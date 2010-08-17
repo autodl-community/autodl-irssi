@@ -1,0 +1,278 @@
+# ***** BEGIN LICENSE BLOCK *****
+# Version: MPL 1.1
+#
+# The contents of this file are subject to the Mozilla Public License Version
+# 1.1 (the "License"); you may not use this file except in compliance with
+# the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS" basis,
+# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# for the specific language governing rights and limitations under the
+# License.
+#
+# The Original Code is IRC Auto Downloader
+#
+# The Initial Developer of the Original Code is
+# David Nilsson.
+# Portions created by the Initial Developer are Copyright (C) 2010
+# the Initial Developer. All Rights Reserved.
+#
+# Contributor(s):
+#
+# ***** END LICENSE BLOCK *****
+
+#
+# Checks if an announced torrent matches a filter.
+#
+
+use 5.008;
+use strict;
+use warnings;
+
+package AutodlIrssi::FilterManager;
+use AutodlIrssi::TextUtils;
+use AutodlIrssi::Constants;
+
+sub new {
+	my $class = shift;
+	bless {
+		filters => undef,
+	}, $class;
+}
+
+sub setFilters {
+	my ($self, $filters) = @_;
+	$self->{filters} = $filters;
+}
+
+sub getNumFilters {
+	return scalar @{shift->{filters}};
+}
+
+# Find a filter matching $ti. Returns the filter if it matched, else undef.
+sub findFilter {
+	my ($self, $ti) = @_;
+
+	for my $filter (@{$self->{filters}}) {
+		return $filter if $self->checkFilter($ti, $filter);
+	}
+
+	return;
+}
+
+# Returns true if $filter matches $ti
+sub checkFilter {
+	my ($self, $ti, $filter) = @_;
+
+	return 0 if !$filter->{enabled};
+
+	return 0 if $filter->{matchReleases} ne '' && !checkFilterStrings($ti->{torrentName}, $filter->{matchReleases});
+	return 0 if $filter->{exceptReleases} ne '' && checkFilterStrings($ti->{torrentName}, $filter->{exceptReleases});
+
+	return 0 if $filter->{matchCategories} ne '' && !checkFilterStrings($ti->{category}, $filter->{matchCategories});
+	return 0 if $filter->{exceptCategories} ne '' && checkFilterStrings($ti->{category}, $filter->{exceptCategories});
+
+	return 0 if $filter->{matchUploaders} ne '' && !checkFilterStrings($ti->{uploader}, $filter->{matchUploaders});
+	return 0 if $filter->{exceptUploaders} ne '' && checkFilterStrings($ti->{uploader}, $filter->{exceptUploaders});
+
+	return 0 if $filter->{matchSites} ne '' && !checkSite($ti->{announceParser}, $filter->{matchSites});
+	return 0 if $filter->{exceptSites} ne '' && checkSite($ti->{announceParser}, $filter->{exceptSites});
+
+	return 0 if $filter->{years} ne '' && !checkFilterNumbers($ti->{year}, $filter->{years});
+	return 0 if $filter->{seasons} ne '' && !checkFilterNumbers($ti->{season}, $filter->{seasons});
+	return 0 if $filter->{episodes} ne '' && !checkFilterNumbers($ti->{episode}, $filter->{episodes});
+
+	return 0 if $filter->{artists} ne '' && !checkName($ti->{name1}, $filter->{artists});
+	return 0 if $filter->{albums} ne '' && !checkName($ti->{name2}, $filter->{albums});
+
+	return 0 if $filter->{resolutions} ne '' && !checkArySynonyms($ti->{resolution}, $filter->{resolutions}, $AutodlIrssi::Constants::tvResolutions);
+	return 0 if $filter->{sources} ne '' && !checkArySynonyms($ti->{source}, $filter->{sources}, $AutodlIrssi::Constants::tvSources);
+	return 0 if $filter->{encoders} ne '' && !checkArySynonyms($ti->{encoder}, $filter->{encoders}, $AutodlIrssi::Constants::tvEncoders);
+
+	return 0 if $filter->{formats} ne '' && !checkFilterStrings($ti->{format}, $filter->{formats});
+	return 0 if $filter->{bitrates} ne '' && !checkFilterBitrate($ti->{bitrate}, $filter->{bitrates});
+	return 0 if $filter->{media} ne '' && !checkFilterStrings($ti->{media}, $filter->{media});
+
+	return 0 if $filter->{tags} ne '' && !checkFilterTags($ti->{tags}, $filter->{tags});
+	return 0 if $filter->{scene} ne '' && !$ti->{scene} != !$filter->{scene};
+	return 0 if $filter->{log} ne '' && !$ti->{log} != !$filter->{log};
+	return 0 if $filter->{cue} ne '' && !$ti->{cue} != !$filter->{cue};
+
+	my $torrentSize = convertByteSizeString($ti->{torrentSize});
+	return 0 if !checkFilterSize($torrentSize, $filter);
+
+	my $maxPreTime = convertTimeSinceString($filter->{maxPreTime});
+	if (defined $maxPreTime) {
+		my $preTime = convertTimeSinceString($ti->{preTime});
+		return 0 if !defined $preTime || $preTime > $maxPreTime;
+	}
+
+	if ($filter->{maxTriggers} && $filter->{maxTriggers} > 0) {
+		$filter->{maxTriggers}--;
+		if ($filter->{maxTriggers} <= 0) {
+			$filter->{enabled} = 0;
+		}
+	}
+
+	return 1;
+}
+
+sub checkFilterStrings {
+	my ($name, $filterList) = @_;
+	my @ary = split /,/, regexEscapeWildcardString($filterList);
+	return checkRegexArray($name, \@ary);
+}
+
+# Returns true if name matches one of the words in filterWordsAry
+#	@param name	The string to check
+#	@param filterWordsAry	Array containing all regex strings
+sub checkRegexArray {
+	my ($name, $filterWordsAry) = @_;
+
+	for my $temp (@$filterWordsAry) {
+		my $filterWord = trim $temp;
+		next unless $filterWord;
+		my $s = '^' . $filterWord . '$';
+		return 1 if $name =~ /$s/i;
+	}
+
+	return 0;
+}
+
+sub checkSite {
+	my ($announceParser, $sitesFilter) = @_;
+
+	my $trackerInfo = $announceParser->getTrackerInfo();
+	return checkFilterStrings($trackerInfo->{siteName}, $sitesFilter) ||
+		   checkFilterStrings($trackerInfo->{type}, $sitesFilter) ||
+		   checkFilterStrings($trackerInfo->{longName}, $sitesFilter);
+}
+
+sub checkFilterNumbers {
+	my ($num, $filterNums) = @_;
+
+	$num = convertStringToInteger($num);
+	return 0 unless defined $num;
+
+	for my $temp (split /,/, $filterNums) {
+		my $yearWord = trim $temp;
+		my @ary = $yearWord =~ /^(\d+)(?:\s*-\s*(\d+))?$/;
+		next unless @ary;
+
+		my $n1 = convertStringToInteger($ary[0]);
+		my $n2 = defined $ary[1] ? convertStringToInteger($ary[1]) : $n1;
+		next unless defined $n1 && defined $n2;
+
+		($n1, $n2) = ($n2, $n1) if $n2 < $n1;
+
+		return 1 if $n1 <= $num && $num <= $n2;
+	}
+
+	return 0;
+}
+
+sub checkName {
+	my ($name, $filterName) = @_;
+
+	# first part is all ASCII chars except "a-zA-Z0-9*?,". Not same as [^a-zA-Z\d\*\?,].
+	my $nregex = qr/[\x00-\x1F\x21-\x29\x2B\x2D-\x2F\x3A-\x3E\x40\x5B-\x60\x7B-\x7F\*\?,]/;
+	my $fregex = qr/[\x00-\x1F\x21-\x29\x2B\x2D-\x2F\x3A-\x3E\x40\x5B-\x60\x7B-\x7F]/;
+	$name =~ s/$nregex//g;
+	$name = removeExtraSpaces($name);
+	$filterName =~ s/$fregex//g;
+	$filterName = removeExtraSpaces($filterName);
+	return checkFilterStrings($name, $filterName);
+}
+
+sub checkArySynonyms {
+	my ($value, $filterString, $arySynonyms) = @_;
+
+	$value = lc $value;
+	my $aryValidValues;
+OUTER:
+	for my $ary (@$arySynonyms) {
+		for my $synonym (@$ary) {
+			if ($value eq lc $synonym) {
+				$aryValidValues = $ary;
+				last OUTER;
+			}
+		}
+	}
+	return 0 unless defined $aryValidValues;
+
+	for my $synonym (@$aryValidValues) {
+		return 1 if checkFilterStrings($synonym, $filterString);
+	}
+
+	return 0;
+}
+
+sub checkFilterBitrate {
+	my ($bitrate, $filterBitrates) = @_;
+
+	$bitrate = canonicalizeBitrate($bitrate);
+	for my $temp (split /,/, $filterBitrates) {
+		my $filterBitrate = canonicalizeBitrate($temp, 1);
+		return 1 if checkFilterStrings($bitrate, $filterBitrate);
+	}
+
+	return 0;
+}
+
+sub canonicalizeBitrate {
+	my ($s, $isFilter) = @_;
+
+	my $regex = '[^a-zA-Z\d.';
+	$regex .= '*?' if $isFilter;
+	$regex .= ']';
+
+	$s =~ s/$regex//g;
+	return lc $s;
+}
+
+sub checkFilterTags {
+	my ($tags, $filterTags) = @_;
+
+	my $fixit = sub {
+		my $s = shift;
+		$s =~ s/[._]/ /g;
+		$s =~ s/\s+/ /g;
+		return [split /,/, $s];
+	};
+
+	my $aryTags = $fixit->($tags);
+	my $aryFilterTags = $fixit->($filterTags);
+
+	my $isInTags = sub {
+		my $filterTag = shift;
+		$filterTag = trim $filterTag;
+		for my $temp (@$aryTags) {
+			my $tag = trim $temp;
+			return 1 if checkFilterStrings($tag, $filterTag);
+		}
+
+		return 0;
+	};
+
+	for my $filterTag (@$aryFilterTags) {
+		return 1 if $isInTags->($filterTag);
+	}
+
+	return 0;
+}
+
+sub checkFilterSize {
+	my ($torrentSize, $filter) = @_;
+
+	return 1 unless defined $torrentSize;
+
+	my $minSize = convertByteSizeString($filter->{minSize});
+	my $maxSize = convertByteSizeString($filter->{maxSize});
+
+	return 0 if defined $minSize && $torrentSize < $minSize;
+	return 0 if defined $maxSize && $torrentSize > $maxSize;
+	return 1;
+}
+
+1;

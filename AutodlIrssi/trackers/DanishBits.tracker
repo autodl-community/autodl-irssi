@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="db"
+	shortName="DB"
+	longName="DanishBits"
+	siteName="danishbits.org"
+	checkRegisteredTorrent="false">
+
+	<settings>
+		<description text="Go to https://danishbits.org/links.php and copy the RSS feed (direct download) link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="irc.danishbits.org"
+			channelNames="#danishbits.org"
+			announcerNames="DB,MyLameNick"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!--DB announce format-->
+				<!--[NEW TORRENT] Van.Diemens.Land.2009.Custom.DKsubs.XTD.PAL.DVDR-DBu just got uploaded! https://danishbits.org/details.php?id=82590-->
+				<regex value="^\[NEW TORRENT\]\s*(.*) just got uploaded! \s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+			<extract>
+				<!--MyLameNick announce format-->
+				<!--Nyt Upload ~ Console ~ Shreks.Carnival.Craze.PAL.Wii-LoCAL ~ https://danishbits.org/details.php?rid=82752-->
+				<regex value="^Nyt Upload\s*~([^~]*)~(.*)~\s*https?\:\/\/([^\/]+\/).*[&amp;\?]rid=(\d+)"/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="https://"/>
+				<var name="$baseUrl"/>
+				<string value="download.php/"/>
+				<var name="$torrentId"/>
+				<string value="/"/>
+				<varenc name="torrentName"/>
+				<string value=".torrent?passkey="/>
+				<var name="passkey"/>
+			</var>
+		</linematched>
+		<ignore>
+			<regex value="^\[NEW TORRENT\]" expected="false"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

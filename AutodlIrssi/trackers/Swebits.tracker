@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="sb"
+	shortName="SB"
+	longName="Swebits"
+	siteName="swebits.org"
+	checkRegisteredTorrent="false">
+
+	<settings>
+		<description text="Go to http://swebits.org/personligrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="irc.freequest.net,irc.eu.freequest.net,irc.us.freequest.net"
+			channelNames="#swebits"
+			announcerNames="Swebits"
+			/>
+	</servers>
+
+	<parseinfo>
+		<multilinepatterns>
+			<!--[RELEASE] TV - Whats.New.Scooby.Doo.S02E12.SWEDiSH.DVDRip.XviD-CENTiMETER  (186,18 MiB)-->
+			<!--[RELEASE] https://swebits.org/details.php?id=80986-->
+			<!--[RELEASE] 4 dagar 2 timmar 5 minuter 41 sekunder efter pre.-->
+			<!---->
+			<!--[ÖNSKEMÅL] XviD - A.Summer.Tale.2000.DVDRip.XviD-iMBT  (707,87 MiB)-->
+			<!--[ÖNSKEMÅL] https://swebits.org/details.php?id=80985-->
+			<!--[ÖNSKEMÅL] 1 minut efter önskemål.-->
+			<extract>
+				<regex value="^\[(RELEASE|ÖNSKEMÅL|SwebitsMedia)\](.*) - (.*)\((.*)\)"/>
+				<vars>
+					<var name="tags"/>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="torrentSize"/>
+				</vars>
+			</extract>
+			<extract>
+				<regex value="^\[(?:RELEASE|ÖNSKEMÅL|SwebitsMedia)\]\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<vars>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</multilinepatterns>
+		<linematched>
+			<varreplace name="torrentSize" srcvar="torrentSize" regex="," replace="."/>
+
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value="download.php?id="/>
+				<var name="$torrentId"/>
+				<string value="&amp;passkey="/>
+				<var name="passkey"/>
+			</var>
+		</linematched>
+		<ignore>
+			<regex value="^\[(?:RELEASE|ÖNSKEMÅL|SwebitsMedia)\].* efter .*"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

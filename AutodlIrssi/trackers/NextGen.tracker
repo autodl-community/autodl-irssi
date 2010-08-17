@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="ng"
+	shortName="NG"
+	longName="NextGen"
+	siteName="nxtgn.org"
+	checkRegisteredTorrent="false">
+
+	<settings>
+		<description text="Go to http://nxtgn.org/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey tooltiptext="The passkey in your NextGen RSS feed link."/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="irc.after-all.org,eu.after-all.org,us.after-all.org,sleepless.after-all.org"
+			channelNames="#NG,#NG-Announce"
+			announcerNames="MrNG"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!--~ [ TORRENT ] ~ [ UPLOADED ] ~[ HD ] ~ [ Surrogates.2009.MULTi.COMPLETE.BLURAY-SURROGATES ] ~ [ http://nxtgn.org/details.php?id=746 ] ~-->
+				<regex value="^\s*~\s*\[ TORRENT \]\s*~\s*\[ UPLOADED \]\s*~\s*\[([^\]]*)\]\s*~\s*\[(.*)\]\s*~\s*\[ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value="download.php?id="/>
+				<var name="$torrentId"/>
+				<string value="&amp;passkey="/>
+				<var name="passkey"/>
+			</var>
+		</linematched>
+		<ignore>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

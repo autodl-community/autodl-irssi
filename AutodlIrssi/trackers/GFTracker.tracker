@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="gft"
+	shortName="GFT"
+	longName="GFTracker"
+	siteName="www.thegft.org"
+	checkRegisteredTorrent="false">
+
+	<settings>
+		<cookie_description/>
+		<cookie/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="irc.thegft.org"
+			channelNames="#gftracker-spam"
+			announcerNames="AnnounceBot,Spannage"
+			/>
+	</servers>
+
+	<parseinfo>
+		<!--Spannage bot only-->
+		<linepatterns>
+			<extract>
+				<!--NEW :: Important.Things.with.Demetri.Martin.S02E01.720p.HDTV.X264-DIMENSION :: TV-X264 :: http://www.thegft.org/details.php?id=225329 :: 1 minutes and 23 seconds after pre.-->
+				<regex value="^NEW\s*::(.*)::(.*)::\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s*::(.*)"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="category"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="preTime"/>
+				</vars>
+			</extract>
+		</linepatterns>
+
+		<!--AnnounceBot bot only-->
+		<multilinepatterns>
+			<!--Name......: Hold_Up-Im_Free-READNFO-x264-2009-MVO-->
+			<!--Catergory.: MVID Location..: www.thegft.org-->
+			<!--Pretime...: About 40 seconds ago-->
+			<!--ePenis....: Shit Hawt!!-->
+			<!-- a bunch of '-' -->
+			<extract>
+				<regex value="^Name\.*: (.*)"/>
+				<vars>
+					<var name="torrentName"/>
+				</vars>
+			</extract>
+			<extract>
+				<regex value="^(?:Catergory|Category)\.*:\s*(.*) Location\.*: .*"/>
+				<vars>
+					<var name="category"/>
+				</vars>
+			</extract>
+			<extract>
+				<regex value="^Pretime\.*: (.*)"/>
+				<vars>
+					<var name="preTime"/>
+				</vars>
+			</extract>
+		</multilinepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value="download.php?id="/>
+				<var name="$torrentId"/>
+				<string value="&amp;name="/>
+				<varenc name="torrentName"/>
+				<string value=".torrent"/>
+			</var>
+			<http name="Cookie">
+				<var name="cookie"/>
+			</http>
+		</linematched>
+		<ignore>
+			<regex value="^ePenis\.*: "/>
+			<regex value="^------------"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

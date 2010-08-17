@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="mat"
+	shortName="MAT"
+	longName="Midnight Arab Torrents"
+	siteName="www.midnightarab-torrents.org"
+	checkRegisteredTorrent="false">
+
+	<settings>
+		<description text="Go to http://www.midnightarab-torrents.org/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey tooltiptext="The passkey in your Midnight Arab Torrents RSS feed link."/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="188.40.105.150"
+			channelNames="#MAT-Announce"
+			announcerNames="MATebot"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!-- [New Torrent Uploaded]: -> [Name] : Louie.S01E02.HDTV.XviD-LOL  .:. [Size] : 232.20 MB .:. [Category] : TV XVID .:. [Uploaded] : 7 seconds after pre. .:. [URL] : http://www.midnightarab-torrents.org/details.php?id=9407  .:. [Uploaded by] : MATilu-->
+				<regex value="^\s*\[New Torrent Uploaded\]: -> \[Name\] :([^:]*)\.:\. \[Size\] :([^:]*)\.:\. \[Category\] :([^:]*)(?:\.:\. \[Uploaded\] :([^:]*))?\.:\. \[URL\] :\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s*\.:\. \[Uploaded by\] :\s*([\w\-]+)"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="torrentSize"/>
+					<var name="category"/>
+					<var name="preTime"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="uploader"/>
+				</vars>
+			</extract>
+			<extract>
+				<!-- New Torrent Uploaded:  The_Helping_Hand-House_is_the_Cure-(HITCV002)-WEB-2010-1REAL in Music - Size: 91.22 MB - Uploaded: 1 minute, 32 seconds after pre. - URL: http://www.midnightarab-torrents.org/details.php?id=23249 - Uploaded_by: MATe-->
+				<regex value="^\s*New Torrent Uploaded:(.*) in (.*) - Size:(.*)- Uploaded:(.*)- URL:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s* - Uploaded_by:\s*([\w\-]+)"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="category"/>
+					<var name="torrentSize"/>
+					<var name="preTime"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="uploader"/>
+				</vars>
+			</extract>
+			<extract>
+				<!-- New Torrent Uploaded:  The Other Guys 2010 TS H264 CRYS in Movies/XviD - Size: 687.32 MB - URL: http://www.midnightarab-torrents.org/details.php?id=22326 - Uploaded_by: sagar7877-->
+				<regex value="^\s*New Torrent Uploaded:(.*) in (.*) - Size:(.*)- URL:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s* - Uploaded_by:\s*([\w\-]+)"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="category"/>
+					<var name="torrentSize"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="uploader"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value="download.php?torrent="/>
+				<var name="$torrentId"/>
+				<string value="&amp;passkey="/>
+				<var name="passkey"/>
+			</var>
+		</linematched>
+		<ignore>
+			<regex value="New Torrent Uploaded" expected="false"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

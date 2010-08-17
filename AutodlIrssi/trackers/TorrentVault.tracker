@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="tv"
+	shortName="TV"
+	longName="TorrentVault"
+	siteName="www.torrentvault.org"
+	checkRegisteredTorrent="true">
+
+	<settings>
+		<gazelle_description/>
+		<gazelle_authkey/>
+		<gazelle_torrent_pass/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="irc.torrentvault.org"
+			channelNames="#tv,#tv-spam"
+			announcerNames="InfoVault"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!--NEW in MUSIC/MP3 -> Angela_Groothuizen-Bier_En_Bitterballen-WEB-NL-2010-DOH by Msrv [ Size: 24.89 MB | Pre: 34 secs | Genre: Folk ] [ https://www.torrentvault.org/torrents.php?id=54134 ]-->
+				<!--NEW in MUSIC/VIDEOS -> Jay_Sean_Ft_Sean_Paul_and_Lil_Jon-Do_You_Remember-DVDRip-x264-2009-SNO by Msrv [ Size: 50.85 MB | Pre: 1 min, 3 secs ] [ https://www.torrentvault.org/torrents.php?id=54137 ]-->
+				<!--NEW in APPZ/0DAY -> TorrentVault.mIRC.Autodownloader.2.4.Official.Release-TVSTAFF by Msrv [ Size: 72.04 KB ] [ https://www.torrentvault.org/torrents.php?id=54200 ]-->
+				<regex value="^NEW in(.*?)->(.*)\s+by\s+(\S*).*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="uploader"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<!--Get torrent size field-->
+			<extract srcvar="line" optional="true">
+				<regex value="Size:(.*?[bB])"/>
+				<vars>
+					<var name="torrentSize"/>
+				</vars>
+			</extract>
+
+			<!--Get pre time field-->
+			<extract srcvar="line" optional="true">
+				<regex value="Pre:([^\]\|]*)"/>
+				<vars>
+					<var name="preTime"/>
+				</vars>
+			</extract>
+
+			<!--Get genre field, and save it in tags-->
+			<extract srcvar="line" optional="true">
+				<regex value="Genre:([^\]\|]*)"/>
+				<vars>
+					<var name="tags"/>
+				</vars>
+			</extract>
+			<varreplace name="tags" srcvar="tags" regex="[\/]" replace=", "/>
+
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value="torrents.php?action=download&amp;id="/>
+				<var name="$torrentId"/>
+				<string value="&amp;authkey="/>
+				<var name="authkey"/>
+				<string value="&amp;torrent_pass="/>
+				<var name="torrent_pass"/>
+			</var>
+		</linematched>
+		<ignore>
+			<regex value="^NEW in(?:.*?)->" expected="false"/>
+			<regex value="^NEW in NOTICE"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

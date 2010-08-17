@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="pt"
+	shortName="PT"
+	longName="PolishTracker"
+	siteName="polishtracker.org"
+	checkRegisteredTorrent="false">
+
+	<settings>
+		<cookie_description/>
+		<cookie/>
+		<integer
+			name="port"
+			text="Tracker port"
+			accesskey="r"
+			tooltiptext="The port we should use when downloading torrent files."
+			defaultValue="85"
+			minValue="1"
+			maxValue="65535"
+			/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="irc.polishtracker.org"
+			channelNames="#pt-announce"
+			announcerNames="PT-BOT"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!-- ::: PolishTracker :::  Torrent ( Bachna.Ae.Haseeno.720p.BluRay.x264-MAGiCViBE )  ||  Kategoria : ( Movies x264 )  ||  Rozmiar: ( 6.62 GB )  ||  Link: ( http://polishtracker.org:81/details.php?id=112268&hit=1 )  ||  Wstawiony: ( 7m 14s po PRE )  ||  Gatunek: ( Comedy Drama Romance )  ||  Wiecej: ( http://www.imdb.com/title/tt1182972/ )  -->
+				<regex value="^\s*:::\s*PolishTracker\s*:::\s*Torrent\s*\(\s*(.*)\s*\)\s*\|\|\s*Kategoria\s*:\s*\(\s*([^\)]*)\s*\)\s*\|\|\s*Rozmiar:\s*\(\s*([^\)]*)\s*\)\s*\|\|\s*Link:\s*\(\s*https?\:\/\/([^\/:]+)[^\)]*id=(\d+)[^\)]*\s*\)\s*\|\|\s*Wstawiony:\s*\(\s*([^\)]*)\s*po PRE\s*\)"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="category"/>
+					<var name="torrentSize"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="preTime"/>
+				</vars>
+			</extract>
+			<extract>
+				<!-- ::: PolishTracker :::  Torrent ( 1220-MP3.PACK-PT )  ||  Kategoria : ( Music )  ||  Rozmiar: ( 19.05 GB )  ||  Link: ( http://polishtracker.org:81/details.php?id=112272&hit=1 )  -->
+				<regex value="^\s*:::\s*PolishTracker\s*:::\s*Torrent\s*\(\s*(.*)\s*\)\s*\|\|\s*Kategoria\s*:\s*\(\s*([^\)]*)\s*\)\s*\|\|\s*Rozmiar:\s*\(\s*([^\)]*)\s*\)\s*\|\|\s*Link:\s*\(\s*https?\:\/\/([^\/:]+)[^\)]*id=(\d+)[^\)]*\s*\)"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="category"/>
+					<var name="torrentSize"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value=":"/>
+				<var name="port"/>
+				<string value="/download.php/"/>
+				<var name="$torrentId"/>
+				<string value="/"/>
+				<varenc name="torrentName"/>
+				<string value=".torrent"/>
+			</var>
+			<http name="Cookie">
+				<var name="cookie"/>
+			</http>
+			<http name="Referer">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value=":"/>
+				<var name="port"/>
+				<string value="/"/>
+			</http>
+		</linematched>
+		<ignore>
+			<regex value="^ $"/>
+			<regex value="^INFO"/>
+			<regex value="^NUKE"/>
+			<regex value="^\s*:::\s*PolishTracker\s*:::\s*Torrent:.*NUKE:"/>
+			<regex value="||\s*Zosta"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

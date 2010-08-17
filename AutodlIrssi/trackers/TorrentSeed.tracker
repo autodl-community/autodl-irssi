@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="ts"
+	shortName="TS"
+	longName="TorrentSeed"
+	siteName="torrentseed.org"
+	checkRegisteredTorrent="false">
+
+	<settings>
+		<cookie_description/>
+		<cookie/>
+	</settings>
+
+	<servers>
+		<server
+			serverNames="irc.p2p-network.net,irc.p2p-irc.net"
+			channelNames="#torrentseed"
+			announcerNames="TS-Announce"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!--[New Torrent Uploaded] [Movies/DVDR] Law.Abiding.Citizen.DVDR-BOW .:. Size: 4.42 GB .:. Pre Time: 22m 36s .:. URL: http://torrentseed.org/details.php?id=12161&hit=1-->
+				<regex value="^\[New Torrent Uploaded\]\s*\[([^\]]*)\](.*)\.:\.\s*Size:(.*)\.:\.\s*Pre Time:(.*)\.:\.\s*URL: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="torrentSize"/>
+					<var name="preTime"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+			<extract>
+				<!--[New Torrent Uploaded] [TV/x264] Doctor.Who.2005.S05E09.720p.HDTV.x264-BiA  .:. Size: 1.12 GB .:. URL: http://torrentseed.org/details.php?id=16756&hit=1-->
+				<regex value="^\[New Torrent Uploaded\]\s*\[([^\]]*)\](.*)\.:\.\s*Size:(.*)\.:\.\s*URL: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="torrentSize"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value="download.php/"/>
+				<var name="$torrentId"/>
+				<string value="/"/>
+				<varenc name="torrentName"/>
+				<string value=".torrent"/>
+			</var>
+			<http name="Cookie">
+				<var name="cookie"/>
+			</http>
+		</linematched>
+		<ignore>
+			<regex value="^User: "/>
+			<regex value="^\w+ \(.*\) last seen "/>
+			<regex value="^test "/>
+			<regex value="No such user, please try again"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>
