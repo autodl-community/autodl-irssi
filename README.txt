@@ -1,0 +1,469 @@
+
+This is an auto downloader for Irssi. It's a port of the ChatZilla auto downloader (autodl-cz) and has all of autodl-cz's features except scripting isn't supported, and there's no easy to use GUI. :) There's a program to convert autodl-cz's options file to a file understandable by autodl-irssi.
+
+Features:
+[*] Supports lots of trackers
+[*] Advanced but easy to use filters. No complicated regex required, not even wildcards for TV shows and movies.
+[*] Some of the filters: release, size, tracker, resolution, source (eg. BluRay), category, format (eg. FLAC), bitrate, and many more.
+[*] Torrent can be saved to a watch directory, or uploaded to uTorrent webui or an FTP server.
+[*] Torrent data can be saved to dynamic folder names (eg. folders containing current date) Requires uTorrent.
+[*] No broken .torrent files are ever uploaded to your client. Torrent files are verified before uploading them.
+[*] Duplicate releases are not downloaded by default.
+[*] Torrents are downloaded in the background so Irssi isn't blocked.
+[*] SSL downloads can be forced.
+
+It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
+
+[b]Installation[/b]
+
+First install Irssi. Use your GUI package manager or append [b]irssi[/b] to one of the below commands.
+
+This auto downloader requires some Perl modules. You need to be root (eg. use [b]sudo[/b] or [b]su -[/b]) to install them. Start a terminal and type one of the below commands.
+
+[b]Ubuntu, Debian, and others based on Debian/Ubuntu[/b]:
+[code]apt-get -y install libarchive-zip-perl libnet-ssleay-perl libhtml-parser-perl libxml-libxml-perl libdigest-sha1-perl libjson-perl libjson-xs-perl libxml-libxslt-perl[/code]
+
+[b]Fedora, CentOS[/b]:
+[code]yum -y install perl-Archive-Zip perl-Net-SSLeay perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1 perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
+
+[b]OpenSUSE[/b]:
+[code]yast -i perl-Archive-Zip perl-Net-SSLeay perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1 perl-XML-LibXSLT
+# This may fail, so you may need to add a 3rd-party repo to install them or use the cpan utility.
+yast -i perl-JSON perl-JSON-XS[/code]
+
+[b]PCLinuxOS[/b]:
+[code]apt-get -y install perl-Archive-Zip perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1
+use cpan: perl-Net-SSLeay perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
+
+[b]Mandriva Linux[/b]:
+[code]urpmi perl-Archive-Zip perl-Net-SSLeay perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1 perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
+
+[b]Arch Linux[/b]:
+[code]pacman -S perl-archive-zip perl-net-ssleay perl-html-parser perl-xml-libxml perl-digest-sha1 perl-json perl-json-xs perl-xml-libxslt[/code]
+
+[b]FreeBSD[/b]:
+[code]pkg_add -r p5-Archive-Zip p5-Net-SSLeay p5-HTML-Parser p5-XML-LibXML p5-Digest-SHA1 p5-JSON p5-JSON-XS p5-XML-LibXSLT[/code]
+
+[b]For other OSes[/b] try the cpan utility as root. You will probably also need a C compiler (gcc) installed:
+[code]cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA1 JSON JSON::XS XML::LibXSLT[/code]
+
+Now to install autodl-irssi. Replace the url with the latest autodl-irssi release. Get the download URL from http://sourceforge.net/projects/autodl-irssi/
+[code]
+mkdir -p ~/.irssi/scripts/autorun
+cd ~/.irssi/scripts
+wget https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.XX.zip/download
+unzip autodl-irssi-v*.zip
+rm autodl-irssi-v*.zip
+cp autodl-irssi.pl autorun/
+mkdir -p ~/.autodl
+touch ~/.autodl/autodl.cfg
+[code]
+
+The autodl-irssi startup script has been copied to the autorun directory so it will be started automatically when Irssi is started.
+
+Now start Irssi. View the [b](status)[/b] window (or [b]autodl[/b] window) (eg. press ALT+1 or ALT+2). You should now see text indicating that autodl-irssi has loaded. Type [b]/script load autodl-irssi[/b] to start it if Irssi already was started.
+
+By default, all autodl-irssi output goes to the [b](status)[/b] window. If there's a window called [b]autodl[/b], then it will write all output to that window. Use these Irssi commands to create a new window named [b]autodl[/b] and place it right after the status window (i.e., window position 2):
+[code]First start Irssi! :D
+/window new hidden
+/window name autodl
+/window move 2
+/layout save
+/save[/b]
+
+[b]The autodl.cfg file[/b]
+
+All filters and other options are read from ~/.autodl/autodl.cfg. If you use non-ASCII characters, be sure to set the encoding (or character coding) to UTF-8 before saving it. The file will be automatically re-read whenever you make any modifications to it when autodl-irssi is running.
+
+If you have used the ChatZilla auto downloader, I wrote a program that will convert autodl-cz's options into a format understood by autodl-irssi. See [b]Using autodl-cz's options[/b] somewhere near the bottom.
+
+Here's an example autodl.cfg file you can modify:
+[quote]
+# Lines beginning with a '#' character are ignored (i.e., they're comments!)
+
+# TV-shows/movies template: (note that wildcards aren't necessary in the [b]shows[/b] filter option!)
+[filter TV SHOW MOVIE FILTER TEMPLATE]
+shows = The Simpsons, Other show, 3rd Show, Some movie, Movie #2
+max-size = 2GB
+#seasons = 3-8
+#episodes = 0-99
+resolutions = SD, 720p
+sources = HDTV, DVDRip, BluRay
+encoders = xvid, x264
+#years = 2008-2012, 1950
+#match-sites =
+
+# Music template:
+[filter MUSIC FILTER TEMPLATE]
+match-sites = what, waffles
+min-size = 30MB
+max-size = 1GB
+years = 1950-1969, 2000, 2009-2099
+#shows = ArtistOrGroup #1, ArtistOrGroup #2, etc
+#albums = Album #1, Album #2, etc
+formats = MP3, FLAC
+bitrates = v0 (vbr), lossless
+media = CD
+#tags = hip hop, tag #2, tag #3
+#scene =
+#log =
+#cue =
+
+# Random scene releases:
+[filter RANDOM SCENE RELEASE FILTER TEMPLATE]
+match-releases = the?simpsons*, american?dad*, blah*
+except-releases = *-LOL, *-crapgroup, crap.release*
+#match-sites =
+#except-sites =
+#min-size = 10MB
+max-size = 500MB
+#max-pretime = 3 secs
+#match-uploaders =
+#except-uploaders =
+
+# All releases from a certain category:
+[filter CATEGORY FILTER TEMPLATE]
+match-categories = *MP3*, *XVID*
+#except-categories = *XXX*
+#match-releases =
+#except-releases =
+#match-sites =
+#except-sites =
+#min-size =
+max-size = 10GB
+
+[options]
+max-saved-releases = 1000
+save-download-history = true
+download-duplicates = false
+upload-type = watchdir
+#upload-type = webui
+#upload-type = ftp
+upload-watch-dir = /home/username/watchdir
+upload-ftp-path = /
+
+[webui]
+user = 
+password = 
+hostname = 
+port = 
+ssl = 
+
+[ftp]
+user = 
+password = 
+hostname = 
+port = 
+
+[tracker scc]
+authkey =
+[/quote]
+
+All lines starting with the # character are ignored (they're comments). Use it to disable some options.
+
+The file contains several headers of the form [b][headername][/b] and header options immediately below the header. The options are of the form [b]option-name = option-value[/b]. If you leave out the value or option-name, then the default value will be used.
+
+There are a few different option types:
+Comma separated list. eg. [b]value1, value2, value3[/b].
+List of numbers. eg. [b]1980-1999, 2010, 2012[/b]
+String. Any number of random characters.
+Integer. Any integer.
+Boolean. [b]false[/b], [b]off[/b], [b]no[/b], or [b]0[/b] all mean "false". Anything else means "true".
+Size. eg. [b]120 MB[/b] or [b]4.5GB[/b]
+
+All option values are case-insensitive so eg. [b]The Simpsons[/b] is the same thing as [b]the siMPSonS[/b].
+
+The comma separated list type supports wildcards, where the [b]*[/b] character means 0 or more characters, and the [b]?[/b] character means exactly one character. Google wildcards for more information. Example, [b]*simpsons*[/b] will match any text with the word simpsons in it. It means [b]First 0 or more characters, then "simpsons", then 0 or more characters[/b]. Note that [b]simpsons*[/b] is not the same thing, it means [b]First "simpsons" then 0 or more characters[/b], so [b]simpsons*[/b] will match anything that begins with the word "simpsons" followed by any text.
+
+[b]The filter header[/b]
+Create one [filter] header per filter. You can optionally name the filter like [b][filter MY FILTER NAME][/b]. All filter options are optional! If you don't use any filter options, then everything will be downloaded because your filter doesn't filter out anything.
+
+[b]Name:[/b] enabled
+[b]Type:[/b] Boolean
+[b]Default:[/b] true
+[b]Example:[/b] enabled = false
+[b]Description:[/b] Use it to disable a filter. All filters are enabled by default.
+
+[b]Name:[/b] match-releases
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] match-releases = The?Simpsons*, American?Dad*
+[b]Description:[/b] It's compared against the torrent name, eg. [b]Some.release.720p.HDTV-GROUP[/b]. If the filter should only match TV-shows or movies, it's easier to use the [b]shows[/b] filter option since it doesn't require wildcards.
+
+[b]Name:[/b] except-releases
+[b]Description:[/b] The exact opposite of [b]match-releases[/b]. If a release matches this option, then it's NOT downloaded.
+
+[b]Name:[/b] match-categories
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] match-categories = *MP3*, TV/XVID
+[b]Description:[/b] It's compared against the torrent category.
+
+[b]Name:[/b] except-categories
+[b]Description:[/b] The exact opposite of [b]except-categories[/b]. If a release matches this option, then it's NOT downloaded.
+
+[b]Name:[/b] match-sites
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] match-sites = tracker1, tracker2, tracker3
+[b]Description:[/b] It's compared against the tracker. Use the full tracker name, eg. MyTracker or use one of the tracker types found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker. Open one of the files and locate the [b]type="XYZ"[/b] line. Use the value inside the quotes, eg. [b]XYZ[/b].
+
+[b]Name:[/b] except-sites
+[b]Description:[/b] The exact opposite of [b]match-sites[/b]. If a release matches this option, then it's NOT downloaded.
+
+[b]Name:[/b] min-size
+[b]Type:[/b] Size
+[b]Example:[/b] min-size = 200MB
+[b]Default:[/b] 0
+[b]Description:[/b] Used to filter out too small torrents.
+
+[b]Name:[/b] max-size
+[b]Type:[/b] Size
+[b]Example:[/b] max-size = 2.5GB
+[b]Default:[/b] any size is allowed
+[b]Description:[/b] Used to filter out too big torrents. I recommend everyone to always use this option so you don't accidentally download a 100GB torrent! :D Set it to a reasonable value, eg. for TV-shows, set it to about twice the size of a normal episode (just in case it's a double-episode). This will automatically filter out season packs!
+
+[b]Name:[/b] shows
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] shows = The Simpsons, American Dad
+[b]Description:[/b] This is for TV-shows, movies and artists/groups (what.cd/waffles only). autodl-irssi will automatically extract the TV-show/movie name from a scene release name. Example, The.Simpsons.S35E24.720p.HDTV-BLAH will match a [b]shows[/b] option set to [b]the simpsons[/b]. You don't need wildcards at all, though it's possible to use wildcards. It's recommended to use [b]shows[/b] instead of [b]match-releases[/b] if all you want is for the filter to match TV-shows or movies. what.cd and waffles: this will match against the artist/group.
+
+[b]Name:[/b] seasons
+[b]Type:[/b] List of numbers
+[b]Example:[/b] seasons = 1, 3, 5-10
+[b]Description:[/b] This is for TV-shows only. Unless the release matches one of the seasons, it's not downloaded.
+
+[b]Name:[/b] episodes
+[b]Type:[/b] List of numbers
+[b]Example:[/b] episodes = 1, 3, 5-10
+[b]Description:[/b] This is for TV-shows only. Unless the release matches one of the episodes, it's not downloaded.
+
+[b]Name:[/b] resolutions
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] resolutions = SD, 720p, 1080p
+[b]Description:[/b] This is for TV-shows and movies only. Unless the release matches one of the resolutions, it's not downloaded. Valid resolutions are one or more of the following: [b]SD[/b], [b]480i[/b], [b]480p[/b], [b]576p[/b], [b]720p[/b], [b]810p[/b], [b]1080i[/b], [b]1080p[/b].
+
+[b]Name:[/b] sources
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] sources = HDTV, DVDRip, BluRay
+[b]Description:[/b] This is for TV-shows and movies only. Unless the release matches one of the sources, it's not downloaded. Valid sources are one or more of the following: [b]DSR[/b], [b]PDTV[/b], [b]HDTV[/b], [b]HR.PDTV[/b], [b]HR.HDTV[/b], [b]DVDRip[/b], [b]DVDScr[/b], [b]BDr[/b], [b]BD5[/b], [b]BD9[/b], [b]BDRip[/b], [b]BRRip[/b], [b]DVDR[/b], [b]MDVDR[/b], [b]HDDVD[/b], [b]HDDVDRip[/b], [b]BluRay[/b], [b]WEB-DL[/b], [b]TVRip[/b], [b]CAM[/b], [b]R5[/b], [b]TELESYNC[/b], [b]TS[/b], [b]TELECINE[/b], [b]TC[/b]. [b]TELESYNC[/b] and [b]TS[/b] are synonyms (you don't need both). Same for [b]TELECINE[/b] and [b]TC[/b].
+
+[b]Name:[/b] encoders
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] encoders = x264, xvid
+[b]Description:[/b] If you don't want windows WMV files, this option could be useful. :) Valid encoders are: [b]XviD[/b], [b]DivX[/b], [b]x264[/b], [b]h.264[/b] (or [b]h264[/b]), [b]mpeg2[/b] (or [b]mpeg-2[/b]), [b]VC-1[/b] (or [b]VC1[/b]), [b]WMV[/b].
+
+[b]Name:[/b] years
+[b]Type:[/b] List of numbers
+[b]Example:[/b] years = 1999, 2005-2010
+[b]Description:[/b] Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.
+
+[b]Name:[/b] albums
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] albums = Some album, Some other album, yet another one
+[b]Description:[/b] what.cd/waffles only.
+
+[b]Name:[/b] formats
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] formats = MP3, FLAC
+[b]Description:[/b] what.cd/waffles only. List the formats you want. Valid formats are: [b]MP3[/b], [b]FLAC[/b], [b]Ogg[/b], [b]AAC[/b], [b]AC3[/b], [b]DTS[/b].
+
+[b]Name:[/b] bitrates
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] bitrates = 192, V0 (vbr), lossless
+[b]Description:[/b] what.cd/waffles only. List the bitrates you want. Some example values: [b]192[/b], [b]320[/b], [b]APS (VBR)[/b], [b]V2 (VBR)[/b], [b]V1 (VBR)[/b], [b]APX (VBR)[/b], [b]V0 (VBR)[/b], [b]q8.x (VBR)[/b], [b]Lossless[/b], [b]24bit Lossless[/b], [b]Other[/b].
+
+[b]Name:[/b] media
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] media = CD, WEB
+[b]Description:[/b] what.cd/waffles only. List the media you want. Valid media are: [b]CD[/b], [b]DVD[/b], [b]Vinyl[/b], [b]Soundboard[/b], [b]SACD[/b], [b]DAT[/b], [b]Cassette[/b], [b]WEB[/b], [b]Other[/b].
+
+[b]Name:[/b] tags
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] tags = hip hop, rock
+[b]Description:[/b] what.cd/waffles only. Unless at least one of your tags matches the release's tags, it's not downloaded.
+
+[b]Name:[/b] scene
+[b]Type:[/b] Boolean
+[b]Example:[/b] scene = true
+[b]Description:[/b] what.cd/waffles, and a few others. Some sites mark a release as scene or non-scene. Set it to true if you want only scene releases, false if you only want non-scene releases, or don't use this option if you don't care.
+
+[b]Name:[/b] log
+[b]Type:[/b] Boolean
+[b]Example:[/b] log = true
+[b]Description:[/b] what.cd/waffles. Set it to true if you only want releases with a log file, false if you don't want releases with log files, or don't use this option if you don't care.
+
+[b]Name:[/b] cue
+[b]Type:[/b] Boolean
+[b]Example:[/b] cue = true
+[b]Description:[/b] what.cd. Set it to true if you only want releases with a cue file, false if you don't want releases with cue files, or don't use this option if you don't care.
+
+[b]Name:[/b] match-uploaders
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] match-uploaders = uploader1, uploader2
+[b]Description:[/b] Use it to only download from certain uploaders.
+
+[b]Name:[/b] except-uploaders
+[b]Description:[/b] The exact opposite of [b]match-uploaders[/b]. If a release matches this option, then it's NOT downloaded.
+
+[b]Name:[/b] max-pretime
+[b]Type:[/b] time-since string
+[b]Example:[/b] max-pretime = 2 mins 3 secs
+[b]Description:[/b] Some sites announce the pretime of the release. Use this to filter out old releases.
+
+[b]The options header[/b]
+These options change the behavior of autodl-irssi. Place these options below the [b][options][/b] header.
+
+[b]Name:[/b] max-saved-releases
+[b]Type:[/b] Integer greater than or equal to 0.
+[b]Default:[/b] 1000
+[b]Example:[/b] max-saved-releases = 200
+[b]Description:[/b] autodl-irssi will remember the last [b]max-saved-releases[/b] releases you have downloaded so it won't re-download the same file again. Only useful if [b]save-download-history[/b] is enabled.
+
+[b]Name:[/b] save-download-history
+[b]Type:[/b] Boolean
+[b]Default:[/b] true
+[b]Example:[/b] save-download-history = true
+[b]Description:[/b] Set it to false to disable writing the last N (= [b]max-saved-releases[/b]) downloaded releases to ~/.autodl/DownloadHistory.txt.
+
+[b]Name:[/b] download-duplicates
+[b]Type:[/b] Boolean
+[b]Default:[/b] false
+[b]Example:[/b] download-duplicates = true
+[b]Description:[/b] By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release again if it's re-announced.
+
+[b]Name:[/b] download-retry-time-seconds
+[b]Type:[/b] Integer
+[b]Default:[/b] 300
+[b]Example:[/b] download-retry-time-seconds = 120
+[b]Description:[/b] If a download fails, autodl-irssi will try to re-download it after waiting a little while. If it still can't download it after [b]download-retry-time-seconds[/b] seconds, it will give up and report an error.
+
+[b]Name:[/b] path-utorrent
+[b]Type:[/b] String
+[b]Default:[/b] nothing
+[b]Example:[/b] path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe
+[b]Description:[/b] Set it to the path of uTorrent if you're using an [b]upload-type[/b] equal to [b]dyndir[/b].
+
+[b]Torrent upload options[/b]
+autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.
+
+There's a global upload option in the [options] header and a local upload option in each filter. By default, the global upload option is used but you can override it in any filter by placing a new [b]upload-type[/b] below your [filter] header.
+
+[b]Save torrent to a watch directory:[/b]
+[quote]
+upload-type = watchdir
+upload-watch-dir = /home/myusername/mywatchdir
+[/quote]
+
+[b]Upload torrent to uTorrent webui:[/b]
+Don't forget to initialize webui user, password, etc below the [webui] header!
+[quote]
+upload-type = webui
+[/quote]
+
+[b]Upload torrent to an FTP server:[/b]
+Don't forget to initialize FTP user, password, etc below the [ftp] header!
+[quote]
+upload-type = ftp
+upload-ftp-path = /ftp/server/path
+[/quote]
+
+[b]Execute a program:[/b]
+[quote]
+upload-type = exec
+upload-command = /path/to/program
+upload-args = all arguments here
+[/quote]
+
+Both [b]upload-command[/b] and [b]upload-args[/b] support macros. See Macros below for an explanation of all available macros. Just remember to surround the macro in double quotes if it's possible that the macro contains spaces. Example: [b]upload-args = --torrent "$(TorrentPathName)" --category $(Category)[/b]
+
+
+[b]Save torrent data to a dynamic directory using uTorrent:[/b]
+You need to initialize [b]path-utorrent[/b] below [options] or it won't work!
+[quote]
+upload-type = dyndir
+upload-dyndir = c:\the\windows\path\$(macro)$(macro2)\$(macro3)
+[/quote]
+
+Important: autodl-irssi assumes that the Z: drive is mapped to your / (root) directory if you're using Wine to run uTorrent.
+
+[b]upload-dyndir[/b] supports macros. See Macros below for an explanation of all available macros. You can use macros to create a directory based on current day and month. Some examples:
+
+[b]upload-dyndir = c:\mydownloads\$(year)-$(month)-$(day)[/b] will save the torrent data below a directory containing the current year, month and day. Eg. [b]c:\mydownloads\2010-10-28[/b] if 2010-10-28 happened to be the current day.
+
+[b]upload-dyndir = c:\mydownloads\$(month)$(day)\$(trackershort)\$(category)[/b] will save the data to a directory based on current month, day, tracker name, and torrent category.
+
+[b]The webui header[/b]
+[quote]
+[webui]
+user =
+password =
+hostname =
+port =
+ssl =
+[/quote]
+user is user name, password is your password, hostname is the IP-address (uTorrent only wants IP-addresses), and port is the webui port. Set [b]ssl = true[/b] to enable encrypted uploads or false to use normal non-encrypted uploads. Read here on how to enable HTTPS webui: http://www.utorrent.com/documentation/webui
+
+[b]The FTP header[/b]
+[quote]
+[ftp]
+user =
+password =
+hostname =
+port =
+[/quote]
+user is user name, password is your password, hostname is the hostname/IP-address, and port is the FTP port.
+
+[b]The tracker header[/b]
+Your trackers require that you authenticate before letting you download a torrent file. Use the tracker headers to set the required options so downloads work.
+
+A tracker header looks like [b][tracker TYPE][/b] where [b]TYPE[/b] is the tracker type. This is the exact same type that you find in the [b]~/.irssi/scripts/AutodlIrssi/trackers/*.tracker[/b] files. Open one of the files with a text editor and locate the [b]type="XYZ"[/b] line. Use the value inside the quotes, eg. [b]XYZ[/b]. Example: [b][tracker XYZ][/b]. Case matters so XYZ is different from xyz.
+
+Some trackers require a [b]passkey[/b], others an [b]authkey[/b], or a [b]cookie[/b], etc. To quickly find out which one your tracker needs, just add [b][tracker TYPE][/b] (with no options below it) to autodl.cfg and wait 1-2 seconds (start Irssi if necessary). It will report the missing options, eg.: [b]ERROR: /home/YOURNAME/.autodl/autodl.cfg: line 123: TRACKER-TYPE: Missing option(s): passkey, uid[/b]. Here it's saying that you forgot to add the options [b]passkey = XXX[/b] and [b]uid = YYY[/b]. Add them below the tracker header.
+
+Some common tracker options and how to get them:
+
+[b]cookie[/b]: Go to your tracker's home page, then type [b]javascript:document.innerHTML=document.cookie[/b] in the address bar and press enter. You should now see your cookie. If all you see is PHPSESSID=XXXXX, then you'll have to manually get the cookie using FireFox: Tools -> Privacy tab -> Show Cookies. It's usually just [b]uid=XXX; pass=YYY[/b]. Separate each key=value pair with a semicolon.
+
+[b]passkey[/b]: First check a torrent download link if it contains it. If not you can usually find it in the generated RSS-feed URL, which you probably can generate @ yourtracker.com/getrss.php . passkeys are usually exactly 32 characters long. The passkey can also sometimes be found in your profile (click your name).
+
+[b]authkey[/b]: See [b]passkey[/b] above. For gazelle sites, it's part of the torrent download link.
+
+[b]torrent_pass[/b]: For gazelle sites, it's part of the torrent download link.
+
+[b]uid[/b]: Click your username and you should see the id=XXX in the address bar. That's your user id, or uid.
+
+[tracker TYPE]
+#enabled =
+#force-ssl =
+#upload-wait-secs =
+#cookie =
+#passkey =
+#etc ...
+
+[b]enabled[/b] is optional and defaults to true. Set it to false to disable the tracker.
+[b]force-ssl[/b] is optional and can be set to true to force encrypted torrent downloads. Not all trackers support HTTPS downloads. Leave it blank for the default value (which is HTTP or HTTPS).
+[b]upload-wait-secs[/b] is optional and is the number of seconds autodl-irssi should wait before uploading/saving the torrent. Default is 0 (no wait). This option isn't needed 99.999% of the time.
+
+[b]Macros[/b]
+
+Current date and time: [b]$(year)[/b], [b]$(month)[/b], [b]$(day)[/b], [b]$(hour)[/b], [b]$(minute)[/b], [b]$(second)[/b], [b]$(milli)[/b]
+[b]$(TYear)[/b] is the year of the torrent release, not current year.
+[b]$(Artist)[/b], [b]$(Show)[/b], [b]$(Movie)[/b], [b]$(Name1)[/b] all mean the same thing.
+[b]$(Album)[/b], [b]$(Name2)[/b] both mean the same thing.
+[b]$(Site)[/b] is tracker URL.
+[b]$(Tracker)[/b] is long tracker name.
+[b]$(TrackerShort)[/b] is short tracker name.
+[b]$(TorrentPathName)[/b] is the path to the .torrent file (unix path if you're using cygwin).
+[b]$(WinTorrentPathName)[/b] is the windows path to the .torrent file.
+
+The rest are possibly self explanatory: [b]$(Category)[/b], [b]$(TorrentName)[/b], [b]$(Uploader)[/b], [b]$(TorrentSize)[/b], [b]$(PreTime)[/b], [b]$(TorrentUrl)[/b], [b]$(TorrentSslUrl)[/b], [b]$(Season)[/b], [b]$(Episode)[/b], [b]$(Resolution)[/b], [b]$(Source)[/b], [b]$(Encoder)[/b], [b]$(Format)[/b], [b]$(Bitrate)[/b], [b]$(Media)[/b], [b]$(Tags)[/b], [b]$(Scene)[/b], [b]$(Log)[/b], [b]$(Cue)[/b]
+
+[b]Using autodl-cz's options[/b]
+This part explains how to re-use autodl-cz's options.
+
+It's important that you are using at least version 2.03 of autodl-cz! After upgrading it, run it once and go to Auto Downloader -> Preferences. Press OK and it will save all options in the 2.03 (or later) format. Failure to do this may result in a pretty useless autodl.cfg file.
+
+Start ChatZilla and type [b]/pref profilePath[/b] and press enter. Copy your profilePath, which is something like [b]/home/YOURNAME/.mozilla/firefox/XXXXXXXXX.default/chatzilla[/b], and append [b]/autodl/settings/autodl.xml[/b] so you get something like [b]/home/YOURNAME/.mozilla/firefox/XXXXXXXXX.default/chatzilla/scripts/autodl/settings/autodl.xml[/b]. That's the path to your autodl-cz's options file. Now type this in your terminal (add your path below):
+
+[code]
+mkdir -p ~/.autodl
+wget https://sourceforge.net/projects/autodl-irssi/files/convertxml.pl/download
+perl convertxml.pl /home/YOURNAME/.mozilla/firefox/XXXXXXXXX.default/chatzilla/scripts/autodl/settings/autodl.xml > ~/.autodl/autodl.cfg[/code]
