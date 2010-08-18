@@ -47,7 +47,7 @@ use cpan: perl-Net-SSLeay perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
 [b]For other OSes[/b] try the cpan utility as root. You will probably also need a C compiler (gcc) installed:
 [code]cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA1 JSON JSON::XS XML::LibXSLT[/code]
 
-Now to install autodl-irssi. Replace the url with the latest autodl-irssi release. Get the download URL from http://sourceforge.net/projects/autodl-irssi/
+Now to install autodl-irssi. [b]Replace the url with the latest autodl-irssi release[/b]. Get the download URL from http://sourceforge.net/projects/autodl-irssi/
 [code]
 mkdir -p ~/.irssi/scripts/autorun
 cd ~/.irssi/scripts
@@ -57,7 +57,7 @@ rm autodl-irssi-v*.zip
 cp autodl-irssi.pl autorun/
 mkdir -p ~/.autodl
 touch ~/.autodl/autodl.cfg
-[code]
+[/code]
 
 The autodl-irssi startup script has been copied to the autorun directory so it will be started automatically when Irssi is started.
 
@@ -69,7 +69,7 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 /window name autodl
 /window move 2
 /layout save
-/save[/b]
+/save[/code]
 
 [b]The autodl.cfg file[/b]
 
@@ -372,7 +372,7 @@ upload-command = /path/to/program
 upload-args = all arguments here
 [/quote]
 
-Both [b]upload-command[/b] and [b]upload-args[/b] support macros. See Macros below for an explanation of all available macros. Just remember to surround the macro in double quotes if it's possible that the macro contains spaces. Example: [b]upload-args = --torrent "$(TorrentPathName)" --category $(Category)[/b]
+Both [b]upload-command[/b] and [b]upload-args[/b] support macros. See Macros below for an explanation of all available macros. Just remember to enclose the macro in double quotes if it's possible that the macro contains spaces. Example: [b]upload-args = --torrent "$(TorrentPathName)" --category $(Category)[/b]
 
 
 [b]Save torrent data to a dynamic directory using uTorrent:[/b]
@@ -420,7 +420,7 @@ Some trackers require a [b]passkey[/b], others an [b]authkey[/b], or a [b]cookie
 
 Some common tracker options and how to get them:
 
-[b]cookie[/b]: Go to your tracker's home page, then type [b]javascript:document.innerHTML=document.cookie[/b] in the address bar and press enter. You should now see your cookie. If all you see is PHPSESSID=XXXXX, then you'll have to manually get the cookie using FireFox: Tools -> Privacy tab -> Show Cookies. It's usually just [b]uid=XXX; pass=YYY[/b]. Separate each key=value pair with a semicolon.
+[b]cookie[/b]: Go to your tracker's home page, then type [b]javascript:document.innerHTML=document.cookie[/b] in the address bar and press enter. You should now see your cookie. If all you see is PHPSESSID=XXXXX, then you'll have to manually get the cookie using FireFox: Edit -> Preferences -> Privacy tab -> Show Cookies. It's usually just [b]uid=XXX; pass=YYY[/b]. Separate each key=value pair with a semicolon.
 
 [b]passkey[/b]: First check a torrent download link if it contains it. If not you can usually find it in the generated RSS-feed URL, which you probably can generate @ yourtracker.com/getrss.php . passkeys are usually exactly 32 characters long. The passkey can also sometimes be found in your profile (click your name).
 
