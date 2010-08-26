@@ -47,7 +47,7 @@ use cpan: perl-Net-SSLeay perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
 [b]For other OSes[/b] try the cpan utility as root. You will probably also need a C compiler (gcc) installed:
 [code]cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA1 JSON JSON::XS XML::LibXSLT[/code]
 
-Now to install autodl-irssi. [b]Replace the url with the latest autodl-irssi release[/b]. Get the download URL from http://sourceforge.net/projects/autodl-irssi/
+Now to install autodl-irssi. [b]Replace the url with the latest autodl-irssi release[/b]. Get the download URL from http://sourceforge.net/projects/autodl-irssi/ . Note: Make sure you're [b]not[/b] root when you're executing the following commands.
 [code]
 mkdir -p ~/.irssi/scripts/autorun
 cd ~/.irssi/scripts

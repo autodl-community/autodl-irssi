@@ -394,7 +394,6 @@ sub _saveTorrentFile {
 	if ($@) {
 		message(0, "Could not save torrent file; error: " . formatException($@));
 	}
-
 }
 
 sub _sendTorrentFileWebui {
@@ -487,18 +486,28 @@ sub _getMacroReplacer {
 	return $macroReplacer;
 }
 
+# Write data to a temporary file. Returns the filename
+sub _writeTempFile {
+	my ($self, $data) = @_;
+
+	my $tempInfo = createTempFile();
+	$AutodlIrssi::g->{tempFiles}->add($tempInfo->{filename});
+	binmode $tempInfo->{fh};
+	print { $tempInfo->{fh} } $data or die "Could not write to temporary file\n";
+	close $tempInfo->{fh};
+
+	return $tempInfo->{filename};
+}
+
 sub _runProgram {
 	my $self = shift;
 
 	return if $self->_checkAlreadyDownloaded();
 
 	eval {
-		my $tempInfo = createTempFile();
-		$AutodlIrssi::g->{tempFiles}->add($tempInfo->{filename});
-		print { $tempInfo->{fh} } $self->{torrentFileData} or die "Could not write to temporary file\n";
-		close $tempInfo->{fh};
+		my $filename = $self->_writeTempFile($self->{torrentFileData});
 
-		my $macroReplacer = $self->_getMacroReplacer($tempInfo->{filename});
+		my $macroReplacer = $self->_getMacroReplacer($filename);
 		my $command = $macroReplacer->replace($self->{uploadMethod}{uploadCommand});
 		my $args = $macroReplacer->replace($self->{uploadMethod}{uploadArgs});
 
@@ -518,12 +527,8 @@ sub _runUtorrentDir {
 	return if $self->_checkAlreadyDownloaded();
 
 	eval {
-		my $tempInfo = createTempFile();
-		$AutodlIrssi::g->{tempFiles}->add($tempInfo->{filename});
-		print { $tempInfo->{fh} } $self->{torrentFileData} or die "Could not write to temporary file\n";
-		close $tempInfo->{fh};
-
-		my $macroReplacer = $self->_getMacroReplacer($tempInfo->{filename});
+		my $filename = $self->_writeTempFile($self->{torrentFileData});
+		my $macroReplacer = $self->_getMacroReplacer($filename);
 
 		my $dyndir = $self->{uploadMethod}{uploadDyndir};
 		$dyndir =~ s#/#\\#g;
