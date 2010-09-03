@@ -37,7 +37,7 @@
 
 	<servers>
 		<server
-			serverNames="irc.thegft.org"
+			serverNames="irc.thegft.org,irc.station51.net"
 			channelNames="#gftracker-spam"
 			announcerNames="AnnounceBot,Spannage"
 			/>
