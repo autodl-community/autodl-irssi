@@ -59,8 +59,8 @@
 				</vars>
 			</extract>
 			<extract>
-				<!-- New Torrent Uploaded:  The_Helping_Hand-House_is_the_Cure-(HITCV002)-WEB-2010-1REAL in Music - Size: 91.22 MB - Uploaded: 1 minute, 32 seconds after pre. - URL: http://www.midnightarab-torrents.org/details.php?id=23249 - Uploaded_by: MATe-->
-				<regex value="^\s*New Torrent Uploaded:(.*) in (.*) - Size:(.*)- Uploaded:(.*)- URL:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s* - Uploaded_by:\s*([\w\-]+)"/>
+				<!-- New Torrent Uploaded: Junior_caldera-what_you_get_(live_bydgoszcz_hit_festiwal_2010)-720p-x264-2010-JESTERS - Category: Music/Videos - Size: 178.49 MB - Uploaded: 2 minutes, 43 seconds after pre. - URL: http://www.midnightarab-torrents.org/details.php?id=25555 - Uploaded_by: emat-->
+				<regex value="^\s*New Torrent Uploaded:(.*)- Category:(.*)- Size:(.*)- Uploaded:(.*)- URL:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s* - Uploaded_by:\s*([\w\-]+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="category"/>
