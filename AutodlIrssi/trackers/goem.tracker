@@ -47,7 +47,8 @@
 		<linepatterns>
 			<extract>
 				<!--[New Torrent]  Cirque du Freak: The Vampire's Assistant [720P] - http://goem.org/details.php?id=23028-->
-				<regex value="^\[New Torrent\](.*)- https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--[New Torrent]  "Leverage" The Morning After Job [S03] [E13] [720P] - BD/x264/AC3 - http://goem.org/details.php?torrent=26175-->
+				<regex value="^\[New Torrent\](.*)- https?\:\/\/([^\/]+\/).*[&amp;\?](?:id|torrent)=(\d+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>

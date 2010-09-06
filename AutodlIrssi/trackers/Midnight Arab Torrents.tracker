@@ -72,8 +72,8 @@
 				</vars>
 			</extract>
 			<extract>
-				<!-- New Torrent Uploaded:  The Other Guys 2010 TS H264 CRYS in Movies/XviD - Size: 687.32 MB - URL: http://www.midnightarab-torrents.org/details.php?id=22326 - Uploaded_by: sagar7877-->
-				<regex value="^\s*New Torrent Uploaded:(.*) in (.*) - Size:(.*)- URL:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s* - Uploaded_by:\s*([\w\-]+)"/>
+				<!-- New Torrent Uploaded: Das.Ist.Fantastisch.S01E02.DVDRip.XviD-HEiL - Category: TV/XVID - Size: 236.44 MB - URL: http://www.midnightarab-torrents.org/details.php?id=25752 - Uploaded_by: emat-->
+				<regex value="^\s*New Torrent Uploaded:(.*)- Category:(.*)- Size:(.*)- URL:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s* - Uploaded_by:\s*([\w\-]+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="category"/>
