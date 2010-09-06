@@ -47,7 +47,8 @@
 		<linepatterns>
 			<extract>
 				<!--* TORRENT RELEASE * NAME: United.States.of.Tara.S02E02.DVDSCR.XviD-DIMENSION.avi  * TYPE: TV-XViD * SIZE:  232.30 MB  * URL: http://uglybits.org/details.php?id=2559  -->
-				<regex value="^\* TORRENT RELEASE \* NAME:(.*)\* TYPE:(.*)\* SIZE:(.*)\* URL: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--* NEW TORRENT RELEASE * NAME: Sommer.I.Sunny.Beach.S01E01.DANiSH.PDTV.XviD-KULA * TYPE: TV-XViD * SIZE:  354.02 MB  * URL: http://uglybits.org/details.php?id=10863 -->
+				<regex value="^\* (?:NEW )?TORRENT RELEASE \* NAME:(.*)\* TYPE:(.*)\* SIZE:(.*)\* URL: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="category"/>
@@ -69,7 +70,7 @@
 			</http>
 		</linematched>
 		<ignore>
-			<regex value="^\* TORRENT RELEASE \* NAME:" expected="false"/>
+			<regex value="^\* (?:NEW )?TORRENT RELEASE \* NAME:" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
