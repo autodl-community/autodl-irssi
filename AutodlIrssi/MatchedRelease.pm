@@ -144,6 +144,9 @@ sub start {
 	$self->{downloadUrl} = $forceSsl ? $self->{ti}{torrentSslUrl} : $self->{ti}{torrentUrl};
 
 	$self->{httpRequest} = new AutodlIrssi::HttpRequest();
+	if ($self->{trackerInfo}{follow302}) {
+		$self->{httpRequest}->setFollowNewLocation();
+	}
 	$self->{startTime} = gettimeofday();
 	$self->{httpRequest}->sendRequest("GET", "", $self->{downloadUrl}, $self->{ti}{httpHeaders}, sub {
 		$self->_onTorrentDownloaded(@_);

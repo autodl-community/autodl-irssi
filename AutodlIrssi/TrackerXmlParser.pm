@@ -49,6 +49,7 @@ sub parse {
 		shortName	=> $self->readAttribute($trackerinfoElem, "shortName", ""),
 		longName	=> $self->readAttribute($trackerinfoElem, "longName", ""),
 		siteName	=> $self->readAttribute($trackerinfoElem, "siteName", ""),
+		follow302	=> $self->readAttribute($trackerinfoElem, "follow302links", ""),
 		checkRegisteredTorrent => $self->readAttributeBoolean($trackerinfoElem, "checkRegisteredTorrent", ''),
 	};
 	$self->{trackerInfo} = $trackerInfo;
