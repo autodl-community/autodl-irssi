@@ -589,8 +589,6 @@ sub _onTorrentFileUploaded {
 sub _displayTotalTime {
 	my ($self, $endTime, $startMsg) = @_;
 
-	my $hostname = $self->{downloadUrl} =~ m!^https?://([^/:]*)! ? $1 : "";
-
 	my $msg = "$startMsg ";
 	$msg .= $self->_getTorrentInfoString({
 		torrentName => $self->{ti}{torrentName},
