@@ -47,13 +47,13 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--NEW in MUSIC/MP3 -> Angela_Groothuizen-Bier_En_Bitterballen-WEB-NL-2010-DOH by Msrv [ Size: 24.89 MB | Pre: 34 secs | Genre: Folk ] [ https://www.torrentvault.org/torrents.php?id=54134 ]-->
-				<!--NEW in MUSIC/VIDEOS -> Jay_Sean_Ft_Sean_Paul_and_Lil_Jon-Do_You_Remember-DVDRip-x264-2009-SNO by Msrv [ Size: 50.85 MB | Pre: 1 min, 3 secs ] [ https://www.torrentvault.org/torrents.php?id=54137 ]-->
-				<!--NEW in APPZ/0DAY -> TorrentVault.mIRC.Autodownloader.2.4.Official.Release-TVSTAFF by Msrv [ Size: 72.04 KB ] [ https://www.torrentvault.org/torrents.php?id=54200 ]-->
-				<regex value="^NEW in(.*?)->(.*)\s+by\s+(\S*).*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--NEW -#- EPISODES/TV-XVID -#- Name: Nikita.S01E01.HDTV.XviD-LOL [27F/349.71MB] -#- Uploader: Anonymous (Regular) -#- Pre: 3 mins, 16 secs [Action/Drama] -#- https://www.torrentvault.org/torrents.php?id=138767-->
+				<!--NEW -#- MUSIC/MP3 -#- Name: Of_Montreal-False_Priest-2010-FNT [17F/75.55MB] -#- Uploader: Anonymous (Regular) -#- Pre: 1 min, 27 secs [Indie] -#- https://www.torrentvault.org/torrents.php?id=138766-->
+				<regex value="^NEW -#-(.*)-#- Name:(.*)\[\d+F/([\d.,]+\wB)] -#- Uploader:\s*(\S+).*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
+					<var name="torrentSize"/>
 					<var name="uploader"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
@@ -61,26 +61,11 @@
 			</extract>
 		</linepatterns>
 		<linematched>
-			<!--Get torrent size field-->
+			<!--Get pre time and tag fields-->
 			<extract srcvar="line" optional="true">
-				<regex value="Size:(.*?[bB])"/>
-				<vars>
-					<var name="torrentSize"/>
-				</vars>
-			</extract>
-
-			<!--Get pre time field-->
-			<extract srcvar="line" optional="true">
-				<regex value="Pre:([^\]\|]*)"/>
+				<regex value="Pre:([^\[\-]*)(?:\[([^\]]*)])?"/>
 				<vars>
 					<var name="preTime"/>
-				</vars>
-			</extract>
-
-			<!--Get genre field, and save it in tags-->
-			<extract srcvar="line" optional="true">
-				<regex value="Genre:([^\]\|]*)"/>
-				<vars>
 					<var name="tags"/>
 				</vars>
 			</extract>
@@ -98,8 +83,8 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^NEW in(?:.*?)->" expected="false"/>
 			<regex value="^NEW in NOTICE"/>
+			<regex value="^NEW -#-" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
