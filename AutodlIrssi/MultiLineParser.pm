@@ -23,7 +23,7 @@
 # ***** END LICENSE BLOCK *****
 
 #
-# String utility functions
+# Parses multi-line IRC announces
 #
 
 use 5.008;
