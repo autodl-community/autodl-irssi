@@ -50,7 +50,7 @@ use Net::SSLeay qw//;
 #
 use constant CHECK_BROKEN_ANNOUNCERS_SECS => 10*60;
 
-my $version = '1.01';
+my $version = '1.02';
 
 # Called when we're enabled
 sub enable {
