@@ -599,12 +599,11 @@ sub extractReleaseNameInfo {
 			value	=> "",
 		};
 
-		my $regexFlags = $isCaseSensitive ? "" : "i";
 		for my $strings (@$aryStrings) {
 			for my $searchString (@$strings) {
 				my $canonSearchString = $canonicalize->($searchString);
 				my $regexStr = "\\s$canonSearchString(?:\\s|\$)";
-				my $qr = $isCaseSensitive ? qr/$regexStr/i : qr/$regexStr/;
+				my $qr = $isCaseSensitive ? qr/$regexStr/ : qr/$regexStr/i;
 				my $tmp = $findLast->($canonReleaseName, $qr);
 				if (defined $tmp && $tmp->{index} < $rv->{index}) {
 					$rv->{index} = $tmp->{index};
