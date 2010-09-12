@@ -71,15 +71,6 @@
 					<var name="$torrentId"/>
 				</vars>
 			</extract>
-			<extract>
-				<!--If all else fails-->
-				<regex value="^NEW\W.*->\s*([^\s]*).*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
-				<vars>
-					<var name="torrentName"/>
-					<var name="$baseUrl"/>
-					<var name="$torrentId"/>
-				</vars>
-			</extract>
 		</linepatterns>
 		<linematched>
 			<var name="torrentUrl">
