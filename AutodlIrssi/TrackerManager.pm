@@ -137,7 +137,7 @@ sub reportBrokenAnnouncers {
 
 		if ($currTime - $trackerState->{lastAnnounce} >= 24*60*60) {
 			my $trackerInfo = $announceParser->getTrackerInfo();
-			message(3, "\x0304WARNING\x03: \x02$trackerInfo->{longName}\x02: IRC announcer hasn't announced anything since " . localtime($trackerState->{lastAnnounce}));
+			message(3, "\x0304WARNING\x03: \x02$trackerInfo->{longName}\x02: Nothing announced since " . localtime($trackerState->{lastAnnounce}));
 		}
 	}
 }
