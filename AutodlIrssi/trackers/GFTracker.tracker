@@ -31,8 +31,8 @@
 	checkRegisteredTorrent="false">
 
 	<settings>
-		<cookie_description/>
-		<cookie/>
+		<description text="Go to http://www.thegft.org/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey tooltiptext="The passkey in your GFTracker RSS feed link."/>
 	</settings>
 
 	<servers>
@@ -65,15 +65,11 @@
 				<var name="$torrentId"/>
 				<string value="&amp;name="/>
 				<varenc name="torrentName"/>
-				<string value=".torrent"/>
+				<string value=".torrent&amp;passkey="/>
+				<varenc name="passkey"/>
 			</var>
-			<http name="Cookie">
-				<var name="cookie"/>
-			</http>
 		</linematched>
 		<ignore>
-			<regex value="^ePenis\.*: "/>
-			<regex value="^------------"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
