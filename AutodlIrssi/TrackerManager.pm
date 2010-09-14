@@ -91,6 +91,7 @@ sub getTrackerInfos {
 sub reloadTrackerFiles {
 	my ($self, $trackerFilesDir) = @_;
 
+	my $oldAnnounceParsers = $self->{announceParsers};
 	$self->{announceParsers} = {};
 	$self->{servers} = {};
 
@@ -108,6 +109,9 @@ sub reloadTrackerFiles {
 		$state->{lastCheck} ||= $currTime;
 
 		my $announceParser = new AutodlIrssi::AnnounceParser($trackerInfo, $state);
+		if (my $oldAnnounceParser = $oldAnnounceParsers->{$type}) {
+			$announceParser->addOptionsFrom($oldAnnounceParser);
+		}
 		$self->{announceParsers}{$type} = $announceParser;
 		$self->addAnnounceParserToServerTable($announceParser);
 	}

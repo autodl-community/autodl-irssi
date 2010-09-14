@@ -94,6 +94,14 @@ sub getUninitializedDownloadVars {
 	return $rv;
 }
 
+# Add options from an old announce parser. Make sure it has the same type as this one.
+sub addOptionsFrom {
+	my ($self, $other) = @_;
+
+	die "Not same type of announce parser!\n" if $self->{trackerInfo}{type} ne $other->{trackerInfo}{type};
+	$self->{options} = {%{$other->{options}}};
+}
+
 # Returns true if the option exists
 sub isOption {
 	my ($self, $name) = @_;
