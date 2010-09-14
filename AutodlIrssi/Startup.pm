@@ -43,6 +43,7 @@ use AutodlIrssi::IrcHandler;
 use AutodlIrssi::TempFiles;
 use AutodlIrssi::ActiveConnections;
 use AutodlIrssi::ChannelMonitor;
+use AutodlIrssi::Updater;
 use Net::SSLeay qw//;
 
 #
@@ -50,7 +51,18 @@ use Net::SSLeay qw//;
 #
 use constant CHECK_BROKEN_ANNOUNCERS_SECS => 10*60;
 
+#
+# How often we'll check for updates
+#
+use constant CHECK_FOR_UPDATES_SECS => 60*60;
+
+#
+# Wait at most this many seconds before closing the connection
+#
+use constant MAX_CONNECTION_WAIT_SECS => 10*60;
+
 my $version = '1.02';
+my $trackersVersion = -1;
 
 # Called when we're enabled
 sub enable {
@@ -73,9 +85,13 @@ sub enable {
 	reloadAutodlConfigFile();
 	readDownloadHistoryFile();
 
+	#TODO: Update $trackersVersion from disk
+
 	$AutodlIrssi::g->{ircHandler} = new AutodlIrssi::IrcHandler($AutodlIrssi::g->{trackerManager},
 																$AutodlIrssi::g->{filterManager},
 																$AutodlIrssi::g->{downloadHistory});
+
+	irssi_command_bind('autodl', \&command_autodl);
 
 	irssi_timeout_add(1000, \&secondTimer, undef);
 }
@@ -90,6 +106,23 @@ sub disable {
 	# Free the SSL_CTX created by SslSocket
 	if (defined $AutodlIrssi::g->{ssl_ctx}) {
 		Net::SSLeay::CTX_free($AutodlIrssi::g->{ssl_ctx});
+	}
+}
+
+sub command_autodl {
+	my ($data, $server, $witem) = @_;
+
+	eval {
+		if ($data =~ /^\s*update\s*$/i) {
+			manualCheckForUpdates();
+		}
+		else {
+			message 0, "Usage /autodl update";
+		}
+	};
+	if ($@) {
+		chomp $@;
+		message 0, "command_autodl: ex: $@";
 	}
 }
 
@@ -161,6 +194,7 @@ sub secondTimer {
 		reloadAutodlConfigFile();
 		activeConnectionsCheck();
 		reportBrokenAnnouncers();
+		checkForUpdates();
 	};
 	if ($@) {
 		message 0, "secondTimer: ex: " . formatException($@);
@@ -207,6 +241,131 @@ sub getActiveAnnounceParserTypes {
 			()
 		}
 	} irssi_channels()];
+}
+
+{
+	my $updater;
+	my $lastUpdateCheck;
+	my $updateCheck;
+
+	sub checkForUpdates {
+		eval {
+			my $elapsedSecs = defined $lastUpdateCheck ? time - $lastUpdateCheck : -1;
+			if ($elapsedSecs >= MAX_CONNECTION_WAIT_SECS && defined $updater && $updater->isSendingRequest()) {
+				cancelCheckForUpdates("Stuck connection!");
+				return;
+			}
+			return if $elapsedSecs >= 0 && $elapsedSecs < CHECK_FOR_UPDATES_SECS;
+			$updateCheck = $AutodlIrssi::g->{options}{updateCheck};
+			forceCheckForUpdates();
+		};
+		if ($@) {
+			chomp $@;
+			message 0, "checkForUpdates: ex: $@";
+		}
+	}
+
+	sub manualCheckForUpdates {
+		eval {
+			$updateCheck = 'manual';
+			forceCheckForUpdates();
+		};
+		if ($@) {
+			chomp $@;
+			message 0, "manualCheckForUpdates: ex: $@";
+		}
+	}
+
+	sub updateFailed {
+		my $errorMessage = shift;
+		$updater = undef;
+		message 0, $errorMessage;
+	}
+
+	sub cancelCheckForUpdates {
+		my $errorMessage = shift;
+
+		$errorMessage ||= "Cancelling update!";
+		return unless defined $updater;
+
+		$updater->cancel($errorMessage);
+		$updater = undef;
+	}
+
+	sub forceCheckForUpdates {
+		cancelCheckForUpdates('Update check cancelled!');
+		message 4, "Checking for updates...";
+		$lastUpdateCheck = time;
+		$updater = new AutodlIrssi::Updater();
+		$updater->check(\&onUpdateFileDownloaded);
+	}
+
+	sub onUpdateFileDownloaded {
+		my $errorMessage = shift;
+
+		return updateFailed("Could not check for updates: $errorMessage") if $errorMessage;
+
+		my $autodlUpdateAvailable = $updater->hasAutodlUpdate($version);
+		my $updateAutodl = $autodlUpdateAvailable;
+
+		if ($updateCheck eq 'manual') {
+			if (!$autodlUpdateAvailable) {
+				message 3, "\x0309You are using the latest version!\x03";
+			}
+		}
+		elsif ($updateCheck eq 'auto') {
+			# Nothing
+		}
+		elsif ($updateCheck eq 'ask') {
+			if ($autodlUpdateAvailable) {
+				message 3, "\x0309A new version is available!\x03 Type \x02/autodl update\x02 to update.";
+			}
+			$updateAutodl = 0;
+		}
+		else {	# 'disabled' or unknown
+			$updateAutodl = 0;
+		}
+
+		if ($updateAutodl) {
+			if ($updater->isMissingModules()) {
+				$updater->printMissingModules();
+			}
+			else {
+				message 3, "Downloading update...";
+				$updater->updateAutodl(getIrssiScriptDir(), \&onUpdatedAutodl);
+				return;
+			}
+		}
+
+		if ($updater->hasTrackersUpdate($trackersVersion)) {
+			message 3, "Updating tracker files...";
+			$updater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
+			return;
+		}
+
+		$updater = undef;
+	}
+
+	sub onUpdatedAutodl {
+		my $errorMessage = shift;
+
+		$updater = undef;
+		return updateFailed("Could not update autodl-irssi: $errorMessage") if $errorMessage;
+
+		message 3, "Reloading autodl-irssi...";
+		irssi_command('script load autodl-irssi');
+	}
+
+	sub onUpdatedTrackers {
+		my $errorMessage = shift;
+
+		return updateFailed("Could not update trackers: $errorMessage") if $errorMessage;
+
+		message 3, "Trackers updated";
+		$trackersVersion = $updater->getTrackersVersion();
+		$updater = undef;
+		reloadTrackerFiles();
+	}
 }
 
 1;

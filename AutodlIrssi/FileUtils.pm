@@ -34,7 +34,7 @@ package AutodlIrssi::FileUtils;
 use File::Spec;
 use File::Temp qw/ tempfile /;
 use base qw/ Exporter /;
-our @EXPORT = qw/ createDirectories saveRawDataToFile createTempFile /;
+our @EXPORT = qw/ createDirectories saveRawDataToFile createTempFile appendUnixPath /;
 our @EXPORT_OK = qw//;
 
 # Creates a directory. Returns true on success.
@@ -67,6 +67,18 @@ sub createTempFile {
 	my $out = {};
 	($out->{fh}, $out->{filename}) = tempfile(undef, UNLINK => 0);
 	return $out;
+}
+
+# Appends $unixPath to $basePath and returns the new path
+sub appendUnixPath {
+	my ($basePath, $unixPath) = @_;
+
+	for my $dirName (split /\//, $unixPath) {
+		next if $dirName =~ /^\s*$/;
+		$basePath = File::Spec->catfile($basePath, $dirName);
+	}
+
+	return $basePath;
 }
 
 1;

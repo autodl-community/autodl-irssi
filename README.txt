@@ -11,6 +11,7 @@ Features:
 [*] Duplicate releases are not downloaded by default.
 [*] Torrents are downloaded in the background so Irssi isn't blocked.
 [*] SSL downloads can be forced.
+[*] Automatic updates.
 
 It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
@@ -310,6 +311,12 @@ Create one [filter] header per filter. You can optionally name the filter like [
 
 [b]The options header[/b]
 These options change the behavior of autodl-irssi. Place these options below the [b][options][/b] header.
+
+[b]Name:[/b] update-check
+[b]Type:[/b] string
+[b]Default:[/b] ask
+[b]Example:[/b] update-check = auto
+[b]Description:[/b] autodl-irssi can auto update itself. Valid values are [b]ask[/b], [b]auto[/b], and [b]disabled[/b]. [b]ask[/b] will print a message when there's a new version. [b]auto[/b] will automatically update it when there's a new version. [b]disabled[/b] won't do a thing when there's a new update.
 
 [b]Name:[/b] max-saved-releases
 [b]Type:[/b] Integer greater than or equal to 0.

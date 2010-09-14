@@ -34,7 +34,7 @@ package AutodlIrssi::ActiveConnections;
 use AutodlIrssi::Globals;
 
 # Max number of seconds a connection is allowed to be alive before we mark it as a memory leak
-use constant MAX_CONNECTION_TIME_SECS => 10*60;
+use constant MAX_CONNECTION_TIME_SECS => 15*60;
 
 sub new {
 	my $class = shift;

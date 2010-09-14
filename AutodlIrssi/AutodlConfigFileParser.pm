@@ -303,6 +303,11 @@ sub doHeaderOptions {
 	$self->{options}{level} = convertStringToInteger($self->{options}{level}, 3, -1, 5);
 	$self->{options}{debug} = convertStringToBoolean($self->{options}{debug});
 	$self->{options}{memoryLeakCheck} = convertStringToBoolean($self->{options}{memoryLeakCheck});
+	if ($self->{options}{updateCheck} ne "auto" &&
+		$self->{options}{updateCheck} ne "ask" &&
+		$self->{options}{updateCheck} ne "disabled") {
+		$self->{options}{updateCheck} = "ask";
+	}
 }
 
 # Initialize options from all [webui] headers

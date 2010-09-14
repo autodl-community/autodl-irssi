@@ -105,9 +105,6 @@ sub _callUser {
 			delete $self->{callback};
 			$callback->($errorMessage);
 		}
-		else {
-			$self->_message(0, "HttpRequest::_callUser: no callback present!");
-		}
 	};
 	if ($@) {
 		chomp $@;
@@ -490,6 +487,17 @@ sub retryRequest {
 sub setUserAgent {
 	my ($self, $userAgent) = @_;
 	$self->{userAgent} = $userAgent;
+}
+
+# Cancel any request WITHOUT notifying the callback function
+sub cancel {
+	my $self = shift;
+
+	$self->{callback} = undef;
+	if (defined $self->{socket}) {
+		$self->{socket}->close();
+		$self->{socket} = undef;
+	}
 }
 
 1;

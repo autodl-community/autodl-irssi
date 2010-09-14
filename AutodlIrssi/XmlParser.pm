@@ -52,6 +52,17 @@ sub openFile {
 	return $doc;
 }
 
+# Creates an XML document from XML data passed in as a string. An exception is thrown if we
+# couldn't parse the string.
+sub openString {
+	my ($self, $xmlData) = @_;
+
+	my $doc = eval { XML::LibXML->new()->parse_string($xmlData) };
+	die "Error parsing XML data: $@" if $@;
+
+	return $doc;
+}
+
 # Returns all child elements of $elem that have nodeName eq $childElemName
 sub getChildElementsByTagName {
 	my ($self, $elem, $childElemName) = @_;
