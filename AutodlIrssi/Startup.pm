@@ -328,7 +328,7 @@ sub getActiveAnnounceParserTypes {
 
 	sub forceCheckForUpdates {
 		cancelCheckForUpdates('Update check cancelled!');
-		message 4, "Checking for updates...";
+		message 5, "Checking for updates...";
 		$lastUpdateCheck = time;
 		$updater = new AutodlIrssi::Updater();
 		$updater->check(\&onUpdateFileDownloaded);
