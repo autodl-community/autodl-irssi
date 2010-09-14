@@ -88,16 +88,27 @@ sub getTheChildElement {
 	return $ary[0];
 }
 
+sub getOptionalChildElement {
+	my ($self, $elem, $childElemName) = @_;
+	my @ary = $self->getChildElementsByTagName($elem, $childElemName);
+	return $ary[0];
+}
+
 # Returns the value of the text node in a child element. $elem is the element which must have a
 # child element called $childElemName. $defaultValue is returned the child element isn't found.
 sub readTextNode {
 	my ($self, $elem, $childElemName, $defaultValue) = @_;
 
-	my @ary = $self->getChildElementsByTagName($elem, $childElemName);
-	return $defaultValue if !@ary;
+	my $child;
+	if (defined $childElemName) {
+		my @ary = $self->getChildElementsByTagName($elem, $childElemName);
+		return $defaultValue if !@ary;
+		$child = $ary[0]->firstChild;
+	}
+	else {
+		$child = $elem->firstChild;
+	}
 
-	$elem = $ary[0];
-	my $child = $elem->firstChild;
 	return $defaultValue if !defined $child || $child->nodeType != 3;
 
 	# Trim the string, including newlines

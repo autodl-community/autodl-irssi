@@ -44,6 +44,7 @@ use AutodlIrssi::TempFiles;
 use AutodlIrssi::ActiveConnections;
 use AutodlIrssi::ChannelMonitor;
 use AutodlIrssi::Updater;
+use AutodlIrssi::AutodlState;
 use Net::SSLeay qw//;
 
 #
@@ -74,7 +75,10 @@ sub enable {
 
 	message 0, "Missing configuration file: " . getAutodlCfgFile() unless -f getAutodlCfgFile();
 
-	$AutodlIrssi::g->{trackerManager} = new AutodlIrssi::TrackerManager();
+	my $autodlState = readAutodlState();
+	$trackersVersion = $autodlState->{trackersVersion};
+
+	$AutodlIrssi::g->{trackerManager} = new AutodlIrssi::TrackerManager($autodlState->{trackerStates});
 	$AutodlIrssi::g->{downloadHistory} = new AutodlIrssi::DownloadHistory(getDownloadHistoryFile());
 	$AutodlIrssi::g->{filterManager} = new AutodlIrssi::FilterManager();
 	$AutodlIrssi::g->{tempFiles} = new AutodlIrssi::TempFiles();
@@ -84,8 +88,6 @@ sub enable {
 	reloadTrackerFiles();
 	reloadAutodlConfigFile();
 	readDownloadHistoryFile();
-
-	#TODO: Update $trackersVersion from disk
 
 	$AutodlIrssi::g->{ircHandler} = new AutodlIrssi::IrcHandler($AutodlIrssi::g->{trackerManager},
 																$AutodlIrssi::g->{filterManager},
@@ -100,12 +102,44 @@ sub enable {
 sub disable {
 	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now disabled! ;-(";
 
-	$AutodlIrssi::g->{trackerManager}->saveTrackersState();
+	saveAutodlState();
 	$AutodlIrssi::g->{tempFiles}->deleteAll();
 
 	# Free the SSL_CTX created by SslSocket
 	if (defined $AutodlIrssi::g->{ssl_ctx}) {
 		Net::SSLeay::CTX_free($AutodlIrssi::g->{ssl_ctx});
+	}
+}
+
+sub readAutodlState {
+
+	my $autodlState = {
+		trackersVersion => -1,
+		trackerStates => {},
+	};
+
+	eval {
+		$autodlState = AutodlIrssi::AutodlState->new()->read(getAutodlStateFile());
+	};
+	if ($@) {
+		chomp $@;
+		message 0, "Could not save AutodlState.xml: ex: $@";
+	}
+
+	return $autodlState;
+}
+
+sub saveAutodlState {
+	eval {
+		my $autodlState = {
+			trackersVersion => $trackersVersion,
+			trackerStates => $AutodlIrssi::g->{trackerManager}->getTrackerStates(),
+		};
+		AutodlIrssi::AutodlState->new()->write(getAutodlStateFile(), $autodlState);
+	};
+	if ($@) {
+		chomp $@;
+		message 0, "Could not save AutodlState.xml: ex: $@";
 	}
 }
 
@@ -219,7 +253,7 @@ sub secondTimer {
 		eval {
 			my $channels = getActiveAnnounceParserTypes();
 			$AutodlIrssi::g->{trackerManager}->reportBrokenAnnouncers($channels);
-			$AutodlIrssi::g->{trackerManager}->saveTrackersState();
+			saveAutodlState();
 		};
 		if ($@) {
 			chomp $@;
@@ -338,7 +372,7 @@ sub getActiveAnnounceParserTypes {
 		}
 
 		if ($updater->hasTrackersUpdate($trackersVersion)) {
-			message 3, "Updating tracker files...";
+			message 4, "Updating tracker files...";
 			$updater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
 			return;
 		}
@@ -361,7 +395,7 @@ sub getActiveAnnounceParserTypes {
 
 		return updateFailed("Could not update trackers: $errorMessage") if $errorMessage;
 
-		message 3, "Trackers updated";
+		message 4, "Trackers updated";
 		$trackersVersion = $updater->getTrackersVersion();
 		$updater = undef;
 		reloadTrackerFiles();

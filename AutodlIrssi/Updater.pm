@@ -38,7 +38,7 @@ use AutodlIrssi::FileUtils;
 use File::Spec;
 use File::Copy;
 use Archive::Zip qw/ :ERROR_CODES /;
-use constant UPDATE_URL => 'http://localhost/update.xml';	#TODO: Change the URL
+use constant UPDATE_URL => 'http://autodl-irssi.sourceforge.net/update.xml';
 
 sub new {
 	my $class = shift;

@@ -30,7 +30,7 @@ use 5.008;
 use strict;
 use warnings;
 
-package AutodlIrssi::TrackersState;
+package AutodlIrssi::AutodlState;
 use AutodlIrssi::XmlParser;
 use AutodlIrssi::FileUtils;
 use base qw/ AutodlIrssi::XmlParser /;
@@ -39,13 +39,22 @@ use base qw/ AutodlIrssi::XmlParser /;
 sub read {
 	my ($self, $filename) = @_;
 
-	my $trackerStates = {};
+	my $autodlState = {
+		trackersVersion => -1,
+		trackerStates => {},
+	};
 
-	return $trackerStates unless -f $filename;
+	return $autodlState unless -f $filename;
 	my $doc = $self->openFile($filename);
-	return $trackerStates unless defined $doc;
+	return $autodlState unless defined $doc;
 
 	my $autodlElem = $self->getTheChildElement($doc, "autodl");
+
+	my $trackersVersionElem = $self->getOptionalChildElement($autodlElem, "trackers-version");
+	if ($trackersVersionElem) {
+		$autodlState->{trackersVersion} = $self->readTextNodeInteger($trackersVersionElem, undef, -1);
+	}
+
 	my $trackersElem = $self->getTheChildElement($autodlElem, "trackers");
 	my @trackerElems = $self->getChildElementsByTagName($trackersElem, "tracker");
 	for my $trackerElem (@trackerElems) {
@@ -53,25 +62,29 @@ sub read {
 		die "Invalid tracker type\n" unless defined $trackerType && $trackerType ne "";
 		my $lastAnnounce = $self->readTextNodeInteger($trackerElem, "last-announce");
 
-		$trackerStates->{$trackerType} = {
+		$autodlState->{trackerStates}{$trackerType} = {
 			lastAnnounce => $lastAnnounce,
 		};
 	}
 
-	return $trackerStates;
+	return $autodlState;
 }
 
 sub write {
-	my ($self, $filename, $trackerStates) = @_;
+	my ($self, $filename, $autodlState) = @_;
 
 	my $doc = $self->createDocument();
 	my $autodlElem = $doc->createElement("autodl");
 	$doc->setDocumentElement($autodlElem);
 
+	my $trackersVersionElem = $doc->createElement("trackers-version");
+	$autodlElem->appendChild($trackersVersionElem);
+	$trackersVersionElem->appendChild($doc->createTextNode($autodlState->{trackersVersion}));
+
 	my $trackersElem = $doc->createElement("trackers");
 	$autodlElem->appendChild($trackersElem);
 
-	while (my ($trackerType, $info) = each %$trackerStates) {
+	while (my ($trackerType, $info) = each %{$autodlState->{trackerStates}}) {
 		my $trackerElem = $doc->createElement("tracker");
 		$trackersElem->appendChild($trackerElem);
 

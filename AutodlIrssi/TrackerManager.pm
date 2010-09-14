@@ -35,24 +35,14 @@ use AutodlIrssi::Globals;
 use AutodlIrssi::TrackerXmlParser;
 use AutodlIrssi::AnnounceParser;
 use AutodlIrssi::TextUtils;
-use AutodlIrssi::TrackersState;
-use AutodlIrssi::Dirs;
 use File::Spec;
 
 sub new {
-	my $class = shift;
-	my $self = bless {}, $class;
+	my ($class, $trackerStates) = @_;
 
-	$self->{trackersState} = eval {
-		AutodlIrssi::TrackersState->new()->read(getAutodlStateFile());
-	};
-	if ($@) {
-		chomp $@;
-		message 0, "Error in " . getAutodlStateFile() . ": $@";
-		$self->{trackersState} = {};
-	}
-
-	return $self;
+	bless {
+		trackerStates => $trackerStates,
+	}, $class;
 }
 
 # Returns the number of trackers we support.
@@ -112,8 +102,8 @@ sub reloadTrackerFiles {
 			next;
 		}
 
-		my $state = $self->{trackersState}{$type};
-		$self->{trackersState}{$type} = $state = {} unless $state;
+		my $state = $self->{trackerStates}{$type};
+		$self->{trackerStates}{$type} = $state = {} unless $state;
 		$state->{lastAnnounce} ||= $currTime;
 		$state->{lastCheck} ||= $currTime;
 
@@ -129,7 +119,7 @@ sub reportBrokenAnnouncers {
 	my $currTime = time();
 	for my $trackerType (@$trackerTypes) {
 		my $announceParser = $self->{announceParsers}{$trackerType};
-		my $trackerState = $self->{trackersState}{$trackerType};
+		my $trackerState = $self->{trackerStates}{$trackerType};
 		next unless defined $announceParser && defined $trackerState;
 
 		next if $currTime - $trackerState->{lastCheck} <= 6*60*60;
@@ -142,20 +132,15 @@ sub reportBrokenAnnouncers {
 	}
 }
 
-sub saveTrackersState {
+sub getTrackerStates {
 	my $self = shift;
 
-	eval {
-		# Don't save invalid tracker types
-		my %trackersStates = map {
-			exists $self->{announceParsers}{$_} ? ($_, $self->{trackersState}{$_}) : ()
-		} keys %{$self->{trackersState}};
-		AutodlIrssi::TrackersState->new()->write(getAutodlStateFile(), \%trackersStates);
+	# Don't save invalid tracker types
+	return {
+		map {
+			exists $self->{announceParsers}{$_} ? ($_, $self->{trackerStates}{$_}) : ()
+		} keys %{$self->{trackerStates}}
 	};
-	if ($@) {
-		chomp $@;
-		message 0, "Could not save file " . getAutodlStateFile() . ". Error: $@";
-	}
 }
 
 # Splits a comma-separated string and returns a reference to an array of strings. Empty strings are
