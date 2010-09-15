@@ -74,6 +74,7 @@ sub getTrackerInfos {
 
 	my @trackerInfos;
 	for my $filename ($self->getTrackerFiles($baseDir)) {
+		next if -z $filename;
 		my $parser = new AutodlIrssi::TrackerXmlParser();
 
 		my $trackerInfo = eval { $parser->parse($filename) };
