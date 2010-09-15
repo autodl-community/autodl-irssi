@@ -84,13 +84,14 @@ sub _notifyHandler {
 	}
 }
 
-# Called when an error occurs.
+# Called when an error occurs. The handler is called with the error message.
 sub _error {
 	my ($self, $errorMessage) = @_;
 	$errorMessage ||= "Unknown error";
 	$self->_notifyHandler($errorMessage);
 }
 
+# Cancel any downloads, and call the handler with an error message.
 sub cancel {
 	my ($self, $errorMessage) = @_;
 
@@ -247,7 +248,7 @@ sub _extractZipFile {
 
 		# Make sure we can write to all files
 		for my $info (@fileInfos) {
-			dmessage 5, "Verifying file '$info->{destFile}'";
+			message 5, "Verifying file '$info->{destFile}'";
 
 			if ($info->{member}->isDirectory()) {
 				die "Could not create directory '$info->{destFile}'\n" unless createDirectories($info->{destFile});
@@ -263,7 +264,7 @@ sub _extractZipFile {
 		# Now write all data to disk. This shouldn't fail... :)
 		for my $info (@fileInfos) {
 			if (!$info->{member}->isDirectory()) {
-				dmessage 5, "Extracting file '$info->{destFile}'";
+				message 5, "Extracting file '$info->{destFile}'";
 				if ($info->{member}->extractToFileNamed($info->{destFile}) != AZ_OK) {
 					die "Could not extract file '$info->{destFile}'\n";
 				}

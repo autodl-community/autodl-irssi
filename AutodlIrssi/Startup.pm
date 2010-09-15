@@ -48,17 +48,18 @@ use AutodlIrssi::AutodlState;
 use Net::SSLeay qw//;
 
 #
-# How often we'll check which IRC announcers haven't announced anything for a long time.
+# How often we'll check which IRC announcers haven't announced anything for a long time. Default is
+# 10 mins.
 #
 use constant CHECK_BROKEN_ANNOUNCERS_SECS => 10*60;
 
 #
-# How often we'll check for updates
+# How often we'll check for updates to autodl-irssi and *.tracker files. Default is 1 hour.
 #
 use constant CHECK_FOR_UPDATES_SECS => 60*60;
 
 #
-# Wait at most this many seconds before closing the connection
+# Wait at most this many seconds before closing the connection. Default is 10 mins.
 #
 use constant MAX_CONNECTION_WAIT_SECS => 10*60;
 
