@@ -48,15 +48,17 @@ sub new {
 	}, $class;
 }
 
-# Returns true if we're checking for updates, or downloading something else
-sub verifyCheckHasBeenCalled {
+# Throws an exception if check() hasn't been called.
+sub _verifyCheckHasBeenCalled {
 	my $self = shift;
 	die "check() hasn't been called!\n" unless $self->{autodl};
 }
 
+# Returns true if we're checking for updates, or downloading something else
 sub _isChecking {
 	my $self = shift;
 
+	# Vim Perl parser doesn't like !! so use 'not !' for now...
 	return not !$self->{request};
 }
 
@@ -73,9 +75,6 @@ sub _notifyHandler {
 
 		if (defined $handler) {
 			$handler->($errorMessage);
-		}
-		else {
-			message 0, "Updater::_notifyHandler: No handler!";
 		}
 	};
 	if ($@) {
@@ -150,7 +149,7 @@ sub _onRequestReceived {
 sub updateTrackers {
 	my ($self, $destDir, $handler) = @_;
 
-	$self->verifyCheckHasBeenCalled();
+	$self->_verifyCheckHasBeenCalled();
 	die "Already checking for updates\n" if $self->_isChecking();
 
 	$self->{handler} = $handler || sub {};
@@ -186,7 +185,7 @@ sub _onDownloadedTrackersFile {
 sub updateAutodl {
 	my ($self, $destDir, $handler) = @_;
 
-	$self->verifyCheckHasBeenCalled();
+	$self->_verifyCheckHasBeenCalled();
 	die "Already checking for updates\n" if $self->_isChecking();
 	die "Can't update. Missing these Perl modules: @{$self->{missingModules}}\n" if $self->isMissingModules();
 
@@ -391,7 +390,7 @@ sub printMissingModules {
 sub hasAutodlUpdate {
 	my ($self, $version) = @_;
 
-	$self->verifyCheckHasBeenCalled();
+	$self->_verifyCheckHasBeenCalled();
 	return $self->{autodl}{version} gt $version;
 }
 
@@ -399,14 +398,14 @@ sub hasAutodlUpdate {
 sub hasTrackersUpdate {
 	my ($self, $version) = @_;
 
-	$self->verifyCheckHasBeenCalled();
+	$self->_verifyCheckHasBeenCalled();
 	return $self->getTrackersVersion() > $version;
 }
 
 sub getTrackersVersion {
 	my $self = shift;
 
-	$self->verifyCheckHasBeenCalled();
+	$self->_verifyCheckHasBeenCalled();
 	return $self->{trackers}{version};
 }
 
