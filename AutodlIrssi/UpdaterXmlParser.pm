@@ -41,7 +41,7 @@ sub parse {
 	my $updateElem = $self->getTheChildElement($doc, "update");
 	my $irssiElem = $self->getTheChildElement($updateElem, "irssi");
 
-	my $autodlElem = $self->getTheChildElement($irssiElem, "autodl-irssi");
+	my $autodlElem = $self->getTheChildElement($irssiElem, "autodl");
 	$self->_parseAutodlElement($autodlElem);
 
 	my $trackersElem = $self->getTheChildElement($irssiElem, "trackers");
