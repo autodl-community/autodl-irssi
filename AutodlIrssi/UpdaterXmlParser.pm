@@ -39,11 +39,12 @@ sub parse {
 
 	my $doc = $self->openString($xmlData);
 	my $updateElem = $self->getTheChildElement($doc, "update");
+	my $irssiElem = $self->getTheChildElement($updateElem, "irssi");
 
-	my $autodlElem = $self->getTheChildElement($updateElem, "autodl-irssi");
+	my $autodlElem = $self->getTheChildElement($irssiElem, "autodl-irssi");
 	$self->_parseAutodlElement($autodlElem);
 
-	my $trackersElem = $self->getTheChildElement($updateElem, "trackers");
+	my $trackersElem = $self->getTheChildElement($irssiElem, "trackers");
 	$self->_parseTrackersElement($trackersElem);
 }
 
@@ -51,10 +52,10 @@ sub _parseAutodlElement {
 	my ($self, $autodlElem) = @_;
 
 	$self->{autodl} = {
-		version => $self->readTextNode($autodlElem, "version"),
-		whatsNew => $self->readTextNode($autodlElem, "whats-new"),
-		url => $self->readTextNode($autodlElem, "url"),
-		modules => [],
+		version		=> $self->readTextNode($autodlElem, "version"),
+		whatsNew	=> $self->readTextNode($autodlElem, "whats-new"),
+		url			=> $self->readTextNode($autodlElem, "url"),
+		modules		=> [],
 	};
 	if (!defined $self->{autodl}{version} || !defined $self->{autodl}{whatsNew} ||
 		!defined $self->{autodl}{url} || $self->{autodl}{version} !~ /^\d\.\d\d$/) {
@@ -76,8 +77,8 @@ sub _parseTrackersElement {
 	my ($self, $trackersElem) = @_;
 
 	$self->{trackers} = {
-		version => $self->readTextNode($trackersElem, "version"),
-		url => $self->readTextNode($trackersElem, "url"),
+		version	=> $self->readTextNode($trackersElem, "version"),
+		url		=> $self->readTextNode($trackersElem, "url"),
 	};
 	if (!defined $self->{trackers}{version} || !defined $self->{trackers}{url} ||
 		$self->{trackers}{version} !~ /^\d+$/) {

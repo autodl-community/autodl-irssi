@@ -248,7 +248,7 @@ sub _extractZipFile {
 
 		# Make sure we can write to all files
 		for my $info (@fileInfos) {
-			message 5, "Verifying file '$info->{destFile}'";
+			message 5, "Creating file '$info->{destFile}'";
 
 			if ($info->{member}->isDirectory()) {
 				die "Could not create directory '$info->{destFile}'\n" unless createDirectories($info->{destFile});
