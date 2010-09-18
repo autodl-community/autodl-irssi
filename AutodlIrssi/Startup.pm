@@ -387,6 +387,8 @@ sub getActiveAnnounceParserTypes {
 		$updater = undef;
 		return updateFailed("Could not update autodl-irssi: $errorMessage") if $errorMessage;
 
+		# Reset trackersVersion since we may have overwritten with older files
+		$trackersVersion = 0;
 		message 3, "Reloading autodl-irssi...";
 		irssi_command('script load autodl-irssi');
 	}
