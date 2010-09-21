@@ -99,6 +99,7 @@
 		<ignore>
 			<regex value="PRE.*WiNNER"/>
 			<regex value="^\[.+\]"/>
+			<regex value="^\.::[\w\-]+ is an invitee"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
