@@ -32,6 +32,7 @@ use warnings;
 
 package AutodlIrssi::Dirs;
 use AutodlIrssi::Globals qw/ message /;
+use Irssi;
 use File::Spec;
 use base qw/ Exporter /;
 our @EXPORT = qw/ getHomeDir getIrssiScriptDir getAutodlFilesDir getTrackerFilesDir
@@ -47,7 +48,7 @@ sub getHomeDir {
 
 # Returns directory of Irssi scripts
 sub getIrssiScriptDir {
-	return File::Spec->catfile(getHomeDir(), ".irssi", "scripts");
+	return File::Spec->catfile(Irssi::get_irssi_dir(), "scripts");
 }
 
 # Returns base directory of all our files (except the startup autodl-irssi.pl file)
