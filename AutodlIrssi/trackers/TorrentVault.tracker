@@ -49,7 +49,7 @@
 			<extract>
 				<!--NEW -#- EPISODES/TV-XVID -#- Name: Nikita.S01E01.HDTV.XviD-LOL [27F/349.71MB] -#- Uploader: Anonymous (Regular) -#- Pre: 3 mins, 16 secs [Action/Drama] -#- https://www.torrentvault.org/torrents.php?id=138767-->
 				<!--NEW -#- MUSIC/MP3 -#- Name: Of_Montreal-False_Priest-2010-FNT [17F/75.55MB] -#- Uploader: Anonymous (Regular) -#- Pre: 1 min, 27 secs [Indie] -#- https://www.torrentvault.org/torrents.php?id=138766-->
-				<regex value="^NEW -#-(.*)-#- Name:(.*)\[\d+F/([\d.,]+\wB)] -#- Uploader:\s*(\S+).*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^NEW -#-(.*)-#- Name:(.*)\[\d+\s*F/([\d.,]+\s*\w?B)] -#- Uploader:\s*(\S+).*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
