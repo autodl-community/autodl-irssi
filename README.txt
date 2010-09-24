@@ -466,6 +466,8 @@ The rest are possibly self explanatory: [b]$(Category)[/b], [b]$(TorrentName)[/b
 [b]Using autodl-cz's options[/b]
 This part explains how to re-use autodl-cz's options.
 
+Some Perl modules are required to run this script, so install autodl-irssi first before trying to run this script.
+
 It's important that you are using at least version 2.03 of autodl-cz! After upgrading it, run it once and go to Auto Downloader -> Preferences. Press OK and it will save all options in the 2.03 (or later) format. Failure to do this may result in a pretty useless autodl.cfg file.
 
 Start ChatZilla and type [b]/pref profilePath[/b] and press enter. Copy your profilePath, which is something like [b]/home/YOURNAME/.mozilla/firefox/XXXXXXXXX.default/chatzilla[/b], and append [b]/autodl/settings/autodl.xml[/b] so you get something like [b]/home/YOURNAME/.mozilla/firefox/XXXXXXXXX.default/chatzilla/scripts/autodl/settings/autodl.xml[/b]. That's the path to your autodl-cz's options file. Now type this in your terminal (add your path below):
