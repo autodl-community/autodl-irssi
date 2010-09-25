@@ -446,15 +446,20 @@ sub _sendTorrentFileFtp {
 
 		message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): Starting ftp upload.");
 
+		# Some programs may read the torrent before we've had the chance to upload all of it, so upload
+		# it with a non ".torrent" extension, and later rename it when all of the file has been uploaded.
+		my $tempName = "$self->{filename}1";
+
 		my $ftpClient = new AutodlIrssi::FtpClient();
 		$ftpClient->addConnect($AutodlIrssi::g->{options}{ftp});
 		$ftpClient->addChangeDirectory($self->{uploadMethod}{uploadFtpPath});
-		$ftpClient->addSendFile($self->{filename}, sub {
+		$ftpClient->addSendFile($tempName, sub {
 			my $ctx = shift;
 			return "" if $ctx->{sizeLeft} == 0;
 			$ctx->{sizeLeft} = 0;
 			return $ctx->{torrentFileData};
 		}, { torrentFileData => $self->{torrentFileData}, sizeLeft => length $self->{torrentFileData} });
+		$ftpClient->addRename($tempName, $self->{filename});
 		$ftpClient->addQuit();
 		$ftpClient->sendCommands(sub { return $self->_onFtpUploadComplete(@_) });
 	};

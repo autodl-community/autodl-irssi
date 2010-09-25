@@ -501,6 +501,59 @@ sub sendFileHandler {
 	}
 }
 
+use constant {
+	STRN_START			=> 50,
+	STRN_RNFR_SENT		=> 51,
+	STRN_RNTO_SENT		=> 52,
+	STRN_END			=> 59,
+};
+
+sub addRename {
+	my ($self, $oldName, $newName) = @_;
+
+	$self->addCommand({
+		name => "rename",
+		oldName => $oldName,
+		newName => $newName,
+		state => STRN_START,
+		handler => \&renameHandler,
+	});
+}
+
+sub renameHandler {
+	my ($self, $command, $code, $codeMessage) = @_;
+
+	my $code0 = substr $code, 0, 1;
+	while (1) {
+		if ($command->{state} == STRN_START) {
+			$self->sendLowLevelCommand("RNFR $command->{oldName}");
+			$command->{state} = STRN_RNFR_SENT;
+			return;
+		}
+		elsif ($command->{state} == STRN_RNFR_SENT) {
+			if ($code0 != 3) {
+				return $self->sendNextCommand("Could not rename '$command->{oldName}' -> '$command->{newName}'. Reason: $codeMessage");
+			}
+			$self->sendLowLevelCommand("RNTO $command->{newName}");
+			$command->{state} = STRN_RNTO_SENT;
+			return;
+		}
+		elsif ($command->{state} == STRN_RNTO_SENT) {
+			if ($code0 != 2) {
+				return $self->sendNextCommand("Could not rename '$command->{oldName}' -> '$command->{newName}'. Reason: $codeMessage");
+			}
+			$command->{state} = STRN_END;
+			next;
+		}
+		elsif ($command->{state} == STRN_END) {
+			return $self->sendNextCommand();
+		}
+		else {
+			return $self->fatal("Unknown state $command->{state} ($command->{name})");
+		}
+	}
+}
+
 sub addQuit {
 	my $self = shift;
 
