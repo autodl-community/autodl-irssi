@@ -38,7 +38,7 @@
 
 	<servers>
 		<server
-			serverNames="irc.what-network.org,irc.what-network.net,irc.what-network.com,s1.what-network.net,s2.what-network.net"
+			serverNames="irc.what-network.org,irc.what-network.net,irc.what-network.com,s1.what-network.net,s2.what-network.net,irc.what.cd"
 			channelNames="#what.cd-announce"
 			announcerNames="Drone"
 			/>

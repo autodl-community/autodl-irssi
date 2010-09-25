@@ -37,7 +37,7 @@
 
 	<servers>
 		<server
-			serverNames="irc.blackcats-games.net"
+			serverNames="irc.blackcats-games.net,blackcats-games.net"
 			channelNames="#blackcats"
 			announcerNames="snarf"
 			/>
