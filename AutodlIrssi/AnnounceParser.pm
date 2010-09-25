@@ -649,11 +649,11 @@ sub extractReleaseNameInfo {
 	}
 
 	# Some MP3 releases contain the tag "WEB"
-	my $isTvOrMovie = !!($out->{resolution} || ($out->{source} && lc $out->{source} ne "web") ||
+	my $isTvOrMovie = !!($out->{resolution} || ($out->{source} && lc($out->{source}) ne "web") ||
 						$out->{encoder} || $out->{season} || $out->{episode});
 
 	if ($isTvOrMovie) {
-		if ($out->{source}) 	{
+		if ($out->{source}) {
 			my $source = lc $out->{source};
 			if ($source eq "dsr" || $source eq "pdtv" || $source eq "hdtv" || $source eq "hr.pdtv" ||
 				$source eq "hr.hdtv" || $source eq "dvdrip" || $source eq "dvdscr" || $source eq "tvrip" ||
@@ -675,7 +675,7 @@ sub extractReleaseNameInfo {
 		# Don't use the year index if it's a TV show since the year may be part of the name.
 		my $yindex = $indexYear;
 		if ($out->{season} || $out->{episode} || ($out->{source} && $out->{source} =~ /HDTV|PDTV/i)) {
-			if ($canonReleaseName !~ /(?:^|\D)19[4-9]\d|20[01]\d\s+\d\d\s+\d\d(?:\D|$)/) {
+			if ($canonReleaseName !~ /(?:^|\D)(?:19[4-9]\d|20[01]\d)\s+\d\d\s+\d\d(?:\D|$)/) {
 				$yindex = undef;
 			}
 		}
