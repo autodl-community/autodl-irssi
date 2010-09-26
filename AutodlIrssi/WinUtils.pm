@@ -56,8 +56,7 @@ sub getWindowsPath {
 	}
 }
 
-# Converts a unix path into its real Windows path. An exception is thrown if we're not running
-# under cygwin.
+# Converts a unix path into its real Windows path.
 sub _cygwin_getWindowsPath {
 	my $unixPath = shift;
 
