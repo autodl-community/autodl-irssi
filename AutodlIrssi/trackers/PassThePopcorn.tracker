@@ -39,6 +39,7 @@
 
 	<servers>
 		<server
+			network="passthepopcorn"
 			serverNames="irc.passthepopcorn.me"
 			channelNames="#announce,#announce-ssl"
 			announcerNames="HAL"

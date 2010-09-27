@@ -38,6 +38,7 @@
 
 	<servers>
 		<server
+			network="AHDIRCNet"
 			serverNames="irc.awesome-hd.net"
 			channelNames="#awesome-hd"
 			announcerNames="AHDBot"

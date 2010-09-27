@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="Sparvar"
 			serverNames="irc.sparvar.org"
 			channelNames="#sparvar"
 			announcerNames="SparvGuden"

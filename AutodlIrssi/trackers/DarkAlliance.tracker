@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="PirateNet"
 			serverNames="irc.pirate-net.info,irc.p2p-net.in"
 			channelNames="#da-announce"
 			announcerNames="DarkDudE"

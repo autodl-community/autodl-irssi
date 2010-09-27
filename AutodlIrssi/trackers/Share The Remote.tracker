@@ -38,6 +38,7 @@
 
 	<servers>
 		<server
+			network="ShareTheRemote"
 			serverNames="irc.sharetheremote.org"
 			channelNames="#announce"
 			announcerNames="TVGuide"

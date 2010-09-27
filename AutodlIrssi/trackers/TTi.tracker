@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="FreeQuest"
 			serverNames="irc.freequest.net,irc.eu.freequest.net,irc.us.freequest.net"
 			channelNames="#TTi"
 			announcerNames="TTi"

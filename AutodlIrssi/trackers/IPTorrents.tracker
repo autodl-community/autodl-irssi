@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="IPTorrents"
 			serverNames="irc.iptorrents.com"
 			channelNames="#ipt.announce"
 			announcerNames="Announce-Bot"

@@ -38,6 +38,7 @@
 
 	<servers>
 		<server
+			network="omgwtfhax"
 			serverNames="irc.omgwtfhax.net,island.au.omgwtfhax.net,lmao.uk.omgwtfhax.net,rofl.no.omgwtfhax.net,services.omgwtfhax.net,shadow.ca.omgwtfhax.net,stats.omgwtfhax.net,woot.se.omgwtfhax.net"
 			channelNames="#BTN-Announce"
 			announcerNames="Barney"

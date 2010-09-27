@@ -66,10 +66,10 @@ sub _findChannel {
 }
 
 sub _isMonitoredChannel {
-	my ($self, $serverName, $channelName) = @_;
+	my ($self, $networkName, $serverName, $channelName) = @_;
 
 	$channelName = canonicalizeChannelName($channelName);
-	my @channels = $self->{trackerManager}->getChannels($serverName);
+	my @channels = $self->{trackerManager}->getChannels($networkName, $serverName);
 	for my $name (@channels) {
 		return 1 if $channelName eq canonicalizeChannelName($name);
 	}
@@ -81,8 +81,9 @@ sub _onMessageDisconnect {
 	my ($self, $server) = @_;
 
 	eval {
+		my $networkName = $server->isupport('NETWORK');
 		my $serverName = $server->{address};
-		my @channels = $self->{trackerManager}->getChannels($serverName);
+		my @channels = $self->{trackerManager}->getChannels($networkName, $serverName);
 
 		for my $channelName (@channels) {
 			next unless $self->_findChannel($serverName, $channelName);
@@ -100,10 +101,11 @@ sub _onMessageJoin {
 	my ($self, $server, $channelName, $nick, $address) = @_;
 
 	eval {
-		my $servername = $server->{address};
+		my $networkName = $server->isupport('NETWORK');
+		my $serverName = $server->{address};
 		return unless $server->{nick} eq $nick;
-		return unless $self->_isMonitoredChannel($servername, $channelName);
-		$self->_monitoringChannel($servername, $channelName, "join");
+		return unless $self->_isMonitoredChannel($networkName, $serverName, $channelName);
+		$self->_monitoringChannel($serverName, $channelName, "join");
 	};
 	if ($@) {
 		chomp $@;
@@ -116,10 +118,11 @@ sub _onMessagePart {
 	my ($self, $server, $channelName, $nick, $address, $reason) = @_;
 
 	eval {
-		my $servername = $server->{address};
+		my $networkName = $server->isupport('NETWORK');
+		my $serverName = $server->{address};
 		return unless $server->{nick} eq $nick;
-		return unless $self->_isMonitoredChannel($servername, $channelName);
-		$self->_notMonitoringChannel($servername, $channelName, "part");
+		return unless $self->_isMonitoredChannel($networkName, $serverName, $channelName);
+		$self->_notMonitoringChannel($serverName, $channelName, "part");
 	};
 	if ($@) {
 		chomp $@;
@@ -132,10 +135,11 @@ sub _onMessageKick {
 	my ($self, $server, $channelName, $nick, $kicker, $address, $reason) = @_;
 
 	eval {
-		my $servername = $server->{address};
+		my $networkName = $server->isupport('NETWORK');
+		my $serverName = $server->{address};
 		return unless $server->{nick} eq $nick;
-		return unless $self->_isMonitoredChannel($servername, $channelName);
-		$self->_notMonitoringChannel($servername, $channelName, "kick");
+		return unless $self->_isMonitoredChannel($networkName, $serverName, $channelName);
+		$self->_notMonitoringChannel($serverName, $channelName, "kick");
 	};
 	if ($@) {
 		chomp $@;

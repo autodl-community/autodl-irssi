@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="revolutiontt"
 			serverNames="irc.revolutiontt.net"
 			channelNames="#RevolutionTT"
 			announcerNames="RevoTT"

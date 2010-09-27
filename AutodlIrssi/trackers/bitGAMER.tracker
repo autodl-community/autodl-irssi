@@ -37,7 +37,8 @@
 
 	<servers>
 		<server
-			serverNames="irc.bitgamer.com"
+			network="bgirc"
+			serverNames="irc.bitgamer.com,irc.underground-gamer.com"
 			channelNames="#bitGAMER"
 			announcerNames="Bob"
 			/>

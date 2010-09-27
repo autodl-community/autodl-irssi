@@ -37,7 +37,8 @@
 
 	<servers>
 		<server
-			serverNames="irc.hdme.eu,irc.racethe.net"
+			network="hdme.eu"
+			serverNames="irc.hdme.eu"
 			channelNames="#hdme-announce"
 			announcerNames="HDME"
 			/>

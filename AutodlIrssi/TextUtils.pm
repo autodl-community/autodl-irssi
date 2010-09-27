@@ -38,7 +38,7 @@ our @EXPORT = qw/ convertStringToBoolean convertStringToInteger trim removeInvis
 				convertByteSizeString convertToByteSizeString convertTimeSinceString
 				convertToTimeSinceString stripMircColorCodes canonicalizeReleaseName
 				regexEscapeWildcardString removeExtraSpaces convertToValidPathName decodeOctets
-				canonicalizeServerName canonicalizeChannelName /;
+				canonicalizeNetworkName canonicalizeServerName canonicalizeChannelName /;
 our @EXPORT_OK = qw//;
 
 
@@ -292,6 +292,13 @@ sub decodeOctets {
 	}
 
 	return $string;
+}
+
+# Returns a canonicalized network name
+sub canonicalizeNetworkName {
+	my $network = shift;
+	return "" unless defined $network;
+	return "NETWORK-\L$network";
 }
 
 # Returns a canonicalized server name

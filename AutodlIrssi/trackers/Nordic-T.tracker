@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="NT-IRC"
 			serverNames="irc.nordic-t.org"
 			channelNames="#NT.TorrentInfo"
 			announcerNames="Nordic-T"

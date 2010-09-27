@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="SceneXpress"
 			serverNames="irc.scenexpress.net"
 			channelNames="#announce"
 			announcerNames="SeX"

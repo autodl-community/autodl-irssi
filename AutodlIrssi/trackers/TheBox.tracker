@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="TBZchat"
 			serverNames="irc.TheBox.bz"
 			channelNames="#TheBox.bz"
 			announcerNames="Bella"

@@ -165,7 +165,8 @@ sub addAnnounceParserToServerTable {
 
 	my $trackerInfo = $announceParser->getTrackerInfo();
 	for my $server (@{$trackerInfo->{servers}}) {
-		my $canonServerName = canonicalizeServerName($server->{name});
+		# This is the canonicalized server name or network name
+		my $canonName = $server->{name};
 		for my $channelName (@{splitCommaSeparatedList($server->{channelNames})}) {
 			my $channel = {
 				announceParser	=> $announceParser,
@@ -173,23 +174,47 @@ sub addAnnounceParserToServerTable {
 				announcerNames	=> splitCommaSeparatedList($server->{announcerNames}),
 			};
 			my $canonChannelName = canonicalizeChannelName($channelName);
-			$self->{servers}{$canonServerName}{$canonChannelName} = $channel;
+			$self->{servers}{$canonName}{$canonChannelName} = $channel;
 		}
 	}
 }
 
-# Returns the announce parser or undef if none found
-sub findAnnounceParser {
-	my ($self, $serverName, $channelName, $announcerName) = @_;
+# Returns the server info struct if there is one or undef otherwise
+sub _findServerInfo {
+	my ($self, $networkName, $serverName) = @_;
 
+	$networkName = canonicalizeNetworkName($networkName);
 	$serverName = canonicalizeServerName($serverName);
-	$channelName = canonicalizeChannelName($channelName);
-	$announcerName = lc $announcerName;
 
-	return unless exists $self->{servers}{$serverName};
-	my $channel = $self->{servers}{$serverName}{$channelName};
+	if (exists $self->{servers}{$serverName}) {
+		return $self->{servers}{$serverName};
+	}
+	if (exists $self->{servers}{$networkName}) {
+		return $self->{servers}{$networkName};
+	}
+	return;
+}
+
+# Returns the channel info struct if there is one or undef otherwise
+sub _findChannelInfo {
+	my ($self, $networkName, $serverName, $channelName) = @_;
+
+	my $server = $self->_findServerInfo($networkName, $serverName);
+	return unless defined $server;
+
+	$channelName = canonicalizeChannelName($channelName);
+	return $server->{$channelName};
+}
+
+# Returns the announce parser or undef if none found
+#	$networkName	=> undef/empty or the (005) ISUPPORT NETWORK name
+sub findAnnounceParser {
+	my ($self, $networkName, $serverName, $channelName, $announcerName) = @_;
+
+	my $channel = $self->_findChannelInfo($networkName, $serverName, $channelName);
 	return unless defined $channel;
 
+	$announcerName = lc $announcerName;
 	for my $name (@{$channel->{announcerNames}}) {
 		if (lc(trim $name) eq $announcerName) {
 			return $channel->{announceParser};
@@ -210,23 +235,18 @@ sub getAnnounceParsers {
 
 # Returns a list of all monitored channels for this $serverName
 sub getChannels {
-	my ($self, $serverName) = @_;
+	my ($self, $networkName, $serverName) = @_;
 
-	$serverName = canonicalizeServerName($serverName);
-	my $serverInfo = $self->{servers}{$serverName};
-	return () unless defined $serverInfo;
-	return map { $_->{name} } values %$serverInfo;
+	my $server = $self->_findServerInfo($networkName, $serverName);
+	return () unless defined $server;
+	return map { $_->{name} } values %$server;
 }
 
 # Returns the announce parser or undef if none found
 sub getAnnounceParserFromChannel {
-	my ($self, $serverName, $channelName) = @_;
+	my ($self, $networkName, $serverName, $channelName) = @_;
 
-	$serverName = canonicalizeServerName($serverName);
-	$channelName = canonicalizeChannelName($channelName);
-
-	return unless exists $self->{servers}{$serverName};
-	my $channel = $self->{servers}{$serverName}{$channelName};
+	my $channel = $self->_findChannelInfo($networkName, $serverName, $channelName);
 	return unless defined $channel;
 	return $channel->{announceParser};
 }

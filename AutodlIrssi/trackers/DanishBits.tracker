@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="Danishbits"
 			serverNames="irc.danishbits.org"
 			channelNames="#danishbits.org"
 			announcerNames="DB,MyLameNick"

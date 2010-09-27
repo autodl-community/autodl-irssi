@@ -37,7 +37,8 @@
 
 	<servers>
 		<server
-			serverNames="irc.sport-scene.net"
+			network="P2P-NET"
+			serverNames="irc.sport-scene.net,irc.p2p-network.net,irc.p2p-irc.net"
 			channelNames="#ssc"
 			announcerNames="SSC-Bot"
 			/>

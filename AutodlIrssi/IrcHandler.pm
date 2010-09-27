@@ -60,9 +60,10 @@ sub onPrivmsg {
 		return unless $channelName =~ /^#/;
 		my $serverName = $server->{address};
 		my $userName = $nick;
+		my $networkName = $server->isupport('NETWORK');
 
 		$line = decodeOctets($line);
-		$self->onNewIrcLine($line, $serverName, $channelName, $userName);
+		$self->onNewIrcLine($line, $serverName, $channelName, $userName, $networkName);
 	};
 	if ($@) {
 		message 0, "Exception in onPrivmsg: " . formatException($@);
@@ -70,9 +71,9 @@ sub onPrivmsg {
 }
 
 sub onNewIrcLine {
-	my ($self, $line, $serverName, $channelName, $userName) = @_;
+	my ($self, $line, $serverName, $channelName, $userName, $networkName) = @_;
 
-	my $ti = $self->handleNewAnnouncerLine($line, $serverName, $channelName, $userName);
+	my $ti = $self->handleNewAnnouncerLine($line, $serverName, $channelName, $userName, $networkName);
 	return 0 unless defined $ti;
 
 	my $matchedRelease = new AutodlIrssi::MatchedRelease($self->{downloadHistory});
@@ -82,9 +83,9 @@ sub onNewIrcLine {
 
 # Parses the line and returns a $ti if it matches a filter, else undef is returned.
 sub handleNewAnnouncerLine {
-	my ($self, $line, $serverName, $channelName, $userName) = @_;
+	my ($self, $line, $serverName, $channelName, $userName, $networkName) = @_;
 
-	my $announceParser = $self->{trackerManager}->findAnnounceParser($serverName, $channelName, $userName);
+	my $announceParser = $self->{trackerManager}->findAnnounceParser($networkName, $serverName, $channelName, $userName);
 	return unless defined $announceParser;
 
 	my $ti = $announceParser->onNewLine($line);

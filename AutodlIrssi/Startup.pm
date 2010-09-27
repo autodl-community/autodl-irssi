@@ -267,9 +267,10 @@ sub secondTimer {
 sub getActiveAnnounceParserTypes {
 	return [map {
 		if ($_->{joined}) {
+			my $networkName = $_->{server}->isupport('NETWORK');
 			my $serverName = $_->{server}{address};
 			my $channelName = $_->{name};
-			my $announceParser = $AutodlIrssi::g->{trackerManager}->getAnnounceParserFromChannel($serverName, $channelName);
+			my $announceParser = $AutodlIrssi::g->{trackerManager}->getAnnounceParserFromChannel($networkName, $serverName, $channelName);
 			$announceParser ? $announceParser->getTrackerInfo()->{type} : ();
 		}
 		else {
@@ -339,6 +340,7 @@ sub getActiveAnnounceParserTypes {
 		my $errorMessage = shift;
 
 		return updateFailed("Could not check for updates: $errorMessage") if $errorMessage;
+		message 5, "Downloaded update.xml";
 
 		my $autodlUpdateAvailable = $updater->hasAutodlUpdate($version);
 		my $updateAutodl = $autodlUpdateAvailable;

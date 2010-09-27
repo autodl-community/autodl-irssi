@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="LostIRC"
 			serverNames="irc.bitmetv.org"
 			channelNames="#bitmetv.announce"
 			announcerNames="BitMeTV"

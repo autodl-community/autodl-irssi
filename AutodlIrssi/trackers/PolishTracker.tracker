@@ -46,6 +46,7 @@
 
 	<servers>
 		<server
+			network="PolishTracker"
 			serverNames="irc.polishtracker.org"
 			channelNames="#pt-announce"
 			announcerNames="PT-BOT"

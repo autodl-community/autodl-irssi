@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="VaultNET"
 			serverNames="irc.vaultnet.org"
 			channelNames="#vip-spam"
 			announcerNames="VIP-BOT"

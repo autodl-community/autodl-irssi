@@ -41,6 +41,7 @@
 
 	<servers>
 		<server
+			network="torrent-damage"
 			serverNames="irc.torrent-damage.net"
 			channelNames="#releases-auto"
 			announcerNames="AnnounceBot"

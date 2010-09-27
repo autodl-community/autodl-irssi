@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="DIDInet"
 			serverNames="irc.dididave.com"
 			channelNames="#siteannounce"
 			announcerNames="didibot2"

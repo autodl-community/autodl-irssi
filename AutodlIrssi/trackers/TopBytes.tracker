@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="TopBytes"
 			serverNames="irc.topbytes.net"
 			channelNames="#tb-announce"
 			announcerNames="[PreBot]"

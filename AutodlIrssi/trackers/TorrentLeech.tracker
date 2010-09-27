@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="TorrentLeech.org"
 			serverNames="irc.torrentleech.org"
 			channelNames="#torrentleech"
 			announcerNames="_AnnounceBot_"

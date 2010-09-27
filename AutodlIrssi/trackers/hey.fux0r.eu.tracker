@@ -38,6 +38,7 @@
 
 	<servers>
 		<server
+			network="Corrupt-Net"
 			serverNames="irc.corrupt-net.org,irc.fux0r.eu"
 			channelNames="#fux0r"
 			announcerNames="XXX"

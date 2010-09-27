@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="MAT-IRC"
 			serverNames="188.40.105.150"
 			channelNames="#MAT-Announce"
 			announcerNames="MATebot"

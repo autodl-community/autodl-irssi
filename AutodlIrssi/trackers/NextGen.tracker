@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="After-All"
 			serverNames="irc.after-all.org,eu.after-all.org,us.after-all.org,sleepless.after-all.org"
 			channelNames="#NG,#NG-Announce"
 			announcerNames="MrNG"

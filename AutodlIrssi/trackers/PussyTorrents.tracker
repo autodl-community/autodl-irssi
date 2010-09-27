@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="PussyTorrents.org"
 			serverNames="irc.pussytorrents.org"
 			channelNames="#pussytorrents"
 			announcerNames="_PussyBot_"

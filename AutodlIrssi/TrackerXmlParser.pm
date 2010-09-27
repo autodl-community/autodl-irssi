@@ -188,6 +188,7 @@ sub parseServers {
 
 	my @servers;
 	for my $elem (@childElems) {
+		my $network = $self->readAttribute($elem, "network", "");
 		my $serverNames = $self->readAttribute($elem, "serverNames");
 		my $channelNames = $self->readAttribute($elem, "channelNames");
 		my $announcerNames = $self->readAttribute($elem, "announcerNames");
@@ -196,9 +197,13 @@ sub parseServers {
 		die "Invalid server.channelNames" if $channelNames eq "";
 		die "Invalid server.announcerNames" if $announcerNames eq "";
 
-		for my $serverName (split /,/, $serverNames) {
-			my $name = lc trim $serverName;
-			next if $name eq "";
+		my @serverNames = map {
+			trim canonicalizeServerName($_);
+		} split /,/, $serverNames;
+		push @serverNames, canonicalizeNetworkName($network);
+
+		for my $serverName (@serverNames) {
+			next if $serverName eq "";
 
 			my $server = {
 				name			=> $serverName,

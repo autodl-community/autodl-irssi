@@ -37,6 +37,7 @@
 
 	<servers>
 		<server
+			network="Corrupt-Net"
 			serverNames="irc.corrupt-net.org,irc.digitalhive.org"
 			channelNames="#DH.Announce"
 			announcerNames="DH-Announce"

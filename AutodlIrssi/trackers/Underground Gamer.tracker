@@ -37,7 +37,8 @@
 
 	<servers>
 		<server
-			serverNames="irc.underground-gamer.com"
+			network="bgirc"
+			serverNames="irc.bitgamer.com,irc.underground-gamer.com"
 			channelNames="#Chat"
 			announcerNames="Eva"
 			/>
