@@ -193,7 +193,6 @@ sub parseServers {
 		my $channelNames = $self->readAttribute($elem, "channelNames");
 		my $announcerNames = $self->readAttribute($elem, "announcerNames");
 
-		die "Invalid server.serverNames" if $serverNames eq "";
 		die "Invalid server.channelNames" if $channelNames eq "";
 		die "Invalid server.announcerNames" if $announcerNames eq "";
 
