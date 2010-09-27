@@ -38,7 +38,7 @@
 
 	<servers>
 		<server
-			serverNames="irc.omgwtfhax.net"
+			serverNames="irc.omgwtfhax.net,shadow.ca.omgwtfhax.net"
 			channelNames="#BTN-Announce"
 			announcerNames="Barney"
 			/>
