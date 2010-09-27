@@ -189,7 +189,7 @@ sub parseServers {
 	my @servers;
 	for my $elem (@childElems) {
 		my $network = $self->readAttribute($elem, "network", "");
-		my $serverNames = $self->readAttribute($elem, "serverNames");
+		my $serverNames = $self->readAttribute($elem, "serverNames", "");
 		my $channelNames = $self->readAttribute($elem, "channelNames");
 		my $announcerNames = $self->readAttribute($elem, "announcerNames");
 
