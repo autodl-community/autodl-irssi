@@ -48,7 +48,8 @@
 		<linepatterns>
 			<extract>
 				<!--[IPT] Shakespeare In Love 1998 BRRip(1120x480) x264 GokU61 ( http://www.iptorrents.com/details.php?id=377461 )-->
-				<regex value="^\[IPT](.*)\( https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
+				<!--[IPT] [REQ] Birdemic 2008 DVDRip mp4 AAC ( http://www.iptorrents.com/details.php?id=377470 )-->
+				<regex value="^\[IPT]\s*(?:\[REQ])?(.*)\( https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
