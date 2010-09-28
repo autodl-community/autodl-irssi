@@ -314,6 +314,7 @@ sub canonicalizeChannelName {
 
 # Convert binary data string to a hex string
 sub dataToHex {
+	use bytes;
 	return join "", map {
 		sprintf("%02X", ord($_))
 	} split //, shift;
