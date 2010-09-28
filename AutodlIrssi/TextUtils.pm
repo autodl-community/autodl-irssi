@@ -297,7 +297,7 @@ sub decodeOctets {
 # Returns a canonicalized network name
 sub canonicalizeNetworkName {
 	my $network = shift;
-	return "" unless defined $network;
+	return "" if !defined $network || $network eq "";
 	return "NETWORK-\L$network";
 }
 

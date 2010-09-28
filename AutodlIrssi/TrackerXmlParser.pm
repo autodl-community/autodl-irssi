@@ -199,7 +199,9 @@ sub parseServers {
 		my @serverNames = map {
 			trim canonicalizeServerName($_);
 		} split /,/, $serverNames;
-		push @serverNames, canonicalizeNetworkName($network);
+		if ($network) {
+			push @serverNames, canonicalizeNetworkName($network);
+		}
 
 		for my $serverName (@serverNames) {
 			next if $serverName eq "";
