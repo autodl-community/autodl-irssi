@@ -66,13 +66,12 @@
 			</var>
 
 			<extract srcvar="torrentName" optional="true">
-				<regex value=".*-(.*)"/>
+				<regex value=".*\s+?-\s+?(.*)$"/>
 				<vars>
 					<var name="category"/>
 				</vars>
 			</extract>
 
-			<!--Since they really add tags like what.cd I renamed the var formerly known as tags :p. This might be wrong but I didn't see any harm in it at first glance so I went with $releaseTags for this-->
 			<varreplace name="$releaseTags" srcvar="category" regex="[\/]" replace=","/>
 
 			<!--Some use dots some use underscores, but replace all with spaces-->
@@ -86,8 +85,7 @@
 			</extract>
 
 			<extract srcvar="torrentName" optional="true">
-				<!--Director is non greedy since there are actually movie names that contain '\s-\s' delimiters so I have to assume at least the director does not-->
-				<regex value="^(.+?)\s+-\s+(.+)\s\[\d+\]"/>
+				<regex value="^(.+?)\s+-\s+(.+)\s+\[|-"/>
 				<vars>
 					<var name="name2"/>
 					<var name="name1"/>
