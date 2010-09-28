@@ -40,19 +40,17 @@
 			network="IPTorrents"
 			serverNames="irc.iptorrents.com"
 			channelNames="#ipt.announce"
-			announcerNames="Announce-Bot"
+			announcerNames="Paranoia"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--New Torrent [Games/PC ISO] 'NFS World Online' [1.467 GB] http://www.iptorrents.com/details.php?id=282978-->
-				<regex value="^New Torrent \[([^\]]*)\] '(.*)' \[([^\]]*)\] https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
+				<!--[IPT] Shakespeare In Love 1998 BRRip(1120x480) x264 GokU61 ( http://www.iptorrents.com/details.php?id=377461 )-->
+				<regex value="^\[IPT](.*)\( https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
 				<vars>
-					<var name="category"/>
 					<var name="torrentName"/>
-					<var name="torrentSize"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
