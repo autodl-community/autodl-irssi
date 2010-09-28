@@ -491,6 +491,8 @@ sub _getMacroReplacer {
 		$macroReplacer->add("WinTorrentPathName", getWindowsPath($torrentPathname));
 	}
 
+	$macroReplacer->add("InfoHash", dataToHex($self->{info_hash}));
+
 	return $macroReplacer;
 }
 

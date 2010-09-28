@@ -460,6 +460,7 @@ Current date and time: [b]$(year)[/b], [b]$(month)[/b], [b]$(day)[/b], [b]$(hour
 [b]$(TrackerShort)[/b] is short tracker name.
 [b]$(TorrentPathName)[/b] is the path to the .torrent file (unix path if you're using cygwin).
 [b]$(WinTorrentPathName)[/b] is the windows path to the .torrent file.
+[b]$(InfoHash)[/b] This is the "info hash" of the torrent file.
 
 The rest are possibly self explanatory: [b]$(Category)[/b], [b]$(TorrentName)[/b], [b]$(Uploader)[/b], [b]$(TorrentSize)[/b], [b]$(PreTime)[/b], [b]$(TorrentUrl)[/b], [b]$(TorrentSslUrl)[/b], [b]$(Season)[/b], [b]$(Episode)[/b], [b]$(Resolution)[/b], [b]$(Source)[/b], [b]$(Encoder)[/b], [b]$(Format)[/b], [b]$(Bitrate)[/b], [b]$(Media)[/b], [b]$(Tags)[/b], [b]$(Scene)[/b], [b]$(Log)[/b], [b]$(Cue)[/b]
 

@@ -38,7 +38,7 @@ our @EXPORT = qw/ convertStringToBoolean convertStringToInteger trim removeInvis
 				convertByteSizeString convertToByteSizeString convertTimeSinceString
 				convertToTimeSinceString stripMircColorCodes canonicalizeReleaseName
 				regexEscapeWildcardString removeExtraSpaces convertToValidPathName decodeOctets
-				canonicalizeNetworkName canonicalizeServerName canonicalizeChannelName /;
+				canonicalizeNetworkName canonicalizeServerName canonicalizeChannelName dataToHex /;
 our @EXPORT_OK = qw//;
 
 
@@ -310,6 +310,13 @@ sub canonicalizeServerName {
 # Returns a canonicalized channel name
 sub canonicalizeChannelName {
 	return lc shift;
+}
+
+# Convert binary data string to a hex string
+sub dataToHex {
+	return join "", map {
+		sprintf("%02X", ord($_))
+	} split //, shift;
 }
 
 1;
