@@ -85,12 +85,21 @@
 			</extract>
 
 			<extract srcvar="torrentName" optional="true">
-				<regex value="^(.+?)\s+-\s+(.+)\s+\[|-"/>
+				<regex value="^(.+?)\s+-\s+(.+)\s+\[\d{4}]\s+-"/>
 				<vars>
 					<var name="name2"/>
 					<var name="name1"/>
 				</vars>
 			</extract>
+			<if srcvar="name1" regex="^$">
+				<extract srcvar="torrentName">
+					<regex value="^(.+?)\s+-\s+(.+)\s+-"/>
+					<vars>
+						<var name="name2"/>
+						<var name="name1"/>
+					</vars>
+				</extract>
+			</if>
 
 			<extracttags srcvar="$releaseTags" split=",">
 				<setvarif varName="scene" value="Scene" newValue="true"/>
@@ -114,7 +123,6 @@
 			</var>
 		</linematched>
 		<ignore>
-			<!-- I don't think the bot does anything else in this chan-->
 		</ignore>
 	</parseinfo>
 </trackerinfo>
