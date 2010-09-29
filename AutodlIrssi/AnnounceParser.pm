@@ -236,7 +236,7 @@ sub parseSingleLine {
 	}
 
 	if (!$self->shouldIgnoreLine($line)) {
-		message 0, $self->getTrackerName() . ": did not match line '$line'";
+		dmessage 0, $self->getTrackerName() . ": did not match line '$line'";
 		return 0;
 	}
 	return 1;
@@ -255,7 +255,7 @@ sub parseMultiLine {
 	}
 	else {
 		if (!defined $self->{multiLineParser}->getLineNumber($line) && !$self->shouldIgnoreLine($line)) {
-			message 0, $self->getTrackerName() . ": did not match line '$line'";
+			dmessage 0, $self->getTrackerName() . ": did not match line '$line'";
 			return 0;
 		}
 		return 1;
