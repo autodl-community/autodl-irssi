@@ -50,8 +50,10 @@
 				<!--[IPT] Shakespeare In Love 1998 BRRip(1120x480) x264 GokU61 ( http://www.iptorrents.com/details.php?id=377461 )-->
 				<!--[IPT] [REQ] Birdemic 2008 DVDRip mp4 AAC ( http://www.iptorrents.com/details.php?id=377470 )-->
 				<!--[IPT] PSP Game Pack #3 [5 00M33-6][Patched] [color=red][FreeLeech][/color] ( http://www.iptorrents.com/details.php?id=377477 )-->
-				<regex value="^\[IPT]\s*(?:\[REQ])?(.*?)(?:\[color=red]\[FreeLeech]\[/color])?\s*\( https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
+				<!--[ANIME] Occult Academy - Episode 13 [CyRox] ( http://www.iptorrents.com/details.php?id=377248 )-->
+				<regex value="^\[([^\]]+)]\s*(?:\[REQ])?(.*?)(?:\[color=red]\[FreeLeech]\[/color])?\s*\( https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
 				<vars>
+					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
