@@ -52,8 +52,8 @@ my $SMALL_NEGATIVE_INT_HI	= 0x65;
 my $SMALL_DICTIONARY_LO		= 0x66;	# Dictionary with 0..24 elements
 my $SMALL_DICTIONARY_HI		= 0x7E;
 my $TERMINATOR				= 0x7F;	# Terminates LIST, DICTIONARY, INTEGER, STRING
-my $SMALL_STRING_LO			= 0x80;	# Small strings of length 0..63
-my $SMALL_STRING_HI			= 0xBF;
+my $SHORT_STRING_LO			= 0x80;	# Short strings of length 0..63
+my $SHORT_STRING_HI			= 0xBF;
 my $SMALL_LIST_LO			= 0xC0;	# List with 0..63 elements
 my $SMALL_LIST_HI			= 0xFF;
 
@@ -123,11 +123,11 @@ sub encode {
 	use bytes;
 	my $octets = Encode::encode("utf-8", $val);
 	my $len = length($octets);
-	if ($len <= $SMALL_STRING_HI - $SMALL_STRING_LO) {
-		return chr($SMALL_STRING_LO + $len) . $octets;
+	if ($len <= $SHORT_STRING_HI - $SHORT_STRING_LO) {
+		return chr($SHORT_STRING_LO + $len) . $octets;
 	}
 	else {
-		return $len . ":$octets";
+		return "$len:$octets";
 	}
 }
 
@@ -292,7 +292,7 @@ sub _initializeParseTable {
 	$parseTable->[$NULL] = \&_parseNull;
 	$setRange->($SMALL_NEGATIVE_INT_LO, $SMALL_NEGATIVE_INT_HI, \&_parseSmallNegativeInteger);
 	$setRange->($SMALL_DICTIONARY_LO, $SMALL_DICTIONARY_HI, \&_parseSmallDictionary);
-	$setRange->($SMALL_STRING_LO, $SMALL_STRING_HI, \&_parseSmallString);
+	$setRange->($SHORT_STRING_LO, $SHORT_STRING_HI, \&_parseShortString);
 	$setRange->($SMALL_LIST_LO, $SMALL_LIST_HI, \&_parseSmallList);
 }
 
@@ -503,11 +503,11 @@ sub _parseSmallList {
 	return $list;
 }
 
-sub _parseSmallString {
+sub _parseShortString {
 	my ($info, $code) = @_;
 
 	_getChar($info);
-	my $len = $code - $SMALL_STRING_LO;
+	my $len = $code - $SHORT_STRING_LO;
 	my $s = _getString($info, $len);
 	return $s;
 }
