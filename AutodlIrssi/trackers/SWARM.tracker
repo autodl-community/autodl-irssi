@@ -49,6 +49,7 @@
 		<linepatterns>
 			<extract>
 				<!--Reservoir Dogs [1992] - XviD/AVI/Blu-Ray/576p - http://theswarm.me/torrents.php?id=500 / http://theswarm.me/torrents.php?action=download&id=181 - comedy, crime-->
+				<!--Centurion [2010] - XviD/AVI/DVD/576p Scene  - http://theswarm.me/torrents.php?id=23759 / http://theswarm.me/torrents.php?action=download&id=182 - action, adventure, drama, history, thriller-->
 				<regex value="^(.*)-\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s+-(.*)$"/>
 				<vars>
 					<var name="torrentName"/>
@@ -64,12 +65,19 @@
 			</var>
 
 			<extract srcvar="torrentName">
-				<regex value=".* - (.*)$"/>
+				<regex value=".* - (.*?)(Scene)?$"/>
 				<vars>
 					<var name="category"/>
+					<var name="$scene"/>
 				</vars>
 			</extract>
+			<if srcvar="$scene" regex="^Scene$">
+				<var name="scene">
+					<string value="true"/>
+				</var>
+			</if>
 
+			<varreplace name="$releaseTags" srcvar="category" regex="/" replace=","/>
 			<varreplace name="tags" srcvar="tags" regex="[._]" replace=" "/>
 
 			<extract srcvar="torrentName" optional="true">
@@ -79,7 +87,7 @@
 				</vars>
 			</extract>
 
-			<extracttags srcvar="tags" split=",">
+			<extracttags srcvar="$releaseTags" split=",">
 				<setvarif varName="scene" value="Scene" newValue="true"/>
 
 				<setvarif varName="resolution" regex="^(?:SD|Standard?Def.*|480p|720p|1080p|1080i)$"/>
