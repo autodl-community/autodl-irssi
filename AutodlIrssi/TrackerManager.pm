@@ -127,11 +127,11 @@ sub printNewTrackers {
 
 	while (my ($type, $announceParser) = each %{$self->{announceParsers}}) {
 		next if exists $oldAnnounceParsers->{$type};
-		message 3, "Added tracker \x0309" . $announceParser->getTrackerName() . "\x03";
+		message 3, "\x02Added tracker\x02 \x0309" . $announceParser->getTrackerName() . "\x03";
 	}
 	while (my ($type, $announceParser) = each %$oldAnnounceParsers) {
 		next if exists $self->{announceParsers}{$type};
-		message 3, "Removed tracker \x0304" . $announceParser->getTrackerName() . "\x03";
+		message 3, "\x02Removed tracker\x02 \x0304" . $announceParser->getTrackerName() . "\x03";
 	}
 }
 
