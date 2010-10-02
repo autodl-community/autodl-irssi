@@ -116,6 +116,23 @@ sub reloadTrackerFiles {
 		$self->{announceParsers}{$type} = $announceParser;
 		$self->addAnnounceParserToServerTable($announceParser);
 	}
+
+	if (%$oldAnnounceParsers) {
+		$self->printNewTrackers($oldAnnounceParsers);
+	}
+}
+
+sub printNewTrackers {
+	my ($self, $oldAnnounceParsers) = @_;
+
+	while (my ($type, $announceParser) = each %{$self->{announceParsers}}) {
+		next if exists $oldAnnounceParsers->{$type};
+		message 3, "Added tracker \x0309" . $announceParser->getTrackerName() . "\x03";
+	}
+	while (my ($type, $announceParser) = each %$oldAnnounceParsers) {
+		next if exists $self->{announceParsers}{$type};
+		message 3, "Removed tracker \x0304" . $announceParser->getTrackerName() . "\x03";
+	}
 }
 
 sub reportBrokenAnnouncers {
