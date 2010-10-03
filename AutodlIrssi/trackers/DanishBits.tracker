@@ -74,6 +74,7 @@
 		</linematched>
 		<ignore>
 			<regex value="^Found "/>
+			<regex value="^Viser "/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
