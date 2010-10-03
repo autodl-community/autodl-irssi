@@ -141,6 +141,15 @@
 				</if>
 			</if>
 
+			<!--BTN's AutoFill is buggy. They don't seem to want to fix it-->
+			<if srcvar="name1" regex="^National Geographic - Predator CSI$">
+				<if srcvar="torrentName" regex="^CSI\.(?:Crime\.Scene\.Investigation\.)?S\d\dE\d\d">
+					<var name="name1">
+						<string value="CSI: Crime Scene Investigation"/>
+					</var>
+				</if>
+			</if>
+
 			<if srcvar="torrentName" regex="^\s*$">
 				<var name="torrentName">
 					<var name="name1"/>
