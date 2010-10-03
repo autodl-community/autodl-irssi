@@ -73,9 +73,7 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^Found "/>
-			<regex value="^Viser "/>
-			<regex value="^User: "/>
+			<regex value="^(?:Nyt Upload|POWERLEECH|POWERLEEH|FREELEECH) " expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
