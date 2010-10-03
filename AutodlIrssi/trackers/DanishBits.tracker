@@ -47,22 +47,14 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--DB announce format-->
-				<!--[NEW TORRENT] Van.Diemens.Land.2009.Custom.DKsubs.XTD.PAL.DVDR-DBu just got uploaded! https://danishbits.org/details.php?id=82590-->
-				<regex value="^\[NEW TORRENT\]\s*(.*) just got uploaded! \s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
-				<vars>
-					<var name="torrentName"/>
-					<var name="$baseUrl"/>
-					<var name="$torrentId"/>
-				</vars>
-			</extract>
-			<extract>
-				<!--MyLameNick announce format-->
-				<!--Nyt Upload ~ Console ~ Shreks.Carnival.Craze.PAL.Wii-LoCAL ~ https://danishbits.org/details.php?rid=82752-->
-				<regex value="^Nyt Upload\s*~([^~]*)~(.*)~\s*https?\:\/\/([^\/]+\/).*[&amp;\?]rid=(\d+)"/>
+				<!--Nyt Upload ~ Danske Film ~ Hunters.Video.74.Jagt.paa.Berleburg.Nordic.PAL-DVDR ~ 4.25GB ~ https://danishbits.org/details.php?id=94606-->
+				<!--Nyt Upload ~ HD-X264 ~ The.Thin.Red.Line.1998.DKsubs.720p.BluRay.x264-DNG ~ 8.00GB ~ https://danishbits.org/details.php?id=94607-->
+				<!--POWERLEECH ~ HD-X264 ~ The.Thin.Red.Line.1998.DKsubs.720p.BluRay.x264-DNG ~ 8.00GB ~ https://danishbits.org/details.php?id=94607-->
+				<regex value="^(?:Nyt Upload|POWERLEECH|POWERLEEH|FREELEECH) ~([^~]*)~([^~]*)~([^~]*)~\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
+					<var name="torrentSize"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
@@ -81,7 +73,7 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^\[NEW TORRENT\]" expected="false"/>
+			<regex value="^Found "/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
