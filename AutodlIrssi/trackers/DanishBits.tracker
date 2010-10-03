@@ -75,6 +75,7 @@
 		<ignore>
 			<regex value="^Found "/>
 			<regex value="^Viser "/>
+			<regex value="^User: "/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
