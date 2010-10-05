@@ -40,7 +40,7 @@
 			network="IPTorrents"
 			serverNames="irc.iptorrents.com"
 			channelNames="#ipt.announce"
-			announcerNames="Paranoia"
+			announcerNames="IPT_Bot"
 			/>
 	</servers>
 
