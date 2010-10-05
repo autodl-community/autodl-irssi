@@ -376,7 +376,12 @@ sub getActiveAnnounceParserTypes {
 			$updateAutodl = 0;
 		}
 		elsif ($updateCheck eq 'whatsnew') {
-			message 3, "New:\n" . $updater->getAutodlWhatsNew();
+			if (!$autodlUpdateAvailable) {
+				message 3, "\x0309You are using the latest version!\x03";
+			}
+			else {
+				message 3, "New:\n" . $updater->getAutodlWhatsNew();
+			}
 			$updateAutodl = 0;
 		}
 		else {	# 'disabled' or unknown
