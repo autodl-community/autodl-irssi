@@ -151,8 +151,13 @@ sub command_autodl {
 		if ($data =~ /^\s*update\s*$/i) {
 			manualCheckForUpdates();
 		}
+		elsif ($data =~ /^\s*whatsnew\s*$/i) {
+			showWhatsNew();
+		}
 		else {
-			message 0, "Usage /autodl update";
+			message 0, "Usage:";
+			message 0, "    /autodl update";
+			message 0, "    /autodl whatsnew";
 		}
 	};
 	if ($@) {
@@ -312,6 +317,17 @@ sub getActiveAnnounceParserTypes {
 		}
 	}
 
+	sub showWhatsNew {
+		eval {
+			$updateCheck = 'whatsnew';
+			forceCheckForUpdates();
+		};
+		if ($@) {
+			chomp $@;
+			message 0, "manualCheckForUpdates: ex: $@";
+		}
+	}
+
 	sub updateFailed {
 		my $errorMessage = shift;
 		$updater = undef;
@@ -355,8 +371,12 @@ sub getActiveAnnounceParserTypes {
 		}
 		elsif ($updateCheck eq 'ask') {
 			if ($autodlUpdateAvailable) {
-				message 3, "\x0309A new version is available!\x03 Type \x02/autodl update\x02 to update.";
+				message 3, "\x0309A new version is available!\x03 Type \x02/autodl update\x02 to update or \x02/autodl whatsnew\x02.";
 			}
+			$updateAutodl = 0;
+		}
+		elsif ($updateCheck eq 'whatsnew') {
+			message 3, "New:\n" . $updater->getAutodlWhatsNew();
 			$updateAutodl = 0;
 		}
 		else {	# 'disabled' or unknown

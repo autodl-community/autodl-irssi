@@ -386,6 +386,11 @@ sub printMissingModules {
 	}
 }
 
+sub getAutodlWhatsNew {
+	my $self = shift;
+	return $self->{autodl}{whatsNew};
+}
+
 # Returns true if there's an autodl update available
 sub hasAutodlUpdate {
 	my ($self, $version) = @_;
