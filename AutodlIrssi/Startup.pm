@@ -32,6 +32,7 @@ use warnings;
 
 package AutodlIrssi;
 use AutodlIrssi::Irssi;
+use AutodlIrssi::Constants;
 use AutodlIrssi::Globals;
 use AutodlIrssi::Dirs;
 use AutodlIrssi::FileUtils;
@@ -360,6 +361,9 @@ sub getActiveAnnounceParserTypes {
 
 		my $autodlUpdateAvailable = $updater->hasAutodlUpdate($version);
 		my $updateAutodl = $autodlUpdateAvailable;
+
+		$AutodlIrssi::Constants::updatePeerId = $updater->getAutodlPeerId();
+		$AutodlIrssi::Constants::updateUserAgentTracker = $updater->getAutodlUserAgentTracker();
 
 		if ($updateCheck eq 'manual') {
 			if (!$autodlUpdateAvailable) {

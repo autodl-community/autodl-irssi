@@ -51,6 +51,18 @@ use Digest::SHA1 qw/ sha1 /;
 use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
 
+sub getPeerId {
+	return $AutodlIrssi::g->{options}{peerId} ||
+			$AutodlIrssi::Constants::updatePeerId ||
+			AutodlIrssi::Constants::PEER_ID;
+}
+
+sub getUserAgentTracker {
+	return $AutodlIrssi::g->{options}{userAgentTracker} ||
+			$AutodlIrssi::Constants::updateUserAgentTracker ||
+			AutodlIrssi::Constants::USER_AGENT_TRACKER;
+}
+
 sub new {
 	my ($class, $downloadHistory) = @_;
 	bless {
@@ -275,7 +287,7 @@ sub _checkRegisteredTorrentInternal {
 	my $self = shift;
 
 	my $url = $self->_getTrackerMessageUrl("started");
-	$self->{httpRequest}->setUserAgent($AutodlIrssi::g->{options}{userAgentTracker});
+	$self->{httpRequest}->setUserAgent(getUserAgentTracker());
 	$self->{httpRequest}->sendRequest("GET", "", $url, {}, sub {
 		$self->_onTrackerMessageStartedSent(@_);
 	});
@@ -284,7 +296,7 @@ sub _checkRegisteredTorrentInternal {
 sub _getTrackerMessageUrl {
 	my ($self, $trackerEvent) = @_;
 
-	my $peer_id = substr $AutodlIrssi::g->{options}{peerId} . "01234567890123456789", 0, 20;
+	my $peer_id = substr(getPeerId() . "01234567890123456789", 0, 20);
 	my $url = $self->{bencRoot}->readDictionary("announce")->{string};
 	$url .= index($url, "?") == -1 ? "?" : "&";
 	$url .= "info_hash=" . toUrlEncode($self->{info_hash}) .
@@ -335,7 +347,7 @@ sub _onTrackerMessageStartedSent {
 	message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}) is now registered. Sending STOP event to tracker.");
 
 	my $url = $self->_getTrackerMessageUrl("stopped");
-	$self->{httpRequest}->setUserAgent($AutodlIrssi::g->{options}{userAgentTracker});
+	$self->{httpRequest}->setUserAgent(getUserAgentTracker());
 	$self->{httpRequest}->sendRequest("GET", "", $url, {}, sub {
 		$self->_onTrackerMessageStoppedSent(@_);
 	});

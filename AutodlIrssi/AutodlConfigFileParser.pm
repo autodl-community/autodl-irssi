@@ -39,8 +39,8 @@ sub defaultOptions {
 	return {
 		updateCheck => 'ask',	# auto, ask, disabled
 		userAgent => 'autodl-irssi',
-		userAgentTracker => 'rtorrent/0.8.6/0.12.6',
-		peerId => '-lt0C60-IRCAUTODWNLD',
+		userAgentTracker => '',
+		peerId => '',
 		maxSavedReleases => 1000,
 		saveDownloadHistory => 1,
 		downloadDupeReleases => 0,

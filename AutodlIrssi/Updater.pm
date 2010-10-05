@@ -387,8 +387,15 @@ sub printMissingModules {
 }
 
 sub getAutodlWhatsNew {
-	my $self = shift;
-	return $self->{autodl}{whatsNew};
+	return shift->{autodl}{whatsNew};
+}
+
+sub getAutodlUserAgentTracker {
+	return shift->{autodl}{userAgentTracker};
+}
+
+sub getAutodlPeerId {
+	return shift->{autodl}{peerId};
 }
 
 # Returns true if there's an autodl update available
