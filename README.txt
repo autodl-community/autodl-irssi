@@ -52,7 +52,7 @@ Now to install autodl-irssi. [b]Replace the url with the latest autodl-irssi rel
 [code]
 mkdir -p ~/.irssi/scripts/autorun
 cd ~/.irssi/scripts
-wget https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.XX.zip/download
+wget https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.04.zip/download
 unzip -o autodl-irssi-v*.zip
 rm autodl-irssi-v*.zip
 cp autodl-irssi.pl autorun/
