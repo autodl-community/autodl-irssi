@@ -110,6 +110,7 @@
 			</var>
 		</linematched>
 		<ignore>
+			<regex value="^Hello, "/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
