@@ -31,9 +31,9 @@
 	checkRegisteredTorrent="false">
 
 	<settings>
-		<description text="Paste (Ctrl+V) any SceneAccess torrent SSH download link into the text box below to automatically extract authkey."/>
+		<description text="Paste (Ctrl+V) any SceneAccess torrent download link into the text box below to automatically extract authkey."/>
 		<authkey
-			pasteRegex="http.*download\w*2\.php\/\d+\/([a-fA-F\d]+)\/"
+			pasteRegex="/download/\d+/([a-fA-F\d]+)/"
 			tooltiptext="The authkey in any SceneAccess SSH torrent download link."
 			/>
 	</settings>
@@ -77,7 +77,7 @@
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="downloadbig2.php/"/>
+				<string value="download/"/>
 				<var name="$torrentId"/>
 				<string value="/"/>
 				<var name="authkey"/>
