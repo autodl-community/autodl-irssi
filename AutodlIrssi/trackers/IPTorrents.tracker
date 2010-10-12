@@ -51,7 +51,7 @@
 				<!--[IPT] [REQ] Birdemic 2008 DVDRip mp4 AAC ( http://www.iptorrents.com/details.php?id=377470 )-->
 				<!--[IPT] PSP Game Pack #3 [5 00M33-6][Patched] [color=red][FreeLeech][/color] ( http://www.iptorrents.com/details.php?id=377477 )-->
 				<!--[ANIME] Occult Academy - Episode 13 [CyRox] ( http://www.iptorrents.com/details.php?id=377248 )-->
-				<regex value="^\[([^\]]+)]\s*(?:\[REQ])?(.*?)(?:\[color=red]\[FreeLeech]\[/color])?\s*\( https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
+				<regex value="^\[([^\]]+)]\s*(?:\[REQ])?(.*?)(?:\[color=red]\[FreeLeech]\[/color])?\s*\(\s*https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
