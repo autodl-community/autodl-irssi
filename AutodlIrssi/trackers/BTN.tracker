@@ -107,6 +107,12 @@
 					<string value=""/>
 				</var>
 			</if>
+			<!--BTN sometimes writes the scene release name as the Series name. If so, clear the variable.-->
+			<if srcvar="name1" regex="^[^ .]+\.[^ ]+$">
+				<var name="name1">
+					<string value=""/>
+				</var>
+			</if>
 
 			<varreplace name="tags" srcvar="tags" regex="[\|]" replace=", "/>
 
