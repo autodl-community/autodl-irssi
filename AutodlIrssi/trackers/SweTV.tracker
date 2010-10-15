@@ -78,6 +78,7 @@
 			</var>
 		</linematched>
 		<ignore>
+			<regex value="^\[([^\]]*)\] " expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
