@@ -40,6 +40,7 @@
 
 	<servers>
 		<server
+			network="ViSiON-iRC"
 			serverNames="irc.uknova.com"
 			channelNames="#UKNova"
 			announcerNames="Blobbybot"
