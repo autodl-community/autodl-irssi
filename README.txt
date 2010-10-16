@@ -440,14 +440,14 @@ Some common tracker options and how to get them:
 [tracker TYPE]
 #enabled =
 #force-ssl =
-#upload-wait-secs =
+#upload-delay-secs =
 #cookie =
 #passkey =
 #etc ...
 
 [b]enabled[/b] is optional and defaults to true. Set it to false to disable the tracker.
 [b]force-ssl[/b] is optional and can be set to true to force encrypted torrent downloads. Not all trackers support HTTPS downloads. Leave it blank for the default value (which is HTTP or HTTPS).
-[b]upload-wait-secs[/b] is optional and is the number of seconds autodl-irssi should wait before uploading/saving the torrent. Default is 0 (no wait). This option isn't needed 99.999% of the time.
+[b]upload-delay-secs[/b] is optional and is the number of seconds autodl-irssi should wait before uploading/saving the torrent. Default is 0 (no wait). This option isn't needed 99.999% of the time.
 
 [b]Macros[/b]
 
