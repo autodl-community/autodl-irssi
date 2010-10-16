@@ -369,7 +369,8 @@ sub doHeaderTracker {
 		}
 
 		my $uninitialized = $announceParser->getUninitializedDownloadVars();
-		if (@$uninitialized) {
+		my $isEnabled = $announceParser->readOption("enabled");
+		if ($isEnabled && @$uninitialized) {
 			my $uninitializedStr = join ", ", @$uninitialized;
 			$self->error($header->{lineNumber}, "$trackerType: Missing option(s): $uninitializedStr");
 		}
