@@ -234,7 +234,9 @@ sub findAnnounceParser {
 	$announcerName = lc $announcerName;
 	for my $name (@{$channel->{announcerNames}}) {
 		if (lc(trim $name) eq $announcerName) {
-			return $channel->{announceParser};
+			my $announceParser = $channel->{announceParser};
+			return $announceParser if $announceParser->readOption("enabled");
+			return;
 		}
 	}
 	return;
