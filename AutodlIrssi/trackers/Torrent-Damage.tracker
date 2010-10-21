@@ -28,7 +28,7 @@
 	shortName="TD"
 	longName="Torrent-Damage"
 	siteName="www.torrent-damage.net"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<cookie_description/>

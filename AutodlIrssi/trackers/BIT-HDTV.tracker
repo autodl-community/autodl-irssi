@@ -28,7 +28,7 @@
 	shortName="bithdtv"
 	longName="BIT-HDTV"
 	siteName="www.bit-hdtv.com"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<cookie_description/>

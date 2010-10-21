@@ -28,7 +28,7 @@
 	shortName="TL"
 	longName="TorrentLeech"
 	siteName="www.torrentleech.org"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<description text="Go to http://www.torrentleech.org/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

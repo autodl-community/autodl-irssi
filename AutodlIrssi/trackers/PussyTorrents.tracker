@@ -28,7 +28,7 @@
 	shortName="PUSSY"
 	longName="PussyTorrents"
 	siteName="www.pussytorrents.org"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<cookie_description/>

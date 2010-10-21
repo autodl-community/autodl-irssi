@@ -28,7 +28,7 @@
 	shortName="BTN"
 	longName="BTN"
 	siteName=""
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<gazelle_description/>

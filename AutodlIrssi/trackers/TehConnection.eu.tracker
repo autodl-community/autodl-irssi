@@ -28,7 +28,7 @@
 	shortName="TC"
 	longName="TehConnection.eu"
 	siteName="tehconnection.eu"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<gazelle_description/>

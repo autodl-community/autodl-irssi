@@ -28,7 +28,7 @@
 	shortName="ST"
 	longName="SuperTorrents"
 	siteName="www.supertorrents.org"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<description text="Click the General link and copy the RSS link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

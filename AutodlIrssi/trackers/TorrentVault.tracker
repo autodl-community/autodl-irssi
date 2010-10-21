@@ -28,7 +28,7 @@
 	shortName="TV"
 	longName="TorrentVault"
 	siteName="www.torrentvault.org"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<gazelle_description/>

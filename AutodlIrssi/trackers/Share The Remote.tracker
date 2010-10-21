@@ -28,7 +28,7 @@
 	shortName="STR"
 	longName="Share The Remote"
 	siteName="sharetheremote.org"
-	checkRegisteredTorrent="true">
+	checkRegisteredTorrent="false">
 
 	<settings>
 		<gazelle_description/>
