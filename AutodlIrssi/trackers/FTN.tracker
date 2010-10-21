@@ -49,7 +49,7 @@
 			<!-- [ Movies/HD ] -  TheqAmTeamUEXTENDEDvCUTV2OIOHIO8OpvB1uRaykx264vN0HD  was uploaded 16h, 27m, 43s after pre. -->
 			<!-- [ https://xxxxxxxxxx/details.php?id=118878&hit=1 ] -->
 			<extract>
-				<regex value="^\s*-*\s*\[([^]]+)]\s*-(.*) was uploaded(.*)"/>
+				<regex value="^\s*--\s*\[([^\]]+)]\s*-(.*) was uploaded(.*)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
@@ -57,7 +57,7 @@
 				</vars>
 			</extract>
 			<extract>
-				<regex value="^\s*-*\s*\[\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^\s*--\s*\[\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
