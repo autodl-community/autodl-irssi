@@ -279,18 +279,10 @@ sub _onCommandGetFiles {
 
 	my $data = {
 		error => "",
-		files => [],
 	};
 
 	my $trackerDir = getTrackerFilesDir();
-	my @files = map {
-		if (-s $_) {
-			$_;
-		}
-		else {
-			();
-		}
-	} bsd_glob("$trackerDir/*.tracker", GLOB_ERR | GLOB_NOSORT);
+	my @files = map { -s $_ ? $_ : () } bsd_glob("$trackerDir/*.tracker", GLOB_ERR | GLOB_NOSORT);
 	push @files, getAutodlCfgFile();
 
 	$data->{files} = [map { basename($_) } @files];
