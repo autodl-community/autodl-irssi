@@ -46,6 +46,7 @@ use AutodlIrssi::ActiveConnections;
 use AutodlIrssi::ChannelMonitor;
 use AutodlIrssi::Updater;
 use AutodlIrssi::AutodlState;
+use AutodlIrssi::GuiServer;
 use Net::SSLeay qw//;
 
 #
@@ -86,6 +87,7 @@ sub enable {
 	$AutodlIrssi::g->{tempFiles} = new AutodlIrssi::TempFiles();
 	$AutodlIrssi::g->{activeConnections} = new AutodlIrssi::ActiveConnections();
 	$AutodlIrssi::g->{channelMonitor} = new AutodlIrssi::ChannelMonitor($AutodlIrssi::g->{trackerManager});
+	$AutodlIrssi::g->{guiServer} = new AutodlIrssi::GuiServer();
 
 	reloadTrackerFiles();
 	reloadAutodlConfigFile();
@@ -219,6 +221,7 @@ sub forceReloadAutodlConfigFile {
 		$configFileParser->parse(getAutodlCfgFile());
 		$AutodlIrssi::g->{filterManager}->setFilters($configFileParser->getFilters());
 		$AutodlIrssi::g->{options} = $configFileParser->getOptions();
+		$AutodlIrssi::g->{guiServer}->setListenPort($AutodlIrssi::g->{options}{guiServerPort});
 	};
 	if ($@) {
 		message 0, "Error when reading autodl.cfg: " . formatException($@);

@@ -141,11 +141,23 @@ sub close {
 sub _createSocket {
 	my $self = shift;
 
-	die "_createSocket() has already been called!" if defined $self->{socket};
+	die "Socket already created" if defined $self->{socket};
 
 	socket($self->{socket}, AF_INET, SOCK_STREAM, getprotobyname('tcp'));
 	_setNonblocking($self->{socket});
 	_setAutoFlush($self->{socket});
+}
+
+sub setSocket {
+	my ($self, $socket) = @_;
+
+	die "Socket already created" if defined $self->{socket};
+
+	$self->{socket} = $socket;
+	_setNonblocking($self->{socket});
+	_setAutoFlush($self->{socket});
+
+	$self->_nowConnected();
 }
 
 # Calls connect() and returns if successful. Will throw if connect() reports an error other than

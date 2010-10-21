@@ -41,22 +41,18 @@ our @EXPORT = qw/ irssi_signal_add irssi_print irssi_input_add irssi_input_remov
 					irssi_command irssi_command_bind /;
 our @EXPORT_OK = qw//;
 
-# Calls Irssi::signal_add()
 sub irssi_signal_add {
 	goto &Irssi::Script::autodl_irssi::irssi_signal_add;
 }
 
-# Calls Irssi::print()
 sub irssi_print {
 	goto &Irssi::Script::autodl_irssi::irssi_print;
 }
 
-# Calls Irssi::input_add()
 sub irssi_input_add {
 	goto &Irssi::Script::autodl_irssi::irssi_input_add;
 }
 
-# Calls Irssi::input_remove()
 sub irssi_input_remove {
 	goto &Irssi::Script::autodl_irssi::irssi_input_remove;
 }

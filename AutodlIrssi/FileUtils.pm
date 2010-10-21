@@ -34,7 +34,7 @@ package AutodlIrssi::FileUtils;
 use File::Spec;
 use File::Temp qw/ tempfile /;
 use base qw/ Exporter /;
-our @EXPORT = qw/ createDirectories saveRawDataToFile createTempFile appendUnixPath /;
+our @EXPORT = qw/ createDirectories saveRawDataToFile createTempFile appendUnixPath getFileData /;
 our @EXPORT_OK = qw//;
 
 # Creates a directory. Returns true on success.
@@ -79,6 +79,15 @@ sub appendUnixPath {
 	}
 
 	return $basePath;
+}
+
+sub getFileData {
+	my $filename = shift;
+
+	open my $fh, '<', $filename or die "Could not open file $filename\n";
+	binmode $fh;
+	local $/;
+	return scalar <$fh>;
 }
 
 1;

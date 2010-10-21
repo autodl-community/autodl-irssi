@@ -33,9 +33,9 @@ use warnings;
 package AutodlIrssi::InternetUtils;
 use POSIX qw/ floor /;
 use HTML::Entities qw/ decode_entities /;
-use JSON qw/ decode_json /;
+use JSON qw/ decode_json encode_json /;
 use base qw/ Exporter /;
-our @EXPORT = qw/ decodeHtmlEntities toUrlEncode appendUrlQuery base64Encode decodeJson /;
+our @EXPORT = qw/ decodeHtmlEntities toUrlEncode appendUrlQuery base64Encode decodeJson encodeJson /;
 our @EXPORT_OK = qw//;
 
 sub decodeHtmlEntities {
@@ -97,6 +97,11 @@ sub base64Encode {
 sub decodeJson {
 	my $s = shift;
 	return decode_json $s;
+}
+
+sub encodeJson {
+	my $obj = shift;
+	return encode_json $obj;
 }
 
 1;

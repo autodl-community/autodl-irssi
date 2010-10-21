@@ -55,6 +55,7 @@ sub defaultOptions {
 		uploadDyndir => '',
 		pathToUtorrent => '',
 		memoryLeakCheck => 0,
+		guiServerPort => 0,
 
 		webui => {
 			user => '',
@@ -293,6 +294,7 @@ sub doHeaderOptions {
 		'upload-dyndir' => 'uploadDyndir',
 		'path-utorrent' => 'pathToUtorrent',
 		'memory-leak-check' => 'memoryLeakCheck',
+		'gui-server-port' => 'guiServerPort',
 	});
 
 	$self->checkValidUploadType($self->{options}{uploadType}, $options->{'upload-type'});
