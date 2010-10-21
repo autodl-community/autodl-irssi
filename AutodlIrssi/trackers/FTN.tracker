@@ -31,7 +31,7 @@
 	checkRegisteredTorrent="false">
 
 	<settings>
-		<cookie_description/>
+		<cookie_description text="FireFox -> Options -> Privacy -> Show Cookies and find the uid and pass cookies. Example: uid=1234; pass=asdf12347asdf13"/>
 		<cookie/>
 	</settings>
 
