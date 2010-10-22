@@ -46,7 +46,7 @@ use constant TIMEOUT_SECS => 60;
 #
 # Close the connection if data is greater than this size
 #
-use constant MAX_JSON_SIZE_BYTES => 128*1024;
+use constant MAX_JSON_SIZE_BYTES => 512*1024;
 
 sub new {
 	my ($class, $socket) = @_;
@@ -244,8 +244,9 @@ sub _onNewConnection {
 }
 
 my %handlers = (
-	"getfiles"	=> \&_onCommandGetFiles,
-	"getfile"	=> \&_onCommandGetFile,
+	"getfiles"		=> \&_onCommandGetFiles,
+	"getfile"		=> \&_onCommandGetFile,
+	"writeconfig"	=> \&_onCommandWriteConfig,
 );
 
 sub _onJsonReceived {
@@ -346,6 +347,17 @@ sub _onCommandGetFile {
 	}
 
 	return encodeJson($data);
+}
+
+# Saves the data to autodl.cfg
+sub _onCommandWriteConfig {
+	my ($self, $json) = @_;
+
+	my $data = $json->{data};
+	die "Missing data\n" if !defined $data || ref $data;
+
+	my $filename = getAutodlCfgFile();
+	saveRawDataToFile($filename, $data);
 }
 
 1;
