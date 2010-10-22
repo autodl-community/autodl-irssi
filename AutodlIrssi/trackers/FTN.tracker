@@ -28,6 +28,7 @@
 	shortName="FTN"
 	longName="FTN"
 	siteName=""
+	deobfuscate="ftn"
 	checkRegisteredTorrent="false">
 
 	<settings>
