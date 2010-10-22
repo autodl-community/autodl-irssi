@@ -56,6 +56,7 @@ sub defaultOptions {
 		pathToUtorrent => '',
 		memoryLeakCheck => 0,
 		guiServerPort => 0,
+		guiServerPassword => '',
 
 		webui => {
 			user => '',
@@ -295,6 +296,7 @@ sub doHeaderOptions {
 		'path-utorrent' => 'pathToUtorrent',
 		'memory-leak-check' => 'memoryLeakCheck',
 		'gui-server-port' => 'guiServerPort',
+		'gui-server-password' => 'guiServerPassword',
 	});
 
 	$self->checkValidUploadType($self->{options}{uploadType}, $options->{'upload-type'});

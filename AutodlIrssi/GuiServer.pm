@@ -244,6 +244,13 @@ sub _onJsonReceived {
 	}
 
 	eval {
+		my $password = $json->{password};
+		my $realPassword = $AutodlIrssi::g->{options}{guiServerPassword};
+		if ($realPassword eq "" || $password ne $realPassword) {
+			$jsonSocket->close();
+			return;
+		}
+
 		my $command = $json->{command};
 		my $func = $handlers{$command};
 
