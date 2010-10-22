@@ -390,14 +390,6 @@ sub getAutodlWhatsNew {
 	return shift->{autodl}{whatsNew};
 }
 
-sub getAutodlUserAgentTracker {
-	return shift->{autodl}{userAgentTracker};
-}
-
-sub getAutodlPeerId {
-	return shift->{autodl}{peerId};
-}
-
 # Returns true if there's an autodl update available
 sub hasAutodlUpdate {
 	my ($self, $version) = @_;

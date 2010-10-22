@@ -278,8 +278,8 @@ sub doHeaderOptions {
 	$self->setOptions('OPTIONS', $self->{options}, $options, {
 		'update-check' => 'updateCheck',
 		'user-agent' => 'userAgent',
-		'user-agent-tracker' => 'userAgentTracker',
-		'peer-id' => 'peerId',
+		'user-agent-tracker' => 'userAgentTracker',	# Not used anymore
+		'peer-id' => 'peerId',						# Not used anymore
 		'max-saved-releases' => 'maxSavedReleases',
 		'save-download-history' => 'saveDownloadHistory',
 		'download-duplicates' => 'downloadDupeReleases',
@@ -362,7 +362,7 @@ sub doHeaderTracker {
 
 		while (my ($name, $option) = each %{$header->{options}}) {
 			my $value = $option->{value};
-			if (!$announceParser->isOption($name)) {
+			if (!$announceParser->isOption($name) && $name ne 'checkregd') {
 				$self->error($option->{lineNumber}, "$trackerType: Unknown tracker option '$name'");
 				next;
 			}

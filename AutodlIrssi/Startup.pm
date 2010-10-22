@@ -71,7 +71,6 @@ my $trackersVersion = -1;
 # Called when we're enabled
 sub enable {
 	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now enabled! :-)";
-	message 3, "Get latest version from \x02http://sourceforge.net/projects/autodl-irssi/\x02";
 	message 3, "\x0309Help forum\x03 \x02http://sourceforge.net/apps/phpbb/autodl-irssi/\x02";
 
 	createDirectories(getAutodlSettingsDir());
@@ -364,9 +363,6 @@ sub getActiveAnnounceParserTypes {
 
 		my $autodlUpdateAvailable = $updater->hasAutodlUpdate($version);
 		my $updateAutodl = $autodlUpdateAvailable;
-
-		$AutodlIrssi::Constants::updatePeerId = $updater->getAutodlPeerId();
-		$AutodlIrssi::Constants::updateUserAgentTracker = $updater->getAutodlUserAgentTracker();
 
 		if ($updateCheck eq 'manual') {
 			if (!$autodlUpdateAvailable) {

@@ -51,18 +51,6 @@ use Digest::SHA1 qw/ sha1 /;
 use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
 
-sub getPeerId {
-	return $AutodlIrssi::g->{options}{peerId} ||
-			$AutodlIrssi::Constants::updatePeerId ||
-			AutodlIrssi::Constants::PEER_ID;
-}
-
-sub getUserAgentTracker {
-	return $AutodlIrssi::g->{options}{userAgentTracker} ||
-			$AutodlIrssi::Constants::updateUserAgentTracker ||
-			AutodlIrssi::Constants::USER_AGENT_TRACKER;
-}
-
 sub new {
 	my ($class, $downloadHistory) = @_;
 	bless {
@@ -149,7 +137,6 @@ sub start {
 	# different trackers at the same time without overwriting the previous torrent file of the
 	# exact same release name.
 	$self->{filename} = convertToValidPathName($self->{trackerInfo}{type} . '-' . $self->{ti}{torrentName} . '.torrent');
-	$self->{checkregd} = $self->{ti}{announceParser}->readOption("checkregd");
 	$self->{uploadMethod} = $self->{ti}{filter}{uploadType} ? $self->{ti}{filter} : $AutodlIrssi::g->{options};
 
 	my $forceSsl = $self->{ti}{announceParser}->readOption("force-ssl");
@@ -231,7 +218,7 @@ sub _onTorrentUploadWait {
 
 	my $uploadDelaySecs = $self->{ti}{announceParser}->readOption("upload-delay-secs");
 	if (!$uploadDelaySecs || $uploadDelaySecs <= 0) {
-		$self->_onTorrentOkToDownload();
+		$self->_onTorrentFileDownloaded();
 	}
 	else {
 		my $msg = "Waiting $uploadDelaySecs seconds before uploading/saving torrent ";
@@ -242,130 +229,9 @@ sub _onTorrentUploadWait {
 		message(3, $msg);
 
 		irssi_timeout_add_once($uploadDelaySecs * 1000, sub {
-			$self->_onTorrentOkToDownload();
+			$self->_onTorrentFileDownloaded();
 		}, undef);
 	}
-}
-
-sub _onTorrentOkToDownload {
-	my $self = shift;
-
-	if ($self->{checkregd}) {
-		$self->_checkRegisteredTorrent();
-	}
-	else {
-		$self->_onTorrentFileDownloaded();
-	}
-}
-
-sub _checkRegisteredTorrent {
-	my $self = shift;
-
-	my $endTime = gettimeofday();
-
-	my $url = $self->{bencRoot}->readDictionary("announce");
-	if (!$url || !$url->isString()) {
-		message(0, "Release $self->{ti}{torrentName} ($self->{trackerInfo}{longName}): Invalid torrent file: missing announce URL");
-		$self->_onTorrentFileDownloaded();
-		return;
-	}
-
-	my $msg = "Downloaded ";
-	$msg .= $self->_getTorrentInfoString({
-		torrentName => $self->{ti}{torrentName},
-		announceParser => $self->{ti}{announceParser},
-	});
-	my $timeInSecs = sprintf("%.3f", $endTime - $self->{startTime});
-	$msg .= ", took \x02\x0313$timeInSecs\x03\x02 seconds; \x02Now checking if it's registered.\x02";
-	message(3, $msg);
-
-	$self->{trackerRetryCount} = 0;
-	$self->_checkRegisteredTorrentInternal();
-}
-
-sub _checkRegisteredTorrentInternal {
-	my $self = shift;
-
-	my $url = $self->_getTrackerMessageUrl("started");
-	$self->{httpRequest}->setUserAgent(getUserAgentTracker());
-	$self->{httpRequest}->sendRequest("GET", "", $url, {}, sub {
-		$self->_onTrackerMessageStartedSent(@_);
-	});
-}
-
-sub _getTrackerMessageUrl {
-	my ($self, $trackerEvent) = @_;
-
-	my $peer_id = substr(getPeerId() . "01234567890123456789", 0, 20);
-	my $url = $self->{bencRoot}->readDictionary("announce")->{string};
-	$url .= index($url, "?") == -1 ? "?" : "&";
-	$url .= "info_hash=" . toUrlEncode($self->{info_hash}) .
-			"&peer_id=" . toUrlEncode($peer_id) .
-			"&port=12345" .
-			"&uploaded=0" .
-			"&downloaded=0" .
-			"&left=" . (defined $self->{ti}{torrentSizeInBytes} ? $self->{ti}{torrentSizeInBytes} : 0) .
-			"&corrupt=0" .
-			"&key=F39AD813" .
-			"&event=$trackerEvent" .
-			"&numwant=0" .
-			"&compact=1" .
-			"&no_peer_id=1" .
-			"";
-	message(5, "Sending $trackerEvent event: $url");
-	return $url;
-}
-
-# Called when the tracker "start" event has been sent
-sub _onTrackerMessageStartedSent {
-	my ($self, $errorMessage) = @_;
-
-	if ($errorMessage) {
-		message(0, "Could not check if torrent $self->{ti}{torrentName} ($self->{trackerInfo}{longName}) is registered. Error: $errorMessage");
-		$self->_onTorrentFileDownloaded();
-		return;
-	}
-
-	my $retryMessage;
-	my $benc = parseBencodedString($self->{httpRequest}->getResponseData());
-	if (!$benc) {
-		$retryMessage = "Tracker returned invalid data. '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}), data: '" . substr($self->{httpRequest}->getResponseData(), 0, 50) . "'";
-	}
-	elsif (defined $benc->readDictionary("failure reason")) {
-		$retryMessage = "Tracker returned a failure. '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}), message: '" . $benc->readDictionary("failure reason")->{string} . "'";
-	}
-
-	if ($retryMessage && !$self->{downloadHistory}->canDownload($self->{ti})) {
-		$self->_releaseAlreadyDownloaded();
-		return;
-	}
-	if ($retryMessage) {
-		$self->{httpRequest}->retryRequest($retryMessage, sub { $self->_onTrackerMessageStartedSent(@_) });
-		return;
-	}
-
-	message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}) is now registered. Sending STOP event to tracker.");
-
-	my $url = $self->_getTrackerMessageUrl("stopped");
-	$self->{httpRequest}->setUserAgent(getUserAgentTracker());
-	$self->{httpRequest}->sendRequest("GET", "", $url, {}, sub {
-		$self->_onTrackerMessageStoppedSent(@_);
-	});
-}
-
-# Called when the tracker "stopped" event has been sent
-sub _onTrackerMessageStoppedSent {
-	my ($self, $errorMessage) = @_;
-
-	if ($errorMessage) {
-		message(0, "Got an error from tracker when stopping $self->{ti}{torrentName} ($self->{trackerInfo}{longName}). Error: $errorMessage");
-		$self->_onTorrentFileDownloaded();
-		return;
-	}
-
-	message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): STOP event sent to tracker.");
-
-	$self->_onTorrentFileDownloaded();
 }
 
 # Called when the torrent file has been successfully downloaded

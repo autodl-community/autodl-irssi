@@ -55,8 +55,6 @@ sub _parseAutodlElement {
 		version		=> $self->readTextNode($autodlElem, "version"),
 		whatsNew	=> $self->readTextNode($autodlElem, "whats-new"),
 		url			=> $self->readTextNode($autodlElem, "url"),
-		userAgentTracker => $self->readTextNode($autodlElem, "user-agent-tracker"),
-		peerId		=> $self->readTextNode($autodlElem, "peer-id"),
 		modules		=> [],
 	};
 	if (!defined $self->{autodl}{version} || !defined $self->{autodl}{whatsNew} ||

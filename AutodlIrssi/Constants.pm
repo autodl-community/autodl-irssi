@@ -33,13 +33,6 @@ use warnings;
 package AutodlIrssi::Constants;
 
 use constant {
-	USER_AGENT_TRACKER	=> 'rtorrent/0.8.6/0.12.6',
-	PEER_ID				=> '-lt0C60-IRCAUTODWNLD',
-};
-our $updatePeerId = '';
-our $updateUserAgentTracker = '';
-
-use constant {
 	UPLOAD_WATCH_FOLDER	=> 'watchdir',
 	UPLOAD_WEBUI		=> 'webui',
 	UPLOAD_FTP			=> 'ftp',

@@ -97,12 +97,6 @@ sub parseSettings {
 		isDownloadVar => 0,
 	});
 	$addIt->({
-		name => "checkregd",
-		type => "bool",
-		defaultValue => "" . $self->{trackerInfo}{checkRegisteredTorrent},
-		isDownloadVar => 0,
-	});
-	$addIt->({
 		name => "force-ssl",
 		type => "bool",
 		defaultValue => "false",
