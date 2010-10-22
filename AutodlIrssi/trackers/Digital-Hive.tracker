@@ -27,8 +27,7 @@
 	type="dh"
 	shortName="DH"
 	longName="Digital-Hive"
-	siteName="www.digitalhive.org"
-	checkRegisteredTorrent="false">
+	siteName="www.digitalhive.org">
 
 	<settings>
 		<cookie_description/>

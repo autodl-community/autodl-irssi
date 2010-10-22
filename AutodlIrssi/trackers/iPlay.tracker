@@ -27,8 +27,7 @@
 	type="iplay"
 	shortName="iPlay"
 	longName="iPlay"
-	siteName="www.iplay.ro"
-	checkRegisteredTorrent="false">
+	siteName="www.iplay.ro">
 
 	<settings>
 		<cookie_description/>

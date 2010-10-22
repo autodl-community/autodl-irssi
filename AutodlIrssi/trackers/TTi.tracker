@@ -27,8 +27,7 @@
 	type="tti"
 	shortName="TTi"
 	longName="TTi"
-	siteName="www.tti.nu"
-	checkRegisteredTorrent="false">
+	siteName="www.tti.nu">
 
 	<settings>
 		<description text="Go to http://www.tti.nu/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

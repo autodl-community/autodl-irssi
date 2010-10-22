@@ -27,8 +27,7 @@
 	type="ace"
 	shortName="ACE"
 	longName="ACEtorrents"
-	siteName="www.acetorrents.net"
-	checkRegisteredTorrent="false">
+	siteName="www.acetorrents.net">
 
 	<settings>
 		<description text="Go to http://www.acetorrents.net/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

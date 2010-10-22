@@ -27,8 +27,7 @@
 	type="ug"
 	shortName="UG"
 	longName="Underground Gamer"
-	siteName="www.underground-gamer.com"
-	checkRegisteredTorrent="false">
+	siteName="www.underground-gamer.com">
 
 	<settings>
 		<cookie_description/>

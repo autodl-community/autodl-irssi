@@ -27,8 +27,7 @@
 	type="fux0r"
 	shortName="fux0r"
 	longName="fux0r"
-	siteName="hey.fux0r.eu"
-	checkRegisteredTorrent="false">
+	siteName="hey.fux0r.eu">
 
 	<settings>
 		<gazelle_description/>

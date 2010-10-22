@@ -27,8 +27,7 @@
 	type="ssc"
 	shortName="SSC"
 	longName="Sport-Scene"
-	siteName="www.sport-scene.net"
-	checkRegisteredTorrent="false">
+	siteName="www.sport-scene.net">
 
 	<settings>
 		<cookie_description/>

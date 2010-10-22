@@ -27,8 +27,7 @@
 	type="bg"
 	shortName="BG"
 	longName="bitGAMER"
-	siteName="www.bitgamer.com"
-	checkRegisteredTorrent="false">
+	siteName="www.bitgamer.com">
 
 	<settings>
 		<cookie_description/>

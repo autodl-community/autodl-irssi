@@ -27,8 +27,7 @@
 	type="tvt.ro"
 	shortName="TvT.ro"
 	longName="Tv TORRENTs ro"
-	siteName="freshon.tv"
-	checkRegisteredTorrent="false">
+	siteName="freshon.tv">
 
 	<settings>
 		<description text="Go to your user profile and copy the passkey and paste (Ctrl+V) it below."/>

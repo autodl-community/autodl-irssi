@@ -27,8 +27,7 @@
 	type="da"
 	shortName="DA"
 	longName="DarkAlliance"
-	siteName="darkalliance.co.uk"
-	checkRegisteredTorrent="false">
+	siteName="darkalliance.co.uk">
 
 	<settings>
 		<description text="Go to http://darkalliance.co.uk/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

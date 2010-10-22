@@ -27,8 +27,7 @@
 	type="ts"
 	shortName="TS"
 	longName="TorrentSeed"
-	siteName="torrentseed.org"
-	checkRegisteredTorrent="false">
+	siteName="torrentseed.org">
 
 	<settings>
 		<cookie_description/>

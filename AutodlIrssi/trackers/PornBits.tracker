@@ -27,8 +27,7 @@
 	type="pb"
 	shortName="PB"
 	longName="PornBits"
-	siteName="pornbits.net"
-	checkRegisteredTorrent="false">
+	siteName="pornbits.net">
 
 	<settings>
 		<description text="Go to http://pornbits.net/getrss.php to get the RSS feed link. Use Feed type 'Download link' and Login type 'Alternative (no cookies)'. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

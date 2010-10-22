@@ -27,8 +27,7 @@
 	type="tdc"
 	shortName="TDC"
 	longName="TheDVDClub"
-	siteName="thedvdclub.org"
-	checkRegisteredTorrent="false">
+	siteName="thedvdclub.org">
 
 	<settings>
 		<cookie_description/>

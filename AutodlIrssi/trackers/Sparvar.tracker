@@ -27,8 +27,7 @@
 	type="sparvar"
 	shortName="Sparvar"
 	longName="Sparvar"
-	siteName="www.sparvar.org"
-	checkRegisteredTorrent="false">
+	siteName="www.sparvar.org">
 
 	<settings>
 		<description text="Paste (Ctrl+V) any Sparvar torrent download link into the text box below to automatically extract authkey."/>

@@ -27,8 +27,7 @@
 	type="ipt"
 	shortName="IPT"
 	longName="IPTorrents"
-	siteName="www.iptorrents.com"
-	checkRegisteredTorrent="false">
+	siteName="www.iptorrents.com">
 
 	<settings>
 		<cookie_description text="FireFox -> Options -> Privacy -> Show Cookies and find the uid and pass cookies. Example: uid=1234; pass=asdf12347asdf13"/>

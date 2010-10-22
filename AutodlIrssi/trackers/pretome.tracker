@@ -27,8 +27,7 @@
 	type="ptm"
 	shortName="PTM"
 	longName="pretome"
-	siteName="preto.me"
-	checkRegisteredTorrent="false">
+	siteName="preto.me">
 
 	<settings>
 		<cookie_description/>

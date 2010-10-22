@@ -27,8 +27,7 @@
 	type="xnt"
 	shortName="XNT"
 	longName="excellent.nu"
-	siteName="xnt.nu"
-	checkRegisteredTorrent="false">
+	siteName="xnt.nu">
 
 	<settings>
 		<cookie_description/>

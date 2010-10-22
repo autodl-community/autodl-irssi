@@ -27,8 +27,7 @@
 	type="swarm"
 	shortName="SWARM"
 	longName="SWARM"
-	siteName="theswarm.me"
-	checkRegisteredTorrent="false">
+	siteName="theswarm.me">
 
 	<settings>
 		<gazelle_description/>

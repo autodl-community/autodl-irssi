@@ -27,8 +27,7 @@
 	type="bmtv"
 	shortName="BMTV"
 	longName="BitMeTV"
-	siteName="www.bitmetv.org"
-	checkRegisteredTorrent="false">
+	siteName="www.bitmetv.org">
 
 	<settings>
 		<cookie_description/>

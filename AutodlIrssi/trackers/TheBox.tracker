@@ -27,8 +27,7 @@
 	type="thebox"
 	shortName="TheBox"
 	longName="TheBox"
-	siteName="thebox.bz"
-	checkRegisteredTorrent="false">
+	siteName="thebox.bz">
 
 	<settings>
 		<cookie_description/>

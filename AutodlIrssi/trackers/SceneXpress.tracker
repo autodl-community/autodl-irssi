@@ -27,8 +27,7 @@
 	type="sex"
 	shortName="SeX"
 	longName="SceneXpress"
-	siteName="scenexpress.net"
-	checkRegisteredTorrent="false">
+	siteName="scenexpress.net">
 
 	<settings>
 		<description text="Paste (Ctrl+V) any SceneXpress torrent download link into the text box below to automatically extract passkey."/>

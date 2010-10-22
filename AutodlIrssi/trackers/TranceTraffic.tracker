@@ -27,8 +27,7 @@
 	type="tt"
 	shortName="TT"
 	longName="TranceTraffic"
-	siteName="www.trancetraffic.com"
-	checkRegisteredTorrent="false">
+	siteName="www.trancetraffic.com">
 
 	<settings>
 		<description text="Go to http://www.trancetraffic.com/links.php and copy the RSS feed (direct download) link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

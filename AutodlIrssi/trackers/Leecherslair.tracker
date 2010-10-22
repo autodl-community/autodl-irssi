@@ -27,8 +27,7 @@
 	type="ll"
 	shortName="LL"
 	longName="Leecherslair"
-	siteName="www.leecherslairywot.com"
-	checkRegisteredTorrent="false">
+	siteName="www.leecherslairywot.com">
 
 	<settings>
 		<cookie_description/>

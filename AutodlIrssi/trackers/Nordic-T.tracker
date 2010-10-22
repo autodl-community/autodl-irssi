@@ -27,8 +27,7 @@
 	type="nordict"
 	shortName="NORDICT"
 	longName="Nordic-T"
-	siteName="nordic-t.org"
-	checkRegisteredTorrent="false">
+	siteName="nordic-t.org">
 
 	<settings>
 		<cookie_description/>

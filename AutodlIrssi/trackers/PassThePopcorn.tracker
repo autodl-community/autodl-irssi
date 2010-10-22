@@ -28,8 +28,7 @@
 	type="ptp"
 	shortName="PtP"
 	longName="PassThePopcorn"
-	siteName="passthepopcorn.me"
-	checkRegisteredTorrent="false">
+	siteName="passthepopcorn.me">
 
 	<settings>
 		<gazelle_description/>

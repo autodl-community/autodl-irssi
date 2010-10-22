@@ -27,8 +27,7 @@
 	type="btn"
 	shortName="BTN"
 	longName="BTN"
-	siteName=""
-	checkRegisteredTorrent="false">
+	siteName="">
 
 	<settings>
 		<gazelle_description/>

@@ -27,8 +27,7 @@
 	type="what"
 	shortName="WHAT"
 	longName="What.CD"
-	siteName="what.cd"
-	checkRegisteredTorrent="false">
+	siteName="what.cd">
 
 	<settings>
 		<gazelle_description/>

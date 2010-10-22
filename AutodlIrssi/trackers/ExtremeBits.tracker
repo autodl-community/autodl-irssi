@@ -28,8 +28,7 @@
 	type="extremebits"
 	shortName="extremebits"
 	longName="ExtremeBits"
-	siteName="www.extremebits.org"
-	checkRegisteredTorrent="false">
+	siteName="www.extremebits.org">
 
 	<settings>
 		<description text="Go to http://www.extremebits.org/getrss.php to get your default rss link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

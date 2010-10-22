@@ -27,8 +27,7 @@
 	type="scc"
 	shortName="SCC"
 	longName="SceneAccess"
-	siteName="www.sceneaccess.org"
-	checkRegisteredTorrent="false">
+	siteName="www.sceneaccess.org">
 
 	<settings>
 		<description text="Paste (Ctrl+V) any SceneAccess torrent download link into the text box below to automatically extract authkey."/>

@@ -27,8 +27,7 @@
 	type="hdme"
 	shortName="HDME"
 	longName="HDME.eu"
-	siteName="hdme.eu"
-	checkRegisteredTorrent="false">
+	siteName="hdme.eu">
 
 	<settings>
 		<description text="Go to http://hdme.eu/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>

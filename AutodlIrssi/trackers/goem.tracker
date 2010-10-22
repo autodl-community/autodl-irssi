@@ -27,8 +27,7 @@
 	type="goem"
 	shortName="goem"
 	longName="goem"
-	siteName="goem.org"
-	checkRegisteredTorrent="false">
+	siteName="goem.org">
 
 	<settings>
 		<cookie_description/>

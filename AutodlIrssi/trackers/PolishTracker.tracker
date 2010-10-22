@@ -27,8 +27,7 @@
 	type="pt"
 	shortName="PT"
 	longName="PolishTracker"
-	siteName="polishtracker.org"
-	checkRegisteredTorrent="false">
+	siteName="polishtracker.org">
 
 	<settings>
 		<cookie_description/>

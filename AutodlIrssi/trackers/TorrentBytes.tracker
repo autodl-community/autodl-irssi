@@ -27,8 +27,7 @@
 	type="tby"
 	shortName="TBy"
 	longName="TorrentBytes"
-	siteName="www.torrentbytes.net"
-	checkRegisteredTorrent="false">
+	siteName="www.torrentbytes.net">
 
 	<settings>
 		<cookie_description/>

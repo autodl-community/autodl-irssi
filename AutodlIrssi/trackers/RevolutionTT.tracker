@@ -27,8 +27,7 @@
 	type="rtt"
 	shortName="RevoTT"
 	longName="RevolutionTT"
-	siteName="www.revolutiontt.net"
-	checkRegisteredTorrent="false">
+	siteName="www.revolutiontt.net">
 
 	<settings>
 		<description text="Paste (Ctrl+V) any RevolutionTT torrent download link into the text box below to automatically extract passkey."/>

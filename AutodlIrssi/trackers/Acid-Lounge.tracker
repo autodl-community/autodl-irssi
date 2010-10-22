@@ -27,8 +27,7 @@
 	type="al"
 	shortName="AL"
 	longName="Acid-Lounge"
-	siteName="www.acid-lounge.org.uk"
-	checkRegisteredTorrent="false">
+	siteName="www.acid-lounge.org.uk">
 
 	<settings>
 		<cookie_description/>

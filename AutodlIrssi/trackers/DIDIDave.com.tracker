@@ -27,8 +27,7 @@
 	type="ddt"
 	shortName="DDT"
 	longName="DIDIDave.com"
-	siteName="www.dididave.com"
-	checkRegisteredTorrent="false">
+	siteName="www.dididave.com">
 
 	<settings>
 		<cookie_description/>

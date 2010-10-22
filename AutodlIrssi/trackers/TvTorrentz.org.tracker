@@ -27,8 +27,7 @@
 	type="tvtz"
 	shortName="TVTZ"
 	longName="TvTorrentz.org"
-	siteName="tvtorrentz.org"
-	checkRegisteredTorrent="false">
+	siteName="tvtorrentz.org">
 
 	<settings>
 		<cookie_description/>

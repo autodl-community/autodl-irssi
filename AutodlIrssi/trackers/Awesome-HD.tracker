@@ -27,8 +27,7 @@
 	type="ahd"
 	shortName="AHD"
 	longName="Awesome-HD"
-	siteName="awesome-hd.net"
-	checkRegisteredTorrent="false">
+	siteName="awesome-hd.net">
 
 	<settings>
 		<gazelle_description/>
