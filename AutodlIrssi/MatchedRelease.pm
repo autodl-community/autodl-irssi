@@ -221,7 +221,7 @@ sub _onTorrentUploadWait {
 		$self->_onTorrentFileDownloaded();
 	}
 	else {
-		my $msg = "Waiting $uploadDelaySecs seconds before uploading/saving torrent ";
+		my $msg = "Waiting $uploadDelaySecs seconds. torrent ";
 		$msg .= $self->_getTorrentInfoString({
 			torrentName => $self->{ti}{torrentName},
 			announceParser => $self->{ti}{announceParser},
