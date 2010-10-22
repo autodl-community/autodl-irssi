@@ -205,18 +205,32 @@ sub new {
 sub setListenPort {
 	my ($self, $port) = @_;
 
-	$port = 0 if $port < 0 || $port > 0xFFFF;
-	return if $self->{port} == $port;
+	eval {
+		$port = 0 if $port < 0 || $port > 0xFFFF;
+		return if $self->{port} == $port;
 
-	my $address = LISTEN_ADDRESS;
-	$self->{serverSocket}->setAddress($address, $port);
-	$self->{port} = $port;
+		my $address = LISTEN_ADDRESS;
+		$self->{serverSocket}->setAddress($address, $port);
+		$self->{port} = $port;
 
-	if ($self->{port} != 0) {
-		message 3, "GUI server listening on $address:$port";
-	}
-	else {
-		message 3, "GUI server is disabled";
+		if ($self->{port} != 0) {
+			message 3, "GUI server listening on $address:$port";
+		}
+		else {
+			message 3, "GUI server is disabled";
+		}
+		if ($AutodlIrssi::g->{options}{guiServerPassword} eq "") {
+			message 0, "gui-server-password is blank or missing. All requests will be blocked!";
+		}
+	};
+	if ($@) {
+		chomp $@;
+		my $errorMessage = $@;
+		$self->{port} = 0;
+		eval {
+			$self->{serverSocket}->setAddress("", 0);
+		};
+		message 3, "GUI server disabled. Got error: $errorMessage";
 	}
 }
 
