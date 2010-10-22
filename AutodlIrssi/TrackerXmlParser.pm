@@ -51,6 +51,7 @@ sub parse {
 		siteName	=> $self->readAttribute($trackerinfoElem, "siteName", ""),
 		follow302	=> $self->readAttribute($trackerinfoElem, "follow302links", ""),
 		checkRegisteredTorrent => $self->readAttributeBoolean($trackerinfoElem, "checkRegisteredTorrent", ''),
+		deobfuscate	=> $self->readAttribute($trackerinfoElem, "deobfuscate", ""),
 	};
 	$self->{trackerInfo} = $trackerInfo;
 	die "Invalid trackerinfo.type\n" if $trackerInfo->{type} eq "";
