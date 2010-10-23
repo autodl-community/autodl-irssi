@@ -74,6 +74,7 @@
 			</http>
 		</linematched>
 		<ignore>
+			<regex value="^-$"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
