@@ -1,5 +1,6 @@
 
-This is an auto downloader for Irssi. It's a port of the ChatZilla auto downloader (autodl-cz) and has all of autodl-cz's features except scripting isn't supported, and there's no easy to use GUI. :) There's a program to convert autodl-cz's options file to a file understandable by autodl-irssi.
+This is an auto downloader for Irssi. It's a port of the ChatZilla auto downloader (autodl-cz) and has all of autodl-cz's features except scripting isn't supported. There's a program to convert autodl-cz's options file to a file understandable by autodl-irssi.
+
 
 Features:
 [*] Supports lots of trackers
@@ -14,6 +15,9 @@ Features:
 [*] Automatic updates.
 
 It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
+
+
+
 
 [b]Installation[/b]
 
@@ -48,6 +52,8 @@ use cpan: perl-Net-SSLeay perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
 [b]For other OSes[/b] try the cpan utility as root. You will probably also need a C compiler (gcc) installed:
 [code]cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA1 JSON JSON::XS XML::LibXSLT[/code]
 
+
+
 Now to install autodl-irssi. [b]Replace the url with the latest autodl-irssi release[/b]. Get the download URL from http://sourceforge.net/projects/autodl-irssi/ . Note: Make sure you're [b]not[/b] root when you're executing the following commands.
 [code]
 mkdir -p ~/.irssi/scripts/autorun
@@ -72,7 +78,44 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 /layout save
 /save[/code]
 
+
+
+[b]Installing the ruTorrent plugin[/b]
+
+Make sure ruTorrent is installed properly!
+
+You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/plugins
+
+[quote]
+cd /var/www/rutorrent/plugins
+sudo svn co https://autodl-irssi.svn.sourceforge.net/svnroot/autodl-irssi/trunk/rutorrent/autodl-irssi
+sudo cp autodl-irssi/_conf.php autodl-irssi/conf.php
+sudo chown -R www-data:www-data autodl-irssi
+[quote]
+
+This install assumes ruTorrent is used by one person (HTTP access). For multi-user setup (HTTPS access), you need to copy conf.php to the user directory and not to the plugin directory. Eg. you need to copy it to a path similar to /var/www/rutorrent/conf/users/YOUR-USER-NAME/plugins/autodl-irssi
+
+Edit conf.php with a text editor and add your port number and password. The port number should be a random number between 1024 and 65535 inclusive. The file should look something like this afterwards:
+
+[quote]
+<?php
+$autodlPort = AUTODL-PORT;
+$autodlPassword = "AUTODL-PASSWORD";
+?>
+[/quote]
+
+Open ~/.autodl/autodl.cfg with a text editor and add this to the file:
+[quote]
+[options]
+gui-server-port = AUTODL-PORT
+gui-server-password = AUTODL-PASSWORD
+[/quote]
+
+
+
 [b]The autodl.cfg file[/b]
+
+NOTE: If you're using the ruTorrent plugin, you don't need to read this! :D
 
 All filters and other options are read from ~/.autodl/autodl.cfg. If you use non-ASCII characters, be sure to set the encoding (or character coding) to UTF-8 before saving it. The file will be automatically re-read whenever you make any modifications to it when autodl-irssi is running.
 
@@ -463,6 +506,10 @@ Current date and time: [b]$(year)[/b], [b]$(month)[/b], [b]$(day)[/b], [b]$(hour
 [b]$(InfoHash)[/b] This is the "info hash" of the torrent file.
 
 The rest are possibly self explanatory: [b]$(Category)[/b], [b]$(TorrentName)[/b], [b]$(Uploader)[/b], [b]$(TorrentSize)[/b], [b]$(PreTime)[/b], [b]$(TorrentUrl)[/b], [b]$(TorrentSslUrl)[/b], [b]$(Season)[/b], [b]$(Episode)[/b], [b]$(Resolution)[/b], [b]$(Source)[/b], [b]$(Encoder)[/b], [b]$(Format)[/b], [b]$(Bitrate)[/b], [b]$(Media)[/b], [b]$(Tags)[/b], [b]$(Scene)[/b], [b]$(Log)[/b], [b]$(Cue)[/b]
+
+
+
+
 
 [b]Using autodl-cz's options[/b]
 This part explains how to re-use autodl-cz's options.
