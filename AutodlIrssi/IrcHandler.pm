@@ -45,10 +45,46 @@ sub new {
 		downloadHistory => $downloadHistory,
 	}, $class;
 
-	irssi_signal_add("event privmsg", sub { $self->onPrivmsg(@_) });
-	irssi_signal_add("event notice", sub { $self->onPrivmsg(@_) });
+	$self->_createSignalsTable();
+	$self->_installHandlers();
 
 	return $self;
+}
+
+sub cleanUp {
+	my $self = shift;
+
+	$self->_removeHandlers();
+
+	$self->{signals} = undef;	# Required so the handlers aren't holding a ref to us
+	$self->{trackerManager} = undef;
+	$self->{filterManager} = undef;
+	$self->{downloadHistory} = undef;
+}
+
+sub _createSignalsTable {
+	my $self = shift;
+
+	$self->{signals} = [
+		["event privmsg", sub { $self->onPrivmsg(@_) }],
+		["event notice", sub { $self->onPrivmsg(@_) }],
+	];
+}
+
+sub _installHandlers {
+	my $self = shift;
+
+	for my $info (@{$self->{signals}}) {
+		irssi_signal_add($info->[0], $info->[1]);
+	}
+}
+
+sub _removeHandlers {
+	my $self = shift;
+
+	for my $info (@{$self->{signals}}) {
+		irssi_signal_remove($info->[0], $info->[1]);
+	}
 }
 
 # Called on each PRIVMSG/NOTICE

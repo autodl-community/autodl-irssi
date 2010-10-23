@@ -41,6 +41,10 @@ sub new {
 	}, $class;
 }
 
+sub cleanUp {
+	my $self = shift;
+}
+
 sub setFilters {
 	my ($self, $filters) = @_;
 	$self->{filters} = $filters;

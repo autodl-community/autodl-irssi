@@ -36,13 +36,17 @@ use warnings;
 
 package AutodlIrssi::Irssi;
 use base qw/ Exporter/ ;
-our @EXPORT = qw/ irssi_signal_add irssi_print irssi_input_add irssi_input_remove
+our @EXPORT = qw/ irssi_signal_add irssi_signal_remove irssi_print irssi_input_add irssi_input_remove
 					irssi_timeout_add irssi_timeout_add_once irssi_pidwait_add irssi_channels
 					irssi_command irssi_command_bind /;
 our @EXPORT_OK = qw//;
 
 sub irssi_signal_add {
 	goto &Irssi::Script::autodl_irssi::irssi_signal_add;
+}
+
+sub irssi_signal_remove {
+	goto &Irssi::Script::autodl_irssi::irssi_signal_remove;
 }
 
 sub irssi_print {
@@ -94,6 +98,11 @@ use Irssi;
 sub irssi_signal_add {
 	no warnings;
 	return &Irssi::signal_add(@_);
+}
+
+sub irssi_signal_remove {
+	no warnings;
+	return &Irssi::signal_remove(@_);
 }
 
 sub irssi_print {

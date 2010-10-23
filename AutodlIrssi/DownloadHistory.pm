@@ -42,6 +42,10 @@ sub new {
 	}, $class;
 }
 
+sub cleanUp {
+	my $self = shift;
+}
+
 sub getNumFiles {
 	return scalar keys %{shift->{downloaded}};
 }

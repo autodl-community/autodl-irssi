@@ -41,12 +41,46 @@ sub new {
 		trackerManager => $trackerManager,
 	}, $class;
 
-	irssi_signal_add("server disconnected", sub { $self->_onMessageDisconnect(@_) });
-	irssi_signal_add("message join", sub { $self->_onMessageJoin(@_) });
-	irssi_signal_add("message part", sub { $self->_onMessagePart(@_) });
-	irssi_signal_add("message kick", sub { $self->_onMessageKick(@_) });
+	$self->_createSignalsTable();
+	$self->_installHandlers();
 
 	return $self;
+}
+
+sub cleanUp {
+	my $self = shift;
+
+	$self->_removeHandlers();
+
+	$self->{signals} = undef;	# Required so the handlers aren't holding a ref to us
+	$self->{trackerManager} = undef;
+}
+
+sub _createSignalsTable {
+	my $self = shift;
+
+	$self->{signals} = [
+		["server disconnected", sub { $self->_onMessageDisconnect(@_) }],
+		["message join", sub { $self->_onMessageJoin(@_) }],
+		["message part", sub { $self->_onMessagePart(@_) }],
+		["message kick", sub { $self->_onMessageKick(@_) }],
+	];
+}
+
+sub _installHandlers {
+	my $self = shift;
+
+	for my $info (@{$self->{signals}}) {
+		irssi_signal_add($info->[0], $info->[1]);
+	}
+}
+
+sub _removeHandlers {
+	my $self = shift;
+
+	for my $info (@{$self->{signals}}) {
+		irssi_signal_remove($info->[0], $info->[1]);
+	}
 }
 
 # Returns the channel if it exists

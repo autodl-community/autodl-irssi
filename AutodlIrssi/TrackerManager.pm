@@ -45,6 +45,10 @@ sub new {
 	}, $class;
 }
 
+sub cleanUp {
+	my $self = shift;
+}
+
 # Returns the number of trackers we support.
 sub getNumberOfTrackers {
 	return scalar keys %{shift->{announceParsers}};

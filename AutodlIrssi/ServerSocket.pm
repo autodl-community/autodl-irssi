@@ -36,6 +36,13 @@ use AutodlIrssi::Socket;
 use AutodlIrssi::Globals;
 use Socket;
 
+sub cleanUp {
+	my $self = shift;
+
+	$self->setHandler();
+	$self->setAddress('', 0);
+}
+
 # handler gets called for each new connection
 sub setHandler {
 	my ($self, $handler) = @_;

@@ -201,6 +201,12 @@ sub new {
 	return $self;
 }
 
+sub cleanUp {
+	my $self = shift;
+
+	$self->{serverSocket}->cleanUp();
+}
+
 # If port is 0 or invalid, the server is disabled
 sub setListenPort {
 	my ($self, $port) = @_;

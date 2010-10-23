@@ -103,14 +103,29 @@ sub enable {
 
 # Called when we're disabled
 sub disable {
-	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now disabled! ;-(";
+	eval {
+		message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now disabled! ;-(";
 
-	saveAutodlState();
-	$AutodlIrssi::g->{tempFiles}->deleteAll();
+		saveAutodlState();
+		$AutodlIrssi::g->{tempFiles}->deleteAll() if $AutodlIrssi::g->{tempFiles};
 
-	# Free the SSL_CTX created by SslSocket
-	if (defined $AutodlIrssi::g->{ssl_ctx}) {
-		Net::SSLeay::CTX_free($AutodlIrssi::g->{ssl_ctx});
+		# Free the SSL_CTX created by SslSocket
+		if (defined $AutodlIrssi::g->{ssl_ctx}) {
+			Net::SSLeay::CTX_free($AutodlIrssi::g->{ssl_ctx});
+		}
+
+		$AutodlIrssi::g->{ircHandler}->cleanUp() if $AutodlIrssi::g->{ircHandler};
+		$AutodlIrssi::g->{guiServer}->cleanUp() if $AutodlIrssi::g->{guiServer};
+		$AutodlIrssi::g->{channelMonitor}->cleanUp() if $AutodlIrssi::g->{channelMonitor};
+		$AutodlIrssi::g->{activeConnections}->cleanUp() if $AutodlIrssi::g->{activeConnections};
+		$AutodlIrssi::g->{tempFiles}->cleanUp() if $AutodlIrssi::g->{tempFiles};
+		$AutodlIrssi::g->{filterManager}->cleanUp() if $AutodlIrssi::g->{filterManager};
+		$AutodlIrssi::g->{downloadHistory}->cleanUp() if $AutodlIrssi::g->{downloadHistory};
+		$AutodlIrssi::g->{trackerManager}->cleanUp() if $AutodlIrssi::g->{trackerManager};
+	};
+	if ($@) {
+		chomp $@;
+		message 0, "disable: ex: $@";
 	}
 }
 

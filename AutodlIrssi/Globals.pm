@@ -60,10 +60,15 @@ sub currentTime {
 	return time();
 }
 
+sub getLevel {
+	return 3 unless defined $AutodlIrssi::g;
+	return $AutodlIrssi::g->{options}{level};
+}
+
 sub message {
 	my ($level, $msg) = @_;
 
-	if ($level <= $AutodlIrssi::g->{options}{level}) {
+	if ($level <= getLevel()) {
 		$msg = "\x0300,04 ERROR: \x03 $msg" if $level == 0;
 		$msg =~ s/%/%%/g;
 

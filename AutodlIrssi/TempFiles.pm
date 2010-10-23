@@ -41,6 +41,10 @@ sub new {
 	}, $class;
 }
 
+sub cleanUp {
+	my $self = shift;
+}
+
 # Add a file to be deleted
 sub add {
 	my ($self, $pathname) = @_;

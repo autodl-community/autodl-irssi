@@ -44,6 +44,10 @@ sub new {
 	}, $class;
 }
 
+sub cleanUp {
+	my $self = shift;
+}
+
 # Adds the connection, returning a unique id that should be passed to remove(). This method should
 # be called in the constructor.
 sub add {
