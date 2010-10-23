@@ -13,6 +13,7 @@ Features:
 [*] Torrents are downloaded in the background so Irssi isn't blocked.
 [*] SSL downloads can be forced.
 [*] Automatic updates.
+[*] ruTorrent plugin.
 
 It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
