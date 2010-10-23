@@ -358,7 +358,6 @@ sub doHeaderTracker {
 		my $trackerType = $header->{name};
 		my $announceParser = $self->{trackerManager}->findAnnounceParserFromType($trackerType);
 		if (!defined $announceParser) {
-			$self->error($header->{lineNumber}, "Unknown tracker type '$trackerType'");
 			next;
 		}
 
