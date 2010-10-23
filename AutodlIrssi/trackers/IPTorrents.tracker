@@ -46,13 +46,13 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[IPT] Shakespeare In Love 1998 BRRip(1120x480) x264 GokU61 ( http://www.iptorrents.com/details.php?id=377461 )-->
-				<!--[IPT] [REQ] Birdemic 2008 DVDRip mp4 AAC ( http://www.iptorrents.com/details.php?id=377470 )-->
-				<!--[IPT] PSP Game Pack #3 [5 00M33-6][Patched] [color=red][FreeLeech][/color] ( http://www.iptorrents.com/details.php?id=377477 )-->
-				<!--[ANIME] Occult Academy - Episode 13 [CyRox] ( http://www.iptorrents.com/details.php?id=377248 )-->
-				<regex value="^\[([^\]]+)]\s*(?:\[REQ])?(.*?)(?:\[color=red]\[FreeLeech]\[/color])?\s*\(\s*https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
+				<!--[Category: Movies/XviD] [Size: 815.357 MB] [Added: 2010-10-23 09:01:47] Wall Street Money Never Sleeps 2010 R5 LiNE XViD-MC8 (http://www.iptorrents.com/details.php?id=386366)-->
+				<!--[Category: Appz/misc] [Size: 107.491 MB] [Added: 2010-10-23 08:59:47] Mystery of the Earl v0 1 3945 49747-TE (http://www.iptorrents.com/details.php?id=386365)-->
+				<!--[Category: TV &gt; Episodes] [Size: 2.225 GB] [Added: 2010-10-23 08:57:48] WWE Friday Night Smackdown 2010 10 22 720p HDTV x264-KYR (http://www.iptorrents.com/details.php?id=386364)-->
+				<regex value="^\s*\[Category:([^\]]+)][^\[]*\[Size:([^\]]+)][^\[]*\[Added:[^\]]+](.*)\(\s*https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
+					<var name="torrentSize"/>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
