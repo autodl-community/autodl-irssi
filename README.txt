@@ -1,9 +1,9 @@
 
-This is an auto downloader for Irssi. It's a port of the ChatZilla auto downloader (autodl-cz) and has all of autodl-cz's features except scripting isn't supported. There's a program to convert autodl-cz's options file to a file understandable by autodl-irssi.
+This is an auto downloader for Irssi. It's a port of the ChatZilla auto downloader (autodl-cz) and has all of autodl-cz's features except scripting isn't supported.
 
 
 Features:
-[*] Supports lots of trackers
+[*] Supports your favorite tracker
 [*] Advanced but easy to use filters. No complicated regex required, not even wildcards for TV shows and movies.
 [*] Some of the filters: release, size, tracker, resolution, source (eg. BluRay), category, format (eg. FLAC), bitrate, and many more.
 [*] Torrent can be saved to a watch directory, or uploaded to uTorrent webui or an FTP server.
@@ -16,6 +16,11 @@ Features:
 [*] ruTorrent plugin.
 
 It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
+
+[URL=http://img833.imageshack.us/i/filters1.png/][IMG]http://img833.imageshack.us/img833/3294/filters1.png[/IMG][/URL]
+[URL=http://img197.imageshack.us/i/filters2.png/][IMG]http://img197.imageshack.us/img197/8026/filters2.png[/IMG][/URL]
+[URL=http://img87.imageshack.us/i/filters3.png/][IMG]http://img87.imageshack.us/img87/9039/filters3.png[/IMG][/URL]
+[URL=http://img33.imageshack.us/i/preferencesf.png/][IMG]http://img33.imageshack.us/img33/5206/preferencesf.png[/IMG][/URL]
 
 
 
@@ -55,11 +60,12 @@ use cpan: perl-Net-SSLeay perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
 
 
 
-Now to install autodl-irssi. [b]Replace the url with the latest autodl-irssi release[/b]. Get the download URL from http://sourceforge.net/projects/autodl-irssi/ . Note: Make sure you're [b]not[/b] root when you're executing the following commands.
+
+Now to install autodl-irssi. Note: Make sure you're [b]not[/b] root when you're executing the following commands.
 [code]
 mkdir -p ~/.irssi/scripts/autorun
 cd ~/.irssi/scripts
-wget https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.04.zip/download
+wget https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.05.zip/download
 unzip -o autodl-irssi-v*.zip
 rm autodl-irssi-v*.zip
 cp autodl-irssi.pl autorun/
@@ -85,7 +91,7 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 
 Make sure ruTorrent is installed properly!
 
-You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/plugins
+You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/
 
 [quote]
 cd /var/www/rutorrent/plugins
