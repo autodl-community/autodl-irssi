@@ -93,30 +93,30 @@ Make sure ruTorrent is installed properly!
 
 You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/
 
-[quote]
+[code]
 cd /var/www/rutorrent/plugins
 sudo svn co https://autodl-irssi.svn.sourceforge.net/svnroot/autodl-irssi/trunk/rutorrent/autodl-irssi
 sudo cp autodl-irssi/_conf.php autodl-irssi/conf.php
 sudo chown -R www-data:www-data autodl-irssi
-[quote]
+[/code]
 
 This install assumes ruTorrent is used by one person (HTTP access). For multi-user setup (HTTPS access), you need to copy conf.php to the user directory and not to the plugin directory. Eg. you need to copy it to a path similar to /var/www/rutorrent/conf/users/YOUR-USER-NAME/plugins/autodl-irssi
 
 Edit conf.php with a text editor and add your port number and password. The port number should be a random number between 1024 and 65535 inclusive. The file should look something like this afterwards:
 
-[quote]
+[code]
 <?php
 $autodlPort = AUTODL-PORT;
 $autodlPassword = "AUTODL-PASSWORD";
 ?>
-[/quote]
+[/code]
 
 Open ~/.autodl/autodl.cfg with a text editor and add this to the file:
-[quote]
+[code]
 [options]
 gui-server-port = AUTODL-PORT
 gui-server-password = AUTODL-PASSWORD
-[/quote]
+[/code]
 
 
 
