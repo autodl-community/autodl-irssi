@@ -89,7 +89,7 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 
 [b]Installing the ruTorrent plugin[/b]
 
-Make sure ruTorrent is installed properly!
+Make sure ruTorrent is installed properly! Also make sure it's the latest version of ruTorrent. It needs ruTorrent 3.1 subversion revision r1466 (or later version) since that version added the 'tabbar' CSS class.
 
 You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/
 
