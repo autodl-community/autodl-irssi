@@ -32,6 +32,8 @@
 	<settings>
 		<description text="Get the Client RSS link and paste it below."/>
 		<passkey
+			pasteRegex="pk=([a-fA-F\d]+)"
+			tooltiptext="Your passkey"
 			/>
 	</settings>
 
