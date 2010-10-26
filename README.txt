@@ -118,6 +118,10 @@ gui-server-port = AUTODL-PORT
 gui-server-password = AUTODL-PASSWORD
 [/code]
 
+The required PHP modules are sockets, json, and xml. They're usually installed by default. FreeBSD users need to install them:
+
+[code]pkg_add -r php5-sockets php5-json php5-xml[/code]
+
 
 
 [b]The autodl.cfg file[/b]
