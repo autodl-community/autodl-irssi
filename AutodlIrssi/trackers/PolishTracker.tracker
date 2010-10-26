@@ -80,11 +80,7 @@
 		</linepatterns>
 		<linematched>
 			<var name="torrentUrl">
-				<string value="http://"/>
-				<var name="$baseUrl"/>
-				<string value=":"/>
-				<var name="port"/>
-				<string value="/download.php/"/>
+				<string value="https://polishtracker.org/download.php/"/>
 				<var name="$torrentId"/>
 				<string value="/"/>
 				<varenc name="torrentName"/>
@@ -94,11 +90,7 @@
 				<var name="cookie"/>
 			</http>
 			<http name="Referer">
-				<string value="http://"/>
-				<var name="$baseUrl"/>
-				<string value=":"/>
-				<var name="port"/>
-				<string value="/"/>
+				<string value="https://polishtracker.org/browse.php"/>
 			</http>
 		</linematched>
 		<ignore>
