@@ -41,7 +41,7 @@
 		<server
 			network="xtremespeeds.net"
 			serverNames="irc.xtremespeeds.net"
-			channelNames="#xtremespeeds"
+			channelNames="#xtremespeeds,#announce"
 			announcerNames="Announce"
 			/>
 	</servers>
