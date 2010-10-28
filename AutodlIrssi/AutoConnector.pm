@@ -625,17 +625,18 @@ sub _joinChannels {
 		$channels->{$channelName} = $channel;
 	}
 
+	my $currentTime = time();
 	while (my ($key, $channelInfo) = each %{$self->{info}{channels}}) {
 		my $channelName = canonicalizeChannelName($channelInfo->{name});
 		my $channel = $channels->{$channelName};
 
 		my $channelState = $self->{channelState}{$channelName};
+		$self->{channelState}{$channelName} = $channelState = {} unless defined $channelState;
 		if ($channel && $channel->{joined}) {
 			delete $channelState->{sentJoin};
 			next;
 		}
 
-		my $currentTime = time();
 		if (defined $channelState->{sentJoin}) {
 			my $elapsedTime = $currentTime - $channelState->{sentJoin};
 			next if $elapsedTime < JOIN_WAIT_SECS;
