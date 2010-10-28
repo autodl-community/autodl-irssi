@@ -37,8 +37,8 @@ use warnings;
 package AutodlIrssi::Irssi;
 use base qw/ Exporter/ ;
 our @EXPORT = qw/ irssi_signal_add irssi_signal_remove irssi_print irssi_input_add irssi_input_remove
-					irssi_timeout_add irssi_timeout_add_once irssi_pidwait_add irssi_channels
-					irssi_command irssi_command_bind /;
+					irssi_timeout_add irssi_timeout_add_once irssi_timeout_remove irssi_pidwait_add
+					irssi_servers irssi_reconnects irssi_channels irssi_command irssi_command_bind /;
 our @EXPORT_OK = qw//;
 
 sub irssi_signal_add {
@@ -69,8 +69,20 @@ sub irssi_timeout_add_once {
 	goto &Irssi::Script::autodl_irssi::irssi_timeout_add_once;
 }
 
+sub irssi_timeout_remove {
+	goto &Irssi::Script::autodl_irssi::irssi_timeout_remove;
+}
+
 sub irssi_pidwait_add {
 	goto &Irssi::Script::autodl_irssi::irssi_pidwait_add;
+}
+
+sub irssi_servers {
+	goto &Irssi::Script::autodl_irssi::irssi_servers;
+}
+
+sub irssi_reconnects {
+	goto &Irssi::Script::autodl_irssi::irssi_reconnects;
 }
 
 sub irssi_channels {
@@ -130,9 +142,24 @@ sub irssi_timeout_add_once {
 	return &Irssi::timeout_add_once(@_);
 }
 
+sub irssi_timeout_remove {
+	no warnings;
+	return &Irssi::timeout_remove(@_);
+}
+
 sub irssi_pidwait_add {
 	no warnings;
 	return &Irssi::pidwait_add(@_);
+}
+
+sub irssi_servers {
+	no warnings;
+	return &Irssi::servers(@_);
+}
+
+sub irssi_reconnects {
+	no warnings;
+	return &Irssi::reconnects(@_);
 }
 
 sub irssi_channels {

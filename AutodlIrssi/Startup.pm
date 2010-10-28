@@ -47,6 +47,7 @@ use AutodlIrssi::ChannelMonitor;
 use AutodlIrssi::Updater;
 use AutodlIrssi::AutodlState;
 use AutodlIrssi::GuiServer;
+use AutodlIrssi::AutoConnector;
 use Net::SSLeay qw//;
 
 #
@@ -87,6 +88,7 @@ sub enable {
 	$AutodlIrssi::g->{activeConnections} = new AutodlIrssi::ActiveConnections();
 	$AutodlIrssi::g->{channelMonitor} = new AutodlIrssi::ChannelMonitor($AutodlIrssi::g->{trackerManager});
 	$AutodlIrssi::g->{guiServer} = new AutodlIrssi::GuiServer();
+	$AutodlIrssi::g->{autoConnector} = new AutodlIrssi::AutoConnector();
 
 	reloadTrackerFiles();
 	reloadAutodlConfigFile();
@@ -114,6 +116,7 @@ sub disable {
 			Net::SSLeay::CTX_free($AutodlIrssi::g->{ssl_ctx});
 		}
 
+		$AutodlIrssi::g->{autoConnector}->cleanUp() if $AutodlIrssi::g->{autoConnector};
 		$AutodlIrssi::g->{ircHandler}->cleanUp() if $AutodlIrssi::g->{ircHandler};
 		$AutodlIrssi::g->{guiServer}->cleanUp() if $AutodlIrssi::g->{guiServer};
 		$AutodlIrssi::g->{channelMonitor}->cleanUp() if $AutodlIrssi::g->{channelMonitor};
@@ -236,6 +239,7 @@ sub forceReloadAutodlConfigFile {
 		$AutodlIrssi::g->{filterManager}->setFilters($configFileParser->getFilters());
 		$AutodlIrssi::g->{options} = $configFileParser->getOptions();
 		$AutodlIrssi::g->{guiServer}->setListenPort($AutodlIrssi::g->{options}{guiServerPort});
+		$AutodlIrssi::g->{autoConnector}->setServers($configFileParser->getServers());
 	};
 	if ($@) {
 		message 0, "Error when reading autodl.cfg: " . formatException($@);

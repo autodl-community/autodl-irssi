@@ -83,6 +83,7 @@ sub new {
 	$self->{trackerManager} = $trackerManager;
 	$self->{filters} = [];
 	$self->{options} = defaultOptions();
+	$self->{servers} = {};
 
 	return $self;
 }
@@ -93,6 +94,10 @@ sub getFilters {
 
 sub getOptions {
 	return shift->{options};
+}
+
+sub getServers {
+	return shift->{servers};
 }
 
 sub parse {
@@ -115,6 +120,12 @@ sub parse {
 		}
 		elsif ($headerType eq 'tracker') {
 			$self->doHeaderTracker($aryHeader);
+		}
+		elsif ($headerType eq 'server') {
+			$self->doHeaderServer($aryHeader);
+		}
+		elsif ($headerType eq 'channel') {
+			$self->doHeaderChannel($aryHeader);
 		}
 		else {
 			$self->doHeaderUnknown($aryHeader, $headerType);
@@ -158,6 +169,13 @@ sub mergeHeaderOptions {
 	}
 
 	return $options;
+}
+
+sub readOption {
+	my ($self, $options, $name) = @_;
+	my $option = $options->{$name};
+	return unless defined $option;
+	return $option->{value};
 }
 
 sub setOptions {
@@ -384,6 +402,75 @@ sub doHeaderUnknown {
 	my ($self, $aryHeader, $headerType) = @_;
 	for my $header (@$aryHeader) {
 		$self->error($header->{lineNumber}, "Unknown header '$headerType'");
+	}
+}
+
+sub getServerInfo {
+	my ($self, $serverName) = @_;
+
+	$serverName = canonicalizeServerName($serverName);
+	my $serverInfo = $self->{servers}{$serverName};
+	if (!defined $serverInfo) {
+		$self->{servers}{$serverName} = $serverInfo = {
+			server => $serverName,
+			port => "",
+			ssl => "",
+			nick => "",
+			identPassword => "",
+			identEmail => "",
+			channels => {},
+		};
+	}
+	return $serverInfo;
+}
+
+sub doHeaderServer {
+	my ($self, $aryHeader) = @_;
+
+	for my $header (@$aryHeader) {
+		my $serverInfo = $self->getServerInfo($header->{name});
+		$self->setOptions('SERVER', $serverInfo, $header->{options}, {
+			port => 'port',
+			ssl => 'ssl',
+			nick => 'nick',
+			'ident-password' => 'identPassword',
+			'ident-email' => 'identEmail',
+		});
+	}
+}
+
+sub doHeaderChannel {
+	my ($self, $aryHeader) = @_;
+
+	for my $header (@$aryHeader) {
+		my $serverInfo = $self->getServerInfo($header->{name});
+
+		my $channelName = canonicalizeChannelName($self->readOption($header->{options}, 'name') || "");
+		if ($channelName !~ /^#/) {
+			$self->error($header->{lineNumber}, "Invalid or missing channel name");
+			next;
+		}
+
+		my $channelInfo = $serverInfo->{channels}{$channelName};
+		if (!defined $channelInfo) {
+			$serverInfo->{channels}{$channelName} = $channelInfo = {
+				name => "",
+				inviteCommand => "",
+				inviteHttpData => "",
+				inviteHttpHeader => "",
+				inviteHttpUrl => "",
+				password => "",
+			};
+		}
+
+		$self->setOptions('CHANNEL', $channelInfo, $header->{options}, {
+			name => 'name',
+			'invite-command' => 'inviteCommand',
+			'invite-http-data' => 'inviteHttpData',
+			'invite-http-header' => 'inviteHttpHeader',
+			'invite-http-url' => 'inviteHttpUrl',
+			password => 'password',
+		});
 	}
 }
 
