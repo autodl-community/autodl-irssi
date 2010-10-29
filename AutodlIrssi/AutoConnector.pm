@@ -22,7 +22,9 @@
 #
 # ***** END LICENSE BLOCK *****
 
-# Auto connects to IRC servers and channels. Also sends identify commands.
+# Auto connects to IRC servers and channels. Also sends identify commands and invite requests.
+# It's possible to let Irssi do this but unfortunately it works 99% of the time, not the required
+# 100%. This needs to be 100% automatic.
 
 use 5.008;
 use strict;
@@ -400,7 +402,12 @@ sub _onWaitNickServReply {
 			$handler->(1);
 		}
 		else {
+			return unless canonicalizeServerName($irssiServer->{address}) eq $self->{info}{server};
 			return unless compareNicks(NICKSERV_NICK, $nick);
+			return if $line =~ /Your nickname does not appear to be registered/;
+			return if $line =~ /This nickname is registered and protected/;
+			return if $line =~ /nick, type /;
+			return if $line =~ /please choose a different/;
 
 			$self->{nickServLines} = [$line];
 			$self->_removeNoticeHandlerWithTimeout();
@@ -426,6 +433,7 @@ sub _onWaitNickServNextLine {
 			$handler->(0, $lines);
 		}
 		else {
+			return unless canonicalizeServerName($irssiServer->{address}) eq $self->{info}{server};
 			return unless compareNicks(NICKSERV_NICK, $nick);
 
 			push @{$self->{nickServLines}}, $line;
