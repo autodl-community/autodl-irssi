@@ -27,7 +27,8 @@
 	type="db"
 	shortName="DB"
 	longName="DanishBits"
-	siteName="danishbits.org">
+	siteName="danishbits.org"
+	ignore404="true">
 
 	<settings>
 		<description text="Go to https://danishbits.org/links.php and copy the RSS feed (direct download) link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
