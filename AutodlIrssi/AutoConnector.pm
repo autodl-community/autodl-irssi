@@ -408,6 +408,8 @@ sub _onWaitNickServReply {
 			return if $line =~ /This nickname is registered and protected/;
 			return if $line =~ /nick, type /;
 			return if $line =~ /please choose a different/;
+			return if $line =~ /you do not change/;
+			return if $line =~ /NickServ/;
 
 			$self->{nickServLines} = [$line];
 			$self->_removeNoticeHandlerWithTimeout();
@@ -587,7 +589,7 @@ sub _ghostReply {
 				},
 				{
 					code	=> "ghostkilled",
-					regex	=> qr/has been killed/,
+					regex	=> qr/(?:has been killed|has been ghosted)/,
 				},
 			]);
 
@@ -648,7 +650,7 @@ sub _identifyReply {
 				},
 				{
 					code	=> "identified",
-					regex	=> qr/^(?:Password accepted|You are now identified|You have identified as)/,
+					regex	=> qr/^(?:[Pp]assword accepted|You are now identified|You have identified as)/,
 				},
 				{
 					code	=> "badpassword",
