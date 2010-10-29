@@ -107,16 +107,72 @@ sub compareNicks {
 	return substr($nick1, 0, MAX_NICK_LENGTH) eq substr($nick2, 0, MAX_NICK_LENGTH);
 }
 
-sub new {
-	my ($class, $info, $noticeObservable) = @_;
+# Returns a command string, eg. "/msg blah asdf" => "msg blah asdf"
+sub fixCommandString {
+	my $s = shift;
+	return $s if substr($s, 0, 1) ne "/";
+	return substr $s, 1;
+}
+
+sub fixUserCommand {
+	my $userCmd = shift;
+
+	$userCmd = fixCommandString($userCmd);
+	if ($userCmd =~ /^(?:echo|msg|quote)\s/i) {
+		# Allowed
+	}
+	else {
+		$userCmd = "quote $userCmd";
+	}
+
+	return "/$userCmd";
+}
+
+sub _fixServerInfo {
+	my $info = shift;
 
 	$info->{nick} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{server} = canonicalizeServerName($info->{server});
+	$info->{identPassword} =~ s/[\x00-\x1F\s]/_/g;
+	$info->{identEmail} =~ s/[\x00-\x1F\s]/_/g;
+	$info->{ssl} = convertStringToBoolean($info->{ssl});
 
-	bless {
-		info => $info,
+	$info->{port} = convertStringToInteger($info->{port}, undef, 1, 65535);
+	if (!defined $info->{port}) {
+		if ($info->{ssl}) {
+			$info->{port} = 6697;
+		}
+		else {
+			$info->{port} = 6667;
+		}
+	}
+
+	while (my ($key, $channelInfo) = each %{$info->{channels}}) {
+		$channelInfo->{name} =~ s/[\x00-\x1F\s]/_/g;
+		$channelInfo->{name} = "#$channelInfo->{name}" unless $channelInfo->{name} =~ /^#/;
+		$channelInfo->{password} =~ s/[\x00-\x1F\s]/_/g;
+		$channelInfo->{inviteCommand} = fixUserCommand($channelInfo->{inviteCommand});
+	}
+
+	return $info;
+}
+
+sub new {
+	my ($class, $info, $noticeObservable) = @_;
+
+	my $self = bless {
 		noticeObservable => $noticeObservable,
 	}, $class;
+
+	$self->{info} = _fixServerInfo($info),
+
+	return $self;
+}
+
+sub cleanUp {
+	my $self = shift;
+	$self->_cleanUpConnectionVars();
+	$self->{noticeObservable} = undef;
 }
 
 sub _message {
@@ -128,30 +184,83 @@ sub command {
 	my ($self, $command) = @_;
 
 	my $server = $self->_findServer();
-	if (!defined $server) {
-		$self->_message(0, "Could not find server");
-		return;
-	}
-
+	return unless defined $server;
 	$server->command($command);
 }
 
-sub cleanUp {
+sub setServerInfo {
+	my ($self, $info) = @_;
+
+	_fixServerInfo($info);
+
+	if ($self->{info}{port} != $info->{port} || $self->{info}{ssl} != $info->{ssl}) {
+		$self->_message(3, "Connection settings changed. Reconnecting!");
+
+		# Disconnect BEFORE we set the new server info or we won't be able to find the server
+		# if the port got changed.
+		$self->disconnect();
+
+		$self->{info} = $info;
+		$self->connect();
+	}
+	elsif (!compareNicks($self->{info}{nick}, $info->{nick}) ||
+			$self->{info}{identPassword} ne $info->{identPassword}) {
+		$self->_cleanUpNickVars();
+		$self->{info} = $info;
+		$self->_setNick();
+	}
+	else {
+		# Quick test to see if we added channels. Not perfect, and if it fails, the new channels will
+		# be joined after a few seconds.
+		my $forceJoin = keys %{$self->{info}{channels}} != keys %{$info->{channels}};
+		$self->{info} = $info;
+		$self->_joinChannels() if $forceJoin;
+	}
+}
+
+sub disconnect {
 	my $self = shift;
+
+	if ($self->_findServer()) {
+		$self->command("disconnect");
+	}
+	elsif (my $reconnect = $self->_findReconnect()) {
+		irssi_command("disconnect RECON-$reconnect->{tag}");
+	}
+	else {
+		# This could happen if the server is still in the connection state. It doesn't seem to be
+		# possible to find a server in that state.
+		$self->_message(0, "Could not disconnect. Server not found.");
+	}
+
+	# Make sure everything is cleaned up
 	$self->_cleanUpConnectionVars();
-	$self->{noticeObservable} = undef;
 }
 
 sub _getServerPort {
 	my $self = shift;
-	return $self->{info}{port} if $self->{info}{port} ne "";
-	return 6697 if $self->{info}{ssl};
-	return 6667;
+	return return $self->{info}{port};
 }
 
 sub _getServerName {
 	my $self = shift;
 	return canonicalizeServerName($self->{info}{server});
+}
+
+sub _getChannels {
+	my $self = shift;
+
+	my $channels = {};
+	my $server = $self->_findServer();
+	return $channels unless defined $server;
+
+	my @serverChannels = eval { no warnings; return $server->channels(); };
+	for my $channel (@serverChannels) {
+		my $channelName = canonicalizeChannelName($channel->{name});
+		$channels->{$channelName} = $channel;
+	}
+
+	return $channels;
 }
 
 # Returns the Irssi server reconnection if available or undef if none was found
@@ -195,11 +304,19 @@ sub _cleanUpConnectionVars {
 	$self->{nickServLines} = undef;
 	delete $self->{channelState};
 	delete $self->{fullyConnected};
+	delete $self->{registerStart};
+	delete $self->{changingNickTime};
+	$self->_cleanUpNickVars();
+}
+
+sub _cleanUpNickVars {
+	my $self = shift;
+
+	$self->_removeNoticeHandler();
+	$self->_removeTimerHandler();
+	delete $self->{changingNick};
 	delete $self->{hasTriedRegisterNick};
 	delete $self->{numTimesSentIdentify};
-	delete $self->{registerStart};
-	delete $self->{changingNick};
-	delete $self->{changingNickTime};
 	delete $self->{changingNickStart};
 }
 
@@ -395,10 +512,7 @@ sub _onRetryNickCommand {
 sub _onNewNickName {
 	my ($self, $newNick) = @_;
 
-	delete $self->{changingNick};
-	delete $self->{hasTriedRegisterNick};
-	delete $self->{numTimesSentIdentify};
-	delete $self->{changingNickStart};
+	$self->_cleanUpNickVars();
 	$self->_setNick();
 }
 
@@ -649,7 +763,7 @@ sub _registerReply {
 				}
 			}
 			elsif ($code eq 'registered') {
-				$self->_message(3, "Registered nick!");
+				$self->_message(3, "Registered nick! NickServ reply:\n" . join("\n", @$lines));
 			}
 			elsif ($code eq 'alreadyregistered') {
 				$self->_message(0, "Can't register nick! It's already been registered!");
@@ -667,13 +781,6 @@ sub _registerReply {
 	}
 }
 
-# Returns a command string, eg. "/msg blah asdf" => "msg blah asdf"
-sub fixCommandString {
-	my $s = shift;
-	return $s if substr($s, 0, 1) ne "/";
-	return substr $s, 1;
-}
-
 # Joins all channels. Nick should already be set and identified.
 sub _joinChannels {
 	my $self = shift;
@@ -681,13 +788,7 @@ sub _joinChannels {
 	my $server = $self->_findServer();
 	return unless defined $server;
 
-	my $channels = {};
-	my @channels = eval { no warnings; return $server->channels(); };
-	for my $channel (@channels) {
-		my $channelName = canonicalizeChannelName($channel->{name});
-		$channels->{$channelName} = $channel;
-	}
-
+	my $channels = $self->_getChannels();
 	my $currentTime = time();
 	while (my ($key, $channelInfo) = each %{$self->{info}{channels}}) {
 		my $channelName = canonicalizeChannelName($channelInfo->{name});
@@ -828,26 +929,55 @@ sub cleanUp {
 }
 
 sub setServers {
-	my ($self, $servers) = @_;
+	my ($self, $serverInfos) = @_;
 
-	while (my ($key, $serverInfo) = each %$servers) {
-		$self->addServer($serverInfo);
+	my $oldServers = $self->{servers};
+	$self->{servers} = {};
+
+	my $removedServers = {%$oldServers};
+	my $newServers = {};
+	while (my ($key, $serverInfo) = each %$serverInfos) {
+		next if $serverInfo->{nick} eq "";
+
+		my $serverName = canonicalizeServerName($serverInfo->{server});
+		my $oldServer = $oldServers->{$serverName};
+		if ($oldServer) {
+			delete $removedServers->{$serverName};
+			$self->_addServer($oldServer);
+			$oldServer->setServerInfo($serverInfo);
+		}
+		else {
+			if (!defined $newServers->{$serverName}) {
+				$newServers->{$serverName} = new AutodlIrssi::ServerConnector($serverInfo, $self->{noticeObservable});
+			}
+		}
+	}
+
+	# Disconnect all old servers
+	for my $server (values %$removedServers) {
+		$server->disconnect();
+		$server->cleanUp();
+	}
+
+	# Connect to all new servers
+	for my $server (values %$newServers) {
+		if ($self->_addServer($server)) {
+			$server->connect();
+		}
 	}
 }
 
-sub addServer {
-	my ($self, $info) = @_;
+sub _addServer {
+	my ($self, $server) = @_;
 
-	$info->{server} = canonicalizeServerName($info->{server});
-	my $server = new AutodlIrssi::ServerConnector($info, $self->{noticeObservable});
-
-	if ($self->{servers}{$info->{server}}) {
+	my $serverName = canonicalizeServerName($server->{info}{server});
+	if ($self->{servers}{$serverName}) {
 		$server->cleanUp();
-		return;
+		return 0;
 	}
-	$self->{servers}{$info->{server}} = $server;
 
-	$server->connect();
+	$self->{servers}{$serverName} = $server;
+	return 1;
 }
 
 sub _findServer {
