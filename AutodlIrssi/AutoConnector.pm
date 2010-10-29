@@ -196,6 +196,7 @@ sub _cleanUpConnectionVars {
 	delete $self->{channelState};
 	delete $self->{fullyConnected};
 	delete $self->{hasTriedRegisterNick};
+	delete $self->{numTimesSentIdentify};
 	delete $self->{registerStart};
 	delete $self->{changingNick};
 	delete $self->{changingNickTime};
@@ -206,6 +207,12 @@ sub _setFullyConnected {
 	my $self = shift;
 
 	$self->{fullyConnected} = 1;
+}
+
+# Returns true if our code is waiting for something, eg. a NickServ reply.
+sub _isWaitingForSomething {
+	my $self = shift;
+	return defined $self->{observerId} || defined $self->{timerTag};
 }
 
 sub _installNoticeHandler {
@@ -226,7 +233,15 @@ sub _installTimerHandler {
 	my ($self, $secs, $handler) = @_;
 
 	$self->_removeTimerHandler();
-	$self->{timerTag} = irssi_timeout_add_once($secs * 1000, $handler, undef);
+	$self->{timerTag} = irssi_timeout_add_once($secs * 1000, sub {
+		eval {
+			&$handler;
+		};
+		if ($@) {
+			chomp $@;
+			$self->_message(0, "Timer handler: $@");
+		}
+	}, undef);
 }
 
 sub _removeTimerHandler {
@@ -313,7 +328,9 @@ sub _onWaitNickServNextLine {
 sub _checkNickServReply {
 	my ($self, $lines, $replies) = @_;
 
-	for my $line (@$lines) {
+	# Check the lines in reverse order because the NickServ may send other lines of text
+	# when we join the server, eg. "This nick is already registered......"
+	for my $line (reverse @$lines) {
 		for my $reply (@$replies) {
 			return $reply->{code} if $line =~ $reply->{regex};
 		}
@@ -367,16 +384,20 @@ sub _onFullyConnected {
 	$self->_setNick();
 }
 
+# Called when /nick NEWNICK failed
 sub _onRetryNickCommand {
 	my $self = shift;
 
-	$self->{changingNick} = 0;
+	delete $self->{changingNick};
 }
 
+# Called when we get a new nick
 sub _onNewNickName {
 	my ($self, $newNick) = @_;
 
-	$self->{changingNick} = 0;
+	delete $self->{changingNick};
+	delete $self->{hasTriedRegisterNick};
+	delete $self->{numTimesSentIdentify};
 	delete $self->{changingNickStart};
 	$self->_setNick();
 }
@@ -437,8 +458,28 @@ sub _ghostReply {
 			$self->_message(0, "Sent GHOST command. Got no reply from NickServ.");
 		}
 		else {
-			$self->_message(3, "Killed ghost connection!");
+			my $code = $self->_checkNickServReply($lines, [
+				{
+					code	=> "notinuse",
+					regex	=> qr/isn't currently in use/,
+				},
+				{
+					code	=> "ghostkilled",
+					regex	=> qr/has been killed/,
+				},
+			]);
+
+			if (!defined $code) {
+				$self->_message(0, "Got unknown GHOST response:\n" . join("\n", @$lines));
+			}
+			elsif ($code eq 'notinuse') {
+				# Do nothing
+			}
+			elsif ($code eq 'ghostkilled') {
+				$self->_message(3, "Killed ghost connection!");
+			}
 		}
+
 		$self->_sendNickCommand();
 	};
 	if ($@) {
@@ -453,13 +494,21 @@ sub _sendIdentify {
 
 	if ($self->{info}{identPassword} ne "") {
 		$self->{hasTriedRegisterNick} = 0;
-		$self->_waitForNickServReply(sub { $self->_identifyReply(@_) });
-		$self->command("msg " . NICKSERV_NICK . " IDENTIFY $self->{info}{identPassword}");
+		$self->{numTimesSentIdentify} = 0;
+		$self->_sendIdentifyNickCommand();
 	}
 	else {
 		$self->_sendNickCommand();
 		$self->_joinChannels();
 	}
+}
+
+sub _sendIdentifyNickCommand {
+	my $self = shift;
+
+	$self->{numTimesSentIdentify}++;
+	$self->_waitForNickServReply(sub { $self->_identifyReply(@_) });
+	$self->command("msg " . NICKSERV_NICK . " IDENTIFY $self->{info}{identPassword}");
 }
 
 sub _identifyReply {
@@ -487,6 +536,10 @@ sub _identifyReply {
 					code	=> "notregistered",
 					regex	=> qr/^Your nick isn't registered/,
 				},
+				{
+					code	=> "itsregistered",
+					regex	=> qr/^This nickname is registered and protected/,
+				},
 			]);
 
 			if (!defined $code) {
@@ -509,6 +562,15 @@ sub _identifyReply {
 					$self->{hasTriedRegisterNick} = 1;
 					$self->_registerNick();
 					return;
+				}
+			}
+			elsif ($code eq 'itsregistered') {
+				if ($self->{numTimesSentIdentify} <= 1) {
+					$self->_sendIdentifyNickCommand();
+					return;
+				}
+				else {
+					$self->_message(0, "Failed to IDENTIFY nick.")
 				}
 			}
 			else {
@@ -580,6 +642,7 @@ sub _registerReply {
 				}
 				else {
 					$self->_installTimerHandler(NICKSERV_REGISTER_WAIT_SECS, sub {
+						$self->_removeTimerHandler();
 						$self->_sendRegisterNickCommand();
 					});
 					return;
@@ -677,7 +740,11 @@ sub _checkState {
 					}
 				}
 				else {
-					$self->_joinChannels();
+					# Don't join the channels if we're still waiting for a command, eg. when we've
+					# sent the IDENTIFY command, and waiting for the response.
+					if (!$self->_isWaitingForSomething()) {
+						$self->_joinChannels();
+					}
 				}
 			}
 		}
