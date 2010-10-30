@@ -30,17 +30,9 @@
 	siteName="polishtracker.org">
 
 	<settings>
-		<cookie_description/>
-		<cookie/>
-		<integer
-			name="port"
-			text="Tracker port"
-			accesskey="r"
-			tooltiptext="The port we should use when downloading torrent files."
-			defaultValue="85"
-			minValue="1"
-			maxValue="65535"
-			/>
+		<cookie_description text="Only one of passkey (rsskey) or cookie is needed. RSS is for Power Users or above."/>
+		<passkey isDownloadVar="false"/>
+		<cookie isDownloadVar="false"/>
 	</settings>
 
 	<servers>
@@ -79,19 +71,33 @@
 			</extract>
 		</linepatterns>
 		<linematched>
-			<var name="torrentUrl">
-				<string value="https://polishtracker.org/download.php/"/>
-				<var name="$torrentId"/>
-				<string value="/"/>
-				<varenc name="torrentName"/>
-				<string value=".torrent"/>
-			</var>
-			<http name="Cookie">
-				<var name="cookie"/>
-			</http>
-			<http name="Referer">
-				<string value="https://polishtracker.org/browse.php"/>
-			</http>
+			<if srcvar="passkey" regex="\S">
+				<var name="torrentUrl">
+					<string value="https://polishtracker.org/downloadd.php/"/>
+					<var name="$torrentId"/>
+					<string value="/"/>
+					<var name="passkey"/>
+					<string value="/"/>
+					<varenc name="torrentName"/>
+					<string value=".torrent"/>
+				</var>
+			</if>
+			<if srcvar="passkey" regex="^\s*$">
+				<var name="torrentUrl">
+					<string value="https://polishtracker.org/download.php/"/>
+					<var name="$torrentId"/>
+					<string value="/"/>
+					<varenc name="torrentName"/>
+					<string value=".torrent"/>
+				</var>
+				<http name="Cookie">
+					<var name="cookie"/>
+				</http>
+				<http name="Referer">
+					<string value="https://polishtracker.org/browse.php"/>
+				</http>
+			</if>
+
 		</linematched>
 		<ignore>
 			<regex value="^ $"/>
