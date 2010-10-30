@@ -93,9 +93,6 @@ use constant {
 	# Max number of seconds we'll try to register the nick
 	NICKSERV_REGISTER_MAX_WAIT_SECS => 5*60,
 
-	# Minimum number of seconds before we try to join a channel again
-	JOIN_WAIT_SECS => 30,
-
 	# Max number of seconds we'll wait for a nick change to succeed or fail
 	CHANGE_NICK_TIMEOUT_SECS => 30,
 
@@ -182,6 +179,11 @@ sub _message {
 	message $level, "$self->{info}{server}: $message";
 }
 
+sub _dmessage {
+	my ($self, $level, $message) = @_;
+	dmessage $level, "$self->{info}{server}: $message";
+}
+
 sub command {
 	my ($self, $command) = @_;
 
@@ -232,7 +234,7 @@ sub disconnect {
 	else {
 		# This could happen if the server is still in the connection state. It doesn't seem to be
 		# possible to find a server in that state.
-		$self->_message(0, "Could not disconnect. Server not found.");
+		$self->_dmessage(0, "Could not disconnect. Server not found.");
 	}
 
 	# Make sure everything is cleaned up
@@ -406,10 +408,10 @@ sub _onWaitNickServReply {
 			return unless compareNicks(NICKSERV_NICK, $nick);
 			return if $line =~ /Your nickname does not appear to be registered/;
 			return if $line =~ /This nickname is registered and protected/;
-			return if $line =~ /nick, type /;
 			return if $line =~ /please choose a different/;
 			return if $line =~ /you do not change/;
 			return if $line =~ /NickServ/;
+			return if $line =~ /nick is owned by/;
 
 			$self->{nickServLines} = [$line];
 			$self->_removeNoticeHandlerWithTimeout();
@@ -489,21 +491,42 @@ sub connect {
 
 # Called when we've connected to the server (TCP/IP connect)
 sub _onConnect {
-	my $self = shift;
+	my ($self, $server) = @_;
 
 	$self->_cleanUpConnectionVars();
 }
 
 # Called when we get disconnected
 sub _onDisconnect {
-	my $self = shift;
+	my ($self, $server) = @_;
 
 	$self->_cleanUpConnectionVars();
+
+	if ($server->{connection_lost}) {
+		# Irssi will auto join the channels as soon as we're reconnected. We don't want that!
+		# Some channels won't let you change your nick while in the channel.
+		$self->_removeChannels($server);
+	}
+}
+
+# Removes the channels and channel windows
+sub _removeChannels {
+	my ($self, $server) = @_;
+
+	for my $window (irssi_windows()) {
+		my $item = $window->{active};
+		next unless defined $item;
+		next unless defined $item->{server};
+		next unless $server->{tag} eq $item->{server}{tag};
+		next unless $item->{type} eq "CHANNEL";
+
+		$window->destroy();
+	}
 }
 
 # Called when we're fully connected
 sub _onFullyConnected {
-	my $self = shift;
+	my ($self, $server) = @_;
 
 	return if $self->{fullyConnected};
 
@@ -532,7 +555,7 @@ sub _hasCorrectNick {
 
 	my $server = $self->_findServer();
 	if (!defined $server) {
-		$self->_message(0, "hasCorrectNick: server is undef");
+		$self->_dmessage(0, "hasCorrectNick: server is undef");
 		return 0;
 	}
 	return compareNicks($self->{info}{nick}, $server->{nick});
@@ -579,7 +602,7 @@ sub _ghostReply {
 
 	eval {
 		if ($timedOut) {
-			$self->_message(0, "Sent GHOST command. Got no reply from NickServ.");
+			$self->_dmessage(0, "Sent GHOST command. Got no reply from NickServ.");
 		}
 		else {
 			my $code = $self->_checkNickServReply($lines, [
@@ -594,7 +617,7 @@ sub _ghostReply {
 			]);
 
 			if (!defined $code) {
-				$self->_message(0, "Got unknown GHOST response:\n" . join("\n", @$lines));
+				$self->_dmessage(0, "Got unknown GHOST response:\n" . join("\n", @$lines));
 			}
 			elsif ($code eq 'notinuse') {
 				# Do nothing
@@ -640,7 +663,7 @@ sub _identifyReply {
 
 	eval {
 		if ($timedOut) {
-			$self->_message(0, "Sent IDENTIFY command. Got no reply from NickServ.");
+			$self->_dmessage(0, "Sent IDENTIFY command. Got no reply from NickServ.");
 		}
 		else {
 			my $code = $self->_checkNickServReply($lines, [
@@ -667,7 +690,7 @@ sub _identifyReply {
 			]);
 
 			if (!defined $code) {
-				$self->_message(0, "Got unknown IDENTIFY response:\n" . join("\n", @$lines));
+				$self->_dmessage(0, "Got unknown IDENTIFY response:\n" . join("\n", @$lines));
 			}
 			elsif ($code eq 'wasidentified') {
 				# Do nothing
@@ -749,7 +772,7 @@ sub _registerReply {
 				},
 				{
 					code	=> "registered",
-					regex	=> qr/^Nickname \S+ registered /,
+					regex	=> qr/^Nickname \S+ registered/,
 				},
 				{
 					code	=> "alreadyregistered",
@@ -791,6 +814,14 @@ sub _registerReply {
 	}
 }
 
+sub _getJoinWaitTimeSecs {
+	my ($self, $count) = @_;
+	my $wait = [30, 30, 30, 30, 1*60, 2*60, 3*60, 4*60, 5*60];
+	my $secs = $wait->[$count-1];
+	$secs = $wait->[-1] unless defined $secs;
+	return $secs;
+}
+
 # Joins all channels. Nick should already be set and identified.
 sub _joinChannels {
 	my $self = shift;
@@ -813,9 +844,11 @@ sub _joinChannels {
 
 		if (defined $channelState->{sentJoin}) {
 			my $elapsedTime = $currentTime - $channelState->{sentJoin};
-			next if $elapsedTime < JOIN_WAIT_SECS;
+			next if $elapsedTime < $self->_getJoinWaitTimeSecs($channelState->{sentJoinCount});
 		}
 		$channelState->{sentJoin} = $currentTime;
+		$channelState->{sentJoinCount} = 0 unless defined $channelState->{sentJoinCount};
+		$channelState->{sentJoinCount}++;
 
 		if ($channelInfo->{inviteCommand}) {
 			$server->command(fixCommandString($channelInfo->{inviteCommand}));
@@ -993,6 +1026,7 @@ sub _addServer {
 sub _findServer {
 	my ($self, $irssiServer) = @_;
 
+	return unless defined $irssiServer;
 	my $serverName = canonicalizeServerName($irssiServer->{address});
 	return $self->{servers}{$serverName};
 }
@@ -1004,7 +1038,7 @@ sub _onMessageFullyConnected {
 	eval {
 		my $server = $self->_findServer($irssiServer);
 		return unless defined $server;
-		$server->_onFullyConnected();
+		$server->_onFullyConnected($irssiServer);
 	};
 	if ($@) {
 		chomp $@;
@@ -1019,7 +1053,7 @@ sub _onMessageConnect {
 	eval {
 		my $server = $self->_findServer($irssiServer);
 		return unless defined $server;
-		$server->_onConnect();
+		$server->_onConnect($irssiServer);
 	};
 	if ($@) {
 		chomp $@;
@@ -1033,7 +1067,7 @@ sub _onMessageDisconnect {
 	eval {
 		my $server = $self->_findServer($irssiServer);
 		return unless defined $server;
-		$server->_onDisconnect();
+		$server->_onDisconnect($irssiServer);
 	};
 	if ($@) {
 		chomp $@;

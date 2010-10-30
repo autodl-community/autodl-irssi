@@ -38,7 +38,8 @@ package AutodlIrssi::Irssi;
 use base qw/ Exporter/ ;
 our @EXPORT = qw/ irssi_signal_add irssi_signal_remove irssi_print irssi_input_add irssi_input_remove
 					irssi_timeout_add irssi_timeout_add_once irssi_timeout_remove irssi_pidwait_add
-					irssi_servers irssi_reconnects irssi_channels irssi_command irssi_command_bind /;
+					irssi_servers irssi_reconnects irssi_channels irssi_command irssi_command_bind
+					irssi_windows /;
 our @EXPORT_OK = qw//;
 
 sub irssi_signal_add {
@@ -83,6 +84,10 @@ sub irssi_servers {
 
 sub irssi_reconnects {
 	goto &Irssi::Script::autodl_irssi::irssi_reconnects;
+}
+
+sub irssi_windows {
+	goto &Irssi::Script::autodl_irssi::irssi_windows;
 }
 
 sub irssi_channels {
@@ -160,6 +165,11 @@ sub irssi_servers {
 sub irssi_reconnects {
 	no warnings;
 	return &Irssi::reconnects(@_);
+}
+
+sub irssi_windows {
+	no warnings;
+	return &Irssi::windows(@_);
 }
 
 sub irssi_channels {
