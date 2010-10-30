@@ -31,7 +31,10 @@
 
 	<settings>
 		<cookie_description text="Only one of passkey (rsskey) or cookie is needed. RSS is for Power Users or above."/>
-		<passkey isDownloadVar="false"/>
+		<passkey
+			pasteRegex="rsskey=([a-fA-F\d]{32})"
+			isDownloadVar="false"
+			/>
 		<cookie isDownloadVar="false"/>
 	</settings>
 
