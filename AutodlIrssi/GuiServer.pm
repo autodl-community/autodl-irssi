@@ -243,8 +243,6 @@ sub setListenPort {
 sub _onNewConnection {
 	my ($self, $socket, $address, $port) = @_;
 
-	message 5, "Got new connection: $address:$port!";
-
 	my $jsonSocket = new AutodlIrssi::JsonSocket($socket);
 	$jsonSocket->waitForData(sub { $self->_onJsonReceived(@_); });
 }
@@ -253,6 +251,7 @@ my %handlers = (
 	"getfiles"		=> \&_onCommandGetFiles,
 	"getfile"		=> \&_onCommandGetFile,
 	"writeconfig"	=> \&_onCommandWriteConfig,
+	"getlines"		=> \&_onCommandGetLines,
 );
 
 sub _onJsonReceived {
@@ -364,6 +363,19 @@ sub _onCommandWriteConfig {
 
 	my $filename = getAutodlCfgFile();
 	saveRawDataToFile($filename, $data);
+}
+
+sub _onCommandGetLines {
+	my ($self, $json) = @_;
+
+	my $cid = $json->{cid};
+	my $buffer = $AutodlIrssi::g->{messageBuffer}->getBuffer($cid);
+	my $reply = {
+		error => "",
+		cid => $buffer->{cid},
+		lines => $buffer->{lines},
+	};
+	return encodeJson($reply);
 }
 
 1;

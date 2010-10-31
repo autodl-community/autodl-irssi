@@ -48,6 +48,7 @@ use AutodlIrssi::Updater;
 use AutodlIrssi::AutodlState;
 use AutodlIrssi::GuiServer;
 use AutodlIrssi::AutoConnector;
+use AutodlIrssi::MessageBuffer;
 use Net::SSLeay qw//;
 
 #
@@ -71,6 +72,8 @@ my $trackersVersion = -1;
 
 # Called when we're enabled
 sub enable {
+	$AutodlIrssi::g->{messageBuffer} = new AutodlIrssi::MessageBuffer();
+
 	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now enabled! :-)";
 	message 3, "\x0309Help forum\x03 \x02http://sourceforge.net/apps/phpbb/autodl-irssi/\x02";
 
@@ -86,9 +89,9 @@ sub enable {
 	$AutodlIrssi::g->{filterManager} = new AutodlIrssi::FilterManager();
 	$AutodlIrssi::g->{tempFiles} = new AutodlIrssi::TempFiles();
 	$AutodlIrssi::g->{activeConnections} = new AutodlIrssi::ActiveConnections();
+	$AutodlIrssi::g->{autoConnector} = new AutodlIrssi::AutoConnector();
 	$AutodlIrssi::g->{channelMonitor} = new AutodlIrssi::ChannelMonitor($AutodlIrssi::g->{trackerManager});
 	$AutodlIrssi::g->{guiServer} = new AutodlIrssi::GuiServer();
-	$AutodlIrssi::g->{autoConnector} = new AutodlIrssi::AutoConnector();
 
 	reloadTrackerFiles();
 	reloadAutodlConfigFile();
@@ -116,15 +119,16 @@ sub disable {
 			Net::SSLeay::CTX_free($AutodlIrssi::g->{ssl_ctx});
 		}
 
-		$AutodlIrssi::g->{autoConnector}->cleanUp() if $AutodlIrssi::g->{autoConnector};
 		$AutodlIrssi::g->{ircHandler}->cleanUp() if $AutodlIrssi::g->{ircHandler};
 		$AutodlIrssi::g->{guiServer}->cleanUp() if $AutodlIrssi::g->{guiServer};
 		$AutodlIrssi::g->{channelMonitor}->cleanUp() if $AutodlIrssi::g->{channelMonitor};
+		$AutodlIrssi::g->{autoConnector}->cleanUp() if $AutodlIrssi::g->{autoConnector};
 		$AutodlIrssi::g->{activeConnections}->cleanUp() if $AutodlIrssi::g->{activeConnections};
 		$AutodlIrssi::g->{tempFiles}->cleanUp() if $AutodlIrssi::g->{tempFiles};
 		$AutodlIrssi::g->{filterManager}->cleanUp() if $AutodlIrssi::g->{filterManager};
 		$AutodlIrssi::g->{downloadHistory}->cleanUp() if $AutodlIrssi::g->{downloadHistory};
 		$AutodlIrssi::g->{trackerManager}->cleanUp() if $AutodlIrssi::g->{trackerManager};
+		$AutodlIrssi::g->{messageBuffer}->cleanUp() if $AutodlIrssi::g->{messageBuffer};
 	};
 	if ($@) {
 		chomp $@;
@@ -256,6 +260,7 @@ sub secondTimer {
 		reloadAutodlConfigFile();
 		activeConnectionsCheck();
 		reportBrokenAnnouncers();
+		$AutodlIrssi::g->{messageBuffer}->secondTimer();
 		checkForUpdates();
 	};
 	if ($@) {
