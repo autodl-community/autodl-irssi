@@ -84,6 +84,9 @@
 					<varenc name="torrentName"/>
 					<string value=".torrent"/>
 				</var>
+				<http name="Referer">
+					<string value="https://polishtracker.org/browse.php"/>
+				</http>
 			</if>
 			<if srcvar="passkey" regex="^\s*$">
 				<var name="torrentUrl">
