@@ -70,9 +70,10 @@ sub message {
 
 	if ($level <= getLevel()) {
 		$msg = "\x0300,04 ERROR: \x03 $msg" if $level == 0;
-		$msg =~ s/%/%%/g;
 
 		eval { $AutodlIrssi::g->{messageBuffer}->onMessage($msg) } if $AutodlIrssi::g->{messageBuffer};
+
+		$msg =~ s/%/%%/g;
 		my $window = Irssi::window_find_name("autodl");
 		if ($window) {
 			$window->print($msg);

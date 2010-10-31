@@ -102,7 +102,9 @@ sub secondTimer {
 sub getBuffer {
 	my ($self, $cid) = @_;
 
-	$cid = $self->{nextId}++ unless defined $cid;
+	if (!defined $cid || $cid !~ /^\d+$/) {
+		$cid = $self->{nextId}++;
+	}
 	my $buffer = $self->{buffers}{$cid};
 	if (!$buffer) {
 		$cid = $self->{nextId}++;
