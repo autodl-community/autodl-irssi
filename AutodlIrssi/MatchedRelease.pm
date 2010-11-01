@@ -91,21 +91,21 @@ sub _getTorrentInfoString {
 
 	my $msg = "";
 
-	$msg .= "\x0309$ti->{torrentName}\x03";
-	$msg .= " in \x0304$ti->{category}\x03" if $ti->{category};
+	$msg .= "\x02\x0309$ti->{torrentName}\x03\x02";
+	$msg .= " in \x02\x0304$ti->{category}\x03\x02" if $ti->{category};
 
 	my $sizeStr = convertToByteSizeString(convertByteSizeString($ti->{torrentSize}));
-	$msg .= ", \x0311$sizeStr\x03" if defined $sizeStr;
+	$msg .= ", \x02\x0311$sizeStr\x03\x02" if defined $sizeStr;
 
 	if (exists $ti->{filter} && $ti->{filter}{name}) {
-		$msg .= " (\x0313$ti->{filter}{name}\x03)";
+		$msg .= " (\x02\x0313$ti->{filter}{name}\x02\x03)";
 	}
 
 	my $preStr = convertToTimeSinceString(convertTimeSinceString($ti->{preTime}));
-	$msg .= ", pre'd \x0303$preStr\x03 ago" if defined $preStr;
+	$msg .= ", pre'd \x02\x0303$preStr\x03\x02 ago" if defined $preStr;
 
 	if (exists $ti->{announceParser}) {
-		$msg .= ", \x0308$self->{trackerInfo}{longName}\x03";
+		$msg .= ", \x02\x0308$self->{trackerInfo}{longName}\x03\x02";
 	}
 
 	return $msg;
@@ -127,7 +127,7 @@ sub start {
 		my $missingStr = join ", ", @$missing;
 		my $trackerType = $self->{trackerInfo}{type};
 		my $autodlPath = getAutodlCfgFile();
-		message 0, "Can't download \x0303$self->{ti}->{torrentName}\x03. Initialize \x0304$missingStr\x03 below \x0306[tracker $trackerType]\x03 in \x0307$autodlPath\x03";
+		message 0, "Can't download \x02\x0303$self->{ti}->{torrentName}\x03\x02. Initialize \x02\x0304$missingStr\x03\x02 below \x02\x0306[tracker $trackerType]\x03\x02 in \x02\x0307$autodlPath\x03\x02";
 		return;
 	}
 

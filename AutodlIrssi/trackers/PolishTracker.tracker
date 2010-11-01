@@ -30,12 +30,17 @@
 	siteName="polishtracker.org">
 
 	<settings>
-		<cookie_description text="Only one of passkey (rsskey) or cookie is needed. RSS is for Power Users or above."/>
-		<passkey
-			pasteRegex="rsskey=([a-fA-F\d]{32})"
-			isDownloadVar="false"
+		<cookie_description/>
+		<cookie/>
+		<integer
+			name="port"
+			text="Tracker port"
+			accesskey="r"
+			tooltiptext="The port we should use when downloading torrent files."
+			defaultValue="85"
+			minValue="1"
+			maxValue="65535"
 			/>
-		<cookie isDownloadVar="false"/>
 	</settings>
 
 	<servers>

@@ -75,7 +75,7 @@ sub enable {
 	$AutodlIrssi::g->{messageBuffer} = new AutodlIrssi::MessageBuffer();
 
 	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now enabled! :-)";
-	message 3, "\x0309Help forum\x03 \x02http://sourceforge.net/apps/phpbb/autodl-irssi/\x02";
+	message 3, "\x02\x0309Help forum\x03\x02 \x02http://sourceforge.net/apps/phpbb/autodl-irssi/\x02";
 
 	createDirectories(getAutodlSettingsDir());
 
@@ -84,6 +84,11 @@ sub enable {
 	my $autodlState = readAutodlState();
 	$trackersVersion = $autodlState->{trackersVersion};
 
+	my $autodlCmd = {
+		update => sub { manualCheckForUpdates() },
+		whatsnew => sub { showWhatsNew() },
+	};
+
 	$AutodlIrssi::g->{trackerManager} = new AutodlIrssi::TrackerManager($autodlState->{trackerStates});
 	$AutodlIrssi::g->{downloadHistory} = new AutodlIrssi::DownloadHistory(getDownloadHistoryFile());
 	$AutodlIrssi::g->{filterManager} = new AutodlIrssi::FilterManager();
@@ -91,7 +96,7 @@ sub enable {
 	$AutodlIrssi::g->{activeConnections} = new AutodlIrssi::ActiveConnections();
 	$AutodlIrssi::g->{autoConnector} = new AutodlIrssi::AutoConnector();
 	$AutodlIrssi::g->{channelMonitor} = new AutodlIrssi::ChannelMonitor($AutodlIrssi::g->{trackerManager});
-	$AutodlIrssi::g->{guiServer} = new AutodlIrssi::GuiServer();
+	$AutodlIrssi::g->{guiServer} = new AutodlIrssi::GuiServer($autodlCmd);
 
 	reloadTrackerFiles();
 	reloadAutodlConfigFile();

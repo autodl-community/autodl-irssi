@@ -190,10 +190,11 @@ use File::Spec;
 use constant LISTEN_ADDRESS => '127.0.0.1';
 
 sub new {
-	my $class = shift;
+	my ($class, $autodlCmd) = @_;
 	my $self = bless {
 		port => 0,
 		serverSocket => new AutodlIrssi::ServerSocket(),
+		autodlCmd => $autodlCmd,
 	}, $class;
 
 	$self->{serverSocket}->setHandler(sub { $self->_onNewConnection(@_); });
@@ -252,6 +253,7 @@ my %handlers = (
 	"getfile"		=> \&_onCommandGetFile,
 	"writeconfig"	=> \&_onCommandWriteConfig,
 	"getlines"		=> \&_onCommandGetLines,
+	"command"		=> \&_onCommandCommand,
 );
 
 sub _onJsonReceived {
@@ -363,6 +365,8 @@ sub _onCommandWriteConfig {
 
 	my $filename = getAutodlCfgFile();
 	saveRawDataToFile($filename, $data);
+
+	return encodeJson({ error => "" });
 }
 
 sub _onCommandGetLines {
@@ -376,6 +380,41 @@ sub _onCommandGetLines {
 		lines => $buffer->{lines},
 	};
 	return encodeJson($reply);
+}
+
+sub _onCommandCommand {
+	my ($self, $json) = @_;
+
+	my $data = {
+		error => "",
+	};
+
+	my $type = $json->{type};
+	die "Unknown command type\n" if !defined $type || ref $type;
+	if ($type eq 'autodl') {
+		$self->_doCommandAutodl($json);
+	}
+	else {
+		die "Invalid command type\n";
+	}
+
+	return encodeJson({ error => "" });
+}
+
+sub _doCommandAutodl {
+	my ($self, $json) = @_;
+
+	my $subcmd = $json->{arg1};
+	die "Unknown /autodl command\n" if !defined $subcmd || ref $subcmd;
+	if ($subcmd eq 'update') {
+		$self->{autodlCmd}{update}->();
+	}
+	elsif ($subcmd eq 'whatsnew') {
+		$self->{autodlCmd}{whatsnew}->();
+	}
+	else {
+		die "Invalid /autodl command\n";
+	}
 }
 
 1;
