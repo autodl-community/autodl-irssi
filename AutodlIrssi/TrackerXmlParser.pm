@@ -50,8 +50,8 @@ sub parse {
 		longName	=> $self->readAttribute($trackerinfoElem, "longName", ""),
 		siteName	=> $self->readAttribute($trackerinfoElem, "siteName", ""),
 		deobfuscate	=> $self->readAttribute($trackerinfoElem, "deobfuscate", ""),
-		follow302	=> $self->readAttributeBoolean($trackerinfoElem, "follow302links", 1),
-		ignore404	=> $self->readAttributeBoolean($trackerinfoElem, "ignore404", 1),
+		follow302	=> $self->readAttributeBoolean($trackerinfoElem, "follow302links", 0),
+		ignore404	=> $self->readAttributeBoolean($trackerinfoElem, "ignore404", 0),
 	};
 	$self->{trackerInfo} = $trackerInfo;
 	die "Invalid trackerinfo.type\n" if $trackerInfo->{type} eq "";
