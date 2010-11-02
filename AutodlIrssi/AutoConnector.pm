@@ -135,6 +135,7 @@ sub _fixServerInfo {
 	$info->{identPassword} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{identEmail} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{ssl} = convertStringToBoolean($info->{ssl});
+	$info->{enabled} = convertStringToBoolean($info->{enabled});
 
 	$info->{port} = convertStringToInteger($info->{port}, undef, 1, 65535);
 	if (!defined $info->{port}) {
@@ -471,7 +472,10 @@ sub _checkNickServReply {
 sub connect {
 	my $self = shift;
 
-	if ($self->_findServer()) {
+	if (!$self->{info}{enabled}) {
+		# Do nothing
+	}
+	elsif ($self->_findServer()) {
 		$self->_setFullyConnected();
 		$self->_setNick();
 	}
@@ -912,18 +916,17 @@ use constant CHECK_SERVER_STATE_SECS => 10;
 
 sub new {
 	my $class = shift;
-	my $self = bless {
+	bless {
+		enabled => 0,
 		servers => {},
 		noticeObservable => new AutodlIrssi::NoticeObservable(),
 	}, $class;
+}
 
-	$self->{timerTag} = irssi_timeout_add(CHECK_SERVER_STATE_SECS * 1000, sub {
-		$self->_checkServerState();
-	}, undef);
-	$self->_createSignalsTable();
-	$self->_installHandlers();
+sub cleanUp {
+	my $self = shift;
 
-	return $self;
+	$self->__disable();
 }
 
 sub _createSignalsTable {
@@ -958,8 +961,23 @@ sub _removeHandlers {
 	}
 }
 
-sub cleanUp {
+sub __enable {
 	my $self = shift;
+
+	return if $self->{enabled};
+	$self->{enabled} = 1;
+
+	$self->{timerTag} = irssi_timeout_add(CHECK_SERVER_STATE_SECS * 1000, sub {
+		$self->_checkServerState();
+	}, undef);
+	$self->_createSignalsTable();
+	$self->_installHandlers();
+}
+
+sub __disable {
+	my $self = shift;
+
+	return unless $self->{enabled};
 
 	irssi_timeout_remove($self->{timerTag}) if defined $self->{timerTag};
 	$self->_removeHandlers();
@@ -969,11 +987,20 @@ sub cleanUp {
 		delete $self->{servers}{$key};
 		$server->cleanUp();
 	}
+
+	$self->{enabled} = 0;
+}
+
+# Disable auto connecting
+sub disable {
+	my $self = shift;
+	$self->__disable();
 }
 
 sub setServers {
 	my ($self, $serverInfos) = @_;
 
+	$self->__enable();
 	my $oldServers = $self->{servers};
 	$self->{servers} = {};
 
@@ -984,7 +1011,10 @@ sub setServers {
 
 		my $serverName = canonicalizeServerName($serverInfo->{server});
 		my $oldServer = $oldServers->{$serverName};
-		if ($oldServer) {
+		if (!convertStringToBoolean($serverInfo->{enabled})) {
+			$oldServer->{__disabled} = 1;
+		}
+		elsif ($oldServer) {
 			delete $removedServers->{$serverName};
 			$self->_addServer($oldServer);
 			$oldServer->setServerInfo($serverInfo);
@@ -998,7 +1028,7 @@ sub setServers {
 
 	# Disconnect all old servers
 	for my $server (values %$removedServers) {
-		$server->disconnect();
+		$server->disconnect() unless $server->{__disabled};
 		$server->cleanUp();
 	}
 

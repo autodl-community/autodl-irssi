@@ -72,6 +72,10 @@ sub defaultOptions {
 			hostname => '',
 			port => 0,
 		},
+
+		irc => {
+			autoConnect => 1,
+		}
 	};
 }
 
@@ -117,6 +121,9 @@ sub parse {
 		}
 		elsif ($headerType eq 'ftp') {
 			$self->doHeaderFtp($aryHeader);
+		}
+		elsif ($headerType eq 'irc') {
+			$self->doHeaderIrc($aryHeader);
 		}
 		elsif ($headerType eq 'tracker') {
 			$self->doHeaderTracker($aryHeader);
@@ -366,6 +373,17 @@ sub doHeaderFtp {
 	$self->{options}{ftp}{port} = convertStringToInteger($self->{options}{ftp}{port}, 0, 0, 65535);
 }
 
+sub doHeaderIrc {
+	my ($self, $aryHeader) = @_;
+
+	my $options = mergeHeaderOptions($aryHeader);
+	$self->setOptions('IRC', $self->{options}{irc}, $options, {
+		'auto-connect' => 'autoConnect',
+	});
+
+	$self->{options}{irc}{autoConnect} = convertStringToBoolean($self->{options}{irc}{autoConnect});
+}
+
 # Initialize options from all [tracker] headers
 sub doHeaderTracker {
 	my ($self, $aryHeader) = @_;
@@ -413,6 +431,7 @@ sub getServerInfo {
 	if (!defined $serverInfo) {
 		$self->{servers}{$serverName} = $serverInfo = {
 			server => $serverName,
+			enabled => 'true',
 			port => "",
 			ssl => "",
 			nick => "",
@@ -430,6 +449,7 @@ sub doHeaderServer {
 	for my $header (@$aryHeader) {
 		my $serverInfo = $self->getServerInfo($header->{name});
 		$self->setOptions('SERVER', $serverInfo, $header->{options}, {
+			enabled => 'enabled',
 			port => 'port',
 			ssl => 'ssl',
 			nick => 'nick',

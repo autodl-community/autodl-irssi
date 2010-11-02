@@ -248,7 +248,13 @@ sub forceReloadAutodlConfigFile {
 		$AutodlIrssi::g->{filterManager}->setFilters($configFileParser->getFilters());
 		$AutodlIrssi::g->{options} = $configFileParser->getOptions();
 		$AutodlIrssi::g->{guiServer}->setListenPort($AutodlIrssi::g->{options}{guiServerPort});
-		$AutodlIrssi::g->{autoConnector}->setServers($configFileParser->getServers());
+
+		if ($AutodlIrssi::g->{options}{irc}{autoConnect}) {
+			$AutodlIrssi::g->{autoConnector}->setServers($configFileParser->getServers());
+		}
+		else {
+			$AutodlIrssi::g->{autoConnector}->disable();
+		}
 	};
 	if ($@) {
 		message 0, "Error when reading autodl.cfg: " . formatException($@);
