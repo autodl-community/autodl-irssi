@@ -94,8 +94,8 @@ sub enable {
 	$AutodlIrssi::g->{filterManager} = new AutodlIrssi::FilterManager();
 	$AutodlIrssi::g->{tempFiles} = new AutodlIrssi::TempFiles();
 	$AutodlIrssi::g->{activeConnections} = new AutodlIrssi::ActiveConnections();
-	$AutodlIrssi::g->{autoConnector} = new AutodlIrssi::AutoConnector();
 	$AutodlIrssi::g->{channelMonitor} = new AutodlIrssi::ChannelMonitor($AutodlIrssi::g->{trackerManager});
+	$AutodlIrssi::g->{autoConnector} = new AutodlIrssi::AutoConnector();
 	$AutodlIrssi::g->{guiServer} = new AutodlIrssi::GuiServer($autodlCmd);
 
 	reloadTrackerFiles();
@@ -126,8 +126,8 @@ sub disable {
 
 		$AutodlIrssi::g->{ircHandler}->cleanUp() if $AutodlIrssi::g->{ircHandler};
 		$AutodlIrssi::g->{guiServer}->cleanUp() if $AutodlIrssi::g->{guiServer};
-		$AutodlIrssi::g->{channelMonitor}->cleanUp() if $AutodlIrssi::g->{channelMonitor};
 		$AutodlIrssi::g->{autoConnector}->cleanUp() if $AutodlIrssi::g->{autoConnector};
+		$AutodlIrssi::g->{channelMonitor}->cleanUp() if $AutodlIrssi::g->{channelMonitor};
 		$AutodlIrssi::g->{activeConnections}->cleanUp() if $AutodlIrssi::g->{activeConnections};
 		$AutodlIrssi::g->{tempFiles}->cleanUp() if $AutodlIrssi::g->{tempFiles};
 		$AutodlIrssi::g->{filterManager}->cleanUp() if $AutodlIrssi::g->{filterManager};
