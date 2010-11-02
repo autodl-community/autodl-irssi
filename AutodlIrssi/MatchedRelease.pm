@@ -82,7 +82,7 @@ sub _checkAlreadyDownloaded {
 sub _releaseAlreadyDownloaded {
 	my $self = shift;
 
-	message(4, "Release \x02\x0303$self->{ti}{torrentName}\x03\x02 (\x02\x0302$self->{trackerInfo}{longName}\x03\x02) has already been downloaded");
+	message(4, "Release \x02\x0309$self->{ti}{torrentName}\x03\x02 (\x02\x0302$self->{trackerInfo}{longName}\x03\x02) has already been downloaded");
 }
 
 sub _getTorrentInfoString {
@@ -127,7 +127,7 @@ sub start {
 		my $missingStr = join ", ", @$missing;
 		my $trackerType = $self->{trackerInfo}{type};
 		my $autodlPath = getAutodlCfgFile();
-		message 0, "Can't download \x02\x0303$self->{ti}->{torrentName}\x03\x02. Initialize \x02\x0304$missingStr\x03\x02 below \x02\x0306[tracker $trackerType]\x03\x02 in \x02\x0307$autodlPath\x03\x02";
+		message 0, "Can't download \x02\x0309$self->{ti}->{torrentName}\x03\x02. Initialize \x02\x0304$missingStr\x03\x02 below \x02\x0306[tracker $trackerType]\x03\x02 in \x02\x0307$autodlPath\x03\x02";
 		return;
 	}
 
