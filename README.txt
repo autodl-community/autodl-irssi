@@ -91,6 +91,26 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 
 Make sure ruTorrent is installed properly! Also make sure it's the latest version of ruTorrent. It needs ruTorrent 3.1 subversion revision r1466 (or later version) since that version added the 'tabbar' CSS class.
 
+You will need the following PHP modules enabled for it to work: xml, sockets, and json. They may already be enabled, but if not, you may need to enable them by editing php.ini:
+
+[code]extension=sockets.so
+extension=json.so
+extension=xml.so
+[/code]
+
+FreeBSD users can install the modules by issuing the following command:
+
+[code]pkg_add -r php5-sockets php5-json php5-xml[/code]
+
+You will probably need to restart your web server if you made changes to the PHP configuration file!
+
+
+You can test for the presence of these modules by executing the following command. If you get no output then they're installed:
+
+[code]for module in json xml sockets; do php -m|grep -wq $module || echo "Missing module: $module"; done[/code]
+
+
+
 You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/
 
 [code]
@@ -106,21 +126,17 @@ Edit conf.php with a text editor and add your port number and password. The port
 
 [code]
 <?php
-$autodlPort = AUTODL-PORT;
-$autodlPassword = "AUTODL-PASSWORD";
+$autodlPort = 12345;
+$autodlPassword = "secretpass";
 ?>
 [/code]
 
 Open ~/.autodl/autodl.cfg with a text editor and add this to the file:
 [code]
 [options]
-gui-server-port = AUTODL-PORT
-gui-server-password = AUTODL-PASSWORD
+gui-server-port = 12345
+gui-server-password = secretpass
 [/code]
-
-The required PHP modules are sockets, json, and xml. They're usually installed by default. FreeBSD users need to install them:
-
-[code]pkg_add -r php5-sockets php5-json php5-xml[/code]
 
 
 
