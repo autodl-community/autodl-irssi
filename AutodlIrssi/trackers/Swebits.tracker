@@ -40,39 +40,23 @@
 			network="FreeQuest"
 			serverNames="irc.freequest.net,irc.eu.freequest.net,irc.us.freequest.net"
 			channelNames="#swebits"
-			announcerNames="Swebits"
+			announcerNames="PAYload"
 			/>
 	</servers>
 
 	<parseinfo>
-		<multilinepatterns>
-			<!--[RELEASE] TV - Whats.New.Scooby.Doo.S02E12.SWEDiSH.DVDRip.XviD-CENTiMETER  (186,18 MiB)-->
-			<!--[RELEASE] https://swebits.org/details.php?id=80986-->
-			<!--[RELEASE] 4 dagar 2 timmar 5 minuter 41 sekunder efter pre.-->
-			<!---->
-			<!--[ÖNSKEMÅL] XviD - A.Summer.Tale.2000.DVDRip.XviD-iMBT  (707,87 MiB)-->
-			<!--[ÖNSKEMÅL] https://swebits.org/details.php?id=80985-->
-			<!--[ÖNSKEMÅL] 1 minut efter önskemål.-->
+		<linepatterns>
 			<extract>
-				<regex value="^\[(RELEASE|ÖNSKEMÅL|SwebitsMedia)\](.*) - (.*)\((.*)\)"/>
+				<!--Release: The.Other.Guys.2010.R5.LiNE.CUSTOM.SWESUB.DVDR-iNjECT Leecha @ http://swebits.org/details.php?id=90204-->
+				<regex value="^Release:(.*) Leecha @ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
-					<var name="tags"/>
-					<var name="category"/>
 					<var name="torrentName"/>
-					<var name="torrentSize"/>
-				</vars>
-			</extract>
-			<extract>
-				<regex value="^\[(?:RELEASE|ÖNSKEMÅL|SwebitsMedia)\]\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
-				<vars>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
 			</extract>
-		</multilinepatterns>
+		</linepatterns>
 		<linematched>
-			<varreplace name="torrentSize" srcvar="torrentSize" regex="," replace="."/>
-
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
@@ -83,7 +67,7 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^\[(?:RELEASE|ÖNSKEMÅL|SwebitsMedia)\].* efter .*"/>
+			<regex value="^Release:" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
