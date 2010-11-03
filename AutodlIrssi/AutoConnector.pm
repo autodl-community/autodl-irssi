@@ -837,6 +837,7 @@ sub _joinChannels {
 	my $currentTime = time();
 	while (my ($key, $channelInfo) = each %{$self->{info}{channels}}) {
 		my $channelName = canonicalizeChannelName($channelInfo->{name});
+		next if $channelName eq "";
 		my $channel = $channels->{$channelName};
 
 		my $channelState = $self->{channelState}{$channelName};

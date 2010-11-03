@@ -466,7 +466,7 @@ sub doHeaderChannel {
 		my $serverInfo = $self->getServerInfo($header->{name});
 
 		my $channelName = canonicalizeChannelName($self->readOption($header->{options}, 'name') || "");
-		if ($channelName !~ /^#/) {
+		if ($channelName !~ /^#./) {
 			$self->error($header->{lineNumber}, "Invalid or missing channel name");
 			next;
 		}
