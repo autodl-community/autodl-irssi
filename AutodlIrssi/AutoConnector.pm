@@ -1017,6 +1017,8 @@ sub new {
 		enabled => 0,
 		servers => {},
 		noticeObservable => new AutodlIrssi::NoticeObservable(),
+		userName => "",
+		realName => "",
 	}, $class;
 }
 
@@ -1046,7 +1048,7 @@ sub _installHandlers {
 	my $self = shift;
 
 	for my $info (@{$self->{signals}}) {
-		irssi_signal_add($info->[0], $info->[1]);
+		$info->[2] = $AutodlIrssi::g->{eventManager}->register($info->[0], $info->[1]);
 	}
 }
 
@@ -1054,7 +1056,7 @@ sub _removeHandlers {
 	my $self = shift;
 
 	for my $info (@{$self->{signals}}) {
-		irssi_signal_remove($info->[0], $info->[1]);
+		$AutodlIrssi::g->{eventManager}->unregister($info->[0], $info->[2]);
 	}
 }
 
@@ -1092,6 +1094,22 @@ sub __disable {
 sub disable {
 	my $self = shift;
 	$self->__disable();
+}
+
+sub setNames {
+	my $self = shift;
+
+	my $userName = $AutodlIrssi::g->{options}{irc}{userName};
+	if ($userName ne $self->{userName} && $userName ne "") {
+		$self->{userName} = $userName;
+		irssi_command("set user_name $userName") ;
+	}
+
+	my $realName = $AutodlIrssi::g->{options}{irc}{realName};
+	if ($realName ne $self->{realName} && $realName ne "") {
+		$self->{realName} = $realName;
+		irssi_command("set real_name $realName") ;
+	}
 }
 
 sub setServers {
@@ -1254,6 +1272,10 @@ sub _checkServerState {
 	my $self = shift;
 
 	eval {
+		# It sometimes happens that we end up with dupe IRC servers because it's not possible to detect
+		# IRC servers in the 'connecting' state from Perl code. Disconnect all dupes we can find.
+		$self->_disconnectDupeServers();
+
 		while (my ($key, $server) = each %{$self->{servers}}) {
 			$server->_checkState();
 		}
@@ -1261,6 +1283,36 @@ sub _checkServerState {
 	if ($@) {
 		chomp $@;
 		message 0, "_checkServerState: $@";
+	}
+}
+
+sub _disconnectDupeServers {
+	my $self = shift;
+
+	my $found = {};
+	my $add = sub {
+		my ($server, $isDisconnected) = @_;
+
+		my $name = canonicalizeServerName($server->{address});
+		if ($found->{name}) {
+			message 3, "Disconnecting dupe IRC server: $name";
+			if ($isDisconnected) {
+				irssi_command("disconnect RECON-$server->{tag}");
+			}
+			else {
+				irssi_command("disconnect $server->{tag}");
+			}
+		}
+		else {
+			$found->{name} = 1;
+		}
+	};
+
+	for my $server (irssi_servers()) {
+		$add->($server, 0);
+	}
+	for my $server (irssi_reconnects()) {
+		$add->($server, 1);
 	}
 }
 

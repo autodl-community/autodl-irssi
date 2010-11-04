@@ -75,7 +75,7 @@ sub _installHandlers {
 	my $self = shift;
 
 	for my $info (@{$self->{signals}}) {
-		irssi_signal_add($info->[0], $info->[1]);
+		$info->[2] = $AutodlIrssi::g->{eventManager}->register($info->[0], $info->[1]);
 	}
 }
 
@@ -83,7 +83,7 @@ sub _removeHandlers {
 	my $self = shift;
 
 	for my $info (@{$self->{signals}}) {
-		irssi_signal_remove($info->[0], $info->[1]);
+		$AutodlIrssi::g->{eventManager}->unregister($info->[0], $info->[2]);
 	}
 }
 

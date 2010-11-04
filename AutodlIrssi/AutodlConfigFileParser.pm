@@ -75,6 +75,8 @@ sub defaultOptions {
 
 		irc => {
 			autoConnect => 1,
+			userName => '',
+			realName => '',
 		}
 	};
 }
@@ -379,6 +381,8 @@ sub doHeaderIrc {
 	my $options = mergeHeaderOptions($aryHeader);
 	$self->setOptions('IRC', $self->{options}{irc}, $options, {
 		'auto-connect' => 'autoConnect',
+		'user-name' => 'userName',
+		'real-name' => 'realName',
 	});
 
 	$self->{options}{irc}{autoConnect} = convertStringToBoolean($self->{options}{irc}{autoConnect});

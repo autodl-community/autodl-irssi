@@ -49,6 +49,7 @@ use AutodlIrssi::AutodlState;
 use AutodlIrssi::GuiServer;
 use AutodlIrssi::AutoConnector;
 use AutodlIrssi::MessageBuffer;
+use AutodlIrssi::EventManager;
 use Net::SSLeay qw//;
 
 #
@@ -89,6 +90,7 @@ sub enable {
 		whatsnew => sub { showWhatsNew() },
 	};
 
+	$AutodlIrssi::g->{eventManager} = new AutodlIrssi::EventManager();
 	$AutodlIrssi::g->{trackerManager} = new AutodlIrssi::TrackerManager($autodlState->{trackerStates});
 	$AutodlIrssi::g->{downloadHistory} = new AutodlIrssi::DownloadHistory(getDownloadHistoryFile());
 	$AutodlIrssi::g->{filterManager} = new AutodlIrssi::FilterManager();
@@ -133,6 +135,7 @@ sub disable {
 		$AutodlIrssi::g->{filterManager}->cleanUp() if $AutodlIrssi::g->{filterManager};
 		$AutodlIrssi::g->{downloadHistory}->cleanUp() if $AutodlIrssi::g->{downloadHistory};
 		$AutodlIrssi::g->{trackerManager}->cleanUp() if $AutodlIrssi::g->{trackerManager};
+		$AutodlIrssi::g->{eventManager}->cleanUp() if $AutodlIrssi::g->{eventManager};
 		$AutodlIrssi::g->{messageBuffer}->cleanUp() if $AutodlIrssi::g->{messageBuffer};
 	};
 	if ($@) {
@@ -247,6 +250,7 @@ sub forceReloadAutodlConfigFile {
 		$AutodlIrssi::g->{guiServer}->setListenPort($AutodlIrssi::g->{options}{guiServerPort});
 
 		if ($AutodlIrssi::g->{options}{irc}{autoConnect}) {
+			$AutodlIrssi::g->{autoConnector}->setNames();
 			$AutodlIrssi::g->{autoConnector}->setServers($configFileParser->getServers());
 		}
 		else {
