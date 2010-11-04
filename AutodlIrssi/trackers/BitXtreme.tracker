@@ -49,12 +49,12 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!-- xtremespeeds.net - New Torrent: ( Age Of Empires III-RELOADED ) Size: ( 1.88 GB ) Category: ( PC Games ) Uploader: ( Chre ) Link: ( http://xtremespeeds.net/details.php?id=54868 )-->
-				<regex value="^\s*BitXtreme\s*-\s*New Torrent:\s*\((.*)\)\s*Size:\s*\((.*)\)\s*Category:\s*\((.*)\)\s*Uploader:\s*\((.*)\)\s*Link:\s*\(\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--NEW in TV-XViD: -> Criminal.Minds.S06E07.HDTV.XviD-LOL [ Size: 357.39 MB ] [ Uploader: ACiDBuRN ] [ Link: http://bitxtre.me/details.php?id=5582 ]-->
+				<regex value="^NEW in (\S+): ->(.*)\[ Size:([^\]]+)] \[ Uploader:([^\]]+)] \[ Link:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
+					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="torrentSize"/>
-					<var name="category"/>
 					<var name="uploader"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
