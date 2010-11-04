@@ -30,6 +30,7 @@ use warnings;
 
 package AutodlIrssi::MessageBuffer;
 use AutodlIrssi::Globals;
+use Encode;
 
 use constant {
 	# Keep startup messages this long
@@ -65,7 +66,7 @@ sub onMessage {
 	eval {
 		my $currentTime = time();
 		my $elem = {
-			line => $message,
+			line => encode_utf8($message),
 			time => $currentTime,
 		};
 		if ($currentTime - $self->{timeStarted} <= KEEP_STARTUP_MESSAGES_SECS) {
