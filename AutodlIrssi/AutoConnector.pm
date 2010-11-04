@@ -98,7 +98,17 @@ use constant {
 
 	# Max number of seconds we'll try to set the nick before giving up (and reconnecting)
 	CHANGE_NICK_RECONNECT_SECS => 5*60,
+
+	# Wait at most this many seconds before cancelling the HTTP invite request (stuck connection)
+	MAX_HTTP_INVITE_REQ_WAIT_SECS => 60,
 };
+
+sub _getWaitInSecs {
+	my ($count, @wait) = @_;
+	my $secs = $wait[$count];
+	$secs = $wait[-1] unless defined $secs;
+	return $secs;
+}
 
 # Returns true if both nicks are identical
 sub compareNicks {
@@ -307,11 +317,20 @@ sub _cleanUpConnectionVars {
 	$self->_removeNoticeHandler();
 	$self->_removeTimerHandler();
 	$self->{nickServLines} = undef;
-	delete $self->{channelState};
+	$self->_cleanUpChannelState();
 	delete $self->{fullyConnected};
 	delete $self->{registerStart};
 	delete $self->{changingNickTime};
 	$self->_cleanUpNickVars();
+}
+
+sub _cleanUpChannelState {
+	my $self = shift;
+
+	while (my ($key, $channelState) = each %{$self->{channelState}}) {
+		$self->_cancelHttpInvite($channelState);
+	}
+	delete $self->{channelState};
 }
 
 sub _cleanUpNickVars {
@@ -818,14 +837,6 @@ sub _registerReply {
 	}
 }
 
-sub _getJoinWaitTimeSecs {
-	my ($self, $count) = @_;
-	my $wait = [30, 30, 30, 30, 1*60, 2*60, 3*60, 4*60, 5*60];
-	my $secs = $wait->[$count-1];
-	$secs = $wait->[-1] unless defined $secs;
-	return $secs;
-}
-
 # Joins all channels. Nick should already be set and identified.
 sub _joinChannels {
 	my $self = shift;
@@ -843,13 +854,19 @@ sub _joinChannels {
 		my $channelState = $self->{channelState}{$channelName};
 		$self->{channelState}{$channelName} = $channelState = {} unless defined $channelState;
 		if ($channel && $channel->{joined}) {
+			$self->_cancelHttpInvite($channelState);
 			delete $channelState->{sentJoin};
 			next;
 		}
 
+		if ($channelInfo->{inviteHttpUrl}) {
+			$self->_sendHttpInvite($channelInfo, $channelState);
+		}
+
 		if (defined $channelState->{sentJoin}) {
 			my $elapsedTime = $currentTime - $channelState->{sentJoin};
-			next if $elapsedTime < $self->_getJoinWaitTimeSecs($channelState->{sentJoinCount});
+			my @wait = (30, 30, 30, 30, 1*60, 2*60, 3*60, 4*60, 5*60);
+			next if $elapsedTime < _getWaitInSecs($channelState->{sentJoinCount} - 1, @wait);
 		}
 		$channelState->{sentJoin} = $currentTime;
 		$channelState->{sentJoinCount} = 0 unless defined $channelState->{sentJoinCount};
@@ -863,6 +880,85 @@ sub _joinChannels {
 		$command .= " $channelInfo->{password}" if $channelInfo->{password};
 		$server->channels_join($command, 1);
 	}
+}
+
+sub _cancelHttpInvite {
+	my ($self, $channelState) = @_;
+
+	return unless defined $channelState->{httpRequest};
+	$channelState->{httpRequest}->cancel();
+	delete $channelState->{httpRequest};
+}
+
+sub _sendHttpInvite {
+	my ($self, $channelInfo, $channelState) = @_;
+
+	$channelState->{inviteHttpCount} = 0 unless defined $channelState->{inviteHttpCount};
+
+	return if $channelInfo->{dontHttpInvite};
+
+	my $currentTime = time();
+	if ($channelState->{httpRequest}) {
+		if ($currentTime - $channelState->{lastInviteHttp} >= MAX_HTTP_INVITE_REQ_WAIT_SECS) {
+			$self->_message(0, "$channelInfo->{name}: HTTP invite request failed. Stuck connection.");
+			$self->_cancelHttpInvite($channelState);
+			$channelState->{lastInviteHttp} = $currentTime;
+			return;
+		}
+		return;
+	}
+
+	if (defined $channelState->{lastInviteHttp}) {
+		my @wait = (10, 20, 30, 30, 30, 1*60, 2*60, 3*60, 4*60, 5*60);
+		my $waitSecs = _getWaitInSecs($channelState->{inviteHttpCount} - 1, @wait);
+		return if $currentTime - $channelState->{lastInviteHttp} < $waitSecs;
+	}
+
+	my %headers = map {
+		if (/^\s*([^:\s]+)\s*:\s*(.*)$/) {
+			$1 => trim($2);
+		}
+		else {
+			();
+		}
+	} split /\|/, $channelInfo->{inviteHttpHeader};
+	$headers{"Content-Type"} = "application/x-www-form-urlencoded";
+
+	$channelState->{inviteHttpCount}++;
+	$channelState->{httpRequest} = new AutodlIrssi::HttpRequest();
+	$channelState->{lastInviteHttp} = $currentTime;
+	$channelState->{httpRequest}->sendRequest("POST", $channelInfo->{inviteHttpData}, $channelInfo->{inviteHttpUrl}, \%headers, sub {
+		my $errorMessage = shift;
+		$self->_onHttpInviteSent($errorMessage, $channelInfo, $channelState);
+	});
+}
+
+sub _onHttpInviteSent {
+	my ($self, $errorMessage, $channelInfo, $channelState) = @_;
+
+	$channelState->{lastInviteHttp} = time();
+	if ($errorMessage) {
+		$self->_message(0, "$channelInfo->{name}: HTTP invite request failed. Retrying later. Error: $errorMessage");
+		$self->_cancelHttpInvite($channelState);
+		return;
+	}
+
+	my $statusCode = $channelState->{httpRequest}->getResponseStatusCode();
+	my $statusText = $channelState->{httpRequest}->getResponseStatusText();
+	$self->_cancelHttpInvite($channelState);
+
+	if (substr($statusCode, 0, 1) == 3 || substr($statusCode, 0, 1) == 4) {
+		$self->_message(0, "$channelInfo->{name}: HTTP invite request failed. Not retrying. Error: $statusText");
+		$channelInfo->{dontHttpInvite} = 1;
+		return;
+	}
+	if ($statusCode == 200) {
+		$self->_message(3, "$channelInfo->{name}: HTTP invite request sent successfully.");
+		delete $channelState->{inviteHttpCount};
+		return;
+	}
+
+	$self->_message(0, "$channelInfo->{name}: HTTP invite request failed. Retrying later. Error: $statusText");
 }
 
 sub _checkState {
