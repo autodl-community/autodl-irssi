@@ -23,8 +23,8 @@
 # ***** END LICENSE BLOCK *****
 
 #
-# Sometimes events aren't sent to all listeners by Irssi, eg. when our code disconnects an IRC
-# server. This module fixes that problem.
+# Registers Irssi events and notifies all listeners when the event is triggered. Each listener can
+# set a priority so they're called before/after other listeners for the same event.
 #
 
 use 5.008;

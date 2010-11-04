@@ -281,7 +281,11 @@ sub _onJsonReceived {
 			return;
 		}
 
-		my $reply = $func->($self, $json);
+		my $reply = eval { $func->($self, $json) };
+		if ($@) {
+			chomp $@;
+			$reply = encodeJson({ error => "'$command' failed: $@" });
+		}
 
 		$jsonSocket->writeData($reply, sub {
 			my ($jsonSocket, $errorMessage) = @_;

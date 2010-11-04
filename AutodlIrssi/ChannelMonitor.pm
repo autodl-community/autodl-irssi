@@ -135,7 +135,7 @@ sub _onMessageJoin {
 		my $serverName = $server->{address};
 		return unless $server->{nick} eq $nick;
 		return unless $self->_isMonitoredChannel($networkName, $serverName, $channelName);
-		$self->_monitoringChannel($serverName, $channelName, "join");
+		$self->_monitoringChannel($serverName, $channelName, "/join");
 	};
 	if ($@) {
 		chomp $@;
@@ -152,7 +152,7 @@ sub _onMessagePart {
 		my $serverName = $server->{address};
 		return unless $server->{nick} eq $nick;
 		return unless $self->_isMonitoredChannel($networkName, $serverName, $channelName);
-		$self->_notMonitoringChannel($serverName, $channelName, "part");
+		$self->_notMonitoringChannel($serverName, $channelName, "/part");
 	};
 	if ($@) {
 		chomp $@;
@@ -169,7 +169,7 @@ sub _onMessageKick {
 		my $serverName = $server->{address};
 		return unless $server->{nick} eq $nick;
 		return unless $self->_isMonitoredChannel($networkName, $serverName, $channelName);
-		$self->_notMonitoringChannel($serverName, $channelName, "kick");
+		$self->_notMonitoringChannel($serverName, $channelName, "/kick - $reason");
 	};
 	if ($@) {
 		chomp $@;
