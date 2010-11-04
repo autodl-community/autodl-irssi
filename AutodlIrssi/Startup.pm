@@ -215,9 +215,6 @@ sub reloadTrackerFiles {
 	if ($@) {
 		message 0, "Error when reading tracker files: " . formatException($@);
 	}
-	else {
-		message 3, "Added \x02" . $AutodlIrssi::g->{trackerManager}->getNumberOfTrackers() . "\x02 trackers";
-	}
 }
 
 my $autodlCfgTime;
