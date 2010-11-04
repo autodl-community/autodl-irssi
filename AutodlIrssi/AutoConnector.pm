@@ -1304,7 +1304,7 @@ sub _disconnectDupeServers {
 			}
 		}
 		else {
-			$found->{name} = 1;
+			$found->{$name} = 1;
 		}
 	};
 
