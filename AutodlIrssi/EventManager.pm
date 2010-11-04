@@ -49,6 +49,7 @@ sub cleanUp {
 	for my $eventInfo (values %{$self->{events}}) {
 		message 0, "Event '$eventInfo->{event}' was not unregistered";
 		irssi_signal_remove($eventInfo->{event}, $eventInfo->{myHandler});
+		$eventInfo->{myHandler} = undef;
 	}
 	$self->{events} = {};
 }
