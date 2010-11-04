@@ -266,25 +266,21 @@ sub _onJsonReceived {
 	}
 
 	eval {
-		my $password = $json->{password};
-		my $realPassword = $AutodlIrssi::g->{options}{guiServerPassword};
-		if ($realPassword eq "" || $password ne $realPassword) {
-			$jsonSocket->close();
-			return;
-		}
+		my $reply;
+		eval {
+			my $password = $json->{password};
+			my $realPassword = $AutodlIrssi::g->{options}{guiServerPassword};
+			die "Invalid password\n" if $realPassword eq "" || $password ne $realPassword;
 
-		my $command = $json->{command};
-		my $func = $handlers{$command};
+			my $command = $json->{command};
+			my $func = $handlers{$command};
+			die "Invalid command '$command'. You need to update autodl-irssi.\n" unless $func;
 
-		if (!$func) {
-			$jsonSocket->close();
-			return;
-		}
-
-		my $reply = eval { $func->($self, $json) };
+			$reply = $func->($self, $json);
+		};
 		if ($@) {
 			chomp $@;
-			$reply = encodeJson({ error => "'$command' failed: $@" });
+			$reply = encodeJson({ error => "Error: $@" });
 		}
 
 		$jsonSocket->writeData($reply, sub {
@@ -295,7 +291,6 @@ sub _onJsonReceived {
 		});
 	};
 	if ($@) {
-		# The command handlers throw if something happens. Ignore the error and just close the conn.
 		$jsonSocket->close();
 	}
 }
