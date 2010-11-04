@@ -1294,7 +1294,7 @@ sub _disconnectDupeServers {
 		my ($server, $isDisconnected) = @_;
 
 		my $name = canonicalizeServerName($server->{address});
-		if ($found->{name}) {
+		if ($found->{$name}) {
 			message 3, "Disconnecting dupe IRC server: $name";
 			if ($isDisconnected) {
 				irssi_command("disconnect RECON-$server->{tag}");
