@@ -55,7 +55,9 @@ sub cleanUp {
 }
 
 sub register {
-	my ($self, $event, $handler) = @_;
+	my ($self, $event, $handler, $prio) = @_;
+
+	$prio = 0 unless defined $prio;
 
 	my $eventInfo = $self->{events}{$event};
 	if (!$eventInfo) {
@@ -69,7 +71,10 @@ sub register {
 		irssi_signal_add($eventInfo->{event}, $eventInfo->{myHandler});
 	}
 	my $handlerId = $self->{handlerId}++;
-	$eventInfo->{handlers}{$handlerId} = $handler;
+	$eventInfo->{handlers}{$handlerId} = {
+		prio => $prio,
+		handler => $handler,
+	};
 	return $handlerId;
 }
 
@@ -92,14 +97,33 @@ sub unregister {
 sub _notifyObservers {
 	my ($self, $eventInfo, @args) = @_;
 
-	for my $handler (values %{$eventInfo->{handlers}}) {
+	my @handlers = sort {
+		$b->{prio} <=> $a->{prio};
+	} values %{$eventInfo->{handlers}};
+	for my $handlerInfo (@handlers) {
 		eval {
-			$handler->(@args);
+			$handlerInfo->{handler}->(@args);
 		};
 		if ($@) {
 			chomp $@;
 			message 0, "EventManger: $eventInfo->{event}: handler error. ex: $@";
 		}
+	}
+}
+
+sub installHandlers {
+	my ($self, $signals) = @_;
+
+	for my $info (@$signals) {
+		$info->[3] = $self->register($info->[0], $info->[1], $info->[2]);
+	}
+}
+
+sub removeHandlers {
+	my ($self, $signals) = @_;
+
+	for my $info (@$signals) {
+		$self->unregister($info->[0], $info->[3]);
 	}
 }
 

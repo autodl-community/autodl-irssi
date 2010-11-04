@@ -1036,7 +1036,7 @@ sub _createSignalsTable {
 		["event 376", sub { $self->_onMessageFullyConnected(@_) }],
 		["event 422", sub { $self->_onMessageFullyConnected(@_) }],
 		["server connected", sub { $self->_onMessageConnect(@_) }],
-		["server disconnected", sub { $self->_onMessageDisconnect(@_) }],
+		["server disconnected", sub { $self->_onMessageDisconnect(@_) }, -10],	# Make sure we're called last
 		["event notice", sub { $self->_onMessageNotice(@_) }],
 		["event nick", sub { $self->_onMessageNick(@_) }],
 		["event 433", sub { $self->_onMessageRetryNickCommand(@_) }],
@@ -1047,17 +1047,13 @@ sub _createSignalsTable {
 sub _installHandlers {
 	my $self = shift;
 
-	for my $info (@{$self->{signals}}) {
-		$info->[2] = $AutodlIrssi::g->{eventManager}->register($info->[0], $info->[1]);
-	}
+	$AutodlIrssi::g->{eventManager}->installHandlers($self->{signals});
 }
 
 sub _removeHandlers {
 	my $self = shift;
 
-	for my $info (@{$self->{signals}}) {
-		$AutodlIrssi::g->{eventManager}->unregister($info->[0], $info->[2]);
-	}
+	$AutodlIrssi::g->{eventManager}->removeHandlers($self->{signals});
 }
 
 sub __enable {

@@ -74,17 +74,13 @@ sub _createSignalsTable {
 sub _installHandlers {
 	my $self = shift;
 
-	for my $info (@{$self->{signals}}) {
-		$info->[2] = $AutodlIrssi::g->{eventManager}->register($info->[0], $info->[1]);
-	}
+	$AutodlIrssi::g->{eventManager}->installHandlers($self->{signals});
 }
 
 sub _removeHandlers {
 	my $self = shift;
 
-	for my $info (@{$self->{signals}}) {
-		$AutodlIrssi::g->{eventManager}->unregister($info->[0], $info->[2]);
-	}
+	$AutodlIrssi::g->{eventManager}->removeHandlers($self->{signals});
 }
 
 # Called on each PRIVMSG/NOTICE
