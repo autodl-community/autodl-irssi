@@ -220,48 +220,108 @@ sub reloadTrackerFiles {
 	}
 }
 
-my $autodlCfgTime;
-sub reloadAutodlConfigFile {
+my %autodlCfgFiles = (
+	autodl => {
+		filename => getAutodlCfgFile(),
+		mtime => undef,
+	},
+	autodl2 => {
+		filename => getAutodl2CfgFile,
+		mtime => undef,
+	},
+	etc => {
+		filename => getEtcAutodlCfgFile(),
+		mtime => undef,
+	},
+);
 
-	return unless -f getAutodlCfgFile();
+sub checkReloadFile {
+	my $fileInfo = shift;
+
+	return 0 unless -f $fileInfo->{filename};
 
 	my $reload = 0;
-	if (!defined $autodlCfgTime) {
+	if (!defined $fileInfo->{mtime}) {
 		$reload = 1;
 	}
 	else {
-		my $newTime = (stat getAutodlCfgFile())[9];	# Get mtime
-		$reload = 1 if $newTime > $autodlCfgTime;
+		my $newTime = (stat $fileInfo->{filename})[9];	# Get mtime
+		$reload = 1 if $newTime > $fileInfo->{mtime};
 	}
 
 	if ($reload) {
-		message 3, "autodl.cfg modified, re-reading it..." if defined $autodlCfgTime;
-		$autodlCfgTime = (stat getAutodlCfgFile())[9];	# Get mtime
-		forceReloadAutodlConfigFile();
+		$fileInfo->{mtime} = (stat $fileInfo->{filename})[9];	# Get mtime
 	}
+	return $reload;
 }
 
-sub forceReloadAutodlConfigFile {
+sub parseConfigFile {
+	my ($fileInfo, $trackerManager) = @_;
+
+	return unless -f $fileInfo->{filename};
+
+	my $configFileParser = new AutodlIrssi::AutodlConfigFileParser($trackerManager);
+	$configFileParser->parse($fileInfo->{filename});
+	return $configFileParser;
+}
+
+sub reloadAutodlConfigFile {
+
 	eval {
-		my $configFileParser = new AutodlIrssi::AutodlConfigFileParser($AutodlIrssi::g->{trackerManager});
-		$configFileParser->parse(getAutodlCfgFile());
-		$AutodlIrssi::g->{filterManager}->setFilters($configFileParser->getFilters());
-		$AutodlIrssi::g->{options} = $configFileParser->getOptions();
+		my $reloadAutodl = checkReloadFile($autodlCfgFiles{autodl});
+		my $reloadAutodl2 = checkReloadFile($autodlCfgFiles{autodl2});
+		my $reloadEtcAutodl = checkReloadFile($autodlCfgFiles{etc});
+
+		# Always read in this order: autodl.cfg, autodl2.cfg, /etc/autodl.cfg
+		$reloadAutodl2 = $reloadEtcAutodl = 1 if $reloadAutodl;
+		$reloadEtcAutodl = 1 if $reloadAutodl2;
+
+		return unless $reloadAutodl || $reloadAutodl2 || $reloadEtcAutodl;
+
+		message 3, "Reading configuration files";
+
+		my $configFileParser;
+		my $servers;
+		if ($reloadAutodl) {
+			$configFileParser = parseConfigFile($autodlCfgFiles{autodl}, $AutodlIrssi::g->{trackerManager});
+
+			$AutodlIrssi::g->{filterManager}->setFilters($configFileParser->getFilters());
+			$AutodlIrssi::g->{options} = $configFileParser->getOptions();
+			$servers = $configFileParser->getServers();
+		}
+
+		if ($reloadAutodl2) {
+			$configFileParser = parseConfigFile($autodlCfgFiles{autodl2});
+
+			if ($configFileParser) {
+				my $options = $configFileParser->getOptions();
+				$AutodlIrssi::g->{options}{guiServerPort} = $options->{guiServerPort} if $options->{guiServerPort} != 0;
+				$AutodlIrssi::g->{options}{guiServerPassword} = $options->{guiServerPassword} if $options->{guiServerPassword} ne "";
+			}
+		}
+
+		if ($reloadEtcAutodl) {
+			$configFileParser = parseConfigFile($autodlCfgFiles{etc});
+
+			if ($configFileParser) {
+				my $options = $configFileParser->getOptions();
+				$AutodlIrssi::g->{options}{allowed} = $options->{allowed} if $options->{allowed} ne "";
+			}
+		}
+
 		$AutodlIrssi::g->{guiServer}->setListenPort($AutodlIrssi::g->{options}{guiServerPort});
 
 		if ($AutodlIrssi::g->{options}{irc}{autoConnect}) {
 			$AutodlIrssi::g->{autoConnector}->setNames();
-			$AutodlIrssi::g->{autoConnector}->setServers($configFileParser->getServers());
+			$AutodlIrssi::g->{autoConnector}->setServers($servers);
 		}
 		else {
 			$AutodlIrssi::g->{autoConnector}->disable();
 		}
 	};
 	if ($@) {
-		message 0, "Error when reading autodl.cfg: " . formatException($@);
-	}
-	else {
-		message 3, "Added \x02" . $AutodlIrssi::g->{filterManager}->getNumFilters() . "\x02 filters";
+		chomp $@;
+		message 0, "Error when reading the config file: $@";
 	}
 }
 

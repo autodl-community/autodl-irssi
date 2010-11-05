@@ -234,6 +234,20 @@ sub _onTorrentUploadWait {
 	}
 }
 
+sub _checkMethodAllowed {
+	my ($self, $method) = @_;
+
+	my $allowed = trim($AutodlIrssi::g->{options}{allowed});
+	return 1 if $allowed eq "";
+
+	for my $s (split /,/, $allowed) {
+		return 1 if trim($s) eq $method;
+	}
+
+	message 0, "Can't save/upload torrent: '$method' is disabled!";
+	return 0;
+}
+
 # Called when the torrent file has been successfully downloaded
 sub _onTorrentFileDownloaded {
 	my $self = shift;
@@ -259,6 +273,7 @@ sub _saveTorrentFile {
 	my $self = shift;
 
 	return if $self->_checkAlreadyDownloaded();
+	return unless $self->_checkMethodAllowed("watchdir");
 
 	eval {
 		# Save it to a temporary name with a different extension, and when all data has been written
@@ -281,6 +296,7 @@ sub _sendTorrentFileWebui {
 	my $self = shift;
 
 	return if $self->_checkAlreadyDownloaded();
+	return unless $self->_checkMethodAllowed("webui");
 
 	eval {
 		$self->_addDownload();
@@ -318,6 +334,7 @@ sub _sendTorrentFileFtp {
 	my $self = shift;
 
 	return if $self->_checkAlreadyDownloaded();
+	return unless $self->_checkMethodAllowed("ftp");
 
 	eval {
 		$self->_addDownload();
@@ -391,6 +408,7 @@ sub _runProgram {
 	my $self = shift;
 
 	return if $self->_checkAlreadyDownloaded();
+	return unless $self->_checkMethodAllowed("exec");
 
 	eval {
 		my $filename = $self->_writeTempFile($self->{torrentFileData});
@@ -413,6 +431,7 @@ sub _runUtorrentDir {
 	my $self = shift;
 
 	return if $self->_checkAlreadyDownloaded();
+	return unless $self->_checkMethodAllowed("dyndir");
 
 	eval {
 		my $filename = $self->_writeTempFile($self->{torrentFileData});

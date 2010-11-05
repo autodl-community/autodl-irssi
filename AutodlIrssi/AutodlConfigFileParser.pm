@@ -57,6 +57,7 @@ sub defaultOptions {
 		memoryLeakCheck => 0,
 		guiServerPort => 0,
 		guiServerPassword => '',
+		allowed => '',
 
 		webui => {
 			user => '',
@@ -324,6 +325,7 @@ sub doHeaderOptions {
 		'memory-leak-check' => 'memoryLeakCheck',
 		'gui-server-port' => 'guiServerPort',
 		'gui-server-password' => 'guiServerPassword',
+		'allowed' => 'allowed',
 	});
 
 	$self->checkValidUploadType($self->{options}{uploadType}, $options->{'upload-type'});
@@ -391,6 +393,8 @@ sub doHeaderIrc {
 # Initialize options from all [tracker] headers
 sub doHeaderTracker {
 	my ($self, $aryHeader) = @_;
+
+	return unless defined $self->{trackerManager};
 
 	$self->{trackerManager}->resetTrackerOptions();
 

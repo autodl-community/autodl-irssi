@@ -131,13 +131,33 @@ $autodlPassword = "secretpass";
 ?>
 [/code]
 
-Open ~/.autodl/autodl.cfg with a text editor and add this to the file:
+Open ~/.autodl/autodl2.cfg with a text editor and add this to the file:
 [code]
 [options]
 gui-server-port = 12345
 gui-server-password = secretpass
 [/code]
 
+
+The gui-server-port and gui-server-password options can be moved to ~/.autodl/autodl2.cfg (note the '2') and will override any gui-server-* options in autodl.cfg. This is actually recommended because it's not possible to overwrite autodl2.cfg from the ruTorrent plugin.
+
+
+Since some people don't want users to have shell access, it's also possible to disable the "exec" action. Create /etc/autodl.cfg and add this:
+
+[code]
+[options]
+allowed = watchdir
+[/code]
+
+That will only enable the "Save to watch dir" action. The following can be used with the [b]allowed[/b] option:
+
+watchdir
+webui (requires uTorrent)
+ftp
+exec
+dyndir (requires uTorrent)
+
+It's a comma seperated list, eg.: allowed = watchdir, ftp
 
 
 [b]The autodl.cfg file[/b]
