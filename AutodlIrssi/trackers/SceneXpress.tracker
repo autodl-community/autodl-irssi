@@ -83,6 +83,7 @@
 		<ignore>
 			<regex value="^CLEAR USERS"/>
 			<regex value="^\[Twitchy]"/>
+			<regex value="^PRE:"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
