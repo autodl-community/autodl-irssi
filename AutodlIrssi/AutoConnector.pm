@@ -865,6 +865,7 @@ sub _joinChannels {
 		if ($channel && $channel->{joined}) {
 			$self->_cancelHttpInvite($channelState);
 			delete $channelState->{sentJoin};
+			delete $channelState->{sentJoinCount};
 			next;
 		}
 
