@@ -378,7 +378,7 @@ sub _onCommandWriteConfig {
 sub _onCommandGetLines {
 	my ($self, $json) = @_;
 
-	my $cid = $self->_verifyString("Missing cid", $json->{cid});
+	my $cid = $json->{cid};
 	my $buffer = $AutodlIrssi::g->{messageBuffer}->getBuffer($cid);
 	my $reply = {
 		error => "",
