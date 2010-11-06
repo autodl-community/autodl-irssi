@@ -180,7 +180,7 @@ sub _onMessageKick {
 sub _notMonitoringChannel {
 	my ($self, $serverName, $channelName, $reason) = @_;
 
-	my $msg = "Not monitoring channel $channelName ($serverName)";
+	my $msg = "$serverName: Not monitoring channel $channelName";
 	$msg .= " ($reason)" if $reason;
 	message 0, $msg;
 }
@@ -188,7 +188,7 @@ sub _notMonitoringChannel {
 sub _monitoringChannel {
 	my ($self, $serverName, $channelName, $reason) = @_;
 
-	my $msg = "Monitoring channel $channelName ($serverName)";
+	my $msg = "$serverName: Monitoring channel $channelName";
 	$msg .= " ($reason)" if $reason;
 	message 3, $msg;
 }

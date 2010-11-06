@@ -182,6 +182,8 @@ use AutodlIrssi::InternetUtils qw/ encodeJson /;
 use AutodlIrssi::ServerSocket;
 use AutodlIrssi::Dirs;
 use AutodlIrssi::FileUtils;
+use AutodlIrssi::Irssi;
+use AutodlIrssi::TextUtils;
 use File::Glob qw/ :glob /;
 use File::Basename;
 use File::Spec;
@@ -256,6 +258,13 @@ my %handlers = (
 	"command"		=> \&_onCommandCommand,
 );
 
+sub _verifyString {
+	my ($self, $errorMessage, $val) = @_;
+
+	die "$errorMessage\n" if !defined $val || ref $val;
+	return $val;
+}
+
 sub _onJsonReceived {
 	my ($self, $jsonSocket, $errorMessage, $json) = @_;
 
@@ -268,11 +277,11 @@ sub _onJsonReceived {
 	eval {
 		my $reply;
 		eval {
-			my $password = $json->{password};
+			my $password = $self->_verifyString("Missing password", $json->{password});
 			my $realPassword = $AutodlIrssi::g->{options}{guiServerPassword};
 			die "Invalid password\n" if $realPassword eq "" || $password ne $realPassword;
 
-			my $command = $json->{command};
+			my $command = $self->_verifyString("Missing command", $json->{command});
 			my $func = $handlers{$command};
 			die "Invalid command '$command'. You need to update autodl-irssi.\n" unless $func;
 
@@ -322,8 +331,7 @@ sub _onCommandGetFiles {
 sub _onCommandGetFile {
 	my ($self, $json) = @_;
 
-	my $filename = $json->{name};
-	die "Missing filename\n" if !defined $filename || ref $filename;
+	my $filename = $self->_verifyString("Missing filename", $json->{name});
 	die "Bad filename\n" unless $self->_isValidFilename($filename);
 
 	my $path;
@@ -359,8 +367,7 @@ sub _onCommandGetFile {
 sub _onCommandWriteConfig {
 	my ($self, $json) = @_;
 
-	my $data = $json->{data};
-	die "Missing data\n" if !defined $data || ref $data;
+	my $data = $self->_verifyString("Missing data", $json->{data});
 
 	my $filename = getAutodlCfgFile();
 	saveRawDataToFile($filename, $data);
@@ -371,7 +378,7 @@ sub _onCommandWriteConfig {
 sub _onCommandGetLines {
 	my ($self, $json) = @_;
 
-	my $cid = $json->{cid};
+	my $cid = $self->_verifyString("Missing cid", $json->{cid});
 	my $buffer = $AutodlIrssi::g->{messageBuffer}->getBuffer($cid);
 	my $reply = {
 		error => "",
@@ -388,23 +395,22 @@ sub _onCommandCommand {
 		error => "",
 	};
 
-	my $type = $json->{type};
-	die "Unknown command type\n" if !defined $type || ref $type;
+	my $type = $self->_verifyString("Unknown command type", $json->{type});
 	if ($type eq 'autodl') {
-		$self->_doCommandAutodl($json);
+		return $self->_doCommandAutodl($json);
+	}
+	elsif ($type eq 'irc') {
+		return $self->_doCommandIrc($json);
 	}
 	else {
 		die "Invalid command type\n";
 	}
-
-	return encodeJson({ error => "" });
 }
 
 sub _doCommandAutodl {
 	my ($self, $json) = @_;
 
-	my $subcmd = $json->{arg1};
-	die "Unknown /autodl command\n" if !defined $subcmd || ref $subcmd;
+	my $subcmd = $self->_verifyString("Unknown /autodl command", $json->{arg1});
 	if ($subcmd eq 'update') {
 		$self->{autodlCmd}{update}->();
 	}
@@ -414,6 +420,117 @@ sub _doCommandAutodl {
 	else {
 		die "Invalid /autodl command\n";
 	}
+
+	return encodeJson({ error => "" });
+}
+
+sub _doCommandIrc {
+	my ($self, $json) = @_;
+
+	my $subcmd = $self->_verifyString("Unknown irc command", $json->{arg1});
+	if ($subcmd eq 'getservers') {
+		return $self->_doCommandIrcGetServers($json);
+	}
+	elsif ($subcmd eq 'reconnect') {
+		return $self->_doCommandIrcReconnect($json);
+	}
+	elsif ($subcmd eq 'part') {
+		return $self->_doCommandIrcPart($json);
+	}
+	else {
+		die "Invalid irc command\n";
+	}
+}
+
+sub _doCommandIrcGetServers {
+	my ($self, $json) = @_;
+
+	my $servers = [];
+	for my $server (irssi_servers()) {
+		my $channels = [];
+		my @serverChannels = eval { no warnings; return $server->channels(); };
+		for my $channel (@serverChannels) {
+			push @$channels, {
+				name => $channel->{name},
+				joined => $channel->{joined} ? 1 : 0,
+			};
+		}
+
+		push @$servers, {
+			tag => $server->{tag},
+			network => $server->isupport('NETWORK') || "",
+			name => $server->{address},
+			port => $server->{port},
+			state => "connected",
+			nick => $server->{nick},
+			channels => $channels,
+		};
+	}
+
+	for my $reconnect (irssi_reconnects()) {
+		push @$servers, {
+			tag => "RECON-$reconnect->{tag}",
+			network => "",
+			name => $reconnect->{address},
+			port => $reconnect->{port},
+			state => "reconnect",
+			nick => "",
+			channels => [],
+		};
+	}
+
+	return encodeJson({
+		error => "",
+		servers => $servers,
+	});
+}
+
+sub _doCommandIrcReconnect {
+	my ($self, $json) = @_;
+
+	my $tag = $self->_verifyString("Missing server tag", $json->{arg2});
+
+	if ($tag =~ /^RECON-(\d+)$/) {
+		$tag = $1;
+		for my $reconnect (irssi_reconnects()) {
+			next unless $reconnect->{tag} eq $tag;
+
+			irssi_command("reconnect $tag");
+			last;
+		}
+	}
+	else {
+		for my $server (irssi_servers()) {
+			next unless $server->{tag} eq $tag;
+
+			$server->command("reconnect");
+			last;
+		}
+	}
+
+	return encodeJson({ error => "" });
+}
+
+sub _doCommandIrcPart {
+	my ($self, $json) = @_;
+
+	my $tag = $self->_verifyString("Missing server tag", $json->{arg2});
+	my $channelName = canonicalizeChannelName($self->_verifyString("Missing channel name", $json->{arg3}));
+
+	for my $server (irssi_servers()) {
+		next unless $server->{tag} eq $tag;
+
+		my @serverChannels = eval { no warnings; return $server->channels(); };
+		for my $channel (@serverChannels) {
+			next unless $channelName eq canonicalizeChannelName($channel->{name});
+
+			$channel->destroy();
+			last;
+		}
+		last;
+	}
+
+	return encodeJson({ error => "" });
 }
 
 1;

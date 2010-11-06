@@ -167,10 +167,6 @@ sub _onTorrentDownloaded {
 		message(0, "Got HTTP $statusCode, check your cookie settings! Torrent: $self->{ti}{torrentName}, tracker: $self->{trackerInfo}{longName}");
 		return;
 	}
-	if (substr($statusCode, 0, 1) == 4 && !$self->{trackerInfo}{ignore404}) {
-		message(0, "Got HTTP error $statusCode '" . $self->{httpRequest}->getResponseStatusText() . "' Torrent: $self->{ti}{torrentName}, tracker: $self->{trackerInfo}{longName}");
-		return;
-	}
 	if ($statusCode != 200) {
 		$self->{httpRequest}->retryRequest("HTTP error '" . $self->{httpRequest}->getResponseStatusText() . "'", sub { $self->_onTorrentDownloaded(@_) });
 		return;
