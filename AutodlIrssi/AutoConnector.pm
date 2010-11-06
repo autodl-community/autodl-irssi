@@ -83,7 +83,7 @@ use constant {
 	NICKSERV_NICK => "NickServ",
 
 	# Wait at most this many seconds for a NickServ reply
-	NICKSERV_TIMEOUT_SECS => 10,
+	NICKSERV_TIMEOUT_SECS => 30,
 
 	# Wait this many seconds for NickServ's next line. Assume there's none if it times out.
 	NICKSERV_NEXTLINE_TIMEOUT_SECS => 2,
@@ -102,6 +102,9 @@ use constant {
 
 	# Wait at most this many seconds before cancelling the HTTP invite request (stuck connection)
 	MAX_HTTP_INVITE_REQ_WAIT_SECS => 60,
+
+	# Time to wait before retrying the NickServ IDENTIFY command if it failed.
+	RETRY_NICKSERV_COMMAND_SECS => 2*60,
 };
 
 sub _getWaitInSecs {
@@ -345,6 +348,8 @@ sub _cleanUpNickVars {
 	delete $self->{hasTriedRegisterNick};
 	delete $self->{numTimesSentIdentify};
 	delete $self->{changingNickStart};
+	delete $self->{retryNickServ};
+	delete $self->{lastNickServTime};
 }
 
 sub _setFullyConnected {
@@ -688,6 +693,7 @@ sub _sendIdentify {
 sub _sendIdentifyNickCommand {
 	my $self = shift;
 
+	delete $self->{retryNickServ};
 	$self->{numTimesSentIdentify}++;
 	$self->_waitForNickServReply(sub { $self->_identifyReply(@_) });
 	$self->command("msg " . NICKSERV_NICK . " IDENTIFY $self->{info}{identPassword}");
@@ -699,6 +705,7 @@ sub _identifyReply {
 	eval {
 		if ($timedOut) {
 			$self->_dmessage(0, "Sent IDENTIFY command. Got no reply from NickServ.");
+			$self->{retryNickServ} = 1;
 		}
 		else {
 			my $code = $self->_checkNickServReply($lines, [
@@ -726,6 +733,7 @@ sub _identifyReply {
 
 			if (!defined $code) {
 				$self->_dmessage(0, "Got unknown IDENTIFY response:\n" . join("\n", @$lines));
+				$self->{retryNickServ} = 1;
 			}
 			elsif ($code eq 'wasidentified') {
 				# Do nothing
@@ -752,13 +760,15 @@ sub _identifyReply {
 					return;
 				}
 				else {
-					$self->_message(0, "Failed to IDENTIFY nick.")
+					$self->_message(0, "Failed to IDENTIFY nick.");
+					$self->{retryNickServ} = 1;
 				}
 			}
 			else {
 				$self->_message(0, "IDENTIFY: Got unknown code '$code'");
 			}
 		}
+		$self->{lastNickServTime} = time();
 		$self->_joinChannels();
 	};
 	if ($@) {
@@ -788,6 +798,7 @@ sub _registerNick {
 sub _sendRegisterNickCommand {
 	my $self = shift;
 
+	delete $self->{retryNickServ};
 	$self->_waitForNickServReply(sub { $self->_registerReply(@_) });
 	$self->command("msg " . NICKSERV_NICK . " REGISTER $self->{info}{identPassword} $self->{info}{identEmail}");
 }
@@ -798,6 +809,7 @@ sub _registerReply {
 	eval {
 		if ($timedOut) {
 			$self->_message(0, "Sent REGISTER command. Got no reply from NickServ.");
+			$self->{retryNickServ} = 1;
 		}
 		else {
 			my $code = $self->_checkNickServReply($lines, [
@@ -817,10 +829,12 @@ sub _registerReply {
 
 			if (!defined $code) {
 				$self->_message(0, "Got unknown REGISTER response:\n" . join("\n", @$lines));
+				$self->{retryNickServ} = 1;
 			}
 			elsif ($code eq 'wait') {
 				if (time() - $self->{registerStart} > NICKSERV_REGISTER_MAX_WAIT_SECS) {
 					$self->_message(0, "Could not register nick. Timed out!");
+					$self->{retryNickServ} = 1;
 				}
 				else {
 					$self->_installTimerHandler(NICKSERV_REGISTER_WAIT_SECS, sub {
@@ -840,12 +854,13 @@ sub _registerReply {
 				$self->_message(0, "REGISTER: Got unknown code '$code'");
 			}
 		}
+		$self->{lastNickServTime} = time();
 		delete $self->{registerStart};
 		$self->_joinChannels();
 	};
 	if ($@) {
 		chomp $@;
-		$self->_message(0, "_identifyReply: $@");
+		$self->_message(0, "_registerReply: $@");
 	}
 }
 
@@ -1025,7 +1040,13 @@ sub _checkState {
 					# Don't join the channels if we're still waiting for a command, eg. when we've
 					# sent the IDENTIFY command, and waiting for the response.
 					if (!$self->_isWaitingForSomething()) {
-						$self->_joinChannels();
+						if ($self->{retryNickServ} && $currentTime - $self->{lastNickServTime} > RETRY_NICKSERV_COMMAND_SECS) {
+							$self->_message(3, "Retrying " . NICKSERV_NICK . " IDENTIFY command");
+							$self->_sendIdentify();
+						}
+						else {
+							$self->_joinChannels();
+						}
 					}
 				}
 			}
