@@ -564,6 +564,15 @@ sub _onRetryNickCommand {
 	delete $self->{changingNick};
 }
 
+sub _onInvite {
+	my ($self, $server, $channelName) = @_;
+
+	my $channelInfo = $self->_findChannelInfo($channelName);
+	return unless defined $channelInfo;
+	$self->_message(3, "Got invited to $channelName");
+	$self->_sendChannelJoinCommand($channelInfo, $server);
+}
+
 # Called when we get a new nick
 sub _onNewNickName {
 	my ($self, $newNick) = @_;
@@ -876,10 +885,30 @@ sub _joinChannels {
 			$server->command(fixCommandString($channelInfo->{inviteCommand}));
 		}
 
-		my $command = $channelInfo->{name};
-		$command .= " $channelInfo->{password}" if $channelInfo->{password};
-		$server->channels_join($command, 1);
+		$self->_sendChannelJoinCommand($channelInfo, $server);
 	}
+}
+
+sub _findChannelInfo {
+	my ($self, $channelName) = @_;
+
+	$channelName = canonicalizeChannelName($channelName);
+	while (my ($key, $channelInfo) = each %{$self->{info}{channels}}) {
+		return $channelInfo if canonicalizeChannelName($channelInfo->{name}) eq $channelName;
+	}
+
+	return;
+}
+
+sub _sendChannelJoinCommand {
+	my ($self, $channelInfo, $server) = @_;
+
+	$server = $self->_findServer() unless defined $server;
+	return unless defined $server;
+
+	my $command = $channelInfo->{name};
+	$command .= " $channelInfo->{password}" if $channelInfo->{password};
+	$server->channels_join($command, 1);
 }
 
 sub _cancelHttpInvite {
@@ -1041,6 +1070,7 @@ sub _createSignalsTable {
 		["event nick", sub { $self->_onMessageNick(@_) }],
 		["event 433", sub { $self->_onMessageRetryNickCommand(@_) }],
 		["event 436", sub { $self->_onMessageRetryNickCommand(@_) }],
+		["message invite", sub { $self->_onMessageInvite(@_) }],
 	];
 }
 
@@ -1261,6 +1291,20 @@ sub _onMessageRetryNickCommand {
 	if ($@) {
 		chomp $@;
 		message 0, "_onMessageRetryNickCommand: ex: $@";
+	}
+}
+
+sub _onMessageInvite {
+	my ($self, $irssiServer, $channelName, $nick, $address) = @_;
+
+	eval {
+		my $server = $self->_findServer($irssiServer);
+		return unless defined $server;
+		$server->_onInvite($irssiServer, $channelName);
+	};
+	if ($@) {
+		chomp $@;
+		message 0, "_onMessageInvite: ex: $@";
 	}
 }
 
