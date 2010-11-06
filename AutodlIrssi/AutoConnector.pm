@@ -886,7 +886,9 @@ sub _joinChannels {
 		$channelState->{sentJoinCount}++;
 
 		if ($channelInfo->{inviteCommand}) {
-			$server->command(fixCommandString($channelInfo->{inviteCommand}));
+			my $inviteCommand = fixCommandString($channelInfo->{inviteCommand});
+			$self->_message(4, "$channelInfo->{name}: Sending invite command: $inviteCommand");
+			$server->command($inviteCommand);
 		}
 
 		$self->_sendChannelJoinCommand($channelInfo, $server);
@@ -912,6 +914,7 @@ sub _sendChannelJoinCommand {
 
 	my $command = $channelInfo->{name};
 	$command .= " $channelInfo->{password}" if $channelInfo->{password};
+	$self->_message(4, "$channelInfo->{name}: Sending join command: $command");
 	$server->channels_join($command, 1);
 }
 
@@ -957,6 +960,7 @@ sub _sendHttpInvite {
 	} split /\|/, $channelInfo->{inviteHttpHeader};
 	$headers{"Content-Type"} = "application/x-www-form-urlencoded";
 
+	$self->_message(4, "$channelInfo->{name}: Sending HTTP invite command");
 	$channelState->{inviteHttpCount}++;
 	$channelState->{httpRequest} = new AutodlIrssi::HttpRequest();
 	$channelState->{lastInviteHttp} = $currentTime;
