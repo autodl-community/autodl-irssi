@@ -120,6 +120,7 @@ sub compareNicks {
 # Returns a command string, eg. "/msg blah asdf" => "msg blah asdf"
 sub fixCommandString {
 	my $s = trim(shift);
+	return "" if $s eq "";
 	return $s if substr($s, 0, 1) ne "/";
 	return substr $s, 1;
 }
@@ -128,6 +129,7 @@ sub fixUserCommand {
 	my $userCmd = shift;
 
 	$userCmd = fixCommandString($userCmd);
+	return "" if $userCmd eq "";
 	if ($userCmd =~ /^(?:echo|msg|quote)\s/i) {
 		# Allowed
 	}
