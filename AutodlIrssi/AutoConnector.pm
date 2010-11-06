@@ -629,6 +629,7 @@ sub _forceSetNick {
 	my $self = shift;
 
 	if ($self->{info}{identPassword} ne "") {
+		$self->_message(4, "Sending GHOST command");
 		$self->_waitForNickServReply(sub { $self->_ghostReply(@_) });
 		$self->command("msg " . NICKSERV_NICK . " GHOST $self->{info}{nick} $self->{info}{identPassword}");
 	}
@@ -693,6 +694,7 @@ sub _sendIdentify {
 sub _sendIdentifyNickCommand {
 	my $self = shift;
 
+	$self->_message(4, "Sending IDENTIFY command");
 	delete $self->{retryNickServ};
 	$self->{numTimesSentIdentify}++;
 	$self->_waitForNickServReply(sub { $self->_identifyReply(@_) });
@@ -798,6 +800,7 @@ sub _registerNick {
 sub _sendRegisterNickCommand {
 	my $self = shift;
 
+	$self->_message(4, "Sending NICK command");
 	delete $self->{retryNickServ};
 	$self->_waitForNickServReply(sub { $self->_registerReply(@_) });
 	$self->command("msg " . NICKSERV_NICK . " REGISTER $self->{info}{identPassword} $self->{info}{identEmail}");
