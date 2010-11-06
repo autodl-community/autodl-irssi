@@ -32,6 +32,7 @@ use warnings;
 
 package AutodlIrssi::NoticeObservable;
 use AutodlIrssi::Globals;
+use AutodlIrssi::TextUtils;
 
 sub new {
 	my $class = shift;
@@ -118,7 +119,7 @@ sub compareNicks {
 
 # Returns a command string, eg. "/msg blah asdf" => "msg blah asdf"
 sub fixCommandString {
-	my $s = shift;
+	my $s = trim(shift);
 	return $s if substr($s, 0, 1) ne "/";
 	return substr $s, 1;
 }
