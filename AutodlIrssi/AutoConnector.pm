@@ -666,6 +666,7 @@ sub _ghostReply {
 			}
 			elsif ($code eq 'ghostkilled') {
 				$self->_message(3, "Killed ghost connection!");
+				$self->{changingNick} = 0;
 			}
 		}
 
