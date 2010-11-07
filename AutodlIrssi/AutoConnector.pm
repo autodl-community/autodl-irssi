@@ -89,7 +89,7 @@ use constant {
 	NICKSERV_NEXTLINE_TIMEOUT_SECS => 2,
 
 	# Wait this many seconds before retrying the REGISTER command
-	NICKSERV_REGISTER_WAIT_SECS => 10,
+	NICKSERV_REGISTER_WAIT_SECS => 30,
 
 	# Max number of seconds we'll try to register the nick
 	NICKSERV_REGISTER_MAX_WAIT_SECS => 5*60,
@@ -807,7 +807,7 @@ sub _registerNick {
 sub _sendRegisterNickCommand {
 	my $self = shift;
 
-	$self->_message(4, "Sending NICK command");
+	$self->_message(4, "Sending REGISTER command");
 	delete $self->{retryNickServ};
 	$self->_waitForNickServReply(sub { $self->_registerReply(@_) });
 	$self->command("msg " . NICKSERV_NICK . " REGISTER $self->{info}{identPassword} $self->{info}{identEmail}");
@@ -1046,6 +1046,7 @@ sub _checkState {
 						irssi_command("reconnect $server->{tag}");
 					}
 					elsif ($currentTime - $self->{changingNickTime} > CHANGE_NICK_TIMEOUT_SECS) {
+						$self->_message(4, "Trying to set nick again");
 						$self->{changingNick} = 0;
 						$self->_setNick();
 					}

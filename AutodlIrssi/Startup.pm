@@ -313,7 +313,7 @@ sub reloadAutodlConfigFile {
 
 		if ($AutodlIrssi::g->{options}{irc}{autoConnect}) {
 			$AutodlIrssi::g->{autoConnector}->setNames();
-			$AutodlIrssi::g->{autoConnector}->setServers($servers);
+			$AutodlIrssi::g->{autoConnector}->setServers($servers) if defined $servers;
 		}
 		else {
 			$AutodlIrssi::g->{autoConnector}->disable();
