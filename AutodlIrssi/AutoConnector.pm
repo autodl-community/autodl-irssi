@@ -725,11 +725,15 @@ sub _identifyReply {
 				},
 				{
 					code	=> "notregistered",
-					regex	=> qr/^Your nick isn't registered/,
+					regex	=> qr/Your nick isn't registered|is not a registered nickname|No such authnick or incorrect password|Your nickname isn't registered/,
 				},
 				{
 					code	=> "itsregistered",
 					regex	=> qr/^This nickname is registered and protected/,
+				},
+				{
+					code	=> "emailverification",
+					regex	=> qr/This nick is awaiting an e-mail verification code before completing registration/,
 				},
 			]);
 
@@ -765,6 +769,9 @@ sub _identifyReply {
 					$self->_message(0, "Failed to IDENTIFY nick.");
 					$self->{retryNickServ} = 1;
 				}
+			}
+			elsif ($code eq 'emailverification') {
+				$self->_message(0, "Can't IDENTIFY nick. You must complete the registration by reading your email.");
 			}
 			else {
 				$self->_message(0, "IDENTIFY: Got unknown code '$code'");
@@ -818,15 +825,19 @@ sub _registerReply {
 			my $code = $self->_checkNickServReply($lines, [
 				{
 					code	=> "wait",
-					regex	=> qr/^(?:You must have been using this nick for|You must be connected for)/,
+					regex	=> qr/You must have been using this nick for|You must be connected for|You're not connected long enough|Please wait .* before using/,
 				},
 				{
 					code	=> "registered",
-					regex	=> qr/^Nickname \S+ registered/,
+					regex	=> qr/Nickname \S+ registered|is now registered to/,
 				},
 				{
 					code	=> "alreadyregistered",
 					regex	=> qr/^Nickname \S+ is already registered/,
+				},
+				{
+					code	=> "emailverification",
+					regex	=> qr/has already been part-registered/,
 				},
 			]);
 
@@ -852,6 +863,9 @@ sub _registerReply {
 			}
 			elsif ($code eq 'alreadyregistered') {
 				$self->_message(0, "Can't register nick! It's already been registered!");
+			}
+			elsif ($code eq 'emailverification') {
+				$self->_message(0, "Nick REGISTER reply:\n" . join("\n", @$lines));
 			}
 			else {
 				$self->_message(0, "REGISTER: Got unknown code '$code'");
@@ -932,7 +946,7 @@ sub _sendChannelJoinCommand {
 
 	my $command = $channelInfo->{name};
 	$command .= " $channelInfo->{password}" if $channelInfo->{password};
-	$self->_message(4, "$channelInfo->{name}: Sending join command: $command");
+	$self->_message(4, "$channelInfo->{name}: Sending join command: join $command");
 	$server->channels_join($command, 1);
 }
 
