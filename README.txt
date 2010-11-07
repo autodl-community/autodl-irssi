@@ -138,6 +138,7 @@ gui-server-port = 12345
 gui-server-password = secretpass
 [/code]
 
+If you start more than one Irssi process, make sure each Irssi process uses a unique port number! It won't work if they all use the same port number.
 
 The gui-server-port and gui-server-password options can be moved to ~/.autodl/autodl2.cfg (note the '2') and will override any gui-server-* options in autodl.cfg. This is actually recommended because it's not possible to overwrite autodl2.cfg from the ruTorrent plugin.
 
