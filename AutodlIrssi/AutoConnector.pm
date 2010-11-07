@@ -617,6 +617,7 @@ sub _sendNickCommand {
 	my $self = shift;
 
 	if (!$self->{changingNick} && !$self->_hasCorrectNick()) {
+		$self->_message(4, "Sending NICK command");
 		$self->{changingNick} = 1;
 		my $currentTime = time();
 		$self->{changingNickTime} = $currentTime;
@@ -661,7 +662,7 @@ sub _ghostReply {
 				$self->_dmessage(0, "Got unknown GHOST response:\n" . join("\n", @$lines));
 			}
 			elsif ($code eq 'notinuse') {
-				# Do nothing
+				$self->_message(4, "GHOST nick is not in use.");
 			}
 			elsif ($code eq 'ghostkilled') {
 				$self->_message(3, "Killed ghost connection!");
@@ -742,7 +743,7 @@ sub _identifyReply {
 				$self->{retryNickServ} = 1;
 			}
 			elsif ($code eq 'wasidentified') {
-				# Do nothing
+				$self->_message(4, "Your nick has already been identified!");
 			}
 			elsif ($code eq 'identified') {
 				$self->_message(3, "Identified nick!");
