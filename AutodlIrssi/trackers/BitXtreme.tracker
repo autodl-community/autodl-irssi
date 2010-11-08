@@ -50,7 +50,7 @@
 		<linepatterns>
 			<extract>
 				<!--NEW in TV-XViD: -> Criminal.Minds.S06E07.HDTV.XviD-LOL [ Size: 357.39 MB ] [ Uploader: ACiDBuRN ] [ Link: http://bitxtre.me/details.php?id=5582 ]-->
-				<regex value="^NEW in (\S+): ->(.*)\[ Size:([^\]]+)] \[ Uploader:([^\]]+)] \[ Link:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^NEW in ([^:]+): ->(.*)\[ Size:([^\]]+)] \[ Uploader:([^\]]+)] \[ Link:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
