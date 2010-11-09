@@ -17,11 +17,11 @@ Features:
 
 It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
-[URL=http://img833.imageshack.us/i/filters1.png/][IMG]http://img833.imageshack.us/img833/3294/filters1.png[/IMG][/URL]
-[URL=http://img197.imageshack.us/i/filters2.png/][IMG]http://img197.imageshack.us/img197/8026/filters2.png[/IMG][/URL]
-[URL=http://img87.imageshack.us/i/filters3.png/][IMG]http://img87.imageshack.us/img87/9039/filters3.png[/IMG][/URL]
-[URL=http://img33.imageshack.us/i/preferencesf.png/][IMG]http://img33.imageshack.us/img33/5206/preferencesf.png[/IMG][/URL]
-
+[URL=http://img190.imageshack.us/i/filters1.png/][IMG]http://img190.imageshack.us/img190/3294/filters1.png[/IMG][/URL]
+[URL=http://img257.imageshack.us/i/filters2.png/][IMG]http://img257.imageshack.us/img257/8026/filters2.png[/IMG][/URL]
+[URL=http://img220.imageshack.us/i/filters3.png/][IMG]http://img220.imageshack.us/img220/9039/filters3.png[/IMG][/URL]
+[URL=http://img607.imageshack.us/i/preferences.png/][IMG]http://img607.imageshack.us/img607/4130/preferences.png[/IMG][/URL]
+[URL=http://img819.imageshack.us/i/servers.png/][IMG]http://img819.imageshack.us/img819/2046/servers.png[/IMG][/URL]
 
 
 
