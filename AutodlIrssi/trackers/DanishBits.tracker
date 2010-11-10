@@ -40,7 +40,7 @@
 			network="Danishbits"
 			serverNames="irc.danishbits.org"
 			channelNames="#danishbits.org"
-			announcerNames="DB,MyLameNick"
+			announcerNames="DB,MyLameNick,X"
 			/>
 	</servers>
 
