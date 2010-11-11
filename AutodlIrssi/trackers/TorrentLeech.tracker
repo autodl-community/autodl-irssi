@@ -30,8 +30,8 @@
 	siteName="www.torrentleech.org">
 
 	<settings>
-		<description text="Go to http://www.torrentleech.org/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
-		<passkey tooltiptext="The passkey in your TorrentLeech RSS feed link."/>
+		<cookie_description/>
+		<cookie/>
 	</settings>
 
 	<servers>
@@ -46,8 +46,8 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--New Torrent Announcement: <Episodes/TV> Name:'Serie A 2010 Milan vs Palermo PDTV XviD-W4F' uploaded by 'Ellinas' -  http://www.torrentleech.org/details.php?id=197693-->
-				<regex value="^New Torrent Announcement:\s*&lt;([^&gt;]*)&gt;\s*Name:'(.*)' uploaded by '([^']*)'\s*-\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--New Torrent Announcement: <Games :: Wii>  Name:'PokePark Pikachus Adventure REPACK USA WII-dumpTruck' uploaded by 'Anonymous' -  http://www.torrentleech.org/torrent/263302-->
+				<regex value="^New Torrent Announcement:\s*&lt;([^&gt;]*)&gt;\s*Name:'(.*)' uploaded by '([^']*)'\s*-\s*https?\:\/\/([^\/]+\/)torrent/(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
@@ -61,14 +61,12 @@
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="download_rss.php/"/>
+				<string value="download/"/>
 				<var name="$torrentId"/>
-				<string value="/"/>
-				<var name="passkey"/>
-				<string value="/"/>
-				<varenc name="torrentName"/>
-				<string value=".torrent"/>
 			</var>
+			<http name="Cookie">
+				<var name="cookie"/>
+			</http>
 		</linematched>
 		<ignore>
 		</ignore>
