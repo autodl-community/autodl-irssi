@@ -585,6 +585,7 @@ sub _onInvite {
 sub _onNewNickName {
 	my ($self, $newNick) = @_;
 
+	$self->_message(4, "Got new nick: '$newNick'");
 	$self->_cleanUpNickVars();
 	$self->_setNick();
 }
@@ -853,6 +854,7 @@ sub _registerReply {
 					$self->{retryNickServ} = 1;
 				}
 				else {
+					$self->_message(4, "Can't register nick yet. Must wait.");
 					$self->_installTimerHandler(NICKSERV_REGISTER_WAIT_SECS, sub {
 						$self->_removeTimerHandler();
 						$self->_sendRegisterNickCommand();
