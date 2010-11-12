@@ -94,7 +94,6 @@ sub onPrivmsg {
 		my $userName = $nick;
 		my $networkName = $server->isupport('NETWORK');
 
-		$line = decodeOctets($line);
 		$self->onNewIrcLine($line, $networkName, $serverName, $channelName, $userName);
 	};
 	if ($@) {
@@ -121,7 +120,7 @@ sub handleNewAnnouncerLine {
 	return unless defined $announceParser;
 
 	# Parse the line even if it's disabled to prevent "Nothing announced since ..." warning messages
-	my $ti = $announceParser->onNewLine($line);
+	my $ti = $announceParser->onNewLine(decodeOctets($line));
 	return unless defined $ti;
 	return if $ti->{torrentUrl} eq "" || $ti->{torrentName} eq "";
 	return unless $announceParser->readOption("enabled");

@@ -99,6 +99,7 @@ sub reloadTrackerFiles {
 	my $oldAnnounceParsers = $self->{announceParsers};
 	$self->{announceParsers} = {};
 	$self->{servers} = {};
+	$self->{announceNicks} = {};
 
 	my $currTime = time();
 	for my $trackerInfo (@{$self->getTrackerInfos($trackerFilesDir)}) {
@@ -189,14 +190,28 @@ sub addAnnounceParserToServerTable {
 		# This is the canonicalized server name or network name
 		my $canonName = $server->{name};
 		for my $channelName (@{splitCommaSeparatedList($server->{channelNames})}) {
+			my $announcerNames = splitCommaSeparatedList($server->{announcerNames});
+
 			my $channel = {
 				announceParser	=> $announceParser,
 				name			=> $channelName,
-				announcerNames	=> splitCommaSeparatedList($server->{announcerNames}),
+				announcerNames	=> $announcerNames,
 			};
+
+			$self->_addAnnounceNicks($announcerNames);
+
 			my $canonChannelName = canonicalizeChannelName($channelName);
 			$self->{servers}{$canonName}{$canonChannelName} = $channel;
 		}
+	}
+}
+
+sub _addAnnounceNicks {
+	my ($self, $announcerNames) = @_;
+
+	for my $tmp (@$announcerNames) {
+		my $announcerName = lc $tmp;
+		$self->{announceNicks}{$announcerName} = 1;
 	}
 }
 
@@ -204,15 +219,16 @@ sub addAnnounceParserToServerTable {
 sub _findServerInfo {
 	my ($self, $networkName, $serverName) = @_;
 
-	$networkName = canonicalizeNetworkName($networkName);
 	$serverName = canonicalizeServerName($serverName);
-
 	if (exists $self->{servers}{$serverName}) {
 		return $self->{servers}{$serverName};
 	}
+
+	$networkName = canonicalizeNetworkName($networkName);
 	if (exists $self->{servers}{$networkName}) {
 		return $self->{servers}{$networkName};
 	}
+
 	return;
 }
 
@@ -232,14 +248,15 @@ sub _findChannelInfo {
 sub findAnnounceParser {
 	my ($self, $networkName, $serverName, $channelName, $announcerName) = @_;
 
+	$announcerName = lc $announcerName;
+	return unless $self->{announceNicks}{$announcerName};
+
 	my $channel = $self->_findChannelInfo($networkName, $serverName, $channelName);
 	return unless defined $channel;
 
-	$announcerName = lc $announcerName;
 	for my $name (@{$channel->{announcerNames}}) {
 		if (lc(trim $name) eq $announcerName) {
-			my $announceParser = $channel->{announceParser};
-			return $announceParser;
+			return $channel->{announceParser};
 		}
 	}
 	return;
