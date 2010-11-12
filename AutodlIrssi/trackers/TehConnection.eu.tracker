@@ -96,10 +96,7 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^IMDb:"/>
-			<regex value="^User:"/>
-			<regex value="User not found."/>
-			<regex value="^\d+\. User"/>
+			<regex value="^New Torrent:" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
