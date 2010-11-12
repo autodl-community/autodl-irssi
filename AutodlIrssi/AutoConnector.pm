@@ -1318,7 +1318,7 @@ sub _onMessageNick {
 	eval {
 		my $server = $self->_findServer($irssiServer);
 		return unless defined $server;
-		return unless $line =~ /^:(.*)$/;
+		return unless $line =~ /^\s*:?(\S+)/;
 		my $newNick = $1;
 		return unless AutodlIrssi::ServerConnector::compareNicks($irssiServer->{nick}, $nick) ||
 					  AutodlIrssi::ServerConnector::compareNicks($irssiServer->{nick}, $newNick);
