@@ -71,28 +71,25 @@ sub checkFilter {
 
 	return 0 if !$filter->{enabled};
 
+	return 0 if $filter->{matchSites} ne '' && !checkSite($ti->{announceParser}, $filter->{matchSites});
+	return 0 if $filter->{exceptSites} ne '' && checkSite($ti->{announceParser}, $filter->{exceptSites});
+
+	return 0 if $filter->{resolutions} ne '' && !checkArySynonyms($ti->{resolution}, $filter->{resolutions}, $AutodlIrssi::Constants::tvResolutions);
+	return 0 if $filter->{sources} ne '' && !checkArySynonyms($ti->{source}, $filter->{sources}, $AutodlIrssi::Constants::tvSources);
+	return 0 if $filter->{encoders} ne '' && !checkArySynonyms($ti->{encoder}, $filter->{encoders}, $AutodlIrssi::Constants::tvEncoders);
+
+	return 0 if $filter->{years} ne '' && !checkFilterNumbers($ti->{year}, $filter->{years});
+	return 0 if $filter->{seasons} ne '' && !checkFilterNumbers($ti->{season}, $filter->{seasons});
+	return 0 if $filter->{episodes} ne '' && !checkFilterNumbers($ti->{episode}, $filter->{episodes});
+
 	return 0 if $filter->{matchReleases} ne '' && !checkFilterStrings($ti->{torrentName}, $filter->{matchReleases});
 	return 0 if $filter->{exceptReleases} ne '' && checkFilterStrings($ti->{torrentName}, $filter->{exceptReleases});
 
 	return 0 if $filter->{matchCategories} ne '' && !checkFilterStrings($ti->{category}, $filter->{matchCategories});
 	return 0 if $filter->{exceptCategories} ne '' && checkFilterStrings($ti->{category}, $filter->{exceptCategories});
 
-	return 0 if $filter->{matchUploaders} ne '' && !checkFilterStrings($ti->{uploader}, $filter->{matchUploaders});
-	return 0 if $filter->{exceptUploaders} ne '' && checkFilterStrings($ti->{uploader}, $filter->{exceptUploaders});
-
-	return 0 if $filter->{matchSites} ne '' && !checkSite($ti->{announceParser}, $filter->{matchSites});
-	return 0 if $filter->{exceptSites} ne '' && checkSite($ti->{announceParser}, $filter->{exceptSites});
-
-	return 0 if $filter->{years} ne '' && !checkFilterNumbers($ti->{year}, $filter->{years});
-	return 0 if $filter->{seasons} ne '' && !checkFilterNumbers($ti->{season}, $filter->{seasons});
-	return 0 if $filter->{episodes} ne '' && !checkFilterNumbers($ti->{episode}, $filter->{episodes});
-
 	return 0 if $filter->{artists} ne '' && !checkName($ti->{name1}, $filter->{artists});
 	return 0 if $filter->{albums} ne '' && !checkName($ti->{name2}, $filter->{albums});
-
-	return 0 if $filter->{resolutions} ne '' && !checkArySynonyms($ti->{resolution}, $filter->{resolutions}, $AutodlIrssi::Constants::tvResolutions);
-	return 0 if $filter->{sources} ne '' && !checkArySynonyms($ti->{source}, $filter->{sources}, $AutodlIrssi::Constants::tvSources);
-	return 0 if $filter->{encoders} ne '' && !checkArySynonyms($ti->{encoder}, $filter->{encoders}, $AutodlIrssi::Constants::tvEncoders);
 
 	return 0 if $filter->{formats} ne '' && !checkFilterStrings($ti->{format}, $filter->{formats});
 	return 0 if $filter->{bitrates} ne '' && !checkFilterBitrate($ti->{bitrate}, $filter->{bitrates});
@@ -102,6 +99,9 @@ sub checkFilter {
 	return 0 if $filter->{scene} ne '' && !$ti->{scene} != !$filter->{scene};
 	return 0 if $filter->{log} ne '' && !$ti->{log} != !$filter->{log};
 	return 0 if $filter->{cue} ne '' && !$ti->{cue} != !$filter->{cue};
+
+	return 0 if $filter->{matchUploaders} ne '' && !checkFilterStrings($ti->{uploader}, $filter->{matchUploaders});
+	return 0 if $filter->{exceptUploaders} ne '' && checkFilterStrings($ti->{uploader}, $filter->{exceptUploaders});
 
 	my $torrentSize = convertByteSizeString($ti->{torrentSize});
 	return 0 if !checkFilterSize($torrentSize, $filter);

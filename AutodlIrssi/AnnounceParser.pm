@@ -507,21 +507,23 @@ sub onAllLinesMatched {
 
 	$ti->{canonicalizedName} = canonicalizeReleaseName($ti->{torrentName});
 
-	my $msg = "\x02\x0303" . $self->getTrackerName() . "\x03\x02";
-	my $dumpVars = sub {
-		my $base = shift;
+	if ($AutodlIrssi::g->{options}{level} >= 5) {
+		my $msg = "\x02\x0303" . $self->getTrackerName() . "\x03\x02";
+		my $dumpVars = sub {
+			my $base = shift;
 
-		for my $o (sort keys %$base) {
-			my $v = $base->{$o};
-			next if !defined $v || $v eq "" || ref $v;
-			next if $o eq "line" || $o eq "origLine";
-			$msg .= " : \x02\x0306" . $o . "\x03\x02: '\x02\x0304" . $v . "\x03\x02'";
-		}
-	};
-	$dumpVars->($ti);
-	$dumpVars->($tempVariables);
-	$dumpVars->($ti->{httpHeaders});
-	message 5, $msg;
+			for my $o (sort keys %$base) {
+				my $v = $base->{$o};
+				next if !defined $v || $v eq "" || ref $v;
+				next if $o eq "line" || $o eq "origLine";
+				$msg .= " : \x02\x0306" . $o . "\x03\x02: '\x02\x0304" . $v . "\x03\x02'";
+			}
+		};
+		$dumpVars->($ti);
+		$dumpVars->($tempVariables);
+		$dumpVars->($ti->{httpHeaders});
+		message 5, $msg;
+	}
 
 	if ($ti->{torrentSslUrl} eq "") {
 		($ti->{torrentSslUrl} = $ti->{torrentUrl}) =~ s/^https?/https/;
