@@ -120,9 +120,11 @@ sub handleNewAnnouncerLine {
 	my $announceParser = $self->{trackerManager}->findAnnounceParser($networkName, $serverName, $channelName, $userName);
 	return unless defined $announceParser;
 
+	# Parse the line even if it's disabled to prevent "Nothing announced since ..." warning messages
 	my $ti = $announceParser->onNewLine($line);
 	return unless defined $ti;
 	return if $ti->{torrentUrl} eq "" || $ti->{torrentName} eq "";
+	return unless $announceParser->readOption("enabled");
 
 	$ti->{filter} = $self->{filterManager}->findFilter($ti);
 	return unless defined $ti->{filter};

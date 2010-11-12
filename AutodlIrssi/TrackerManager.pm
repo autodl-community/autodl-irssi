@@ -23,7 +23,7 @@
 # ***** END LICENSE BLOCK *****
 
 #
-# Keeps track of all tracker parsers
+# Keeps track of all announce parsers
 #
 
 use 5.008;
@@ -239,8 +239,7 @@ sub findAnnounceParser {
 	for my $name (@{$channel->{announcerNames}}) {
 		if (lc(trim $name) eq $announcerName) {
 			my $announceParser = $channel->{announceParser};
-			return $announceParser if $announceParser->readOption("enabled");
-			return;
+			return $announceParser;
 		}
 	}
 	return;
