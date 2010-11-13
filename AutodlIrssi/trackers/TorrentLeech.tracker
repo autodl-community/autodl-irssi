@@ -30,7 +30,7 @@
 	siteName="www.torrentleech.org">
 
 	<settings>
-		<cookie_description/>
+		<cookie_description text="The cookie line should look like: tluid=12345; tlpass=asdfqwerhqwjerhjasdfhasdfsafd"/>
 		<cookie/>
 	</settings>
 

@@ -570,6 +570,7 @@ sub _onRetryNickCommand {
 	my $self = shift;
 
 	delete $self->{changingNick};
+	$self->_message(4, "Failed to set nick!");
 }
 
 sub _onInvite {
