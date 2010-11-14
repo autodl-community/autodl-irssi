@@ -39,7 +39,7 @@
 			network="TBZchat"
 			serverNames="irc.TheBox.bz"
 			channelNames="#TheBox.bz"
-			announcerNames="Bella"
+			announcerNames="Aurora"
 			/>
 	</servers>
 
@@ -58,7 +58,7 @@
 		</linepatterns>
 		<linematched>
 			<var name="torrentUrl">
-				<string value="http://"/>
+				<string value="https://"/>
 				<var name="$baseUrl"/>
 				<string value="download.php/"/>
 				<var name="$torrentId"/>
