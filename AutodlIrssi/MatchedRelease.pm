@@ -158,7 +158,8 @@ sub _onTorrentDownloaded {
 	return if $self->_checkAlreadyDownloaded();
 
 	if ($errorMessage) {
-		message(0, "Error downloading torrent file $self->{downloadUrl}. Error: $errorMessage");
+		# Most likely EPIPE error
+		$self->{httpRequest}->retryRequest("Error downloading torrent file $self->{downloadUrl}. Error: $errorMessage", sub { $self->_onTorrentDownloaded(@_) });
 		return;
 	}
 
