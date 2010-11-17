@@ -89,7 +89,7 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 
 [b]Installing the ruTorrent plugin[/b]
 
-Make sure ruTorrent is installed properly! Also make sure it's the latest version of ruTorrent. It needs ruTorrent 3.1 subversion revision r1466 (or later version) since that version added the 'tabbar' CSS class.
+Make sure ruTorrent is installed properly! Also make sure it's the latest version of ruTorrent. It needs ruTorrent v3.2 or any later version.
 
 You will need the following PHP modules enabled for it to work: xml, sockets, and json. They may already be enabled, but if not, you may need to enable them by editing php.ini:
 

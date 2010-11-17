@@ -450,7 +450,7 @@ sub _onWaitNickServReply {
 	};
 	if ($@) {
 		chomp $@;
-		$self->_message("_onWaitNickServReply: $@");
+		$self->_message(0, "_onWaitNickServReply: $@");
 	}
 }
 
@@ -478,7 +478,7 @@ sub _onWaitNickServNextLine {
 	};
 	if ($@) {
 		chomp $@;
-		$self->_message("_onWaitNickServReply: $@");
+		$self->_message(0, "_onWaitNickServReply: $@");
 	}
 }
 
