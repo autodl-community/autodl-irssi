@@ -70,7 +70,8 @@
 				<regex value="^\[ Title:([^\]]*)\]\s*\[ Series:([^\]]*)\]\s*$"/>
 				<vars>
 					<var name="$title"/>
-					<var name="name1"/>
+					<!-- Their series name field is buggy so don't use it anymore -->
+					<var name="$name1"/>
 				</vars>
 			</extract>
 			<extract>
@@ -101,14 +102,8 @@
 					<string value=""/>
 				</var>
 			</if>
-			<if srcvar="name1" regex="^AutoFillFail$">
-				<var name="name1">
-					<string value=""/>
-				</var>
-			</if>
-			<!--BTN sometimes writes the scene release name as the Series name. If so, clear the variable.-->
-			<if srcvar="name1" regex="^[^ .]+\.[^ ]+$">
-				<var name="name1">
+			<if srcvar="$name1" regex="^AutoFillFail$">
+				<var name="$name1">
 					<string value=""/>
 				</var>
 			</if>
@@ -134,30 +129,10 @@
 					<string value=""/>
 				</var>
 			</if>
-			
-			<!--No resolution is given so assume it's 720p if container is MKV, TS-->
-			<if srcvar="torrentName" regex="^\s*$">
-				<if srcvar="resolution" regex="^\s*$">
-					<if srcvar="$container" regex="^(?:MKV|TS)$">
-						<var name="resolution">
-							<string value="720p"/>
-						</var>
-					</if>
-				</if>
-			</if>
-
-			<!--BTN's AutoFill is buggy. They don't seem to want to fix it-->
-			<if srcvar="name1" regex="^National Geographic - Predator CSI$">
-				<if srcvar="torrentName" regex="^CSI\.(?:Crime\.Scene\.Investigation\.)?S\d\dE\d\d">
-					<var name="name1">
-						<string value="CSI: Crime Scene Investigation"/>
-					</var>
-				</if>
-			</if>
 
 			<if srcvar="torrentName" regex="^\s*$">
 				<var name="torrentName">
-					<var name="name1"/>
+					<var name="$name1"/>
 					<string value=" "/>
 					<var name="$title"/>
 					<string value=" "/>
