@@ -63,6 +63,9 @@
 				<var name="$baseUrl"/>
 				<string value="download/"/>
 				<var name="$torrentId"/>
+				<string value="/"/>
+				<varenc name="torrentName"/>
+				<string value=".torrent"/>
 			</var>
 			<http name="Cookie">
 				<var name="cookie"/>
