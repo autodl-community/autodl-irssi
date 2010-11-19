@@ -46,9 +46,10 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--Shrek Forever After R5 XViD AC3-LEGi0N  -> http://www.iptorrents.com/details.php?id=395663-->
-				<regex value="^(.*)-&gt;\s*https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
+				<!--[Appz/misc] Raiden RaidenMAILD v1 9 16 14-Lz0 http://www.iptorrents.com/details.php?id=396229-->
+				<regex value="^\[([^\]]*)](.*)\s+https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
 				<vars>
+					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
