@@ -240,7 +240,7 @@ sub _installHandler {
 sub _getSocketError {
 	my $self = shift;
 	return "SOCKET_CLOSED" unless defined $self->{socket};
-	my $packed = getsockopt($self->{socket}, SOL_SOCKET, SO_ERROR) or die "Could not get socket error: $!\n";
+	my $packed = getsockopt($self->{socket}, SOL_SOCKET, SO_ERROR) or die "Could not get socket, error: $!\n";
 	return unpack("I", $packed);
 }
 

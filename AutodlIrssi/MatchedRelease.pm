@@ -158,8 +158,12 @@ sub _onTorrentDownloaded {
 	return if $self->_checkAlreadyDownloaded();
 
 	if ($errorMessage) {
-		# Most likely EPIPE error
-		$self->{httpRequest}->retryRequest("Error downloading torrent file $self->{downloadUrl}. Error: $errorMessage", sub { $self->_onTorrentDownloaded(@_) });
+		# Yeah this is ugly
+		if ($errorMessage =~ /error: 32(?:\D|$)/i) {
+			$self->{httpRequest}->retryRequest("Got EPIPE error. Retrying. Error: $errorMessage", sub { $self->_onTorrentDownloaded(@_) });
+			return;
+		}
+		message(0, "Error downloading torrent file $self->{downloadUrl}. Error: $errorMessage");
 		return;
 	}
 
