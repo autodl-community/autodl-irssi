@@ -109,7 +109,7 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^Hello, "/>
+			<regex value="[&amp;\?]id=\d+" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
