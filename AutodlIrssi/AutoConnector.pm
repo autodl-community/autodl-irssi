@@ -672,7 +672,12 @@ sub _ghostReply {
 			}
 		}
 
-		$self->_sendNickCommand();
+		if ($self->_hasCorrectNick()) {
+			$self->_sendIdentify();
+		}
+		else {
+			$self->_sendNickCommand();
+		}
 	};
 	if ($@) {
 		chomp $@;
@@ -1092,7 +1097,7 @@ sub _checkState {
 	};
 	if ($@) {
 		chomp $@;
-		message 0, "_checkState: $@";
+		$self->_message(0, "_checkState: $@");
 	}
 }
 
@@ -1266,7 +1271,7 @@ sub _findServer {
 	return $self->{servers}{$serverName};
 }
 
-# Called when we're fully connected, i.e., receive one of 251, 376, or 422
+# Called when we're fully connected, i.e., we received one of 251, 376, or 422
 sub _onMessageFullyConnected {
 	my ($self, $irssiServer, $line, $nick, $address) = @_;
 
