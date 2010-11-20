@@ -39,20 +39,21 @@
 			network="IPTorrents"
 			serverNames="irc.iptorrents.com"
 			channelNames="#ipt.announce"
-			announcerNames="Announce"
+			announcerNames="IPT"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[Appz/misc] Raiden RaidenMAILD v1 9 16 14-Lz0 http://www.iptorrents.com/details.php?id=396229-->
-				<regex value="^\[([^\]]*)](.*)\s+https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)"/>
+				<!--[Movies/XviD] The First Men In The Moon 2010 DVDRip XviD-VoMiT - http://www.iptorrents.com/details.php?id=396589 - 716.219 MB-->
+				<regex value="^\[([^\]]*)](.*)-\s+https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)\s*-(.*)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
+					<var name="torrentSize"/>
 				</vars>
 			</extract>
 		</linepatterns>
