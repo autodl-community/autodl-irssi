@@ -747,9 +747,11 @@ sub _identifyReply {
 			}
 			elsif ($code eq 'wasidentified') {
 				$self->_message(4, "Your nick has already been identified!");
+				$self->_clearJoinChannelVars();
 			}
 			elsif ($code eq 'identified') {
 				$self->_message(3, "Identified nick!");
+				$self->_clearJoinChannelVars();
 			}
 			elsif ($code eq 'badpassword') {
 				$self->_message(0, "Invalid nick password!");
@@ -865,6 +867,7 @@ sub _registerReply {
 			}
 			elsif ($code eq 'registered') {
 				$self->_message(3, "Registered nick! NickServ reply:\n" . join("\n", @$lines));
+				$self->_clearJoinChannelVars();
 			}
 			elsif ($code eq 'alreadyregistered') {
 				$self->_message(0, "Can't register nick! It's already been registered!");
@@ -883,6 +886,15 @@ sub _registerReply {
 	if ($@) {
 		chomp $@;
 		$self->_message(0, "_registerReply: $@");
+	}
+}
+
+sub _clearJoinChannelVars {
+	my $self = shift;
+
+	for my $channelState (values %{$self->{channelState}}) {
+		delete $channelState->{sentJoin};
+		delete $channelState->{sentJoinCount};
 	}
 }
 
