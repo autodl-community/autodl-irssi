@@ -72,6 +72,7 @@
 			</var>
 		</linematched>
 		<ignore>
+			<regex value="details\.php\?id=\d+" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
