@@ -45,14 +45,15 @@
 
 	<parseinfo>
 		<linepatterns>
-			<!--Request filled: Lavasoft.Ad-Aware.2007.Professional.Edition.v7.0.1.6-DVT | http://www.tti.nu/details.php?id=116782&hit=1-->
-			<!--New Torrent: Allsang.Pa.Skansen.2010.E01.SWEDiSH.720p.HDTV.x264-xD2V | http://www.tti.nu/details.php?id=116783&hit=1-->
+			<!--New Torrent: Wall.Street.2.Money.Never.Sleeps.2010.720p.BluRay.x264.DTS-HDChina | http://www.tti.nu/details.php?id=126478 | Size: 6.60 GB-->
+			<!--New Torrent: [Ryuumaru] MM! - 08v0 [6BD6D172].mkv | http://www.tti.nu/details.php?id=126476 | Size: 260.92 MB-->
 			<extract>
-				<regex value="^(?:New Torrent|Request filled):(.*)\| https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^(?:New Torrent|Request filled):(.*)\| https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)[^\|]*\| Size:(.*)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
+					<var name="torrentSize"/>
 				</vars>
 			</extract>
 		</linepatterns>
