@@ -113,7 +113,6 @@ sub reloadTrackerFiles {
 		my $state = $self->{trackerStates}{$type};
 		$self->{trackerStates}{$type} = $state = {} unless $state;
 		$state->{lastAnnounce} ||= $currTime;
-		$state->{lastCheck} ||= $currTime;
 
 		my $announceParser = new AutodlIrssi::AnnounceParser($trackerInfo, $state);
 		if (my $oldAnnounceParser = $oldAnnounceParsers->{$type}) {
@@ -150,10 +149,12 @@ sub reportBrokenAnnouncers {
 		my $trackerState = $self->{trackerStates}{$trackerType};
 		next unless defined $announceParser && defined $trackerState;
 
+		$trackerState->{lastCheck} = $currTime unless defined $trackerState->{lastCheck};
 		next if $currTime - $trackerState->{lastCheck} <= 6*60*60;
 		$trackerState->{lastCheck} = $currTime;
 
-		if ($currTime - $trackerState->{lastAnnounce} >= 24*60*60) {
+		my $maxTimeSecs = $AutodlIrssi::g->{options}{debug} ? 12*60*60 : 24*60*60;
+		if ($currTime - $trackerState->{lastAnnounce} >= $maxTimeSecs) {
 			my $trackerInfo = $announceParser->getTrackerInfo();
 			message(3, "\x0304WARNING\x03: \x02$trackerInfo->{longName}\x02: Nothing announced since " . localtime($trackerState->{lastAnnounce}));
 		}
