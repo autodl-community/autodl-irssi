@@ -32,15 +32,6 @@
 	<settings>
 		<cookie_description/>
 		<cookie/>
-		<integer
-			name="port"
-			text="Tracker port"
-			accesskey="r"
-			tooltiptext="The port we should use when downloading torrent files."
-			defaultValue="85"
-			minValue="1"
-			maxValue="65535"
-			/>
 	</settings>
 
 	<servers>
