@@ -42,6 +42,7 @@ sub new {
 
 	bless {
 		trackerStates => $trackerStates,
+		announceParsers => {},
 	}, $class;
 }
 
