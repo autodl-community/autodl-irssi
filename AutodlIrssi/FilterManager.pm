@@ -146,7 +146,6 @@ sub checkFilter {
 		return 0 if defined $numDownloads && $numDownloads >= $filter->{maxDownloads};
 	}
 
-	$state->incrementDownloads();
 	return 1;
 }
 

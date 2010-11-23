@@ -128,6 +128,23 @@ sub incrementDownloads {
 	$self->{day}{downloads}++;
 	$self->{week}{downloads}++;
 	$self->{month}{downloads}++;
+
+	return {
+		day => $self->{day},
+		week => $self->{week},
+		month => $self->{month},
+	};
+}
+
+sub restoreDownloadCount {
+	my ($self, $obj) = @_;
+
+	# Make sure we don't decrement it if it's a new day/week/month
+	$self->{day}{downloads}-- if $self->{day} == $obj->{day};
+	$self->{week}{downloads}-- if $self->{week} == $obj->{week};
+	$self->{month}{downloads}-- if $self->{month} == $obj->{month};
+
+	$obj->{day} = $obj->{week} = $obj->{month} = undef;
 }
 
 1;

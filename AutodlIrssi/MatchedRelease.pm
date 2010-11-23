@@ -66,6 +66,17 @@ sub DESTROY {
 	}
 }
 
+# Should be called when we didn't download the torrent
+sub _messageFail {
+	my ($self, $level, $msg) = @_;
+
+	if ($self->{ti} && $self->{ti}{filter}) {
+		$self->{ti}{filter}{state}->restoreDownloadCount($self->{filterDlState});
+	}
+
+	message $level, $msg;
+}
+
 # Returns false if torrent hasn't been downloaded, or returns true if it has, and also prints an
 # error message to the user.
 sub _checkAlreadyDownloaded {
@@ -82,7 +93,7 @@ sub _checkAlreadyDownloaded {
 sub _releaseAlreadyDownloaded {
 	my $self = shift;
 
-	message(4, "Release \x02\x0309$self->{ti}{torrentName}\x03\x02 (\x02\x0302$self->{trackerInfo}{longName}\x03\x02) has already been downloaded");
+	$self->_messageFail(4, "Release \x02\x0309$self->{ti}{torrentName}\x03\x02 (\x02\x0302$self->{trackerInfo}{longName}\x03\x02) has already been downloaded");
 }
 
 sub _getTorrentInfoString {
@@ -115,6 +126,7 @@ sub start {
 	my ($self, $ti) = @_;
 
 	$self->{ti} = $ti;
+	$self->{filterDlState} = $ti->{filter}{state}->incrementDownloads();
 	$self->{trackerInfo} = $self->{ti}{announceParser}->getTrackerInfo();
 
 	die "start() already called\n" if defined $self->{connId};
@@ -127,7 +139,7 @@ sub start {
 		my $missingStr = join ", ", @$missing;
 		my $trackerType = $self->{trackerInfo}{type};
 		my $autodlPath = getAutodlCfgFile();
-		message 0, "Can't download \x02\x0309$self->{ti}->{torrentName}\x03\x02. Initialize \x02\x0304$missingStr\x03\x02 below \x02\x0306[tracker $trackerType]\x03\x02 in \x02\x0307$autodlPath\x03\x02";
+		$self->_messageFail(0, "Can't download \x02\x0309$self->{ti}->{torrentName}\x03\x02. Initialize \x02\x0304$missingStr\x03\x02 below \x02\x0306[tracker $trackerType]\x03\x02 in \x02\x0307$autodlPath\x03\x02");
 		return;
 	}
 
@@ -163,13 +175,13 @@ sub _onTorrentDownloaded {
 			$self->{httpRequest}->retryRequest("Got EPIPE error. Retrying. Error: $errorMessage", sub { $self->_onTorrentDownloaded(@_) });
 			return;
 		}
-		message(0, "Error downloading torrent file $self->{downloadUrl}. Error: $errorMessage");
+		$self->_messageFail(0, "Error downloading torrent file $self->{downloadUrl}. Error: $errorMessage");
 		return;
 	}
 
 	my $statusCode = $self->{httpRequest}->getResponseStatusCode();
 	if (substr($statusCode, 0, 1) == 3) {
-		message(0, "Got HTTP $statusCode, check your cookie settings! Torrent: $self->{ti}{torrentName}, tracker: $self->{trackerInfo}{longName}");
+		$self->_messageFail(0, "Got HTTP $statusCode, check your cookie settings! Torrent: $self->{ti}{torrentName}, tracker: $self->{trackerInfo}{longName}");
 		return;
 	}
 	if ($statusCode != 200) {
@@ -194,7 +206,7 @@ sub _onTorrentDownloaded {
 
 	$self->{torrentFiles} = getTorrentFiles($self->{bencRoot});
 	if (!$self->{torrentFiles}) {
-		message(0, "Could not parse torrent file '$self->{ti}{torrentName}'");
+		$self->_messageFail(0, "Could not parse torrent file '$self->{ti}{torrentName}'");
 		return;
 	}
 	$self->{ti}{torrentSizeInBytes} = $self->{torrentFiles}{totalSize};
@@ -206,7 +218,7 @@ sub _onTorrentDownloaded {
 			announceParser => $self->{ti}{announceParser},
 		});
 		$msg .= " is too big/small, size: \x02" . convertToByteSizeString($self->{ti}{torrentSizeInBytes}) . "\x02. Not downloaded.";
-		message(3, $msg);
+		$self->_messageFail(3, $msg);
 		return;
 	}
 	$self->{ti}{torrentSize} = convertToByteSizeString($self->{ti}{torrentSizeInBytes});
@@ -245,7 +257,7 @@ sub _checkMethodAllowed {
 		return 1 if trim($s) eq $method;
 	}
 
-	message 0, "Can't save/upload torrent: '$method' is disabled!";
+	$self->_messageFail(0, "Can't save/upload torrent: '$method' is disabled!");
 	return 0;
 }
 
@@ -266,7 +278,7 @@ sub _onTorrentFileDownloaded {
 		$func->($self);
 	}
 	else {
-		message(0, "Upload type not implemented, type: $self->{uploadMethod}{uploadType}");
+		$self->_messageFail(0, "Upload type not implemented, type: $self->{uploadMethod}{uploadType}");
 	}
 }
 
@@ -289,7 +301,7 @@ sub _saveTorrentFile {
 		$self->_onTorrentFileUploaded("Saved torrent");
 	};
 	if ($@) {
-		message(0, "Could not save torrent file; error: " . formatException($@));
+		$self->_messageFail(0, "Could not save torrent file; error: " . formatException($@));
 	}
 }
 
@@ -311,7 +323,7 @@ sub _sendTorrentFileWebui {
 		});
 	};
 	if ($@) {
-		message(0, "Could not send '$self->{ti}{torrentName}' to webui; error: " . formatException($@));
+		$self->_messageFail(0, "Could not send '$self->{ti}{torrentName}' to webui; error: " . formatException($@));
 	}
 }
 
@@ -320,11 +332,11 @@ sub _onWebuiUploadComplete {
 	my ($self, $errorMessage, $commandResults) = @_;
 
 	if ($errorMessage) {
-		message(0, "Could not send '$self->{ti}{torrentName}' to uTorrent (webui): error: $errorMessage");
+		$self->_messageFail(0, "Could not send '$self->{ti}{torrentName}' to uTorrent (webui): error: $errorMessage");
 		return;
 	}
 	if ($commandResults->[0]{json}{error}) {
-		message(0, "Error adding torrent: " . $commandResults->[0]{json}{error});
+		$self->_messageFail(0, "Error adding torrent: " . $commandResults->[0]{json}{error});
 		return;
 	}
 
@@ -360,7 +372,7 @@ sub _sendTorrentFileFtp {
 		$ftpClient->sendCommands(sub { return $self->_onFtpUploadComplete(@_) });
 	};
 	if ($@) {
-		message(0, "Could not upload '$self->{ti}{torrentName}' to ftp; error: " . formatException($@));
+		$self->_messageFail(0, "Could not upload '$self->{ti}{torrentName}' to ftp; error: " . formatException($@));
 	}
 }
 
@@ -369,7 +381,7 @@ sub _onFtpUploadComplete {
 	my ($self, $errorString) = @_;
 
 	if ($errorString) {
-		message(0, "Could not upload '$self->{ti}{torrentName}' to ftp: error: $errorString");
+		$self->_messageFail(0, "Could not upload '$self->{ti}{torrentName}' to ftp: error: $errorString");
 		return;
 	}
 
@@ -424,7 +436,7 @@ sub _runProgram {
 		$self->_onTorrentFileUploaded("Started command: '$command', args: '$args'");
 	};
 	if ($@) {
-		message(0, "Could not start program, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
+		$self->_messageFail(0, "Could not start program, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
 	}
 }
 
@@ -453,19 +465,19 @@ sub _runUtorrentDir {
 
 		my $command = $AutodlIrssi::g->{options}{pathToUtorrent};
 		if ($command eq "") {
-			message(0, "Missing path-utorrent = XXX below [options]. Can't start uTorrent. Torrent: $self->{ti}{torrentName}");
+			$self->_messageFail(0, "Missing path-utorrent = XXX below [options]. Can't start uTorrent. Torrent: $self->{ti}{torrentName}");
 			return;
 		}
 
 		my $torrentPathWin = $macroReplacer->replace('$(WinTorrentPathName)');
-		my $args = qq!/directory "$destDir" "$torrentPathWin"!;
+		my $args = qq#/directory "$destDir" "$torrentPathWin"#;
 
 		# Use wine if it's not cygwin
 		if (!isCygwin()) {
 			$args = qq!"$command" $args!;
 			$command = '/usr/bin/wine';
 			unless (-x $command) {
-				message 0, "Wine is missing. Can't run uTorrent. Path to wine should be $command";
+				$self->_messageFail(0, "Wine is missing. Can't run uTorrent. Path to wine should be $command");
 				return;
 			}
 		}
@@ -476,7 +488,7 @@ sub _runUtorrentDir {
 		$self->_onTorrentFileUploaded( "Added torrent to '$destDir'");
 	};
 	if ($@) {
-		message(0, "Could not start uTorrent, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
+		$self->_messageFail(0, "Could not start uTorrent, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
 	}
 }
 
