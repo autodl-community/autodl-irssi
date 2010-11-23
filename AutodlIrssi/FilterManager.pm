@@ -33,11 +33,13 @@ use warnings;
 package AutodlIrssi::FilterManager;
 use AutodlIrssi::TextUtils;
 use AutodlIrssi::Constants;
+use AutodlIrssi::FilterState;
 
 sub new {
-	my $class = shift;
+	my ($class, $filterStates) = @_;
 	bless {
-		filters => undef,
+		filters => [],
+		filterStates => $filterStates,
 	}, $class;
 }
 
@@ -45,9 +47,25 @@ sub cleanUp {
 	my $self = shift;
 }
 
+sub getFilterStates {
+	return shift->{filterStates};
+}
+
 sub setFilters {
 	my ($self, $filters) = @_;
+
 	$self->{filters} = $filters;
+
+	my $oldFilterStates = $self->{filterStates};
+	$self->{filterStates} = {};
+
+	for my $filter (@{$self->{filters}}) {
+		my $name = $filter->{name};
+		my $state = delete $oldFilterStates->{$name};
+		$state = new AutodlIrssi::FilterState() unless defined $state;
+		$filter->{state} = $state;
+		$self->{filterStates}{$name} = $state;
+	}
 }
 
 sub getNumFilters {
@@ -112,13 +130,14 @@ sub checkFilter {
 		return 0 if !defined $preTime || $preTime > $maxPreTime;
 	}
 
-	if ($filter->{maxTriggers} && $filter->{maxTriggers} > 0) {
-		$filter->{maxTriggers}--;
-		if ($filter->{maxTriggers} <= 0) {
-			$filter->{enabled} = 0;
-		}
+	my $state = $filter->{state};
+	$state->initializeTime();
+	if ($filter->{maxDownloads} >= 0) {
+		my $numDownloads = $filter->{isPerWeek} ? $state->getWeekDownloads() : $state->getMonthDownloads();
+		return 0 if $numDownloads >= $filter->{maxDownloads};
 	}
 
+	$state->incrementDownloads();
 	return 1;
 }
 

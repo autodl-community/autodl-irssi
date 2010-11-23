@@ -93,7 +93,7 @@ sub enable {
 	$AutodlIrssi::g->{eventManager} = new AutodlIrssi::EventManager();
 	$AutodlIrssi::g->{trackerManager} = new AutodlIrssi::TrackerManager($autodlState->{trackerStates});
 	$AutodlIrssi::g->{downloadHistory} = new AutodlIrssi::DownloadHistory(getDownloadHistoryFile());
-	$AutodlIrssi::g->{filterManager} = new AutodlIrssi::FilterManager();
+	$AutodlIrssi::g->{filterManager} = new AutodlIrssi::FilterManager($autodlState->{filterStates});
 	$AutodlIrssi::g->{tempFiles} = new AutodlIrssi::TempFiles();
 	$AutodlIrssi::g->{activeConnections} = new AutodlIrssi::ActiveConnections();
 	$AutodlIrssi::g->{channelMonitor} = new AutodlIrssi::ChannelMonitor($AutodlIrssi::g->{trackerManager});
@@ -149,6 +149,7 @@ sub readAutodlState {
 	my $autodlState = {
 		trackersVersion => -1,
 		trackerStates => {},
+		filterStates => {},
 	};
 
 	eval {
@@ -167,6 +168,7 @@ sub saveAutodlState {
 		my $autodlState = {
 			trackersVersion => $trackersVersion,
 			trackerStates => $AutodlIrssi::g->{trackerManager}->getTrackerStates(),
+			filterStates => $AutodlIrssi::g->{filterManager}->getFilterStates(),
 		};
 		AutodlIrssi::AutodlState->new()->write(getAutodlStateFile(), $autodlState);
 	};

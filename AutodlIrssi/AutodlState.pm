@@ -33,6 +33,7 @@ use warnings;
 package AutodlIrssi::AutodlState;
 use AutodlIrssi::XmlParser;
 use AutodlIrssi::FileUtils;
+use AutodlIrssi::FilterState;
 use base qw/ AutodlIrssi::XmlParser /;
 
 # Reads settings from the saved file
@@ -42,6 +43,7 @@ sub read {
 	my $autodlState = {
 		trackersVersion => -1,
 		trackerStates => {},
+		filterStates => {},
 	};
 
 	return $autodlState unless -f $filename;
@@ -67,7 +69,36 @@ sub read {
 		};
 	}
 
+	$autodlState->{filterStates} = $self->readFilters($autodlElem);
+
 	return $autodlState;
+}
+
+sub readFilters {
+	my ($self, $rootElem) = @_;
+
+	my $states = {};
+
+	my $filtersElem = $self->getOptionalChildElement($rootElem, "filters");
+	return $states unless defined $filtersElem;
+
+	my @filterElems = $self->getChildElementsByTagName($filtersElem, "filter");
+	for my $filterElem (@filterElems) {
+		my $filterName = $self->readAttribute($filterElem, "name", "");
+		next if $filterName eq "";
+
+		my $state = new AutodlIrssi::FilterState();
+
+		my $weekElem = $self->getTheChildElement($filterElem, "week-downloads");
+		$state->setWeekInfo($self->readAttributeInteger($weekElem, "time"), $self->readAttributeInteger($weekElem, "downloads"));
+
+		my $monthElem = $self->getTheChildElement($filterElem, "month-downloads");
+		$state->setMonthInfo($self->readAttributeInteger($monthElem, "time"), $self->readAttributeInteger($monthElem, "downloads"));
+
+		$states->{$filterName} = $state;
+	}
+
+	return $states;
 }
 
 sub write {
@@ -97,7 +128,35 @@ sub write {
 		$trackerElem->appendChild($lastAnnounceElem);
 	}
 
+	$autodlElem->appendChild($self->writeFilters($doc, $autodlState->{filterStates}));
+
 	saveRawDataToFile($filename, $doc->toString(1));
+}
+
+sub writeFilters {
+	my ($self, $doc, $filterStates) = @_;
+
+	my $filtersElem = $doc->createElement("filters");
+
+	while (my ($name, $state) = each %$filterStates) {
+		next if $name eq "";
+
+		my $filterElem = $doc->createElement("filter");
+		$filtersElem->appendChild($filterElem);
+		$filterElem->setAttribute("name", $name);
+
+		my $weekElem = $doc->createElement("week-downloads");
+		$filterElem->appendChild($weekElem);
+		$weekElem->setAttribute("time", $state->getWeekTime());
+		$weekElem->setAttribute("downloads", $state->getWeekDownloads());
+
+		my $monthElem = $doc->createElement("month-downloads");
+		$filterElem->appendChild($monthElem);
+		$monthElem->setAttribute("time", $state->getMonthTime());
+		$monthElem->setAttribute("downloads", $state->getMonthDownloads());
+	}
+
+	return $filtersElem;
 }
 
 1;

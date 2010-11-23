@@ -400,6 +400,16 @@ Create one [filter] header per filter. You can optionally name the filter like [
 [b]Example:[/b] max-pretime = 2 mins 3 secs
 [b]Description:[/b] Some sites announce the pretime of the release. Use this to filter out old releases.
 
+[b]Name:[/b] max-downloads
+[b]Type:[/b] Integer
+[b]Example:[/b] max-downloads = 15
+[b]Description:[/b] Download no more than this number of torrents per week/month (see [b]is-per-week[/b]). Remove the filter option or set it to a negative number to disable it.
+
+[b]Name:[/b] is-per-week
+[b]Type:[/b] Boolean
+[b]Example:[/b] is-per-week = true
+[b]Description:[/b] If set to true, it's per week, else it's per month. See [b]max-downloads[/b].
+
 [b]The options header[/b]
 These options change the behavior of autodl-irssi. Place these options below the [b][options][/b] header.
 
