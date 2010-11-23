@@ -48,6 +48,7 @@ sub new {
 	my $class = shift;
 
 	my $self = bless {
+		day => _createInfo(),
 		week => _createInfo(),
 		month => _createInfo(),
 	}, $class;
@@ -65,6 +66,11 @@ sub initializeTime {
 	my ($sec, $min, $hour, $mday, $mon, $year, $wday) = gmtime $time;
 	$wday = ($wday - 1) % 7;	# Sunday is last day of the week
 
+	my $dayTime = timegm 0, 0, 0, $mday, $mon, $year;
+	if ($self->{day}{date} != $dayTime) {
+		$self->{day} = _createInfo($dayTime, 0);
+	}
+
 	my $weekTime = timegm 0, 0, 0, $mday, $mon, $year;
 	$weekTime -= 60 * 60 * 24 * $wday;
 	if ($self->{week}{date} != $weekTime) {
@@ -77,6 +83,11 @@ sub initializeTime {
 	}
 }
 
+sub setDayInfo {
+	my ($self, $time, $downloads) = @_;
+	$self->{day} = _createInfo($time, $downloads);
+}
+
 sub setWeekInfo {
 	my ($self, $time, $downloads) = @_;
 	$self->{week} = _createInfo($time, $downloads);
@@ -85,6 +96,14 @@ sub setWeekInfo {
 sub setMonthInfo {
 	my ($self, $time, $downloads) = @_;
 	$self->{month} = _createInfo($time, $downloads);
+}
+
+sub getDayTime {
+	return shift->{day}{date};
+}
+
+sub getDayDownloads {
+	return shift->{day}{downloads};
 }
 
 sub getWeekTime {
@@ -106,6 +125,7 @@ sub getMonthDownloads {
 sub incrementDownloads {
 	my $self = shift;
 
+	$self->{day}{downloads}++;
 	$self->{week}{downloads}++;
 	$self->{month}{downloads}++;
 }

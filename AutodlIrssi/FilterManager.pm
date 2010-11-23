@@ -133,8 +133,17 @@ sub checkFilter {
 	my $state = $filter->{state};
 	$state->initializeTime();
 	if ($filter->{maxDownloads} >= 0) {
-		my $numDownloads = $filter->{isPerWeek} ? $state->getWeekDownloads() : $state->getMonthDownloads();
-		return 0 if $numDownloads >= $filter->{maxDownloads};
+		my $numDownloads;
+		if ($filter->{maxDownloadsPer} eq "day") {
+			$numDownloads = $state->getDayDownloads();
+		}
+		elsif ($filter->{maxDownloadsPer} eq "week") {
+			$numDownloads = $state->getWeekDownloads();
+		}
+		elsif ($filter->{maxDownloadsPer} eq "month") {
+			$numDownloads = $state->getMonthDownloads();
+		}
+		return 0 if defined $numDownloads && $numDownloads >= $filter->{maxDownloads};
 	}
 
 	$state->incrementDownloads();

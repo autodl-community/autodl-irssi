@@ -89,6 +89,9 @@ sub readFilters {
 
 		my $state = new AutodlIrssi::FilterState();
 
+		my $dayElem = $self->getTheChildElement($filterElem, "day-downloads");
+		$state->setDayInfo($self->readAttributeInteger($dayElem, "time"), $self->readAttributeInteger($dayElem, "downloads"));
+
 		my $weekElem = $self->getTheChildElement($filterElem, "week-downloads");
 		$state->setWeekInfo($self->readAttributeInteger($weekElem, "time"), $self->readAttributeInteger($weekElem, "downloads"));
 
@@ -144,6 +147,11 @@ sub writeFilters {
 		my $filterElem = $doc->createElement("filter");
 		$filtersElem->appendChild($filterElem);
 		$filterElem->setAttribute("name", $name);
+
+		my $dayElem = $doc->createElement("day-downloads");
+		$filterElem->appendChild($dayElem);
+		$dayElem->setAttribute("time", $state->getDayTime());
+		$dayElem->setAttribute("downloads", $state->getDayDownloads());
 
 		my $weekElem = $doc->createElement("week-downloads");
 		$filterElem->appendChild($weekElem);

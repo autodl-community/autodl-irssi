@@ -239,7 +239,7 @@ sub doHeaderFilter {
 			log => '',
 			cue => '',
 			maxDownloads => '',
-			isPerWeek => '',
+			maxDownloadsPer => '',
 			uploadType => '',
 			uploadWatchDir => '',
 			uploadFtpPath => '',
@@ -278,7 +278,7 @@ sub doHeaderFilter {
 			'log' => 'log',
 			'cue' => 'cue',
 			'max-downloads' => 'maxDownloads',
-			'is-per-week' => 'isPerWeek',
+			'max-downloads-per' => 'maxDownloadsPer',
 			'upload-type' => 'uploadType',
 			'upload-watch-dir' => 'uploadWatchDir',
 			'upload-ftp-path' => 'uploadFtpPath',
@@ -295,7 +295,6 @@ sub doHeaderFilter {
 		$filter->{scene} = convertStringToBoolean($filter->{scene}) if $filter->{scene};
 		$filter->{log} = convertStringToBoolean($filter->{log}) if $filter->{log};
 		$filter->{cue} = convertStringToBoolean($filter->{cue}) if $filter->{cue};
-		$filter->{isPerWeek} = convertStringToBoolean($filter->{isPerWeek});
 		$filter->{maxDownloads} = convertStringToInteger($filter->{maxDownloads}, -1);
 
 		push @{$self->{filters}}, $filter;

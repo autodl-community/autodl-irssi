@@ -157,7 +157,7 @@ sub readAutodlState {
 	};
 	if ($@) {
 		chomp $@;
-		message 0, "Could not save AutodlState.xml: ex: $@";
+		message 0, "Could not read AutodlState.xml: ex: $@";
 	}
 
 	return $autodlState;

@@ -403,12 +403,12 @@ Create one [filter] header per filter. You can optionally name the filter like [
 [b]Name:[/b] max-downloads
 [b]Type:[/b] Integer
 [b]Example:[/b] max-downloads = 15
-[b]Description:[/b] Download no more than this number of torrents per week/month (see [b]is-per-week[/b]). Remove the filter option or set it to a negative number to disable it.
+[b]Description:[/b] Download no more than this number of torrents per week/month (see [b]max-downloads-per[/b]). Remove the filter option or set it to a negative number to disable it.
 
-[b]Name:[/b] is-per-week
-[b]Type:[/b] Boolean
-[b]Example:[/b] is-per-week = true
-[b]Description:[/b] If set to true, it's per week, else it's per month. See [b]max-downloads[/b].
+[b]Name:[/b] max-downloads-per
+[b]Type:[/b] String
+[b]Example:[/b] max-downloads-per = week
+[b]Description:[/b] Valid values are [b]day[/b], [b]week[/b], and [b]month[/b]. See [b]max-downloads[/b].
 
 [b]The options header[/b]
 These options change the behavior of autodl-irssi. Place these options below the [b][options][/b] header.
