@@ -74,6 +74,7 @@
 			<regex value="^BitMeTV-IRC2RSS"/>
 			<regex value="^cannot announce as the website is being lagged$"/>
 			<regex value="^got a response from the website$"/>
+			<regex value="little robot is sad because page didnt respond to http-query"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
