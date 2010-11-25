@@ -75,6 +75,7 @@
 			<regex value="^cannot announce as the website is being lagged$"/>
 			<regex value="^got a response from the website$"/>
 			<regex value="little robot is sad because page didnt respond to http-query"/>
+			<regex value="robot fully charged with site-access again"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
