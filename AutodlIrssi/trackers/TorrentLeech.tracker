@@ -33,7 +33,11 @@
 		<description text="Go to your profile and copy and paste your RSS link to extract the rsskey."/>
 		<textbox
 			name="rsskey"
+			text="rsskey"
+			accesskey="r"
 			tooltiptext="The rsskey in your TorrentLeech RSS feed link."
+			emptytext="TorrentLeech rsskey"
+			pasteGroup="rsskey"
 			pasteRegex="/([\da-fA-F]{20})"
 			/>
 	</settings>
