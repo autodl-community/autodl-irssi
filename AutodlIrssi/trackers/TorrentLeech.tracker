@@ -30,8 +30,12 @@
 	siteName="www.torrentleech.org">
 
 	<settings>
-		<cookie_description text="FireFox -> Preferences -> Privacy -> Show Cookies and find torrentleech. The cookie line should look like: tluid=12345; tlpass=asdfqwerhqwjerhjasdfhasdfsafd"/>
-		<cookie/>
+		<description text="Go to your profile and copy and paste your RSS link to extract the rsskey."/>
+		<textbox
+			name="rsskey"
+			tooltiptext="The rsskey in your TorrentLeech RSS feed link."
+			pasteRegex="/([\da-fA-F]{20})"
+			/>
 	</settings>
 
 	<servers>
@@ -61,15 +65,14 @@
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="download/"/>
+				<string value="rss/download/"/>
 				<var name="$torrentId"/>
+				<string value="/"/>
+				<var name="rsskey"/>
 				<string value="/"/>
 				<varenc name="torrentName"/>
 				<string value=".torrent"/>
 			</var>
-			<http name="Cookie">
-				<var name="cookie"/>
-			</http>
 		</linematched>
 		<ignore>
 		</ignore>
