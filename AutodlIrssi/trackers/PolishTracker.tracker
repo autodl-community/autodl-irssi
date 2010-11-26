@@ -91,7 +91,7 @@
 					<string value=".torrent"/>
 				</var>
 				<var name="torrentSslUrl">
-					<string value="http://polishtracker.org:81/downloadd.php/"/>
+					<string value="https://polishtracker.org/downloaddssl.php/"/>
 					<var name="$torrentId"/>
 					<string value="/"/>
 					<var name="rsskey"/>
