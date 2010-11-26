@@ -30,8 +30,18 @@
 	siteName="polishtracker.org">
 
 	<settings>
-		<cookie_description/>
-		<cookie/>
+		<description text="Only one of rsskey or cookie is needed. RSS is for Power Users and above."/> 
+		<cookie isDownloadVar="false"/>
+		<textbox
+			name="rsskey"
+			text="rsskey"
+			accesskey="r"
+			tooltiptext="The rsskey in your PolishTracker RSS feed link."
+			emptytext="PolishTracker rsskey"
+			pasteGroup="rsskey"
+			pasteRegex="rsskey=([a-fA-F\d]{32})"
+			isDownloadVar="false"
+			/>
 	</settings>
 
 	<servers>
@@ -70,21 +80,18 @@
 			</extract>
 		</linepatterns>
 		<linematched>
-			<if srcvar="passkey" regex="\S">
+			<if srcvar="rsskey" regex="\S">
 				<var name="torrentUrl">
-					<string value="https://polishtracker.org/downloadd.php/"/>
+					<string value="https://polishtracker.org/downloaddssl.php/"/>
 					<var name="$torrentId"/>
 					<string value="/"/>
-					<var name="passkey"/>
+					<var name="rsskey"/>
 					<string value="/"/>
 					<varenc name="torrentName"/>
 					<string value=".torrent"/>
 				</var>
-				<http name="Referer">
-					<string value="https://polishtracker.org/browse.php"/>
-				</http>
 			</if>
-			<if srcvar="passkey" regex="^\s*$">
+			<if srcvar="rsskey" regex="^\s*$">
 				<var name="torrentUrl">
 					<string value="https://polishtracker.org/download.php/"/>
 					<var name="$torrentId"/>
