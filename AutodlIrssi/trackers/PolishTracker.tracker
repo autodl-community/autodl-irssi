@@ -82,7 +82,16 @@
 		<linematched>
 			<if srcvar="rsskey" regex="\S">
 				<var name="torrentUrl">
-					<string value="https://polishtracker.org/downloaddssl.php/"/>
+					<string value="http://polishtracker.org:81/downloadd.php/"/>
+					<var name="$torrentId"/>
+					<string value="/"/>
+					<var name="rsskey"/>
+					<string value="/"/>
+					<varenc name="torrentName"/>
+					<string value=".torrent"/>
+				</var>
+				<var name="torrentSslUrl">
+					<string value="http://polishtracker.org:81/downloadd.php/"/>
 					<var name="$torrentId"/>
 					<string value="/"/>
 					<var name="rsskey"/>
