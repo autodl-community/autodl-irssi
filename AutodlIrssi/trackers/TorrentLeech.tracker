@@ -30,7 +30,9 @@
 	siteName="www.torrentleech.org">
 
 	<settings>
-		<description text="Go to your profile and copy and paste your RSS link to extract the rsskey."/>
+		<description text="Their RSS download links are buggy. Use the cookie method (and leave rsskey blank) unless you know what you're doing."/>
+		<cookie_description text="FireFox -> Preferences -> Privacy -> Show Cookies and find torrentleech. The cookie line should look like: tluid=12345; tlpass=asdfqwerhqwjerhjasdfhasdfsafd"/>
+		<cookie isDownloadVar="false"/>
 		<textbox
 			name="rsskey"
 			text="rsskey"
@@ -39,6 +41,7 @@
 			emptytext="TorrentLeech rsskey"
 			pasteGroup="rsskey"
 			pasteRegex="/([\da-fA-F]{20})"
+			isDownloadVar="false"
 			/>
 	</settings>
 
@@ -66,17 +69,33 @@
 			</extract>
 		</linepatterns>
 		<linematched>
-			<var name="torrentUrl">
-				<string value="http://"/>
-				<var name="$baseUrl"/>
-				<string value="rss/download/"/>
-				<var name="$torrentId"/>
-				<string value="/"/>
-				<var name="rsskey"/>
-				<string value="/"/>
-				<varenc name="torrentName"/>
-				<string value=".torrent"/>
-			</var>
+			<if srcvar="cookie" regex="\S">
+				<var name="torrentUrl">
+					<string value="http://"/>
+					<var name="$baseUrl"/>
+					<string value="download/"/>
+					<var name="$torrentId"/>
+					<string value="/"/>
+					<varenc name="torrentName"/>
+					<string value=".torrent"/>
+				</var>
+				<http name="Cookie">
+					<var name="cookie"/>
+				</http>
+			</if>
+			<if srcvar="cookie" regex="^\s*$">
+				<var name="torrentUrl">
+					<string value="http://"/>
+					<var name="$baseUrl"/>
+					<string value="rss/download/"/>
+					<var name="$torrentId"/>
+					<string value="/"/>
+					<var name="rsskey"/>
+					<string value="/"/>
+					<varenc name="torrentName"/>
+					<string value=".torrent"/>
+				</var>
+			</if>
 		</linematched>
 		<ignore>
 		</ignore>
