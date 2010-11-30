@@ -47,6 +47,7 @@ use AutodlIrssi::FtpClient;
 use AutodlIrssi::MacroReplacer;
 use AutodlIrssi::Exec;
 use AutodlIrssi::WinUtils;
+use AutodlIrssi::WOL;
 use Digest::SHA1 qw/ sha1 /;
 use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
@@ -282,6 +283,23 @@ sub _onTorrentFileDownloaded {
 	}
 }
 
+# Sends a Wake on LAN magic packet if enabled
+sub _sendWOL {
+	my $self = shift;
+
+	eval {
+		my $filter = $self->{ti}{filter};
+		return unless $filter->{wolMacAddress} && $filter->{wolIpAddress};
+
+		message 3, "Sending WOL: MAC=$filter->{wolMacAddress}, IP=$filter->{wolIpAddress}, Port=$filter->{wolPort}";
+		sendWOL($filter->{wolMacAddress}, $filter->{wolIpAddress}, $filter->{wolPort});
+	};
+	if ($@) {
+		chomp $@;
+		message 0, "Could not send WOL: $@";
+	}
+}
+
 sub _saveTorrentFile {
 	my $self = shift;
 
@@ -312,6 +330,7 @@ sub _sendTorrentFileWebui {
 	return unless $self->_checkMethodAllowed("webui");
 
 	eval {
+		$self->_sendWOL();
 		$self->_addDownload();
 
 		message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): Starting webui upload.");
@@ -350,6 +369,7 @@ sub _sendTorrentFileFtp {
 	return unless $self->_checkMethodAllowed("ftp");
 
 	eval {
+		$self->_sendWOL();
 		$self->_addDownload();
 
 		message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): Starting ftp upload.");

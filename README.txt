@@ -449,6 +449,19 @@ These options change the behavior of autodl-irssi. Place these options below the
 [b]Example:[/b] path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe
 [b]Description:[/b] Set it to the path of uTorrent if you're using an [b]upload-type[/b] equal to [b]dyndir[/b].
 
+
+[b]Sending Wake on LAN (WOL)[/b]
+It's possible to wake up the computer before uploading the torrent (uTorrent webui or FTP upload). You may need to make sure your BIOS and network card have WOL enabled.
+
+wol-mac-address = 00:11:22:33:44:55
+wol-ip-address = 12.34.56.78  (or a DNS name, eg. www.blah.com)
+wol-port = 9 (defaults to 9 if you leave it blank)
+
+[b]wol-mac-address[/b] is the MAC (or hardware) address of the computer's network card. Use ifconfig /all (windows) or ifconfig -a (Linux) to find out your network card's MAC address.
+
+If you have a router, then set [b]wol-ip-address[/b] to your router's public IP address, and make sure the router forwards UDP packets to port [b]wol-port[/b] (default 9) to your router's internal broadcast address (usually 192.168.0.255).
+
+
 [b]Torrent upload options[/b]
 autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.
 

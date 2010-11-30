@@ -246,6 +246,9 @@ sub doHeaderFilter {
 			uploadCommand => '',
 			uploadArgs => '',
 			uploadDyndir => '',
+			wolMacAddress => '',
+			wolIpAddress => '',
+			wolPort => '',
 		};
 
 		my $options = $header->{options};
@@ -285,6 +288,9 @@ sub doHeaderFilter {
 			'upload-command' => 'uploadCommand',
 			'upload-args' => 'uploadArgs',
 			'upload-dyndir' => 'uploadDyndir',
+			'wol-mac-address' => 'wolMacAddress',
+			'wol-ip-address' => 'wolIpAddress',
+			'wol-port' => 'wolPort',
 		});
 		$filter->{name} = $header->{name};
 
