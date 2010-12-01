@@ -14,6 +14,7 @@ Features:
 [*] Torrents are downloaded in the background so Irssi isn't blocked.
 [*] SSL downloads can be forced.
 [*] Automatic updates.
+[*] Wake on LAN
 
 It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
