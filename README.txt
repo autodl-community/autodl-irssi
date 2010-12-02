@@ -441,7 +441,7 @@ These options change the behavior of autodl-irssi. Place these options below the
 
 [b]Name:[/b] unique-torrent-names
 [b]Type:[/b] Boolean
-[b]Default:[/b] true
+[b]Default:[/b] false
 [b]Example:[/b] unique-torrent-names = true
 [b]Description:[/b] If true, all saved torrent filenames are unique (the site name is prepended to the filename). Set it to false to use the torrent release name as the filename.
 
