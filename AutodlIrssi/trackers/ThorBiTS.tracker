@@ -41,7 +41,7 @@
 		<server
 			network="ThorBiTS.org"
 			serverNames="irc.thorbits.org"
-			channelNames="#ThorBiTS.org"
+			channelNames="#ThorBiTS.org, #spam"
 			announcerNames="ThorBiTS"
 			/>
 	</servers>
