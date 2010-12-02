@@ -58,6 +58,7 @@ sub defaultOptions {
 		guiServerPort => 0,
 		guiServerPassword => '',
 		allowed => '',
+		uniqueTorrentNames => 1,
 
 		webui => {
 			user => '',
@@ -336,6 +337,7 @@ sub doHeaderOptions {
 		'gui-server-port' => 'guiServerPort',
 		'gui-server-password' => 'guiServerPassword',
 		'allowed' => 'allowed',
+		'unique-torrent-names' => 'uniqueTorrentNames',
 	});
 
 	$self->checkValidUploadType($self->{options}{uploadType}, $options->{'upload-type'});
@@ -346,6 +348,7 @@ sub doHeaderOptions {
 	$self->{options}{level} = convertStringToInteger($self->{options}{level}, 3, -1, 5);
 	$self->{options}{debug} = convertStringToBoolean($self->{options}{debug});
 	$self->{options}{memoryLeakCheck} = convertStringToBoolean($self->{options}{memoryLeakCheck});
+	$self->{options}{uniqueTorrentNames} = convertStringToBoolean($self->{options}{uniqueTorrentNames});
 	if ($self->{options}{updateCheck} ne "auto" &&
 		$self->{options}{updateCheck} ne "ask" &&
 		$self->{options}{updateCheck} ne "disabled") {

@@ -123,6 +123,24 @@ sub _getTorrentInfoString {
 	return $msg;
 }
 
+sub _getFilename {
+	my ($self, $torrentName) = @_;
+
+	my $rawFilename;
+
+	if ($AutodlIrssi::g->{options}{uniqueTorrentNames}) {
+		# Add tracker type to the torrent name so it's possible to download the same torrent from
+		# different trackers at the same time without overwriting the previous torrent file of the
+		# exact same release name.
+		$rawFilename = $self->{trackerInfo}{type} . '-' . $torrentName;
+	}
+	else {
+		$rawFilename = $torrentName;
+	}
+
+	return convertToValidPathName($rawFilename . '.torrent');
+}
+
 sub start {
 	my ($self, $ti) = @_;
 
@@ -146,10 +164,7 @@ sub start {
 
 	message(3, "Matched " . $self->_getTorrentInfoString());
 
-	# Add tracker type to the torrent name so it's possible to download the same torrent from
-	# different trackers at the same time without overwriting the previous torrent file of the
-	# exact same release name.
-	$self->{filename} = convertToValidPathName($self->{trackerInfo}{type} . '-' . $self->{ti}{torrentName} . '.torrent');
+	$self->{filename} = $self->_getFilename($self->{ti}{torrentName});
 	$self->{uploadMethod} = $self->{ti}{filter}{uploadType} ? $self->{ti}{filter} : $AutodlIrssi::g->{options};
 
 	my $forceSsl = $self->{ti}{announceParser}->readOption("force-ssl");
