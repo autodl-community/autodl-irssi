@@ -78,6 +78,8 @@ sub defaultOptions {
 			autoConnect => 1,
 			userName => '',
 			realName => '',
+			outputServer => '',
+			outputChannel => '',
 		}
 	};
 }
@@ -393,6 +395,8 @@ sub doHeaderIrc {
 		'auto-connect' => 'autoConnect',
 		'user-name' => 'userName',
 		'real-name' => 'realName',
+		'output-server' => 'outputServer',
+		'output-channel' => 'outputChannel',
 	});
 
 	$self->{options}{irc}{autoConnect} = convertStringToBoolean($self->{options}{irc}{autoConnect});

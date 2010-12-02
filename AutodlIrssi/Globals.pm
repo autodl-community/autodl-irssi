@@ -52,6 +52,7 @@ our $g = {
 
 package AutodlIrssi::Globals;
 use AutodlIrssi::Irssi;
+use AutodlIrssi::TextUtils;
 use base qw/ Exporter /;
 our @EXPORT = qw/ message dmessage currentTime formatException /;
 our @EXPORT_OK = qw//;
@@ -65,6 +66,25 @@ sub getLevel {
 	return $AutodlIrssi::g->{options}{level};
 }
 
+sub findServer {
+	my $serverName = canonicalizeServerName(shift);
+
+	for my $server (irssi_servers()) {
+		return $server if $serverName eq canonicalizeServerName($server->{address})
+	}
+	return;
+}
+
+sub messageChannel {
+	my ($serverName, $channelName, $message) = @_;
+
+	eval {
+		my $server = findServer($serverName);
+		return unless defined $server && $server->{connected};
+		$server->command("msg $channelName $message");
+	};
+}
+
 sub message {
 	my ($level, $msg) = @_;
 
@@ -72,6 +92,12 @@ sub message {
 		$msg = "\x0300,04 ERROR: \x03 $msg" if $level == 0;
 
 		eval { $AutodlIrssi::g->{messageBuffer}->onMessage($msg) } if $AutodlIrssi::g->{messageBuffer};
+
+		if ($AutodlIrssi::g->{options}{irc} && $AutodlIrssi::g->{options}{irc}{outputServer} &&
+			$AutodlIrssi::g->{options}{irc}{outputChannel}) {
+			messageChannel($AutodlIrssi::g->{options}{irc}{outputServer},
+							$AutodlIrssi::g->{options}{irc}{outputChannel}, $msg);
+		}
 
 		$msg =~ s/%/%%/g;
 		my $window = Irssi::window_find_name("autodl");

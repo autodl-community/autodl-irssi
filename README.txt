@@ -534,6 +534,20 @@ port =
 [/quote]
 user is user name, password is your password, hostname is the hostname/IP-address, and port is the FTP port.
 
+
+[b]The IRC options header[/b]
+auto-connect = true
+Set it to true to enable auto connecting to IRC servers and channels.
+
+user-name =
+real-name =
+IRC user name and real name. Leave blank if we should use Irssi's settings.
+
+output-server =
+output-channel =
+Send all autodl-irssi output to the specified IRC server and channel. Make sure you've setup autodl-irssi to auto connect to the IRC server and channel.
+
+
 [b]The tracker header[/b]
 Your trackers require that you authenticate before letting you download a torrent file. Use the tracker headers to set the required options so downloads work.
 
