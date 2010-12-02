@@ -58,7 +58,7 @@ sub defaultOptions {
 		guiServerPort => 0,
 		guiServerPassword => '',
 		allowed => '',
-		uniqueTorrentNames => 1,
+		uniqueTorrentNames => 0,
 
 		webui => {
 			user => '',
