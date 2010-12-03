@@ -41,7 +41,7 @@ use constant {
 };
 
 our $tvResolutions = [
-	["PD", "Portable Device"],
+	["Portable Device", "PD"],
 	["SD", "SDTV", "Standard Def", "Standard Definition"],
 	["480i"],
 	["480p"],
