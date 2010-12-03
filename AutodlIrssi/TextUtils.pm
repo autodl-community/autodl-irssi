@@ -171,7 +171,7 @@ sub convertToByteSizeString {
 
 	my $dot = index $size, ".";
 	if ($dot != -1) {
-		$size = substr $size, 0, $dot + 3;
+		$size = sprintf('%.2f', $size);
 	}
 
 	return $size . " " . $sizePrefix;
