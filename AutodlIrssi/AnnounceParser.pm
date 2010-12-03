@@ -684,10 +684,13 @@ sub extractReleaseNameInfo {
 	}
 
 	# Year month day must be part of canonicalized name if it's present.
-	if ($data = $findLast->($canonReleaseName, qr/(?:^|\D)((?:19[3-9]\d|20[01]\d)\s\d{2}\s\d{2})(?:\D|$)/)) {
+	my $indexYmd;
+	if ($data = $findLast->($canonReleaseName, qr/(?:^|\D)((?:19[3-9]\d|20[01]\d)\s\d{1,2}\s\d{1,2})(?:\D|$)/)) {
+		$indexYmd = $data->{index};
 		$setVariable->("ymd", $data->{value});
 	}
 
+	my $startIndex = my_max(0, $indexSeason, $indexEpisode, $indexYmd);
 	my $find = sub {
 		my ($aryStrings, $isCaseSensitive) = @_;
 
@@ -702,7 +705,7 @@ sub extractReleaseNameInfo {
 				my $regexStr = "\\s$canonSearchString(?:\\s|\$)";
 				my $qr = $isCaseSensitive ? qr/$regexStr/ : qr/$regexStr/i;
 				my $tmp = $findLast->($canonReleaseName, $qr);
-				if (defined $tmp && $tmp->{index} < $rv->{index}) {
+				if (defined $tmp && $tmp->{index} >= $startIndex && $tmp->{index} < $rv->{index}) {
 					$rv->{index} = $tmp->{index};
 					$rv->{value} = $searchString;
 				}
@@ -769,7 +772,7 @@ sub extractReleaseNameInfo {
 			}
 		}
 		my $indexMin = my_min($indexResolution, $indexSource, $indexEncoder, $indexIgnore,
-							$yindex, $indexSeason, $indexEpisode);
+							$yindex, $indexSeason, $indexEpisode, $indexYmd);
 
 		if (defined $indexMin) {
 			my $name1 = substr $releaseName, 0, $indexMin;
@@ -789,6 +792,16 @@ sub my_min {
 	my $rv;
 	for my $v (@_) {
 		if (defined $v && (!defined $rv || $v < $rv)) {
+			$rv = $v;
+		}
+	}
+	return $rv;
+}
+
+sub my_max {
+	my $rv;
+	for my $v (@_) {
+		if (defined $v && (!defined $rv || $v > $rv)) {
 			$rv = $v;
 		}
 	}
