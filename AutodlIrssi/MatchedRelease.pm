@@ -51,6 +51,7 @@ use AutodlIrssi::WOL;
 use Digest::SHA1 qw/ sha1 /;
 use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
+use Errno qw/ :POSIX /;
 
 sub new {
 	my ($class, $downloadHistory) = @_;
@@ -187,10 +188,14 @@ sub _onTorrentDownloaded {
 
 	if ($errorMessage) {
 		# Yeah this is ugly
-		if ($errorMessage =~ /error: 32(?:\D|$)/i) {
-			$self->{httpRequest}->retryRequest("Got EPIPE error. Retrying. Error: $errorMessage", sub { $self->_onTorrentDownloaded(@_) });
-			return;
+		if ($errorMessage =~ /Socket error: (\d+)/) {
+			my $errno = $1;
+			if ($errno == EPIPE || $errno == ECONNRESET) {
+				$self->{httpRequest}->retryRequest("Got socket error. Retrying. Error: $errorMessage", sub { $self->_onTorrentDownloaded(@_) });
+				return;
+			}
 		}
+
 		$self->_messageFail(0, "Error downloading torrent file $self->{downloadUrl}. Error: $errorMessage");
 		return;
 	}
