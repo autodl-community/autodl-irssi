@@ -499,7 +499,7 @@ sub onAllLinesMatched {
 			}
 		}
 
-		return "";
+		return $name;
 	};
 	$ti->{resolution} = $canonicalizeIt->($ti->{resolution}, $AutodlIrssi::Constants::tvResolutions);
 	$ti->{source} = $canonicalizeIt->($ti->{source}, $AutodlIrssi::Constants::tvSources);
