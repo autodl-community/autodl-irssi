@@ -47,7 +47,8 @@
 		<linepatterns>
 			<extract>
 				<!--NEW in MP3: Last_Dayz-Demo_MMX-2010-B2R (14.99MB and was pred 31 secs ago) on http://www.scenebytes.org/details.php?id=4574&hit=1-->
-				<regex value="^NEW in ([^:]+):(.*)\(([\d.,]+.B)(\s+and was pred [^\)]+)\)?\s*on https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--NEW in TV/X264: Community.S02E10.720p.HDTV.X264-DIMENSION (582.99MB) on http://www.scenebytes.org/details.php?id=4808&hit=1-->
+				<regex value="^NEW in ([^:]+):(.*)\(([\d.,]+.B)(\s+and was pred [^\)]+)?\)\s*on https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
