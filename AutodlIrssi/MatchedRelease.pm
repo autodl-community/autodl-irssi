@@ -305,14 +305,15 @@ sub _onTorrentFileDownloaded {
 
 # Sends a Wake on LAN magic packet if enabled
 sub _sendWOL {
-	my $self = shift;
+	my ($self, $destIpAddr) = @_;
 
 	eval {
 		my $filter = $self->{ti}{filter};
-		return unless $filter->{wolMacAddress} && $filter->{wolIpAddress};
+		$destIpAddr = $filter->{wolIpAddress} if $filter->{wolIpAddress};
+		return unless $filter->{wolMacAddress} && $destIpAddr;
 
-		message 3, "Sending WOL: MAC=$filter->{wolMacAddress}, IP=$filter->{wolIpAddress}, Port=$filter->{wolPort}";
-		sendWOL($filter->{wolMacAddress}, $filter->{wolIpAddress}, $filter->{wolPort});
+		message 3, "Sending WOL: MAC=$filter->{wolMacAddress}, IP=$destIpAddr, Port=$filter->{wolPort}";
+		sendWOL($filter->{wolMacAddress}, $destIpAddr, $filter->{wolPort});
 	};
 	if ($@) {
 		chomp $@;
@@ -350,7 +351,7 @@ sub _sendTorrentFileWebui {
 	return unless $self->_checkMethodAllowed("webui");
 
 	eval {
-		$self->_sendWOL();
+		$self->_sendWOL($AutodlIrssi::g->{options}{webui}{hostname});
 		$self->_addDownload();
 
 		message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): Starting webui upload.");
@@ -389,7 +390,7 @@ sub _sendTorrentFileFtp {
 	return unless $self->_checkMethodAllowed("ftp");
 
 	eval {
-		$self->_sendWOL();
+		$self->_sendWOL($AutodlIrssi::g->{options}{ftp}{hostname});
 		$self->_addDownload();
 
 		message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): Starting ftp upload.");
