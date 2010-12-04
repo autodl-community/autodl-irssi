@@ -91,7 +91,7 @@
 				</vars>
 			</extract>
 			<if srcvar="name1" regex="^$">
-				<extract srcvar="torrentName">
+				<extract srcvar="torrentName" optional="true">
 					<regex value="^(.+?)\s+-\s+(.+)\s+-"/>
 					<vars>
 						<var name="name2"/>
