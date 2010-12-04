@@ -114,6 +114,7 @@ sub parse {
 	my ($self, $pathname) = @_;
 
 	my $headers = $self->SUPER::parse($pathname);
+	$self->{trackerManager}->resetTrackerOptions() if $self->{trackerManager};
 
 	while (my ($headerType, $aryHeader) = each %$headers) {
 		if ($headerType eq 'filter') {
@@ -410,8 +411,6 @@ sub doHeaderTracker {
 	my ($self, $aryHeader) = @_;
 
 	return unless defined $self->{trackerManager};
-
-	$self->{trackerManager}->resetTrackerOptions();
 
 	for my $header (@$aryHeader) {
 		my $trackerType = $header->{name};

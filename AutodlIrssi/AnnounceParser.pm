@@ -43,6 +43,7 @@ sub new {
 		trackerInfo => $trackerInfo,
 		state => $state,
 		options => {},
+		isDefaultOption => {},
 	}, $class;
 
 	$self->initializeOptions();
@@ -68,16 +69,16 @@ sub getTrackerName {
 
 # Resets all options
 sub resetOptions {
-	my $self = shift;
-
-	$self->{options} = {};
-	$self->initializeOptions();
+	shift->initializeOptions();
 }
 
 sub initializeOptions {
 	my $self = shift;
+
+	$self->{options} = {};
+	$self->{isDefaultOption} = {};
 	for my $setting (values %{$self->{trackerInfo}{settings}}) {
-		$self->writeOption($setting->{name}, $setting->{defaultValue});
+		$self->writeOption($setting->{name}, $setting->{defaultValue}, 1);
 	}
 }
 
@@ -99,7 +100,12 @@ sub addOptionsFrom {
 	my ($self, $other) = @_;
 
 	die "Not same type of announce parser!\n" if $self->{trackerInfo}{type} ne $other->{trackerInfo}{type};
-	$self->{options} = {%{$other->{options}}};
+
+	$self->initializeOptions();
+	while (my ($name, $value) = each %{$other->{options}}) {
+		next if $other->{isDefaultOption}{$name};	# Don't use old default value, use current default value
+		$self->writeOption($name, $value);
+	}
 }
 
 # Returns true if the option exists
@@ -110,12 +116,13 @@ sub isOption {
 
 # Write a new value to a tracker option
 sub writeOption {
-	my ($self, $name, $value) = @_;
+	my ($self, $name, $value, $isDefaultValue) = @_;
 
 	my $setting = ${$self->{trackerInfo}{settings}}{$name};
 	return unless defined $setting;
 
 	$self->{options}{$name} = "" . $value;
+	$self->{isDefaultOption}{$name} = $isDefaultValue;
 }
 
 # Reads a tracker option. Returns undef if the option doesn't exist.

@@ -188,15 +188,35 @@ sub command_autodl {
 		elsif ($data =~ /^\s*whatsnew\s*$/i) {
 			showWhatsNew();
 		}
+		elsif ($data =~ /^\s*dumpvars\s*(\S+)\s*$/i) {
+			dumpTrackerVars($1);
+		}
 		else {
 			message 0, "Usage:";
 			message 0, "    /autodl update";
 			message 0, "    /autodl whatsnew";
+			message 0, "    /autodl dumpvars tracker-type";
 		}
 	};
 	if ($@) {
 		chomp $@;
 		message 0, "command_autodl: ex: $@";
+	}
+}
+
+sub dumpTrackerVars {
+	my $type = shift;
+
+	my $announceParser = $AutodlIrssi::g->{trackerManager}->findAnnounceParserFromType($type);
+	if (!$announceParser) {
+		message 0, "Unknown tracker type $type";
+		return;
+	}
+
+	message 3, "Tracker options ($type):";
+	my $options = $announceParser->{options};
+	while (my ($name, $value) = each %$options) {
+		message 3, "    $name: '$value'";
 	}
 }
 
