@@ -38,7 +38,7 @@
 		<server
 			network="DIDInet"
 			serverNames="irc.dididave.com"
-			channelNames="#siteannounce"
+			channelNames="#DDT-Announce"
 			announcerNames="didibot2"
 			/>
 	</servers>
@@ -46,15 +46,15 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--New Torrent Uploaded: Name: The.Soup.Presents.Anarchy.in.the.UK.PDTV.XviD-MOMENTUM Category: TV/Episodes Size: 175.10 MB URL: http://www.dididave.com/details.php?id=20356 Time After Pre: N/A-->
-				<regex value="^New Torrent Uploaded: Name:(.*)Category:(.*)Size:(.*)URL: \s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s* Time After Pre:(.*)"/>
+				<!--NEW In Music/MP3s: -> Aaron_Ross_-_Defected_in_the_House_(Guest_Gina_Turner)-SBD-12-04-2010-TALiON_INT (Uploaded N/A seconds after pre) - (164.82 MB) http://dididave.com/details.php?id=92173-->
+				<regex value="^NEW In ([^:]*): -&gt;(.*)\(([^\)]+)\) - \(([^\)]+)\)\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
-					<var name="torrentName"/>
 					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="preTime"/>
 					<var name="torrentSize"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
-					<var name="preTime"/>
 				</vars>
 			</extract>
 		</linepatterns>
@@ -73,7 +73,7 @@
 			</http>
 		</linematched>
 		<ignore>
-			<regex value="^New Torrent Uploaded:" expected="false"/>
+			<regex value="xxxxx/details\.php"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
