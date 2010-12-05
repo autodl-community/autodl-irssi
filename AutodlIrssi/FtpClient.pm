@@ -35,6 +35,7 @@ use AutodlIrssi::Globals;
 use AutodlIrssi::LineBuffer;
 use AutodlIrssi::Socket;
 use AutodlIrssi::SslSocket;
+use AutodlIrssi::Irssi qw/ irssi_timeout_add_once /;
 use Socket qw/ :crlf /;
 
 sub new {
@@ -239,6 +240,13 @@ use constant {
 	STCONN_SENT_USER	=> 13,
 	STCONN_SENT_PASS	=> 14,
 	STCONN_END			=> 15,
+
+	# Number of seconds we'll retry connecting to the FTP server. This should be long enough for
+	# the server to start in case we've just sent a WOL command to wake it up.
+	FTP_CONNECT_TIMEOUT_SECS => 2*60,
+
+	# Wait this many seconds before reconnecting
+	FTP_RECONNECT_TIMEOUT_WAIT_SECS => 10,
 };
 
 # Add a "connect to FTP" command. All other commands require this command.
@@ -257,14 +265,32 @@ sub addConnect {
 sub connectHandler {
 	my ($self, $command, $code, $codeMessage) = @_;
 
+	my $retryConnect = sub {
+		my $errorMessage = shift;
+
+		if (time() - $command->{startTime} > FTP_CONNECT_TIMEOUT_SECS) {
+			$self->fatal($errorMessage);
+			return 0;
+		}
+
+		message 4, "Could not connect to FTP. Waiting before reconnecting...";
+		$command->{state} = STCONN_START;
+		irssi_timeout_add_once(FTP_RECONNECT_TIMEOUT_WAIT_SECS * 1000, sub {
+			connectHandler($self, $command, $code, $codeMessage);
+		}, undef);
+		return 1;
+	};
+
 	my $code0 = substr $code, 0, 1;
 	while (1) {
 		if ($command->{state} == STCONN_START) {
+			$command->{startTime} = time() unless $command->{startTime};
+
 			$command->{state} = STCONN_LL_CONN_WAIT;
 			my $rv = $self->start($command->{ftpSettings}{hostname}, $command->{ftpSettings}{port}, sub {
 				my $errorMessage = shift;
 				if ($errorMessage) {
-					return $self->fatal("Could not connect to FTP $command->{ftpSettings}{hostname}:$command->{ftpSettings}{port}. Error: $errorMessage");
+					return $retryConnect->("Could not connect to FTP $command->{ftpSettings}{hostname}:$command->{ftpSettings}{port}. Error: $errorMessage");
 				}
 				$command->{state} = STCONN_CONNECT_WAIT;
 			});
