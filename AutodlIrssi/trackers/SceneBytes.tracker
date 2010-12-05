@@ -70,6 +70,7 @@
 			</var>
 		</linematched>
 		<ignore>
+			<regex value="/details\.php" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
