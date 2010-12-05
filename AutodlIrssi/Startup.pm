@@ -391,18 +391,19 @@ sub secondTimer {
 
 # Returns an array ref of all monitored channels we've joined
 sub getActiveAnnounceParserTypes {
-	return [map {
+	my $hash = {map {
 		if ($_->{joined}) {
 			my $networkName = $_->{server}->isupport('NETWORK');
 			my $serverName = $_->{server}{address};
 			my $channelName = $_->{name};
 			my $announceParser = $AutodlIrssi::g->{trackerManager}->getAnnounceParserFromChannel($networkName, $serverName, $channelName);
-			$announceParser ? $announceParser->getTrackerInfo()->{type} : ();
+			$announceParser ? ($announceParser->getTrackerInfo()->{type}, undef) : ();
 		}
 		else {
 			()
 		}
-	} irssi_channels()];
+	} irssi_channels()};
+	return keys %$hash;
 }
 
 {
