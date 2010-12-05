@@ -30,8 +30,8 @@
 	siteName="x264.me">
 
 	<settings>
-		<description text="Go to http://x264.me/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
-		<passkey/>
+		<cookie_description/>
+		<cookie/>
 	</settings>
 
 	<servers>
@@ -73,11 +73,12 @@
 				<string value="download.php/"/>
 				<var name="$torrentId"/>
 				<string value="/"/>
-				<var name="passkey"/>
-				<string value="/"/>
 				<varenc name="torrentName"/>
 				<string value=".torrent"/>
 			</var>
+			<http name="Cookie">
+				<var name="cookie"/>
+			</http>
 		</linematched>
 		<ignore>
 			<regex value="/details\.php" expected="false"/>
