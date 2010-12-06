@@ -39,7 +39,7 @@
 		<server
 			network="AHDIRCNet"
 			serverNames="irc.awesome-hd.net"
-			channelNames="#awesome-hd"
+			channelNames="#ahd-announce"
 			announcerNames="AHDBot"
 			/>
 	</servers>
@@ -49,7 +49,7 @@
 			<extract>
 				<!--Gangs of New York [2002] - FTW-HD / 1080p / MKV / Blu-Ray / - http://awesome-hd.net/torrents.php?id=1173 / http://awesome-hd.net/torrents.php?action=download&id=2020 - Crime,Drama,History-->
 				<!--Stir Of Echoes - FLAC 5.1 24-bit  - http://awesome-hd.net/torrents.php?id=1743 / http://awesome-hd.net/torrents.php?action=download&id=2023 - horror, mystery, thriller-->
-				<regex value="^(.*?)(?: / (.*?))?\s+- https?\:\/\/.*https?\:\/\/([^\/]+\/)\S*action=download&amp;id=(\d+)\s+-(.*)"/>
+				<regex value="^MOVIE:(.*?)(?: / (.*?))?\s+- https?\:\/\/.*https?\:\/\/([^\/]+\/)\S*action=download&amp;id=(\d+)\s+-(.*)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$releaseTags"/>
@@ -72,8 +72,7 @@
 			</extracttags>
 
 			<var name="torrentUrl">
-				<string value="http://"/>
-				<var name="$baseUrl"/>
+				<string value="http://awesome-hd.net/"/>
 				<string value="torrents.php?action=download&amp;id="/>
 				<var name="$torrentId"/>
 				<string value="&amp;authkey="/>
@@ -82,8 +81,7 @@
 				<var name="torrent_pass"/>
 			</var>
 			<var name="torrentSslUrl">
-				<string value="https://ssl."/>
-				<var name="$baseUrl"/>
+				<string value="https://ssl.awesome-hd.net/"/>
 				<string value="torrents.php?action=download&amp;id="/>
 				<var name="$torrentId"/>
 				<string value="&amp;authkey="/>
