@@ -403,7 +403,7 @@ sub getActiveAnnounceParserTypes {
 			()
 		}
 	} irssi_channels()};
-	return keys %$hash;
+	return [keys %$hash];
 }
 
 {

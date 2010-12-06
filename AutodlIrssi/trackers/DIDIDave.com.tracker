@@ -74,6 +74,7 @@
 		</linematched>
 		<ignore>
 			<regex value="xxxxx/details\.php"/>
+			<regex value="/details\.php" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
