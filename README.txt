@@ -29,56 +29,40 @@ It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
 [b]Installation[/b]
 
-First install Irssi. Use your GUI package manager or append [b]irssi[/b] to one of the below commands.
+I've written an install script which should work with most Linux distributions and FreeBSD. It will install Irssi, autodl-irssi, the ruTorrent plugin and any other dependencies. Note that it will NOT install ruTorrent. See the ruTorrents forum on how to do that. Note that the ruTorrent plugin requires ruTorrent 3.2 or later. If you use an earlier version, it may look weird.
 
-This auto downloader requires some Perl modules. You need to be root (eg. use [b]sudo[/b] or [b]su -[/b]) to install them. Start a terminal and type one of the below commands.
+When it asks for a user name, use a normal existing user, not the root user. You don't need to be root to run Irssi or autodl-irssi.
 
-[b]Ubuntu, Debian, and others based on Debian/Ubuntu[/b]:
-[code]apt-get -y install libarchive-zip-perl libnet-ssleay-perl libhtml-parser-perl libxml-libxml-perl libdigest-sha1-perl libjson-perl libjson-xs-perl libxml-libxslt-perl[/code]
-
-[b]Fedora, CentOS[/b]:
-[code]yum -y install perl-Archive-Zip perl-Net-SSLeay perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1 perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
-
-[b]OpenSUSE[/b]:
-[code]yast -i perl-Archive-Zip perl-Net-SSLeay perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1 perl-XML-LibXSLT
-# This may fail, so you may need to add a 3rd-party repo to install them or use the cpan utility.
-yast -i perl-JSON perl-JSON-XS[/code]
-
-[b]PCLinuxOS[/b]:
-[code]apt-get -y install perl-Archive-Zip perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1
-use cpan: perl-Net-SSLeay perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
-
-[b]Mandriva Linux[/b]:
-[code]urpmi perl-Archive-Zip perl-Net-SSLeay perl-HTML-Parser perl-XML-LibXML perl-Digest-SHA1 perl-JSON perl-JSON-XS perl-XML-LibXSLT[/code]
-
-[b]Arch Linux[/b]:
-[code]pacman -S perl-archive-zip perl-net-ssleay perl-html-parser perl-xml-libxml perl-digest-sha1 perl-json perl-json-xs perl-xml-libxslt[/code]
-
-[b]FreeBSD[/b]:
-[code]pkg_add -r p5-Archive-Zip p5-Net-SSLeay p5-HTML-Parser p5-XML-LibXML p5-Digest-SHA1 p5-JSON p5-JSON-XS p5-XML-LibXSLT[/code]
-
-[b]For other OSes[/b] try the cpan utility as root. You will probably also need a C compiler (gcc) installed:
-[code]cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA1 JSON JSON::XS XML::LibXSLT[/code]
-
-
-
-
-Now to install autodl-irssi. Note: Make sure you're [b]not[/b] root when you're executing the following commands.
+[b]Ubuntu and Ubuntu clones[/b]:
 [code]
-mkdir -p ~/.irssi/scripts/autorun
-cd ~/.irssi/scripts
-wget https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.10.zip/download
-unzip -o autodl-irssi-v*.zip
-rm autodl-irssi-v*.zip
-cp autodl-irssi.pl autorun/
-mkdir -p ~/.autodl
-touch ~/.autodl/autodl.cfg
+cd
+wget --no-check-certificate -O autodl-setup http://sourceforge.net/projects/autodl-irssi/files/autodl-setup/download
+sudo sh autodl-setup
 [/code]
 
-The autodl-irssi startup script has been copied to the autorun directory so it will be started automatically when Irssi is started.
+[b]Any other OS[/b]
+[code]
+su -
+wget --no-check-certificate -O autodl-setup http://sourceforge.net/projects/autodl-irssi/files/autodl-setup/download
+sh autodl-setup
+exit
+[/code]
 
-Now start Irssi. View the [b](status)[/b] window (or [b]autodl[/b] window) (eg. press ALT+1 or ALT+2). You should now see text indicating that autodl-irssi has loaded. Type [b]/script load autodl-irssi[/b] to start it if Irssi already was started.
 
+Now you can log in as your user and start Irssi. You should start Irssi in a screen session so Irssi keeps running even if you close eg. putty. Here's how you start Irssi in a screen session:
+
+[code]
+screen
+irssi
+[/code]
+
+When Irssi has started successfully, make sure that it prints something like "Listening on 127.0.0.1:12345" and not some error message about the port already being used.
+
+If Irssi started successfully, you can then start ruTorrent to verify that the plugin is loaded. To use the plugin, click its icon at the top. It's usually the icon to the left of ruTorrent's settings icon. The icon is either a white bubble or a white down array inside a green square. The autodl-irssi tab will show all autodl-irssi output as long as ruTorrent is loaded.
+
+
+
+If you don't use the ruTorrent plugin, then this tip may be helpful:
 By default, all autodl-irssi output goes to the [b](status)[/b] window. If there's a window called [b]autodl[/b], then it will write all output to that window. Use these Irssi commands to create a new window named [b]autodl[/b] and place it right after the status window (i.e., window position 2):
 [code]First start Irssi! :D
 /window new hidden
@@ -86,81 +70,6 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 /window move 2
 /layout save
 /save[/code]
-
-
-
-[b]Installing the ruTorrent plugin[/b]
-
-Make sure ruTorrent is installed properly! Also make sure it's the latest version of ruTorrent. It needs ruTorrent v3.2 or any later version.
-
-You will need the following PHP modules enabled for it to work: xml, sockets, and json. They may already be enabled, but if not, you may need to enable them by editing php.ini:
-
-[code]extension=sockets.so
-extension=json.so
-extension=xml.so
-[/code]
-
-FreeBSD users can install the modules by issuing the following command:
-
-[code]pkg_add -r php5-sockets php5-json php5-xml[/code]
-
-You will probably need to restart your web server if you made changes to the PHP configuration file!
-
-
-You can test for the presence of these modules by executing the following command. If you get no output then they're installed:
-
-[code]for module in json xml sockets; do php -m|grep -wq $module || echo "Missing module: $module"; done[/code]
-
-
-
-You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/
-
-[code]
-cd /var/www/rutorrent/plugins
-sudo svn co https://autodl-irssi.svn.sourceforge.net/svnroot/autodl-irssi/trunk/rutorrent/autodl-irssi
-sudo cp autodl-irssi/_conf.php autodl-irssi/conf.php
-sudo chown -R www-data:www-data autodl-irssi
-[/code]
-
-This install assumes ruTorrent is used by one person (HTTP access). For multi-user setup (HTTPS access), you need to copy conf.php to the user directory and not to the plugin directory. Eg. you need to copy it to a path similar to /var/www/rutorrent/conf/users/YOUR-USER-NAME/plugins/autodl-irssi
-
-Edit conf.php with a text editor and add your port number and password. The port number should be a random number between 1024 and 65535 inclusive. The file should look something like this afterwards:
-
-[code]
-<?php
-$autodlPort = 12345;
-$autodlPassword = "secretpass";
-?>
-[/code]
-
-Open ~/.autodl/autodl2.cfg with a text editor and add this to the file:
-[code]
-[options]
-gui-server-port = 12345
-gui-server-password = secretpass
-[/code]
-
-If you start more than one Irssi process, make sure each Irssi process uses a unique port number! It won't work if they all use the same port number.
-
-The gui-server-port and gui-server-password options can be moved to ~/.autodl/autodl2.cfg (note the '2') and will override any gui-server-* options in autodl.cfg. This is actually recommended because it's not possible to overwrite autodl2.cfg from the ruTorrent plugin.
-
-
-Since some people don't want users to have shell access, it's also possible to disable the "exec" action. Create /etc/autodl.cfg and add this:
-
-[code]
-[options]
-allowed = watchdir
-[/code]
-
-That will only enable the "Save to watch dir" action. The following can be used with the [b]allowed[/b] option:
-
-watchdir
-webui (requires uTorrent)
-ftp
-exec
-dyndir (requires uTorrent)
-
-It's a comma seperated list, eg.: allowed = watchdir, ftp
 
 
 [b]The autodl.cfg file[/b]
@@ -584,6 +493,25 @@ Some common tracker options and how to get them:
 [b]enabled[/b] is optional and defaults to true. Set it to false to disable the tracker.
 [b]force-ssl[/b] is optional and can be set to true to force encrypted torrent downloads. Not all trackers support HTTPS downloads. Leave it blank for the default value (which is HTTP or HTTPS).
 [b]upload-delay-secs[/b] is optional and is the number of seconds autodl-irssi should wait before uploading/saving the torrent. Default is 0 (no wait). This option isn't needed 99.999% of the time.
+
+
+Since some people don't want users to have shell access, it's also possible to disable the "exec" action. Create [b]/etc/autodl.cfg[/b] and add this:
+
+[code]
+[options]
+allowed = watchdir
+[/code]
+
+That will only enable the "Save to watch dir" action. The following can be used with the [b]allowed[/b] option:
+
+watchdir
+webui (requires uTorrent)
+ftp
+exec
+dyndir (requires uTorrent)
+
+It's a comma seperated list, eg.: allowed = watchdir, ftp
+
 
 [b]Macros[/b]
 
