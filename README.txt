@@ -1,9 +1,8 @@
 
-This is an auto downloader for Irssi. It's a port of the ChatZilla auto downloader (autodl-cz) and has all of autodl-cz's features except scripting isn't supported.
-
+This is an auto downloader for Irssi.
 
 Features:
-[*] ruTorrent plugin.
+[*] ruTorrent plugin (optional).
 [*] Supports your favorite tracker
 [*] Advanced but easy to use filters. No complicated regex required, not even wildcards for TV shows and movies.
 [*] Some of the filters: release, size, tracker, resolution, source (eg. BluRay), category, format (eg. FLAC), bitrate, and many more.
@@ -29,7 +28,7 @@ It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
 [b]Installation[/b]
 
-I've written an install script which should work with most Linux distributions and FreeBSD. It will install Irssi, autodl-irssi, the ruTorrent plugin and any other dependencies. Note that it will NOT install ruTorrent. See the ruTorrents forum on how to do that. Note that the ruTorrent plugin requires ruTorrent 3.2 or later. If you use an earlier version, it may look weird.
+I've written an install script which should work with most Linux distributions and FreeBSD. It will install Irssi, autodl-irssi, the ruTorrent plugin and any other dependencies. Note that it will NOT install ruTorrent. See the ruTorrents forum on how to do that. Note that the ruTorrent plugin requires ruTorrent 3.2 or later.
 
 When it asks for a user name, use a normal existing user, not the root user. You don't need to be root to run Irssi or autodl-irssi.
 
