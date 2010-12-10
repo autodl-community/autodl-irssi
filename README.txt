@@ -41,11 +41,12 @@ sudo sh autodl-setup
 [/code]
 
 [b]Any other OS[/b]
+Log in as root:
+[code]su -[/code]
+Then install it:
 [code]
-su -
 wget --no-check-certificate -O autodl-setup http://sourceforge.net/projects/autodl-irssi/files/autodl-setup/download
 sh autodl-setup
-exit
 [/code]
 
 
