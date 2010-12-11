@@ -28,7 +28,7 @@ It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
 [b]Installation[/b]
 
-I've written an install script which should work with most Linux distributions and FreeBSD. It will install Irssi, autodl-irssi, the ruTorrent plugin and any other dependencies. Note that it will NOT install ruTorrent. See the ruTorrents forum on how to do that. Note that the ruTorrent plugin requires ruTorrent 3.2 or later.
+I've written an install script which should work with most Linux distributions, FreeBSD and OpenBSD. It will install Irssi, autodl-irssi, the ruTorrent plugin and any other dependencies. Note that it will NOT install ruTorrent. See the ruTorrent forum on how to do that. Note that the ruTorrent plugin requires ruTorrent 3.2 or later.
 
 When it asks for a user name, use a normal existing user, not the root user. You don't need to be root to run Irssi or autodl-irssi.
 
@@ -58,7 +58,7 @@ irssi
 
 When Irssi has started successfully, make sure that it prints something like "Listening on 127.0.0.1:12345" and not some error message about the port already being used.
 
-If Irssi started successfully, you can then start ruTorrent to verify that the plugin is loaded. To use the plugin, click its icon at the top. It's usually the icon to the left of ruTorrent's settings icon. The icon is either a white bubble or a white down array inside a green square. The autodl-irssi tab will show all autodl-irssi output as long as ruTorrent is loaded.
+If Irssi started successfully, you can then start ruTorrent to verify that the plugin is loaded. To use the plugin, click its icon at the top. It's usually the icon to the left of ruTorrent's settings icon. The icon is either a white bubble or a white down arrow inside a green square. The autodl-irssi tab will show all autodl-irssi output as long as ruTorrent is loaded.
 
 
 
