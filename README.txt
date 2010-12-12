@@ -72,6 +72,92 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 /save[/code]
 
 
+[b]Manual installation[/b]
+
+If you can't use the installer for some reason, then try a manual install.
+
+autodl-irssi requires Irssi compiled with Perl support.
+
+autodl-irssi has the following Perl module dependencies:
+* Archive::Zip
+* Net::SSLeay
+* HTML::Entities
+* XML::LibXML
+* Digest::SHA1
+* JSON
+* JSON::XS (optional)
+
+Use your package manager to install them or use the CPAN utility. If you use CPAN, you will need a build environment already installed, eg. gcc, make, etc.
+
+[code]
+cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA1 JSON JSON::XS
+[/code]
+
+The optional ruTorrent plugin has the following PHP dependencies:
+* json
+* sockets
+* xml
+
+You can test for the presence of those modules by executing the following command. If you get no output then they're installed:
+
+[code]for module in json xml sockets; do php -m|grep -wq $module || echo "Missing module: $module"; done[/code]
+
+Use your package manager to install them unless they're already installed. You may need to edit your php.ini file by adding this:
+
+[code]
+extension=sockets.so
+extension=json.so
+extension=xml.so
+[/code]
+
+Don't forget to restart your web server if you make any changes to php.ini.
+
+
+Installing autodl-irssi. Note: Make sure you're [b]not[/b] root when you execute the following commands.
+[code]
+mkdir -p ~/.irssi/scripts/autorun
+cd ~/.irssi/scripts
+wget -O autodl-irssi.zip https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.10.zip/download
+unzip -o autodl-irssi.zip
+rm autodl-irssi.zip
+cp autodl-irssi.pl autorun/
+mkdir -p ~/.autodl
+touch ~/.autodl/autodl.cfg
+[/code]
+
+The autodl-irssi startup script has been copied to the autorun directory so it will be started automatically when Irssi is started.
+
+
+Installing the optional ruTorrent plugin. You may need to slightly modify the steps if you're not using Ubuntu or if ruTorrent isn't installed to /var/www/rutorrent/
+
+[code]
+cd /var/www/rutorrent/plugins
+sudo svn co https://autodl-irssi.svn.sourceforge.net/svnroot/autodl-irssi/trunk/rutorrent/autodl-irssi
+sudo cp autodl-irssi/_conf.php autodl-irssi/conf.php
+sudo chown -R www-data:www-data autodl-irssi
+[/code]
+
+This install assumes ruTorrent is not password protected. For password protected (i.e., multi-user) setup, you need to copy conf.php to the user plugins directory and not to the plugin directory. Eg. you need to copy it to a path similar to /var/www/rutorrent/conf/users/YOUR-USER-NAME/plugins/autodl-irssi
+
+Edit conf.php with a text editor and add your port number and password. The port number should be a random number between 1024 and 65535 inclusive. The file should look something like this afterwards:
+
+[code]
+<?php
+$autodlPort = 12345;
+$autodlPassword = "secretpass";
+?>
+[/code]
+
+Open ~/.autodl/autodl2.cfg with a text editor and add this to the file:
+[code]
+[options]
+gui-server-port = 12345
+gui-server-password = secretpass
+[/code]
+
+If you start more than one Irssi process, make sure each Irssi process uses a unique port number! It won't work if they all use the same port number.
+
+
 [b]The autodl.cfg file[/b]
 
 NOTE: If you're using the ruTorrent plugin, you don't need to read this! :D
