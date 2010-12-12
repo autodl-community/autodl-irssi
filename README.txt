@@ -62,7 +62,7 @@ If Irssi started successfully, you can then start ruTorrent to verify that the p
 
 
 
-If you don't use the ruTorrent plugin, then this tip may be helpful:
+If you don't use the ruTorrent plugin, then you may want to send all autodl-irssi output to its own window:
 By default, all autodl-irssi output goes to the [b](status)[/b] window. If there's a window called [b]autodl[/b], then it will write all output to that window. Use these Irssi commands to create a new window named [b]autodl[/b] and place it right after the status window (i.e., window position 2):
 [code]First start Irssi! :D
 /window new hidden
@@ -70,6 +70,25 @@ By default, all autodl-irssi output goes to the [b](status)[/b] window. If there
 /window move 2
 /layout save
 /save[/code]
+
+
+Since some people don't want users to have shell access, it's also possible to disable the "exec" action. Create [b]/etc/autodl.cfg[/b] and add this:
+
+[code]
+[options]
+allowed = watchdir
+[/code]
+
+That will only enable the "Save to watch dir" action. The following can be used with the [b]allowed[/b] option:
+
+watchdir
+webui (requires uTorrent)
+ftp
+exec
+dyndir (requires uTorrent)
+
+It's a comma seperated list, eg.: allowed = watchdir, ftp
+
 
 
 [b]Manual installation[/b]
@@ -580,23 +599,6 @@ Some common tracker options and how to get them:
 [b]force-ssl[/b] is optional and can be set to true to force encrypted torrent downloads. Not all trackers support HTTPS downloads. Leave it blank for the default value (which is HTTP or HTTPS).
 [b]upload-delay-secs[/b] is optional and is the number of seconds autodl-irssi should wait before uploading/saving the torrent. Default is 0 (no wait). This option isn't needed 99.999% of the time.
 
-
-Since some people don't want users to have shell access, it's also possible to disable the "exec" action. Create [b]/etc/autodl.cfg[/b] and add this:
-
-[code]
-[options]
-allowed = watchdir
-[/code]
-
-That will only enable the "Save to watch dir" action. The following can be used with the [b]allowed[/b] option:
-
-watchdir
-webui (requires uTorrent)
-ftp
-exec
-dyndir (requires uTorrent)
-
-It's a comma seperated list, eg.: allowed = watchdir, ftp
 
 
 [b]Macros[/b]
