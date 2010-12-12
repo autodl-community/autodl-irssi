@@ -28,7 +28,7 @@ It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
 [b]Installation[/b]
 
-I've written an install script which should work with most Linux distributions, FreeBSD and OpenBSD. It will install Irssi, autodl-irssi, the ruTorrent plugin and any other dependencies. Note that it will NOT install ruTorrent. See the ruTorrent forum on how to do that. Note that the ruTorrent plugin requires ruTorrent 3.2 or later.
+The install script will install autodl-irssi, the ruTorrent plugin and any dependencies. The install script works on Linux and BSD systems. It won't install ruTorrent, though, only the ruTorrent plugin.
 
 When it asks for a user name, use a normal existing user, not the root user. You don't need to be root to run Irssi or autodl-irssi.
 
