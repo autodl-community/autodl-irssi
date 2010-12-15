@@ -39,8 +39,8 @@
 		<server
 			network="AlphaOmega"
 			serverNames="irc.alphaomega.me"
-			channelNames="#AlphaOmega"
-			announcerNames="cerberus"
+			channelNames="#AlphaOmega, #AO.announce"
+			announcerNames="Q"
 			/>
 	</servers>
 
