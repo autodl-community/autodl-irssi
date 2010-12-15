@@ -46,26 +46,14 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[New Torrent Uploaded] [Movies/DVDR] Law.Abiding.Citizen.DVDR-BOW .:. Size: 4.42 GB .:. Pre Time: 22m 36s .:. URL: http://torrentseed.org/details.php?id=12161&hit=1-->
-				<regex value="^\[New Torrent Uploaded\]\s*\[([^\]]*)\](.*)\.:\.\s*Size:(.*)\.:\.\s*Pre Time:(.*)\.:\.\s*URL: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--[New] [ Official.Big.Brother.Parody.XXX.DVDRip.XviD-Jiggly ] [ XXX ] [ http://torrentseed.org/details.php?id=27023&hit=1 ]  [ 1.37 GB ]-->
+				<regex value="^\[New]\s*\[(.*)]\s*\[([^\]]*)]\s*\[\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)[^\]]*\s*]\s*\[([^\]]*)]"/>
 				<vars>
-					<var name="category"/>
 					<var name="torrentName"/>
-					<var name="torrentSize"/>
-					<var name="preTime"/>
+					<var name="category"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
-				</vars>
-			</extract>
-			<extract>
-				<!--[New Torrent Uploaded] [TV/x264] Doctor.Who.2005.S05E09.720p.HDTV.x264-BiA  .:. Size: 1.12 GB .:. URL: http://torrentseed.org/details.php?id=16756&hit=1-->
-				<regex value="^\[New Torrent Uploaded\]\s*\[([^\]]*)\](.*)\.:\.\s*Size:(.*)\.:\.\s*URL: https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
-				<vars>
-					<var name="category"/>
-					<var name="torrentName"/>
 					<var name="torrentSize"/>
-					<var name="$baseUrl"/>
-					<var name="$torrentId"/>
 				</vars>
 			</extract>
 		</linepatterns>
@@ -84,10 +72,8 @@
 			</http>
 		</linematched>
 		<ignore>
-			<regex value="^User: "/>
-			<regex value="^\w+ \(.*\) last seen "/>
-			<regex value="^test "/>
-			<regex value="No such user, please try again"/>
+			<regex value="/details\.php" expected="false"/>
+			<regex value="^\[New Torrent Uploaded\]"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
