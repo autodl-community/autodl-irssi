@@ -104,7 +104,6 @@ sub removeOld {
 	}
 	my $j = 0;
 	for my $i (@removeIndexes) {
-		dmessage 0, $self->{trackerName} . ": Deleting old announcer lines";
 		splice @{$self->{announces}}, $i - $j, 1;
 		$j++;
 	}
