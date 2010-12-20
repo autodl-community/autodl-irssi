@@ -31,7 +31,10 @@
 
 	<settings>
 		<description text="Grab your RSS feed link and paste below to extract your passkey."/>
-		<passkey tooltiptext="The passkey in your PTFiles RSS feed link."/>
+		<passkey
+			tooltiptext="The passkey in your PTFiles RSS feed link."
+			pasteRegex="[\?&amp;]passkey=([\da-zA-Z]{32})"
+			/>
 	</settings>
 
 	<servers>
