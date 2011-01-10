@@ -40,7 +40,7 @@
 			network="AlphaOmega"
 			serverNames="irc.alphaomega.me"
 			channelNames="#AlphaOmega, #AO.announce"
-			announcerNames="Q"
+			announcerNames="Q, cerberus"
 			/>
 	</servers>
 
