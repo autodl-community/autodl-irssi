@@ -146,7 +146,10 @@ sub fixUserCommand {
 sub _fixServerInfo {
 	my $info = shift;
 
-	$info->{nick} =~ s/[\x00-\x1F\s]/_/g;
+	$info->{nick} =~ s/[^\x5B-\x60\x7B-\x7DA-Za-z\d\-]/_/g;	# special, letter, digit, '-'
+	$info->{nick} =~ s/^[^\x5B-\x60\x7B-\x7DA-Za-z]/_/;	# special, letter
+	$info->{server} =~ s/[\x00-\x1F\s]/_/g;
+	$info->{server} =~ s/^-/_/;
 	$info->{server} = canonicalizeServerName($info->{server});
 	$info->{identPassword} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{identEmail} =~ s/[\x00-\x1F\s]/_/g;
@@ -164,7 +167,7 @@ sub _fixServerInfo {
 	}
 
 	while (my ($key, $channelInfo) = each %{$info->{channels}}) {
-		$channelInfo->{name} =~ s/[\x00-\x1F\s]/_/g;
+		$channelInfo->{name} =~ s/[\x00-\x1F\s,]/_/g;
 		$channelInfo->{name} = "#$channelInfo->{name}" unless $channelInfo->{name} =~ /^#/;
 		$channelInfo->{password} =~ s/[\x00-\x1F\s]/_/g;
 		$channelInfo->{inviteCommand} = fixUserCommand($channelInfo->{inviteCommand});
@@ -1220,6 +1223,7 @@ sub setServers {
 		next if $serverInfo->{nick} eq "";
 
 		my $serverName = canonicalizeServerName($serverInfo->{server});
+		next if $serverName eq "";
 		my $oldServer = $oldServers->{$serverName};
 		if (!convertStringToBoolean($serverInfo->{enabled})) {
 			$oldServer->{__disabled} = 1;
