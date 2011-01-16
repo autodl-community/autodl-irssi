@@ -27,7 +27,8 @@
 	type="bmtv"
 	shortName="BMTV"
 	longName="BitMeTV"
-	siteName="www.bitmetv.org">
+	siteName="www.bitmetv.org"
+	follow302links="true">
 
 	<settings>
 		<cookie_description/>
