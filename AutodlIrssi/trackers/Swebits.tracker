@@ -40,16 +40,19 @@
 			network="FreeQuest"
 			serverNames="irc.freequest.net,irc.eu.freequest.net,irc.us.freequest.net"
 			channelNames="#swebits"
-			announcerNames="PAYload"
+			announcerNames="Announce"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--Release: The.Other.Guys.2010.R5.LiNE.CUSTOM.SWESUB.DVDR-iNjECT Leecha @ http://swebits.org/details.php?id=90204-->
-				<regex value="^Release:(.*) Leecha @ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--Nytt önskemål ~ Full.House.S1D1.NO.SE.DK.PAL.DVDR-BBDvDR ~ http://swebits.org/details.php?id=94719-->
+				<!--Ny Uppladdning ~ Sparlost.S04E03.SWEDiSH.PDTV.XviD-D2V ~ http://swebits.org/details.php?id=94720-->
+				<!--Nytt SwebitsMedia ~ Sparlost.S04E03.SWEDiSH.PDTV.XviD-FNiSS ~ http://swebits.org/details.php?id=94722-->
+				<regex value="^Ny(?:tt)? ([^\s~]*) ~(.*)~ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
+					<var name="tags"/>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
