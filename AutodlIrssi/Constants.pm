@@ -69,7 +69,7 @@ our $tvSources = [
 	["HDDVD", "HD-DVD"],
 	["HDDVDRip"],
 	["BluRay", "Blu-Ray", "MBluRay"],
-	["WEB-DL", "WEB"],
+	["WEB-DL", "WEB", "WEBDL"],
 	["TVRip", "TV"],
 	["CAM"],
 	["R5"],
