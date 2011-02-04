@@ -262,7 +262,8 @@ sub canonicalizeReleaseName {
 sub regexEscapeWildcardString {
 	my $s = shift;
 	$s =~ s/([\^\$\.\+\=\!\:\|\\\/\(\)\[\]\{\}])/\\$1/g;
-	$s =~ s/([\*\?])/.$1/g;
+	$s =~ s/([*])/.$1/g;
+	$s =~ s/([?])/.{1}/g;
 	return $s;
 }
 

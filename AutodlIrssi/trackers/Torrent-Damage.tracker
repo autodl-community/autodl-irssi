@@ -76,7 +76,7 @@
 				<varenc name="torrentName"/>
 				<string value=".torrent"/>
 			</var>
-			<http name="Cookie">
+			<http name="cookie">
 				<var name="cookie"/>
 			</http>
 			<http name="Referer">

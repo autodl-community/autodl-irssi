@@ -431,10 +431,10 @@ sub _followNewLocation {
 
 	my $cookies = $self->getCookiesFromResponseHeader()->toString();
 	if (length $cookies > 0) {
-		$self->{httpHeaders}{Cookie} = $cookies;
+		$self->{httpHeaders}{COOKIE} = $cookies;
 	}
 	else {
-		delete $self->{httpHeaders}{Cookie};
+		delete $self->{httpHeaders}{COOKIE};
 	}
 
 	if (!$self->_splitUrl($url)) {

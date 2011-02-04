@@ -67,7 +67,7 @@
 			<varreplace name="torrentSize" srcvar="torrentSize" regex="Ko$" replace="KB"/> 
 			<varreplace name="torrentSize" srcvar="torrentSize" regex="Mo$" replace="MB"/> 
 			<varreplace name="torrentSize" srcvar="torrentSize" regex="Go$" replace="GB"/> 			
-			<http name="Cookie">
+			<http name="cookie">
 				<var name="cookie"/>
 			</http>
 		</linematched>

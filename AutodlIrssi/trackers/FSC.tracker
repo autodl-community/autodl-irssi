@@ -67,7 +67,7 @@
 			</extract>
 		</multilinepatterns>
 		<linematched>
-			<http name="Cookie">
+			<http name="cookie">
 				<var name="cookie"/>
 			</http>
 		</linematched>

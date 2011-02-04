@@ -104,7 +104,7 @@ use constant {
 	MAX_HTTP_INVITE_REQ_WAIT_SECS => 60,
 
 	# Time to wait before retrying the NickServ IDENTIFY command if it failed.
-	RETRY_NICKSERV_COMMAND_SECS => 2*60,
+	RETRY_NICKSERV_COMMAND_SECS => 5*60,
 };
 
 sub _getWaitInSecs {

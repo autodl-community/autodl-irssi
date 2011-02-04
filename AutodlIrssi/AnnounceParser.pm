@@ -609,8 +609,9 @@ sub onVarOrHttp {
 		}
 		elsif ($o->{type} eq "varenc") {
 			my $name = $o->{name};
-			$name =~ s![/\\]!_!g;	# Replace invalid chars or the download could fail
-			$newValue .= toUrlEncode($self->getVariable($name, $ti, $tempVariables));
+			my $value = $self->getVariable($name, $ti, $tempVariables);
+			$value =~ s![/\\]!_!g;	# Replace invalid chars or the download could fail
+			$newValue .= toUrlEncode($value);
 		}
 		elsif ($o->{type} eq "string") {
 			$newValue .= $o->{value};
