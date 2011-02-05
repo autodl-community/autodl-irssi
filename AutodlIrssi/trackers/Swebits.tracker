@@ -40,7 +40,7 @@
 			network="FreeQuest"
 			serverNames="irc.freequest.net,irc.eu.freequest.net,irc.us.freequest.net"
 			channelNames="#swebits"
-			announcerNames="Announce"
+			announcerNames="Announce, Announce^"
 			/>
 	</servers>
 
