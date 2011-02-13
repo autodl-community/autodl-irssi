@@ -53,6 +53,14 @@ sub defaultOptions {
 		uploadCommand => '',
 		uploadArgs => '',
 		uploadDyndir => '',
+		rtDir => '',
+		rtCommands => '',
+		rtLabel => '',
+		rtRatioGroup => '',
+		rtChannel => '',
+		rtPriority => '',
+		rtIgnoreScheduler => 0,
+		rtAddress => '',
 		pathToUtorrent => '',
 		memoryLeakCheck => 0,
 		guiServerPort => 0,
@@ -83,6 +91,19 @@ sub defaultOptions {
 			outputChannel => '',
 		}
 	};
+}
+
+sub _convertPriority {
+	my $prio = lc shift;
+
+	return "" if $prio eq "";
+	return 3 if $prio eq "high";
+	return 2 if $prio eq "normal";
+	return 1 if $prio eq "low";
+	return 0 if $prio eq "dont-download";
+	return $prio if $prio =~ /^[0-3]$/;
+
+	return "";
 }
 
 sub new {
@@ -164,6 +185,7 @@ sub checkValidUploadType {
 		AutodlIrssi::Constants::UPLOAD_FTP(),
 		AutodlIrssi::Constants::UPLOAD_TOOL(),
 		AutodlIrssi::Constants::UPLOAD_DYNDIR(),
+		AutodlIrssi::Constants::UPLOAD_RTORRENT(),
 	);
 	for my $name (@ary) {
 		return 1 if lc $name eq $uploadType;
@@ -250,6 +272,13 @@ sub doHeaderFilter {
 			uploadCommand => '',
 			uploadArgs => '',
 			uploadDyndir => '',
+			rtDir => '',
+			rtCommands => '',
+			rtLabel => '',
+			rtRatioGroup => '',
+			rtChannel => '',
+			rtPriority => '',
+			rtIgnoreScheduler => 0,
 			wolMacAddress => '',
 			wolIpAddress => '',
 			wolPort => '',
@@ -292,6 +321,13 @@ sub doHeaderFilter {
 			'upload-command' => 'uploadCommand',
 			'upload-args' => 'uploadArgs',
 			'upload-dyndir' => 'uploadDyndir',
+			'rt-dir' => 'rtDir',
+			'rt-commands' => 'rtCommands',
+			'rt-label' => 'rtLabel',
+			'rt-ratio-group' => 'rtRatioGroup',
+			'rt-channel' => 'rtChannel',
+			'rt-priority' => 'rtPriority',
+			'rt-ignore-scheduler' => 'rtIgnoreScheduler',
 			'wol-mac-address' => 'wolMacAddress',
 			'wol-ip-address' => 'wolIpAddress',
 			'wol-port' => 'wolPort',
@@ -306,6 +342,8 @@ sub doHeaderFilter {
 		$filter->{log} = convertStringToBoolean($filter->{log}) if $filter->{log};
 		$filter->{cue} = convertStringToBoolean($filter->{cue}) if $filter->{cue};
 		$filter->{maxDownloads} = convertStringToInteger($filter->{maxDownloads}, -1);
+		$filter->{rtPriority} = _convertPriority($filter->{rtPriority});
+		$filter->{rtIgnoreScheduler} = convertStringToBoolean($filter->{rtIgnoreScheduler});
 
 		push @{$self->{filters}}, $filter;
 	}
@@ -333,6 +371,14 @@ sub doHeaderOptions {
 		'upload-command' => 'uploadCommand',
 		'upload-args' => 'uploadArgs',
 		'upload-dyndir' => 'uploadDyndir',
+		'rt-dir' => 'rtDir',
+		'rt-commands' => 'rtCommands',
+		'rt-label' => 'rtLabel',
+		'rt-ratio-group' => 'rtRatioGroup',
+		'rt-channel' => 'rtChannel',
+		'rt-priority' => 'rtPriority',
+		'rt-ignore-scheduler' => 'rtIgnoreScheduler',
+		'rt-address' => 'rtAddress',
 		'path-utorrent' => 'pathToUtorrent',
 		'memory-leak-check' => 'memoryLeakCheck',
 		'gui-server-port' => 'guiServerPort',
@@ -355,6 +401,8 @@ sub doHeaderOptions {
 		$self->{options}{updateCheck} ne "disabled") {
 		$self->{options}{updateCheck} = "ask";
 	}
+	$self->{options}{rtPriority} = _convertPriority($self->{options}{rtPriority});
+	$self->{options}{rtIgnoreScheduler} = convertStringToBoolean($self->{options}{rtIgnoreScheduler});
 }
 
 # Initialize options from all [webui] headers

@@ -77,7 +77,7 @@ sub isSendingCommands {
 sub checkNotSendingCommands {
 	my $self = shift;
 	if ($self->isSendingCommands()) {
-		die "UtorrentWebui: Can't add commands when we're sending commands.";
+		die "UtorrentWebui: Can't add commands when we're sending commands.\n";
 	}
 }
 

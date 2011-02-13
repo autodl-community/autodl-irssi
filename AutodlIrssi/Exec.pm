@@ -62,7 +62,7 @@ sub run {
 		die "Could not fork '$program'\n";
 	}
 	elsif ($pid == 0) {
-		exec { $program } @userArgs or die "Couldn't execute '$program'";
+		exec { $program } @userArgs or die "Couldn't execute '$program'\n";
 	}
 	else {
 		irssi_pidwait_add($pid);

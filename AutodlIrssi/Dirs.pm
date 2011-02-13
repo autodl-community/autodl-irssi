@@ -37,14 +37,17 @@ use File::Spec;
 use base qw/ Exporter /;
 our @EXPORT = qw/ getHomeDir getIrssiScriptDir getAutodlFilesDir getTrackerFilesDir
 				getAutodlSettingsDir getAutodlCfgFile getAutodl2CfgFile getEtcAutodlCfgFile
-				getDownloadHistoryFile getAutodlStateFile /;
+				getDownloadHistoryFile getAutodlStateFile getAbsPath /;
 our @EXPORT_OK = qw//;
+
+my $_homeDir = "";
 
 # Returns user's home directory
 sub getHomeDir {
-	my $homeDir = $ENV{HOME} || (getpwuid($<))[7];
-	die "Could not find user's home dir!\n" unless $homeDir;
-	return $homeDir;
+	return $_homeDir if $_homeDir;
+	my $_homeDir = $ENV{HOME} || (getpwuid($<))[7];
+	die "Could not find user's home dir!\n" unless $_homeDir;
+	return $_homeDir;
 }
 
 # Returns directory of Irssi scripts
@@ -90,6 +93,15 @@ sub getDownloadHistoryFile {
 # Returns pathname of our AutodlState.xml file
 sub getAutodlStateFile {
 	return File::Spec->catfile(getAutodlSettingsDir(), "AutodlState.xml");
+}
+
+sub getAbsPath {
+	my $path = shift;
+	return $path if $path eq "";
+	return getHomeDir() if $path eq '~';
+	return getHomeDir() . substr($path, 1) if substr($path, 0, 2) eq '~/';
+	return getHomeDir() . '/' . $path if substr($path, 0, 1) ne '/';
+	return $path;
 }
 
 1;

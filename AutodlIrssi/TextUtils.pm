@@ -71,7 +71,7 @@ sub convertStringToInteger {
 	$value = $minValue if defined $minValue && $value < $minValue;
 	$value = $maxValue if defined $maxValue && $value > $maxValue;
 
-	return floor($value);
+	return 0+floor($value);	# Make sure it's a number
 }
 
 sub trim {

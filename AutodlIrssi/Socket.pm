@@ -63,7 +63,7 @@ sub write {
 	my ($self, $data, $callback) = @_;
 
 	eval {
-		die "Not connected" unless $self->{isConnected};
+		die "Not connected\n" unless $self->{isConnected};
 
 		my $writeInfo = {
 			data => $data,

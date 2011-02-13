@@ -95,14 +95,14 @@ sub _tryGetTorrentFiles {
 
 		my $size;
 		if (!$benc || !$benc->isInteger() || !defined ($size = convertStringToInteger($benc->{integer}))) {
-			die "Invalid torrent file: expected an integer";
+			die "Invalid torrent file: expected an integer\n";
 		}
 		return $size;
 	};
 	my $getString = sub {
 		my $benc = shift;
 		if (!$benc || !$benc->isString()) {
-			die "Invalid torrent file: expected a string";
+			die "Invalid torrent file: expected a string\n";
 		}
 		return $benc->{string};
 	};

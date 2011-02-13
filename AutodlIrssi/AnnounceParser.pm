@@ -143,7 +143,7 @@ sub readOption {
 		return convertStringToInteger($val);
 	}
 	else {
-		die "$self->{trackerInfo}{longName}: Invalid setting type: $setting->{type}";
+		die "$self->{trackerInfo}{longName}: Invalid setting type: $setting->{type}\n";
 	}
 }
 
@@ -381,7 +381,7 @@ sub postProcess {
 			$self->handleIf($ti, $tempVariables, $obj);
 		}
 		else {
-			die "Invalid obj.type: " . $obj->{type};
+			die "Invalid obj.type: " . $obj->{type} . "\n";
 		}
 	}
 }
@@ -621,7 +621,7 @@ sub onVarOrHttp {
 						 $self->getVariable($o->{name2}, $ti, $tempVariables);
 		}
 		else {
-			die "Invalid o.type: " . $o->{type};
+			die "Invalid o.type: " . $o->{type} . "\n";
 		}
 	}
 

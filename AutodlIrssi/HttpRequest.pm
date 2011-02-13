@@ -274,7 +274,7 @@ sub _onSendComplete {
 	};
 	if ($@) {
 		chomp $@;
-		$self->_requestFailed("_onConnect ex: $@");
+		$self->_requestFailed("_onSendComplete ex: $@");
 	}
 }
 
@@ -285,6 +285,7 @@ sub _onReadAvailable {
 	eval {
 		die "Could not read: $errorMessage\n" if $errorMessage;
 		if (length $data != 0) {
+			use bytes;
 			$self->{data} .= $data;
 		}
 		else {
@@ -341,7 +342,7 @@ sub _onAllDataReceived {
 	};
 	if ($@) {
 		chomp $@;
-		$self->_requestFailed("_onReadAvailable ex: $@");
+		$self->_requestFailed("_onAllDataReceived ex: $@");
 	}
 }
 

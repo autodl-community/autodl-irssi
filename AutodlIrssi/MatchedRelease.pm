@@ -48,6 +48,9 @@ use AutodlIrssi::MacroReplacer;
 use AutodlIrssi::Exec;
 use AutodlIrssi::WinUtils;
 use AutodlIrssi::WOL;
+use AutodlIrssi::Scgi;
+use AutodlIrssi::XmlRpcSimpleCall;
+use AutodlIrssi::RtorrentCommands;
 use Digest::SHA1 qw/ sha1 /;
 use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
@@ -159,7 +162,7 @@ sub start {
 		my $missingStr = join ", ", @$missing;
 		my $trackerType = $self->{trackerInfo}{type};
 		my $autodlPath = getAutodlCfgFile();
-		$self->_messageFail(0, "Can't download \x02\x0309$self->{ti}->{torrentName}\x03\x02. Initialize \x02\x0304$missingStr\x03\x02 below \x02\x0306[tracker $trackerType]\x03\x02 in \x02\x0307$autodlPath\x03\x02");
+		$self->_messageFail(0, "Can't download \x02\x0309$self->{ti}->{torrentName}\x03\x02. Initialize \x02\x0304$missingStr\x03\x02 below \x02\x0306[tracker $trackerType]\x03\x02 in \x02\x0307$autodlPath\x03\x02 (ruT: Trackers dialog box)");
 		return;
 	}
 
@@ -278,7 +281,7 @@ sub _checkMethodAllowed {
 		return 1 if trim($s) eq $method;
 	}
 
-	$self->_messageFail(0, "Can't save/upload torrent: '$method' is disabled!");
+	$self->_messageFail(0, "Can't save/upload torrent: Torrent action '$method' is disabled!");
 	return 0;
 }
 
@@ -292,6 +295,7 @@ sub _onTorrentFileDownloaded {
 		lc AutodlIrssi::Constants::UPLOAD_FTP()				=> \&_sendTorrentFileFtp,
 		lc AutodlIrssi::Constants::UPLOAD_TOOL()			=> \&_runProgram,
 		lc AutodlIrssi::Constants::UPLOAD_DYNDIR()			=> \&_runUtorrentDir,
+		lc AutodlIrssi::Constants::UPLOAD_RTORRENT()		=> \&_sendRtorrent,
 	);
 
 	my $func = $funcs{lc $self->{uploadMethod}{uploadType}};
@@ -328,11 +332,13 @@ sub _saveTorrentFile {
 	return unless $self->_checkMethodAllowed("watchdir");
 
 	eval {
+		my $watchDir = getAbsPath($self->{uploadMethod}{uploadWatchDir});
+
 		# Save it to a temporary name with a different extension, and when all data has been written
 		# to the file, rename it to the real filename.
-		my $pathname = File::Spec->catfile($self->{uploadMethod}{uploadWatchDir}, $self->{filename});
+		my $pathname = File::Spec->catfile($watchDir, $self->{filename});
 		my $tempname = $pathname . '1';
-		createDirectories($self->{uploadMethod}{uploadWatchDir});
+		createDirectories($watchDir);
 		saveRawDataToFile($tempname, $self->{torrentFileData});
 		rename $tempname, $pathname or die "Could not rename $tempname => $pathname\n";
 
@@ -450,12 +456,17 @@ sub _writeTempFile {
 	my ($self, $data) = @_;
 
 	my $tempInfo = createTempFile();
-	$AutodlIrssi::g->{tempFiles}->add($tempInfo->{filename});
-	binmode $tempInfo->{fh};
-	print { $tempInfo->{fh} } $data or die "Could not write to temporary file\n";
-	close $tempInfo->{fh};
-
+	_writeCreatedTempFile($tempInfo->{filename}, $tempInfo->{fh}, $data);
 	return $tempInfo->{filename};
+}
+
+sub _writeCreatedTempFile {
+	my ($filename, $fh, $data) = @_;
+
+	$AutodlIrssi::g->{tempFiles}->add($filename);
+	binmode $fh;
+	print { $fh } $data or die "Could not write to temporary file\n";
+	close $fh;
 }
 
 sub _runProgram {
@@ -468,7 +479,7 @@ sub _runProgram {
 		my $filename = $self->_writeTempFile($self->{torrentFileData});
 
 		my $macroReplacer = $self->_getMacroReplacer($filename);
-		my $command = $macroReplacer->replace($self->{uploadMethod}{uploadCommand});
+		my $command = getAbsPath($macroReplacer->replace($self->{uploadMethod}{uploadCommand}));
 		my $args = $macroReplacer->replace($self->{uploadMethod}{uploadArgs});
 
 		AutodlIrssi::Exec::run($command, $args);
@@ -504,7 +515,7 @@ sub _runUtorrentDir {
 			$destDir .= '\\' . convertToValidPathName($dirName);
 		}
 
-		my $command = $AutodlIrssi::g->{options}{pathToUtorrent};
+		my $command = getAbsPath($AutodlIrssi::g->{options}{pathToUtorrent});
 		if ($command eq "") {
 			$self->_messageFail(0, "Missing path-utorrent = XXX below [options]. Can't start uTorrent. Torrent: $self->{ti}{torrentName}");
 			return;
@@ -526,11 +537,108 @@ sub _runUtorrentDir {
 		AutodlIrssi::Exec::run($command, $args);
 
 		$self->_addDownload();
-		$self->_onTorrentFileUploaded( "Added torrent to '$destDir'");
+		$self->_onTorrentFileUploaded("Added torrent to '$destDir'");
 	};
 	if ($@) {
 		$self->_messageFail(0, "Could not start uTorrent, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
 	}
+}
+
+# Returns rtorrent's SCGI address. It first tries the options, if it's not there, it reads ~/.rtorrent.rc
+sub _getRtAddress {
+	my $rtAddress = $AutodlIrssi::g->{options}{rtAddress};
+
+	if ($rtAddress eq "" && open(my $fh, '<', getAbsPath('~/.rtorrent.rc'))) {
+		while (<$fh>) {
+			if (/^\s*scgi_(?:local|port)\s*=\s*(.*)/) {
+				$rtAddress = trim $1;
+				if (substr($rtAddress, 0, 1) eq '"') {
+					$rtAddress =~ s/^"//;
+					$rtAddress =~ s/"$//;
+				}
+				$rtAddress =~ s/\\(.)/$1/g;
+				last;
+			}
+		}
+	}
+
+	$rtAddress = "127.0.0.1$rtAddress" if $rtAddress =~ /^:\d+$/;
+
+	return $rtAddress if $rtAddress =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$/;
+	return getAbsPath($rtAddress);
+}
+
+sub _sendRtorrent {
+	my $self = shift;
+
+	return if $self->_checkAlreadyDownloaded();
+	return unless $self->_checkMethodAllowed("rtorrent");
+
+	eval {
+		my $rtAddress = _getRtAddress();
+		if ($rtAddress eq "") {
+			$self->_messageFail(0, "Can't send torrent file to rtorrent. You have not initialized rt-address (SCGI address).");
+			return;
+		}
+
+		my $filename = $self->_writeTempFile($self->{torrentFileData});
+		my $macroReplacer = $self->_getMacroReplacer($filename);
+		my $rtDir = getAbsPath($self->{uploadMethod}{rtDir});
+		my $rtCommands = $macroReplacer->replace($self->{uploadMethod}{rtCommands});
+		my $rtLabel = toUrlEncode($macroReplacer->replace($self->{uploadMethod}{rtLabel}));
+		my $rtRatioGroup = $self->{uploadMethod}{rtRatioGroup};
+		my $rtChannel = $self->{uploadMethod}{rtChannel};
+		my $rtPriority = $self->{uploadMethod}{rtPriority};
+		my $rtIgnoreScheduler = $self->{uploadMethod}{rtIgnoreScheduler};
+
+		my @dirs = File::Spec->splitdir($rtDir);
+		for my $name (@dirs) {
+			$name = convertToValidPathName($macroReplacer->replace($name));
+		}
+		$rtDir = File::Spec->catdir(@dirs);
+		dmessage 5, "Dest dir: '$rtDir'";
+
+		my $rt = new AutodlIrssi::RtorrentCommands();
+		$rt->func('d.set_directory', $rtDir) if $rtDir ne "";
+		$rt->func('d.set_custom1', $rtLabel) if $rtLabel ne "";
+		$rt->func('d.views.push_back_unique', $rtRatioGroup)->func('view.set_visible', $rtRatioGroup) if $rtRatioGroup ne "";
+		$rt->func('d.set_throttle_name', $rtChannel) if $rtChannel ne "";
+		$rt->func('d.set_priority', $rtPriority) if $rtPriority ne "";
+		$rt->func('d.set_throttle_name', 'NULL')->func('d.set_custom', 'sch_ignore', '1') if $rtIgnoreScheduler;
+		$rt->func('d.set_tied_to_file');
+		my $cmds = $rt->get();
+		$cmds .= ";$rtCommands" if $rtCommands ne "";
+		dmessage 5, "rtorrent commands: '$cmds'";
+
+		# Make sure destination base dir exists
+		createDirectories($rtDir) if $rtDir ne "";
+
+		# Set REMOTE_ADDR since there could be user commands
+		my $scgi = new AutodlIrssi::Scgi($rtAddress, {REMOTE_ADDR => "127.0.0.1"});
+		my $xmlrpc = new AutodlIrssi::XmlRpcSimpleCall($scgi);
+		$xmlrpc->method($rtPriority eq '0' ? 'load' : 'load_start');
+		$xmlrpc->string($filename);
+		$xmlrpc->string($cmds) if $cmds ne "";
+		$xmlrpc->methodEnd();
+		$xmlrpc->send(sub { $self->_onRtorrentUploadComplete(@_) });
+
+		$self->_addDownload();
+	};
+	if ($@) {
+		$self->_messageFail(0, "Could not send rtorrent commands, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
+	}
+}
+
+# Called when the webui upload has completed
+sub _onRtorrentUploadComplete {
+	my ($self, $errorMessage, $data) = @_;
+
+	if ($errorMessage) {
+		$self->_messageFail(0, "Could not send '$self->{ti}{torrentName}' to rtorrent: error: $errorMessage");
+		return;
+	}
+
+	$self->_onTorrentFileUploaded("Sent torrent to rtorrent");
 }
 
 sub _addDownload {

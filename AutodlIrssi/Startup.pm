@@ -309,6 +309,7 @@ sub reloadAutodlConfigFile {
 
 			$AutodlIrssi::g->{filterManager}->setFilters($configFileParser->getFilters());
 			$AutodlIrssi::g->{options} = $configFileParser->getOptions();
+			$AutodlIrssi::g->{options}{rtAddress} = "";	# It's not allowed in autodl.cfg
 			$servers = $configFileParser->getServers();
 		}
 
@@ -319,6 +320,7 @@ sub reloadAutodlConfigFile {
 				my $options = $configFileParser->getOptions();
 				$AutodlIrssi::g->{options}{guiServerPort} = $options->{guiServerPort} if $options->{guiServerPort} != 0;
 				$AutodlIrssi::g->{options}{guiServerPassword} = $options->{guiServerPassword} if $options->{guiServerPassword} ne "";
+				$AutodlIrssi::g->{options}{rtAddress} = $options->{rtAddress} if $options->{rtAddress} ne "";
 			}
 		}
 

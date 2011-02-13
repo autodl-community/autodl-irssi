@@ -187,8 +187,8 @@ sub parseServers {
 		my $channelNames = $self->readAttribute($elem, "channelNames");
 		my $announcerNames = $self->readAttribute($elem, "announcerNames");
 
-		die "Invalid server.channelNames" if $channelNames eq "";
-		die "Invalid server.announcerNames" if $announcerNames eq "";
+		die "Invalid server.channelNames\n" if $channelNames eq "";
+		die "Invalid server.announcerNames\n" if $announcerNames eq "";
 
 		my @serverNames = map {
 			trim canonicalizeServerName($_);
@@ -317,24 +317,24 @@ sub parseLineMatchedInternal {
 			for my $childElem ($self->getChildElements($elem)) {
 				if ($childElem->nodeName eq "var") {
 					my $name = $self->readAttribute($childElem, "name", "");
-					die "Invalid var.name" if $name eq "";
+					die "Invalid var.name\n" if $name eq "";
 					push @{$obj->{vars}}, { type => "var", name => $name };
 				}
 				elsif ($childElem->nodeName eq "varenc") {
 					my $name = $self->readAttribute($childElem, "name", "");
-					die "Invalid varenc.name" if $name eq "";
+					die "Invalid varenc.name\n" if $name eq "";
 					push @{$obj->{vars}}, { type => "varenc", name => $name };
 				}
 				elsif ($childElem->nodeName eq "string") {
 					my $value = $self->readAttribute($childElem, "value");
-					die "Invalid string.value" if !defined $value;
+					die "Invalid string.value\n" if !defined $value;
 					push @{$obj->{vars}}, { type => "string", value => $value };
 				}
 				elsif ($childElem->nodeName eq "delta") {
 					my $idName = $self->readAttribute($childElem, "idName", "");
-					die "Invalid delta.idName" if $idName eq "";
+					die "Invalid delta.idName\n" if $idName eq "";
 					my $deltaName = $self->readAttribute($childElem, "deltaName", "");
-					die "Invalid delta.deltaName" if $deltaName eq "";
+					die "Invalid delta.deltaName\n" if $deltaName eq "";
 					push @{$obj->{vars}}, { type => "delta", name1 => $idName, name2 => $deltaName };
 				}
 				else {
@@ -358,8 +358,8 @@ sub parseLineMatchedInternal {
 
 			$obj->{srcvar} = $self->readAttribute($elem, "srcvar");
 			$obj->{split} = $self->readAttribute($elem, "split");
-			die "Invalid extracttags.srcvar" unless defined $obj->{srcvar};
-			die "Invalid extracttags.split" unless defined $obj->{split};
+			die "Invalid extracttags.srcvar\n" unless defined $obj->{srcvar};
+			die "Invalid extracttags.split\n" unless defined $obj->{split};
 
 			$obj->{ary} = [];
 			for my $childElem ($self->getChildElementsByTagName($elem, "setvarif")) {
@@ -369,7 +369,7 @@ sub parseLineMatchedInternal {
 			$obj->{regexIgnore} = [];
 			for my $childElem ($self->getChildElementsByTagName($elem, "regex")) {
 				my $regexInfo = $self->parseRegex($childElem);
-				die "Invalid extracttags ignore regex" unless defined $regexInfo;
+				die "Invalid extracttags ignore regex\n" unless defined $regexInfo;
 				push @{$obj->{regexIgnore}}, $regexInfo;
 			}
 		}
@@ -386,7 +386,7 @@ sub parseLineMatchedInternal {
 			$obj->{if} = $self->parseIf($elem);
 		}
 		else {
-			die "Invalid tag " . $elem->nodeName;
+			die "Invalid tag " . $elem->nodeName . "\n";
 		}
 
 		push @rv, $obj;

@@ -95,7 +95,7 @@ sub getOptionalChildElement {
 }
 
 # Returns the value of the text node in a child element. $elem is the element which must have a
-# child element called $childElemName. $defaultValue is returned the child element isn't found.
+# child element called $childElemName. $defaultValue is returned if the child element isn't found.
 sub readTextNode {
 	my ($self, $elem, $childElemName, $defaultValue) = @_;
 

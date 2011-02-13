@@ -230,6 +230,18 @@ match-categories = *MP3*, *XVID*
 #min-size =
 max-size = 10GB
 
+[filter rtorrent stuff]
+match-releases = Some.Random.Release-GRP
+# ... etc
+upload-type = rtorrent
+rt-dir = /home/YOURNAME/downloads/$(Month)$(Day)/$(Tracker)
+#rt-commands = print="Added: $(TorrentName)"; print="Hello, world!"
+rt-label = $(Tracker)
+#rt-ratio-group = rat_3
+#rt-channel = thr_2
+rt-priority = high
+#rt-ignore-scheduler = true
+
 [options]
 max-saved-releases = 1000
 save-download-history = true
@@ -419,6 +431,13 @@ Create one [filter] header per filter. You can optionally name the filter like [
 [b]The options header[/b]
 These options change the behavior of autodl-irssi. Place these options below the [b][options][/b] header.
 
+[b]Name:[/b] rt-address
+[b]Type:[/b] string
+[b]Default:[/b] Whatever is found in ~/.rtorrent.rc
+[b]Example:[/b] rt-address = 127.0.0.1:5000
+[b]Description:[/b] If you use the 'rtorrent' action ([b]upload-method[/b]), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. [b]NOTE:[/b] This option can only be set in autodl2.cfg, [b]not[/b] autodl.cfg.
+
+
 [b]Name:[/b] update-check
 [b]Type:[/b] string
 [b]Default:[/b] ask
@@ -474,10 +493,33 @@ wol-port = 9 (defaults to 9 if you leave it blank)
 If you have a router, then set [b]wol-ip-address[/b] to your router's public IP address, and make sure the router forwards UDP packets to port [b]wol-port[/b] (default 9) to your router's internal broadcast address (usually 192.168.0.255).
 
 
-[b]Torrent upload options[/b]
+[b]Torrent action options[/b]
 autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.
 
-There's a global upload option in the [options] header and a local upload option in each filter. By default, the global upload option is used but you can override it in any filter by placing a new [b]upload-type[/b] below your [filter] header.
+There's a global action option in the [options] header and a local action option in each filter. By default, the global action option is used but you can override it in any filter by placing a new [b]upload-type[/b] below your [filter] header.
+
+[b]rtorrent only:[/b]
+[quote]
+upload-type = rtorrent
+rt-dir = /home/YOURNAME/downloads/$(Month)$(Day)/$(Tracker)
+rt-commands = print="Added: $(TorrentName)"; print="Hello, world!"
+rt-label = $(Tracker)
+#rt-ratio-group = rat_3
+#rt-channel = thr_2
+rt-priority = high
+#rt-ignore-scheduler = true
+[/quote]
+
+[b]NOTE:[/b] You must initialize rt-address to your rtorrent's SCGI address in [b][options][/b]!
+
+[b]rt-dir[/b] is the destination directory. The torrent data will be saved here. Macros can be used.
+[b]rt-commands[/b] can be used to execute some rtorrent commands when loading the torrent file. It's for advanced users only.
+[b]rt-label[/b] is used to set a ruTorrent label.
+[b]rt-ratio-group[/b] is used to set a ruTorrent ratio group. Valid names are rat_0, rat_1, ..., rat_7. You must have the ratio ruTorrent plugin installed.
+[b]rt-channel[/b] is used to set a ruTorrent channel. Valid names are thr_0, thr_1, ..., thr_9. You must have the throttle ruTorrent plugin installed.
+[b]rt-priority[/b] sets the torrent priority. Valid values are 0, dont-download, 1, low, 2, normal, 3, high. If you set it to dont-download (or 0), the torrent is loaded, but not started.
+[b]rt-ignore-scheduler[/b]: set it to true to disable the ruTorrent scheduler.
+
 
 [b]Save torrent to a watch directory:[/b]
 [quote]

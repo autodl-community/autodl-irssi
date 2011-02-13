@@ -137,25 +137,40 @@ sub close {
 	$self->_cleanUp($errorMessage);
 }
 
+# Initialize socket to non-blocking and auto flush
+sub _initSocket {
+	my $self = shift;
+	_setNonblocking($self->{socket});
+	_setAutoFlush($self->{socket});
+}
+
 # Creates a socket that is non-blocking and auto-flushable.
 sub _createSocket {
 	my $self = shift;
 
-	die "Socket already created" if defined $self->{socket};
+	die "Socket already created\n" if defined $self->{socket};
 
 	socket($self->{socket}, AF_INET, SOCK_STREAM, getprotobyname('tcp'));
-	_setNonblocking($self->{socket});
-	_setAutoFlush($self->{socket});
+	$self->_initSocket();
+}
+
+# Creates a unix domain socket that is non-blocking and auto-flushable.
+sub _domain_createSocket {
+	my $self = shift;
+
+	die "Socket already created\n" if defined $self->{socket};
+
+	socket($self->{socket}, PF_UNIX, SOCK_STREAM, 0);
+	$self->_initSocket();
 }
 
 sub setSocket {
 	my ($self, $socket) = @_;
 
-	die "Socket already created" if defined $self->{socket};
+	die "Socket already created\n" if defined $self->{socket};
 
 	$self->{socket} = $socket;
-	_setNonblocking($self->{socket});
-	_setAutoFlush($self->{socket});
+	$self->_initSocket();
 
 	$self->_nowConnected();
 }
@@ -170,6 +185,16 @@ sub _startConnect {
 
 	my $sockaddr_in = _createSockaddrIn($hostname, $port);
 	connect($self->{socket}, $sockaddr_in) or $!{EINPROGRESS} or die "Could not connect to $hostname:$port: $!\n";
+}
+
+# Same as _startConnect except for unix domain sockets
+sub _domain_startConnect {
+	my ($self, $socketPath) = @_;
+
+	die "_domain_startConnect() already called\n" if defined $self->{connId};
+	$self->{connId} = $AutodlIrssi::g->{activeConnections}->add($self, "Address: $socketPath");
+
+	connect($self->{socket}, sockaddr_un($socketPath)) or $!{EINPROGRESS} or die "Could not connect to $socketPath: $!\n";
 }
 
 # Calls the user callback with the supplied arguments. If the user callback throws, we shut down.
@@ -257,7 +282,7 @@ sub _queueReady {
 		if (@{$queue->{list}} == 0) {
 			$self->_removeQueueTag($queue);
 		}
-		die "_queueReady($isRead) called when list is empty" unless defined $info;
+		die "_queueReady($isRead) called when list is empty\n" unless defined $info;
 
 		$info->{func}->();
 	};

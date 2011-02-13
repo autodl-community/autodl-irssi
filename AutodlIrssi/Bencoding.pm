@@ -76,7 +76,7 @@ sub parseBencodedString {
 	my $rv = eval {
 		my $benc = _parseBencodedStringInternal($s, 0, 0);
 		if (!$benc->isDictionary()) {
-			die "Root of bencoded data must be a dictionary";
+			die "Root of bencoded data must be a dictionary\n";
 		}
 		return $benc;
 	};
@@ -90,7 +90,7 @@ sub _parseBencodedStringInternal {
 	my ($s, $index, $level) = @_;
 
 	my $nextChar = sub {
-		die "Bencoded string is missing data" if $index >= length $s;
+		die "Bencoded string is missing data\n" if $index >= length $s;
 		return substr $s, $index++, 1;
 	};
 	my $peekChar = sub {
@@ -103,7 +103,7 @@ sub _parseBencodedStringInternal {
 		return '0' le $c && $c le '9';
 	};
 
-	die "Too many recursive calls" if $level++ >= 100;
+	die "Too many recursive calls\n" if $level++ >= 100;
 
 	my $benc = new AutodlIrssi::Benc();
 	$benc->{start} = $index;
@@ -121,7 +121,7 @@ sub _parseBencodedStringInternal {
 			my $value = _parseBencodedStringInternal($s, $index, $level);
 			$index = $value->{end};
 
-			die "Invalid dictionary element; key part must be a string" unless $key->isString();
+			die "Invalid dictionary element; key part must be a string\n" unless $key->isString();
 
 			$benc->{dict}{$key->{string}} = $value;
 		}
@@ -149,7 +149,7 @@ sub _parseBencodedStringInternal {
 		$index = $colon + 1;
 		my $ilen = 0+$len;
 		if ($ilen < 0 || $ilen ne $len || $index + $ilen > length $s) {
-			die "Byte string with invalid length";
+			die "Byte string with invalid length\n";
 		}
 		$benc->{string} = substr $s, $index, $ilen;
 		$index += $ilen;
@@ -160,12 +160,12 @@ sub _parseBencodedStringInternal {
 		$benc->{type} = AutodlIrssi::Benc::INTEGER();
 
 		my $eindex = index $s, "e", $index;
-		die "Missing terminating 'e'" if $eindex == -1;
+		die "Missing terminating 'e'\n" if $eindex == -1;
 		$benc->{integer} = substr $s, $index, $eindex - $index;
 		$index = $eindex + 1;
 	}
 	else {
-		die "Invalid character found at index $index";
+		die "Invalid character found at index $index\n";
 	}
 
 	$benc->{end} = $index;
