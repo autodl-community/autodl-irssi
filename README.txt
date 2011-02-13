@@ -8,7 +8,7 @@ Features:
 [*] Some of the filters: release, size, tracker, resolution, source (eg. BluRay), category, format (eg. FLAC), bitrate, and many more.
 [*] Torrent can be saved to a watch directory, or uploaded to uTorrent webui or an FTP server.
 [*] Option to set max downloads per day/week/month
-[*] Torrent data can be saved to dynamic folder names (eg. folders containing current date) Requires uTorrent.
+[*] Torrent data can be saved to any path (eg. folders containing current date)
 [*] No broken .torrent files are ever uploaded to your client. Torrent files are verified before uploading them.
 [*] Duplicate releases are not downloaded by default.
 [*] Torrents are downloaded in the background so Irssi isn't blocked.
@@ -126,7 +126,7 @@ Installing autodl-irssi. Note: Make sure you're [b]not[/b] root when you execute
 [code]
 mkdir -p ~/.irssi/scripts/autorun
 cd ~/.irssi/scripts
-wget -O autodl-irssi.zip https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.10.zip/download
+wget -O autodl-irssi.zip https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.30.zip/download
 unzip -o autodl-irssi.zip
 rm autodl-irssi.zip
 cp autodl-irssi.pl autorun/
