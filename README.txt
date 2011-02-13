@@ -8,7 +8,7 @@ Features:
 [*] Some of the filters: release, size, tracker, resolution, source (eg. BluRay), category, format (eg. FLAC), bitrate, and many more.
 [*] Torrent can be saved to a watch directory, or uploaded to uTorrent webui or an FTP server.
 [*] Option to set max downloads per day/week/month
-[*] Torrent data can be saved to any path (eg. folders containing current date)
+[*] Torrent data folder name can use info from the torrent or current date (eg. "dated" folders)
 [*] No broken .torrent files are ever uploaded to your client. Torrent files are verified before uploading them.
 [*] Duplicate releases are not downloaded by default.
 [*] Torrents are downloaded in the background so Irssi isn't blocked.
@@ -19,11 +19,12 @@ Features:
 
 It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
 
-[URL=http://img190.imageshack.us/i/filters1.png/][IMG]http://img190.imageshack.us/img190/3294/filters1.png[/IMG][/URL]
-[URL=http://img257.imageshack.us/i/filters2.png/][IMG]http://img257.imageshack.us/img257/8026/filters2.png[/IMG][/URL]
-[URL=http://img220.imageshack.us/i/filters3.png/][IMG]http://img220.imageshack.us/img220/9039/filters3.png[/IMG][/URL]
-[URL=http://img607.imageshack.us/i/preferences.png/][IMG]http://img607.imageshack.us/img607/4130/preferences.png[/IMG][/URL]
-[URL=http://img819.imageshack.us/i/servers.png/][IMG]http://img819.imageshack.us/img819/2046/servers.png[/IMG][/URL]
+[URL=http://img38.imageshack.us/i/filters1.png/][IMG]http://img38.imageshack.us/img38/3294/filters1.png[/IMG][/URL]
+[URL=http://img197.imageshack.us/i/filters2e.png/][IMG]http://img197.imageshack.us/img197/1296/filters2e.png[/IMG][/URL]
+[URL=http://img163.imageshack.us/i/filters3.png/][IMG]http://img163.imageshack.us/img163/9039/filters3.png[/IMG][/URL]
+[URL=http://img535.imageshack.us/i/prefs1.png/][IMG]http://img535.imageshack.us/img535/6194/prefs1.png[/IMG][/URL]
+[URL=http://img39.imageshack.us/i/servers1.png/][IMG]http://img39.imageshack.us/img39/153/servers1.png[/IMG][/URL]
+
 
 
 
@@ -66,11 +67,12 @@ Since some people don't want users to have shell access, it's also possible to d
 
 [code]
 [options]
-allowed = watchdir
+allowed = watchdir, rtorrent
 [/code]
 
-That will only enable the "Save to watch dir" action. The following can be used with the [b]allowed[/b] option:
+That will only enable the rtorrent and "Save to watch dir" actions. The following can be used with the [b]allowed[/b] option:
 
+rtorrent
 watchdir
 webui (requires uTorrent)
 ftp
@@ -126,7 +128,7 @@ Installing autodl-irssi. Note: Make sure you're [b]not[/b] root when you execute
 [code]
 mkdir -p ~/.irssi/scripts/autorun
 cd ~/.irssi/scripts
-wget -O autodl-irssi.zip https://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.30.zip/download
+wget -O autodl-irssi.zip http://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.30.zip/download
 unzip -o autodl-irssi.zip
 rm autodl-irssi.zip
 cp autodl-irssi.pl autorun/
@@ -663,5 +665,5 @@ Start ChatZilla and type [b]/pref profilePath[/b] and press enter. Copy your pro
 
 [code]
 mkdir -p ~/.autodl
-wget https://sourceforge.net/projects/autodl-irssi/files/convertxml.pl/download
+wget http://sourceforge.net/projects/autodl-irssi/files/convertxml.pl/download
 perl convertxml.pl /home/YOURNAME/.mozilla/firefox/XXXXXXXXX.default/chatzilla/scripts/autodl/settings/autodl.xml > ~/.autodl/autodl.cfg[/code]
