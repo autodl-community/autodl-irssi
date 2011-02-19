@@ -51,9 +51,9 @@ sub _addElems {
 
 sub _addUserData {
 	my ($self, $userData) = @_;
-	$userData =~ s/[&]/&amp;/g;
-	$userData =~ s/[<]/&lt;/g;
-	$userData =~ s/[>]/&gt;/g;
+	$userData =~ s/[&]/&amp;/mg;
+	$userData =~ s/[<]/&lt;/mg;
+	$userData =~ s/[>]/&gt;/mg;
 	use bytes;
 	$self->{req} .= encode_utf8($userData);
 }
