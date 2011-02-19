@@ -37,7 +37,7 @@
 	<servers>
 		<server
 			network="PreToMe"
-			serverNames="irc.pretome.net"
+			serverNames="irc.preto.me"
 			channelNames="#announce"
 			announcerNames="tehDude"
 			/>
