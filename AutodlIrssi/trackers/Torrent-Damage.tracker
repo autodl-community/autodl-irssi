@@ -34,7 +34,7 @@
 		<cookie/>
 		<delta
 			tooltiptext="Don't change unless you know what you're doing. torrent download link ID - torrent page ID."
-			defaultValue="-25"
+			defaultValue="-26"
 			name="delta2"
 			/>
 	</settings>
