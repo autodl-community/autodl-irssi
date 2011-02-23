@@ -40,7 +40,7 @@
 			network="Swarm-Network"
 			serverNames="irc.swarm-network.me"
 			channelNames="#announce"
-			announcerNames="swarm"
+			announcerNames="Julie"
 			/>
 	</servers>
 
