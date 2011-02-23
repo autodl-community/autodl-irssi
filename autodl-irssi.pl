@@ -37,6 +37,7 @@ BEGIN {
 	sub deleteOurModules {
 		my @deleteThese;
 		while (my ($moduleName, $modulePathName) = each %INC) {
+			next unless defined $moduleName && defined $modulePathName;
 			next unless $modulePathName =~ m!/AutodlIrssi/!;
 			push @deleteThese, $moduleName;
 		}
