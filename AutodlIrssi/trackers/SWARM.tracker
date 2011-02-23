@@ -39,7 +39,7 @@
 		<server
 			network="Swarm-Network"
 			serverNames="irc.swarm-network.me"
-			channelNames="#swarm"
+			channelNames="#announce"
 			announcerNames="swarm"
 			/>
 	</servers>
@@ -49,7 +49,7 @@
 			<extract>
 				<!--Reservoir Dogs [1992] - XviD/AVI/Blu-Ray/576p - http://theswarm.me/torrents.php?id=500 / http://theswarm.me/torrents.php?action=download&id=181 - comedy, crime-->
 				<!--Centurion [2010] - XviD/AVI/DVD/576p Scene  - http://theswarm.me/torrents.php?id=23759 / http://theswarm.me/torrents.php?action=download&id=182 - action, adventure, drama, history, thriller-->
-				<regex value="^(.*)-\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s+-(.*)$"/>
+				<regex value="^(.*)-\s*https?\:\/\/([^\/]+\/).*[&amp;\?]action=download&amp;id=(\d+)\s+-(.*)$"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
