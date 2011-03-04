@@ -41,7 +41,7 @@
 		<server
 			network="SceneAccess"
 			serverNames="irc.sceneaccess.org"
-			channelNames="#announce"
+			channelNames="#announce,#scc-announce"
 			announcerNames="SCC"
 			/>
 	</servers>
