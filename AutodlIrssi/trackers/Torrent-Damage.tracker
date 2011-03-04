@@ -35,7 +35,7 @@
 		<delta
 			tooltiptext="Don't change unless you know what you're doing. torrent download link ID - torrent page ID."
 			defaultValue="-26"
-			name="delta2"
+			name="delta3"
 			/>
 	</settings>
 
@@ -66,7 +66,7 @@
 				<string value="http://www.torrent-damage.net/"/>
 			</var>
 			<var name="$torrentId">
-				<delta idName="$torrentId" deltaName="delta2"/>
+				<delta idName="$torrentId" deltaName="delta3"/>
 			</var>
 			<var name="torrentUrl">
 				<var name="$baseUrl"/>
