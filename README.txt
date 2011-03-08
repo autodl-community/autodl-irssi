@@ -650,6 +650,8 @@ Current date and time: [b]$(year)[/b], [b]$(month)[/b], [b]$(day)[/b], [b]$(hour
 
 The rest are possibly self explanatory: [b]$(Category)[/b], [b]$(TorrentName)[/b], [b]$(Uploader)[/b], [b]$(TorrentSize)[/b], [b]$(PreTime)[/b], [b]$(TorrentUrl)[/b], [b]$(TorrentSslUrl)[/b], [b]$(Season)[/b], [b]$(Episode)[/b], [b]$(Resolution)[/b], [b]$(Source)[/b], [b]$(Encoder)[/b], [b]$(Format)[/b], [b]$(Bitrate)[/b], [b]$(Media)[/b], [b]$(Tags)[/b], [b]$(Scene)[/b], [b]$(Log)[/b], [b]$(Cue)[/b]
 
+[b]$(Season2)[/b] and [b]$(Episode2)[/b] are two-digit season and episode numbers.
+
 
 
 
