@@ -236,7 +236,10 @@ sub _extractZipFile {
 		close $tmp->{fh};
 
 		my $zip = new Archive::Zip();
-		die "Could not read zip file\n" unless $zip->read($tmp->{filename}) == AZ_OK;
+		my $code = $zip->read($tmp->{filename});
+		if ($code != AZ_OK) {
+			die "Could not read zip file, code: $code, size: " . length($zipData) . "\n";
+		}
 
 		my @fileInfos = map {
 			{
