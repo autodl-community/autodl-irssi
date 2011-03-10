@@ -47,25 +47,19 @@
 	</servers>
 
 	<parseinfo>
-		<multilinepatterns>
-			<!--New Torrent Uploaded: [TV-XViD]- Battle.of.The.Supercars.S01E10.WEBRip.XviD-WPi-->
-			<!--PRETiME: 46s @ http://thorbits.org/details.php?id=90142-->
+		<linepatterns>
+			<!--New Torrent Uploaded: [Trash]- MICROSOFT_WINDOWS_EMBEDDED_STANDARD_7_SP1_RUNTIME_X64-DVTiSO PRETiME: 3m 42s @ http://thorbits.org/details.php?id=154520-->
 			<extract>
-				<regex value="^New Torrent Uploaded: \[([^\]]+)\]-(.*)$"/>
+				<regex value="^New Torrent Uploaded: \[([^\]]*)]-(.*) PRETiME:([^@]*)@ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
-				</vars>
-			</extract>
-			<extract>
-				<regex value="^PRETiME:(.*)@ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
-				<vars>
 					<var name="preTime"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
 			</extract>
-		</multilinepatterns>
+		</linepatterns>
 		<linematched>
 			<var name="torrentUrl">
 				<string value="http://"/>
