@@ -73,6 +73,12 @@ sub addTorrentInfo {
 	$self->add("TorrentUrl", $ti->{torrentUrl});
 	$self->add("TorrentSslUrl", $ti->{torrentSslUrl});
 
+	my $fmtNum = sub {
+		my ($fmt, $arg) = @_;
+		return "" if $arg == "";
+		return sprintf($fmt, $arg);
+	}
+
 	$self->add("TYear", $ti->{year});
 	$self->add("Artist", $ti->{name1});
 	$self->add("Show", $ti->{name1});
@@ -81,9 +87,9 @@ sub addTorrentInfo {
 	$self->add("Album", $ti->{name2});
 	$self->add("Name2", $ti->{name2});
 	$self->add("Season", $ti->{season});
-	$self->add("Season2", sprintf("%02d", $ti->{season}));
+	$self->add("Season2", $fmtNum->("%02d", $ti->{season}));
 	$self->add("Episode", $ti->{episode});
-	$self->add("Episode2", sprintf("%02d", $ti->{episode}));
+	$self->add("Episode2", $fmtNum->("%02d", $ti->{episode}));
 	$self->add("Resolution", $ti->{resolution});
 	$self->add("Source", $ti->{source});
 	$self->add("Encoder", $ti->{encoder});
