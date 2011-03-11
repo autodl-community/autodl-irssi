@@ -77,7 +77,7 @@ sub addTorrentInfo {
 		my ($fmt, $arg) = @_;
 		return "" if $arg == "";
 		return sprintf($fmt, $arg);
-	}
+	};
 
 	$self->add("TYear", $ti->{year});
 	$self->add("Artist", $ti->{name1});
