@@ -75,7 +75,7 @@ sub addTorrentInfo {
 
 	my $fmtNum = sub {
 		my ($fmt, $arg) = @_;
-		return "" if $arg == "";
+		return "" if $arg eq "";
 		return sprintf($fmt, $arg);
 	};
 

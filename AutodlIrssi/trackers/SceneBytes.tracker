@@ -37,8 +37,8 @@
 	<servers>
 		<server
 			network="SceneBytes"
-			serverNames="irc.scenebyt.es"
-			channelNames="#scenebytes"
+			serverNames="irc.scenebytes.org,irc.scenebyt.es"
+			channelNames="#announce"
 			announcerNames="SceneBytes"
 			/>
 	</servers>
