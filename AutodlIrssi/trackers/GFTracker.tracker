@@ -39,7 +39,7 @@
 			network="Station51"
 			serverNames="irc.thegft.org,irc.station51.net"
 			channelNames="#gftracker-spam"
-			announcerNames="Spannage"
+			announcerNames="GFT-Announce"
 			/>
 	</servers>
 
@@ -61,11 +61,9 @@
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="download.php?id="/>
+				<string value="download.php?torrent="/>
 				<var name="$torrentId"/>
-				<string value="&amp;name="/>
-				<varenc name="torrentName"/>
-				<string value=".torrent&amp;passkey="/>
+				<string value="&amp;passkey="/>
 				<varenc name="passkey"/>
 			</var>
 		</linematched>
