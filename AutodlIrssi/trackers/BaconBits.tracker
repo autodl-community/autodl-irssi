@@ -27,7 +27,7 @@
 	type="bb"
 	shortName="BB"
 	longName="Baconbits"
-	siteName="baconbits.org">
+	siteName="">
 
 	<settings>
 		<gazelle_description/>
@@ -47,7 +47,7 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--user1 uploaded: TesseracT - Hollow (Single) [2011] - MP3 / V0 (VBR) / Web - https://baconbits.org/torrents.php?id=21841&torrentid=23060 - metal, djent, progressive metal-->
+				<!--user1 uploaded: Something - Else (Single) [2011] - MP3 / V0 (VBR) / Web - https://XXXXXXXXXXXXXX/torrents.php?id=1234&torrentid=12345 - metal, djent, progressive metal-->
 				<regex value="^\s*(\S+) uploaded: (.*)-\s+https?\:\/\/([^\/]+\/).*[&amp;\?]torrentid=(\d+)\S*\s*-(.*)"/>
 				<vars>
 					<var name="uploader"/>
@@ -108,7 +108,7 @@
 			</extracttags>
 
 			<var name="torrentUrl">
-				<string value="http://"/>
+				<string value="https://"/>
 				<var name="$baseUrl"/>
 				<string value="torrents.php?action=download&amp;id="/>
 				<var name="$torrentId"/>
