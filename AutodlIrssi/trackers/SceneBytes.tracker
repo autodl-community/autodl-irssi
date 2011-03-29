@@ -63,7 +63,7 @@
 		<linematched>
 			<var name="torrentUrl">
 				<string value="http://"/>
-				<var name="$baseUrl"/>
+				<string value="www.scenebytes.org/"/>
 				<string value="download.php?torrent="/>
 				<var name="$torrentId"/>
 				<string value="&amp;passkey="/>
