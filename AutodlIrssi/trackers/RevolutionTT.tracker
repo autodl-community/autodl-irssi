@@ -57,7 +57,7 @@
 			</extract>
 			<extract>
 				<!--[NEWyREQUESTEDOTORRENT]CindTV/PacksY->v[REQ]BOneTTreeaHillHSeasonJ6z| https://www.revolutiontt.net/details.php?id=131418&hit=1-->
-				<regex value="^\[NEW.REQUESTED.TORRENT\].in.(.*).->.\[REQ\].(.*).\| https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^\[NEW.REQUESTED.TORRENT\].in.(.*).->.(.*).\| https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
