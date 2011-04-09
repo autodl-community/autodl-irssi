@@ -48,12 +48,14 @@
 		<linepatterns>
 			<extract>
 				<!--[New Release]-[TV|XviD]-[Craig.Ferguson.2010.11.30.D.J.Qualls.HDTV.XviD-2HD]-[URL]-[ http://www.AlphaOmega.me/torrents.php?id=2006 ]-[ 1933 ]-->
-				<regex value="^\[New Release]-\[([^\]]+)]-\[([^\]]+)]-\[URL]-\[ https?\:\/\/([^\/]+\/)[^\]]*]-\[\s*(\d+)\s*]$"/>
+				<!--[New Release]-[Movies|HD]-[When.Harry.Met.Sally.1989.720p.BluRay.X264-AMIABLE]-[URL]-[ https://www.alphaomega.me/torrents.php?id=16290 ]-[ 16224 ]-[ Uploaded 28 Mins, 46 Secs secs after pre. ]-->
+				<regex value="^\[New Release]-\[([^\]]+)]-\[([^\]]+)]-\[URL]-\[\s*https?\:\/\/([^\/]+\/)[^\]]*]-\[\s*(\d+)\s*](?:-\[\s*Uploaded ([^\]]*)])?"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
+					<var name="preTime"/>
 				</vars>
 			</extract>
 		</linepatterns>
