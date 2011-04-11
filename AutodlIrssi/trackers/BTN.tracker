@@ -75,7 +75,7 @@
 				</vars>
 			</extract>
 			<extract>
-				<regex value="^\[\s*(?:(\d+)[^\]]*)?\s*\]\s*\[ ([^\]]*)\] \[([^\]]*)\]\s*\[ Uploader: ([^\]]*)\]\s*(?:\[\s*Pretime:([^\]]*)\])?\s*$"/>
+				<regex value="^(?:\[\s*(?:(\d+)[^\]]*)?\s*\]\s*)?\[ ([^\]]*)\] \[([^\]]*)\]\s*\[ Uploader: ([^\]]*)\]\s*(?:\[\s*Pretime:([^\]]*)\])?\s*$"/>
 				<vars>
 					<var name="year"/>
 					<var name="category"/>
