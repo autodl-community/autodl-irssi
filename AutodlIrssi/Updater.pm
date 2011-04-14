@@ -258,7 +258,7 @@ sub _extractZipFile {
 			else {
 				my ($volume, $dir, $file) = File::Spec->splitpath($info->{destFile}, 0);
 				die "Could not create directory '$dir'\n" unless createDirectories($dir);
-				open my $fh, '>>', $info->{destFile} or die "Could not write to file '$info->{destFile}'\n";
+				open my $fh, '>>', $info->{destFile} or die "Could not write to file '$info->{destFile}': $!\n";
 				close $fh;
 			}
 		}

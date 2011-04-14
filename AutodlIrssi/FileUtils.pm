@@ -57,7 +57,7 @@ sub saveRawDataToFile {
 	my ($filename, $data) = @_;
 
 	my $fh;
-	open $fh, ">:raw", $filename or die "Could not create file $filename\n";
+	open $fh, ">:raw", $filename or die "Could not create file $filename: $!\n";
 	print { $fh } $data or die "Could not write to file $filename\n";
 	close $fh;
 }
@@ -84,7 +84,7 @@ sub appendUnixPath {
 sub getFileData {
 	my $filename = shift;
 
-	open my $fh, '<', $filename or die "Could not open file $filename\n";
+	open my $fh, '<', $filename or die "Could not open file $filename: $!\n";
 	binmode $fh;
 	local $/;
 	return scalar <$fh>;
