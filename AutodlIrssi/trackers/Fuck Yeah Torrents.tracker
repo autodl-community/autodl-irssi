@@ -30,8 +30,8 @@
 	siteName="fuckyeahtorrents.com">
 
 	<settings>
-		<cookie_description/>
-		<cookie/>
+		<description text="Go to http://fuckyeahtorrents.com/getrss.php to get the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey tooltiptext="The passkey in your FYT RSS feed link."/>
 	</settings>
 
 	<servers>
@@ -62,6 +62,8 @@
 				<var name="$baseUrl"/>
 				<string value="download.php?torrent="/>
 				<var name="$torrentId"/>
+				<string value="&amp;passkey="/>
+				<varenc name="passkey"/>
 			</var>
 		</linematched>
 		<ignore>
