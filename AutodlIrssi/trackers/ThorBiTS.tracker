@@ -49,8 +49,9 @@
 	<parseinfo>
 		<linepatterns>
 			<!--New Torrent Uploaded: [Trash]- MICROSOFT_WINDOWS_EMBEDDED_STANDARD_7_SP1_RUNTIME_X64-DVTiSO PRETiME: 3m 42s @ http://thorbits.org/details.php?id=154520-->
+			<!--New Torrent Uploaded: [DVDR]- The.Blind.Side.2009.PAL.MULTiSUBS.DVDR-VEPER [Nuked]- dupe.iGNiTiON.2010-06-12PRETiME: 7h 44m 48s @ http://thorbits.org/details.php?id=159570-->
 			<extract>
-				<regex value="^New Torrent Uploaded: \[([^\]]*)]-(.*) PRETiME:([^@]*)@ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^New Torrent Uploaded: \[([^\]]*)]-(.*) (?:\[Nuked].*)?PRETiME:([^@]*)@ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
