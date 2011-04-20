@@ -41,15 +41,15 @@
 			network="P2P-NET"
 			serverNames="irc.p2p-network.net,irc.p2p-irc.net"
 			channelNames="#tvt"
-			announcerNames="T"
+			announcerNames="FreshOnTV"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[Lost] Lost.S06E00.The.Final.Chapter.720p.HDTV.x264-2HD (1.09 GB) - http://freshon.tv/details.php?id=43630-->
-				<regex value="^\[([^\]]*)\]\s*(.*)\(([^\)]*)\) - https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--[One Tree Hill] One.Tree.Hill.S08E18.Quiet.Little.Voices.PROPER.HDTV.XviD-FQM - 349.53 MB - http://freshon.tv/details.php?id=67150-->
+				<regex value="^\[([^\]]*)\]\s*(.*)-([^\)]*)- https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
@@ -80,7 +80,6 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^[^\[]"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
