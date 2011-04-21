@@ -46,11 +46,13 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--New Torrent Uploaded: <0DAY> Name: 'Luxology.Modo.v501.41483.SP2.MacOSX.Carbon-BEAN' https://fuckyeahtorrents.com/details.php?id=46898-->
-				<regex value="^New Torrent Uploaded: &lt;([^&lt;]*)&gt; Name: '(.*)'\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--New Torrent Uploaded: <TV-XVID> Name: 'MythBusters.S09E03.Running.on.Water.HDTV.XviD-FQM' Size: 358.75 MB Files: 22 https://fuckyeahtorrents.com/details.php?id=54140-->
+				<regex value="^New Torrent Uploaded: &lt;([^&lt;]*)&gt; Name: '(.*)'\s*Size:\s*(\S+\s*\S*)\s*Files:\s*(\S*)\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
+					<var name="torrentSize"/>
+					<var name="$files"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
