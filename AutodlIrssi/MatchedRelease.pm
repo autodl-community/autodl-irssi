@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -564,7 +564,7 @@ sub _getRtAddress {
 
 	$rtAddress = "127.0.0.1$rtAddress" if $rtAddress =~ /^:\d{1,5}$/;
 
-	return $rtAddress if $rtAddress =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}$/;
+	return $rtAddress if isInternetAddress($rtAddress);
 	return getAbsPath($rtAddress);
 }
 
@@ -599,7 +599,14 @@ sub _sendRtorrent {
 		dmessage 5, "Dest dir: '$rtDir'";
 
 		my $rt = new AutodlIrssi::RtorrentCommands();
-		$rt->func('d.set_directory', $rtDir) if $rtDir ne "";
+		if ($rtDir ne "") {
+			if ($self->{uploadMethod}{rtDontAddName}) {
+				$rt->func('d.set_directory_base', $rtDir);
+			}
+			else {
+				$rt->func('d.set_directory', $rtDir);
+			}
+		}
 		$rt->func('d.set_custom1', $rtLabel) if $rtLabel ne "";
 		$rt->func('d.views.push_back_unique', $rtRatioGroup)->func('view.set_visible', $rtRatioGroup) if $rtRatioGroup ne "";
 		$rt->func('d.set_throttle_name', $rtChannel) if $rtChannel ne "";

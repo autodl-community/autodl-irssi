@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -35,6 +35,7 @@ package AutodlIrssi::Scgi;
 use AutodlIrssi::Globals;
 use AutodlIrssi::Socket;
 use AutodlIrssi::DomainSocket;
+use AutodlIrssi::InternetUtils;
 
 # addr => ip:port or /path/to/socket
 # scgiHeader => Extra SCGI header values
@@ -103,7 +104,8 @@ sub send {
 		$self->{data} = "";
 
 		$self->_dmessage(5, "Connecting to $self->{addr}");
-		if (my ($ip, $port) = $self->{addr} =~ /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})$/) {
+		if (isInternetAddress($self->{addr})) {
+			my ($ip, $port) = $self->{addr} =~ /^(.+):(\d+)$/;
 			$self->{socket} = new AutodlIrssi::Socket();
 			$self->{socket}->connect($ip, $port, sub { $self->_onConnect(@_, $data) });
 		}

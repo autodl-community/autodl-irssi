@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -549,7 +549,7 @@ sub getActiveAnnounceParserTypes {
 
 		return updateFailed("Could not update trackers: $errorMessage") if $errorMessage;
 
-		message 4, "Trackers updated";
+		dmessage 4, "Trackers updated";
 		$trackersVersion = $updater->getTrackersVersion();
 		$updater = undef;
 		reloadTrackerFiles();

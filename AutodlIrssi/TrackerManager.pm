@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -136,7 +136,7 @@ sub printNewTrackers {
 	}
 	while (my ($type, $announceParser) = each %$oldAnnounceParsers) {
 		next if exists $self->{announceParsers}{$type};
-		message 3, "\x02Removed tracker\x02 \x0304" . $announceParser->getTrackerName() . "\x03";
+		dmessage 3, "\x02Removed tracker\x02 \x0304" . $announceParser->getTrackerName() . "\x03";
 	}
 }
 

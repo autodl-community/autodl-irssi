@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -60,6 +60,7 @@ sub defaultOptions {
 		rtChannel => '',
 		rtPriority => '',
 		rtIgnoreScheduler => 0,
+		rtDontAddName => 0,
 		rtAddress => '',
 		pathToUtorrent => '',
 		memoryLeakCheck => 0,
@@ -261,6 +262,9 @@ sub doHeaderFilter {
 			bitrates => '',
 			media => '',
 			tags => '',
+			tagsAny => 1,
+			exceptTags => '',
+			exceptTagsAny => 1,
 			scene => '',
 			log => '',
 			cue => '',
@@ -279,6 +283,7 @@ sub doHeaderFilter {
 			rtChannel => '',
 			rtPriority => '',
 			rtIgnoreScheduler => 0,
+			rtDontAddName => 0,
 			wolMacAddress => '',
 			wolIpAddress => '',
 			wolPort => '',
@@ -310,6 +315,9 @@ sub doHeaderFilter {
 			'bitrates' => 'bitrates',
 			'media' => 'media',
 			'tags' => 'tags',
+			'tags-any' => 'tagsAny',
+			'except-tags' => 'exceptTags',
+			'except-tags-any' => 'exceptTagsAny',
 			'scene' => 'scene',
 			'log' => 'log',
 			'cue' => 'cue',
@@ -328,6 +336,7 @@ sub doHeaderFilter {
 			'rt-channel' => 'rtChannel',
 			'rt-priority' => 'rtPriority',
 			'rt-ignore-scheduler' => 'rtIgnoreScheduler',
+			'rt-dont-add-name' => 'rtDontAddName',
 			'wol-mac-address' => 'wolMacAddress',
 			'wol-ip-address' => 'wolIpAddress',
 			'wol-port' => 'wolPort',
@@ -344,6 +353,9 @@ sub doHeaderFilter {
 		$filter->{maxDownloads} = convertStringToInteger($filter->{maxDownloads}, -1);
 		$filter->{rtPriority} = _convertPriority($filter->{rtPriority});
 		$filter->{rtIgnoreScheduler} = convertStringToBoolean($filter->{rtIgnoreScheduler});
+		$filter->{rtDontAddName} = convertStringToBoolean($filter->{rtDontAddName});
+		$filter->{tagsAny} = convertStringToBoolean($filter->{tagsAny});
+		$filter->{exceptTagsAny} = convertStringToBoolean($filter->{exceptTagsAny});
 
 		push @{$self->{filters}}, $filter;
 	}
@@ -378,6 +390,7 @@ sub doHeaderOptions {
 		'rt-channel' => 'rtChannel',
 		'rt-priority' => 'rtPriority',
 		'rt-ignore-scheduler' => 'rtIgnoreScheduler',
+		'rt-dont-add-name' => 'rtDontAddName',
 		'rt-address' => 'rtAddress',
 		'path-utorrent' => 'pathToUtorrent',
 		'memory-leak-check' => 'memoryLeakCheck',
@@ -403,6 +416,7 @@ sub doHeaderOptions {
 	}
 	$self->{options}{rtPriority} = _convertPriority($self->{options}{rtPriority});
 	$self->{options}{rtIgnoreScheduler} = convertStringToBoolean($self->{options}{rtIgnoreScheduler});
+	$self->{options}{rtDontAddName} = convertStringToBoolean($self->{options}{rtDontAddName});
 }
 
 # Initialize options from all [webui] headers

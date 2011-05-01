@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -113,7 +113,8 @@ sub checkFilter {
 	return 0 if $filter->{bitrates} ne '' && !checkFilterBitrate($ti->{bitrate}, $filter->{bitrates});
 	return 0 if $filter->{media} ne '' && !checkFilterStrings($ti->{media}, $filter->{media});
 
-	return 0 if $filter->{tags} ne '' && !checkFilterTags($ti->{tags}, $filter->{tags});
+	return 0 if $filter->{tags} ne '' && !checkFilterTags($ti->{tags}, $filter->{tags}, $filter->{tagsAny});
+	return 0 if $filter->{exceptTags} ne '' && checkFilterTags($ti->{tags}, $filter->{exceptTags}, $filter->{exceptTagsAny});
 	return 0 if $filter->{scene} ne '' && !$ti->{scene} != !$filter->{scene};
 	return 0 if $filter->{log} ne '' && !$ti->{log} != !$filter->{log};
 	return 0 if $filter->{cue} ne '' && !$ti->{cue} != !$filter->{cue};
@@ -263,7 +264,7 @@ sub canonicalizeBitrate {
 }
 
 sub checkFilterTags {
-	my ($tags, $filterTags) = @_;
+	my ($tags, $filterTags, $tagsAny) = @_;
 
 	my $fixit = sub {
 		my $s = shift;
@@ -275,6 +276,7 @@ sub checkFilterTags {
 	my $aryTags = $fixit->($tags);
 	my $aryFilterTags = $fixit->($filterTags);
 
+	# Returns true if $filterTag is in @$aryTags
 	my $isInTags = sub {
 		my $filterTag = shift;
 		$filterTag = trim $filterTag;
@@ -286,8 +288,16 @@ sub checkFilterTags {
 		return 0;
 	};
 
-	for my $filterTag (@$aryFilterTags) {
-		return 1 if $isInTags->($filterTag);
+	if ($tagsAny) {
+		for my $filterTag (@$aryFilterTags) {
+			return 1 if $isInTags->($filterTag);
+		}
+	}
+	else {
+		for my $filterTag (@$aryFilterTags) {
+			return 0 unless $isInTags->($filterTag);
+		}
+		return 1;
 	}
 
 	return 0;

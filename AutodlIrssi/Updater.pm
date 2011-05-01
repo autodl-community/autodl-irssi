@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -35,10 +35,18 @@ use AutodlIrssi::Globals;
 use AutodlIrssi::TextUtils;
 use AutodlIrssi::UpdaterXmlParser;
 use AutodlIrssi::FileUtils;
+use AutodlIrssi::HttpRequest;
 use File::Spec;
 use File::Copy;
 use Archive::Zip qw/ :ERROR_CODES /;
-use constant UPDATE_URL => 'http://autodl-irssi.sourceforge.net/update.xml';
+use constant {
+	UPDATE_URL => 'http://autodl-irssi.sourceforge.net/update.xml',
+
+	# This must not be a popular web browser's user agent or the update may fail
+	# since SourceForge checks the user agent and sends different results depending
+	# on the UA.
+	UPDATE_USER_AGENT => 'autodl-irssi',
+};
 
 sub new {
 	my $class = shift;
@@ -104,6 +112,14 @@ sub cancel {
 	$self->_error($errorMessage);
 }
 
+sub _createHttpRequest {
+	my $self = shift;
+
+	$self->{request} = new AutodlIrssi::HttpRequest();
+	$self->{request}->setUserAgent(UPDATE_USER_AGENT);
+	$self->{request}->setFollowNewLocation();
+}
+
 # Check for updates. $handler->($errorMessage) will be notified.
 sub check {
 	my ($self, $handler) = @_;
@@ -111,8 +127,7 @@ sub check {
 	die "Already checking for updates\n" if $self->_isChecking();
 
 	$self->{handler} = $handler || sub {};
-	$self->{request} = new AutodlIrssi::HttpRequest();
-	$self->{request}->setFollowNewLocation();
+	$self->_createHttpRequest();
 	$self->{request}->sendRequest("GET", "", UPDATE_URL, {}, sub {
 		$self->_onRequestReceived(@_);
 	});
@@ -153,8 +168,7 @@ sub updateTrackers {
 	die "Already checking for updates\n" if $self->_isChecking();
 
 	$self->{handler} = $handler || sub {};
-	$self->{request} = new AutodlIrssi::HttpRequest();
-	$self->{request}->setFollowNewLocation();
+	$self->_createHttpRequest();
 	$self->{request}->sendRequest("GET", "", $self->{trackers}{url}, {}, sub {
 		$self->_onDownloadedTrackersFile(@_, $destDir);
 	});
@@ -190,8 +204,7 @@ sub updateAutodl {
 	die "Can't update. Missing these Perl modules: @{$self->{missingModules}}\n" if $self->isMissingModules();
 
 	$self->{handler} = $handler || sub {};
-	$self->{request} = new AutodlIrssi::HttpRequest();
-	$self->{request}->setFollowNewLocation();
+	$self->_createHttpRequest();
 	$self->{request}->sendRequest("GET", "", $self->{autodl}{url}, {}, sub {
 		$self->_onDownloadedAutodlFile(@_, $destDir);
 	});

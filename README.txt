@@ -205,6 +205,9 @@ formats = MP3, FLAC
 bitrates = v0 (vbr), lossless
 media = CD
 #tags = hip hop, tag #2, tag #3
+#tags-any = true
+#except-tags = hip hop, tag #2, tag #3
+#except-tags-any = false
 #scene =
 #log =
 #cue =
@@ -243,6 +246,7 @@ rt-label = $(Tracker)
 #rt-channel = thr_2
 rt-priority = high
 #rt-ignore-scheduler = true
+#rt-dont-add-name = false
 
 [options]
 max-saved-releases = 1000
@@ -390,7 +394,24 @@ Create one [filter] header per filter. You can optionally name the filter like [
 [b]Name:[/b] tags
 [b]Type:[/b] Comma separated list
 [b]Example:[/b] tags = hip hop, rock
-[b]Description:[/b] what.cd/waffles only. Unless at least one of your tags matches the release's tags, it's not downloaded.
+[b]Description:[/b] what.cd/waffles only. Unless at least one of your tags matches the release's tags, it's not downloaded. See also [b]except-tags[/b] and [b]tags-any[/b].
+
+[b]Name:[/b] except-tags
+[b]Type:[/b] Comma separated list
+[b]Example:[/b] except-tags = hip hop, rock
+[b]Description:[/b] what.cd/waffles only. Same as [b]tags[/b] except if it matches any/all of these, it's not downloaded. See also [b]tags[/b] and [b]except-tags-any[/b].
+
+[b]Name:[/b] tags-any
+[b]Type:[/b] Boolean
+[b]Default:[/b] true
+[b]Example:[/b] tags-any = false
+[b]Description:[/b] what.cd/waffles only. Decides how to match the [b]tags[/b] option, ie., if any or all of the tags must match.
+
+[b]Name:[/b] except-tags-any
+[b]Type:[/b] Boolean
+[b]Default:[/b] true
+[b]Example:[/b] except-tags-any = true
+[b]Description:[/b] what.cd/waffles only. Decides how to match the [b]except-tags[/b] option, ie., if any or all of the tags must match.
 
 [b]Name:[/b] scene
 [b]Type:[/b] Boolean
@@ -510,9 +531,8 @@ rt-label = $(Tracker)
 #rt-channel = thr_2
 rt-priority = high
 #rt-ignore-scheduler = true
+#rt-dont-add-name = false
 [/quote]
-
-[b]NOTE:[/b] You must initialize rt-address to your rtorrent's SCGI address in [b][options][/b]!
 
 [b]rt-dir[/b] is the destination directory. The torrent data will be saved here. Macros can be used.
 [b]rt-commands[/b] can be used to execute some rtorrent commands when loading the torrent file. It's for advanced users only.
@@ -521,6 +541,7 @@ rt-priority = high
 [b]rt-channel[/b] is used to set a ruTorrent channel. Valid names are thr_0, thr_1, ..., thr_9. You must have the throttle ruTorrent plugin installed.
 [b]rt-priority[/b] sets the torrent priority. Valid values are 0, dont-download, 1, low, 2, normal, 3, high. If you set it to dont-download (or 0), the torrent is loaded, but not started.
 [b]rt-ignore-scheduler[/b]: set it to true to disable the ruTorrent scheduler.
+[b]rt-dont-add-name[/b]: set it to true if you don't want the torrent name to be added to the path.
 
 
 [b]Save torrent to a watch directory:[/b]

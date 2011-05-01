@@ -15,7 +15,7 @@
 #
 # The Initial Developer of the Original Code is
 # David Nilsson.
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2010, 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -34,9 +34,18 @@ package AutodlIrssi::InternetUtils;
 use POSIX qw/ floor /;
 use HTML::Entities qw/ decode_entities /;
 use JSON qw/ decode_json encode_json /;
+use Encode qw/ encode_utf8 /;
 use base qw/ Exporter /;
-our @EXPORT = qw/ decodeHtmlEntities toUrlEncode appendUrlQuery base64Encode decodeJson encodeJson /;
+our @EXPORT = qw/ isInternetAddress decodeHtmlEntities toUrlEncode appendUrlQuery base64Encode
+				decodeJson encodeJson /;
 our @EXPORT_OK = qw//;
+
+# Returns true if it's an IP:port or hostname:port address, false otherwise
+sub isInternetAddress {
+	my $addr = shift;
+
+	return scalar $addr =~ m!^[^:\s/\\]+:\d{1,5}$!;
+}
 
 sub decodeHtmlEntities {
 	return decode_entities(shift);
@@ -44,7 +53,7 @@ sub decodeHtmlEntities {
 
 # URL-encode a string
 sub toUrlEncode {
-	my $s = shift;
+	my $s = encode_utf8(shift);
 
 	my $str = "";
 	for (my $i = 0; $i < length $s; $i++) {
