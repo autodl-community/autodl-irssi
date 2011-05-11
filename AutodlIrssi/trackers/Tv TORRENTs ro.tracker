@@ -38,18 +38,18 @@
 
 	<servers>
 		<server
-			network="P2P-NET"
-			serverNames="irc.p2p-network.net,irc.p2p-irc.net"
+			network="TvT"
+			serverNames="irc.freshon.tv"
 			channelNames="#tvt"
-			announcerNames="FreshOnTV"
+			announcerNames="T"
 			/>
 	</servers>
 
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[One Tree Hill] One.Tree.Hill.S08E18.Quiet.Little.Voices.PROPER.HDTV.XviD-FQM - 349.53 MB - http://freshon.tv/details.php?id=67150-->
-				<regex value="^\[([^\]]*)\]\s*(.*)-([^\)]*)- https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--[..Miniseries..] Mortal.Kombat.WebDL.HD.1080 (965.97 MB) - http://freshon.tv/details.php?id=68347-->
+				<regex value="^\[([^\]]*)\]\s*(.*)\(([^\)]*)\)\s*-\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
@@ -60,7 +60,7 @@
 			</extract>
 			<extract>
 				<!--[..Sports..] WWE.Friday.Night.Smackdown.2010.01.29.WS.PDTV.XviD-433 - http://freshon.tv/details.php?id=43435-->
-				<regex value="^\[([^\]]*)\]\s*(.*) - https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^\[([^\]]*)\]\s*(.*)\s*-\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
