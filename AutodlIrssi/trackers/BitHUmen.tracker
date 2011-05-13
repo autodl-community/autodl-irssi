@@ -46,22 +46,16 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[NEW] Poker.After.Dark.2008.E40.TVRiP.XviD.Hungarian-SportTiME got released 11h 33m 8s ago [ Sorozat / Hun | 358MB in 28F ] - http://bithumen.be/t/177123-->
-				<regex value="^\[NEW\](.*)\s*got released (.*) ago \[([^\|]*)\|\s*([\d,.]*\s*\S*)\s*in\s*\d*F\s*\]\s*-\s*https?\:\/\/([^\/]+\/)t/(\d+)"/>
+				<!--[NEW] [REQ] Sons.of.Anarchy.S03E06.The.Push.HDTV.XviD-FQM got released 199d 11h 39m 57s ago [ Sorozat / Eng | 350MB in 21F ] - http://bithumen.be/t/175916-->
+				<!--[NEW] [REQ] Ezel-Bosszu.mindhalalig.S01E14-E18.HUN.TvRip.XviD-MiXED [ Sorozat / Hun | 1978MB in 5F ] - http://bithumen.be/t/175917-->
+				<!--[NEW] Impossible.S01E01.WS.PDTV.XviD-C4TV by FireblasT got released 5h 9m 42s ago [ Sorozat / Eng | 357MB in 28F ] - http://bithumen.be/t/177212-->
+				<!--[NEW] The Shadow Line.1x02.720p HDTV x264-FoV by FireblasT [ Sorozat / Eng | 1507MB in 34F ] - http://bithumen.be/t/177222-->
+				<!--[NEW] The.Evil.Dead.1981.1080p.BluRay.x264.Hun-Rabbit [ Film / Hun / HD | 6947MB in 51F ] - http://bithumen.be/t/177134-->
+				<regex value="^\[NEW\]\s*(?:\[REQ\])?\s*(.*?)\s*(?:by (\S*))?\s*(?:got released (.*) ago)?\s*\[([^\|]*)\|\s*([\d,.]*\s*\S*)\s*in\s*\d*F\s*\]\s*-\s*https?\:\/\/([^\/]+\/)t/(\d+)"/>
 				<vars>
 					<var name="torrentName"/>
+					<var name="uploader"/>
 					<var name="preTime"/>
-					<var name="category"/>
-					<var name="torrentSize"/>
-					<var name="$baseUrl"/>
-					<var name="$torrentId"/>
-				</vars>
-			</extract>
-			<extract>
-				<!--[NEW] Emberborben.S01.E05.WEB.DL.HUNDUB-J&M [ Sorozat / Hun | 507MB in 3F ] - http://bithumen.be/t/177120-->
-				<regex value="^\[NEW\](.*)\[([^\|]*)\|\s*([\d,.]*\s*\S*)\s*in\s*\d*F\s*\]\s*-\s*https?\:\/\/([^\/]+\/)t/(\d+)"/>
-				<vars>
-					<var name="torrentName"/>
 					<var name="category"/>
 					<var name="torrentSize"/>
 					<var name="$baseUrl"/>
