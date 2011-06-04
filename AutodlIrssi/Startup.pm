@@ -421,7 +421,7 @@ sub getActiveAnnounceParserTypes {
 				return;
 			}
 			return if $elapsedSecs >= 0 && $elapsedSecs < CHECK_FOR_UPDATES_SECS;
-			$updateCheck = $AutodlIrssi::g->{options}{updateCheck};
+			$updateCheck = $AutodlIrssi::g->{options}{updateCheck} || 'ask';
 			forceCheckForUpdates();
 		};
 		if ($@) {
