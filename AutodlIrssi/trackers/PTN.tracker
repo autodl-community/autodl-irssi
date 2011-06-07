@@ -36,7 +36,7 @@
 
 	<servers>
 		<server
-			network="PirateNet"
+			network="TiK-T0K"
 			serverNames="irc.pirate-net.info"
 			channelNames="#piratethe.net"
 			announcerNames="PTNBot"
