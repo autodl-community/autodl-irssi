@@ -36,7 +36,7 @@
 
 	<servers>
 		<server
-			network="PirateNet"
+			network="TiK-T0K"
 			serverNames="irc.pirate-net.info"
 			channelNames="#sbits-announce"
 			announcerNames="ScB-Bot"
@@ -47,7 +47,8 @@
 		<linepatterns>
 			<extract>
 				<!--NEW in  Music => Mark_Knight_-_Glow_Radio-SAT-06-04-2011-TALiON :: Size: 89.34 MB :: Uploaded: 7 seconds after pre. :: https://scenebits.info/details.php?id=34776-->
-				<regex value="^NEW in (.*)=>(.*)::\s*Size:([^:]*):: Uploaded:([^:]*)::\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--NEW in  Music => Bad Meets Evil-Hell The Sequel (EP)-2011-pee2pee :: Size: 43.86 MB :: https://scenebits.info/details.php?id=34892-->
+				<regex value="^NEW in (.*)=>(.*)::\s*Size:([^:]*)(?::: Uploaded:([^:]*))?\s*::\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
