@@ -82,6 +82,7 @@
 			</http>
 		</linematched>
 		<ignore>
+			<regex value="^!tkb \S+"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
