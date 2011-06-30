@@ -47,7 +47,7 @@ sub openFile {
 	$self->{filename} = $filename;
 
 	my $doc = eval { XML::LibXML->new()->parse_file($filename) };
-	die "Error parsing $filename: $@" if $@;
+	die "Error parsing $filename: $@\n" if $@;
 
 	return $doc;
 }
@@ -58,7 +58,7 @@ sub openString {
 	my ($self, $xmlData) = @_;
 
 	my $doc = eval { XML::LibXML->new()->parse_string($xmlData) };
-	die "Error parsing XML data: $@" if $@;
+	die "Error parsing XML data: $@\n" if $@;
 
 	return $doc;
 }
