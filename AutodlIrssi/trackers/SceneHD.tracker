@@ -39,7 +39,7 @@
 		<server
 			network="P2P-NET"
 			serverNames="irc.p2p-network.net,irc.p2p-irc.net"
-			channelNames="#scenehd.announce"
+			channelNames="#scenehd,#scenehd.announce"
 			announcerNames="fireBot"
 			/>
 	</servers>
