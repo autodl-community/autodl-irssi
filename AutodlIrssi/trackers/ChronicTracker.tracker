@@ -48,10 +48,6 @@
 			<!--=- Name: The.Listener.S02E11.HDTV.XviD-BiA -=-->
 			<!--=- URL:  http://www.ChronicTracker.com/details.php?id=88222 -=-->
 			<!--||=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=||-->
-			<extract optional="true">
-				<regex value="^=- New torrent was uploaded -="/>
-				<vars />
-			</extract>
 			<extract>
 				<regex value="^=- Name:(.*)-="/>
 				<vars>
@@ -94,6 +90,7 @@
 		</linematched>
 		<ignore>
 			<regex value="^\|\|"/>
+			<regex value="New torrent was uploaded"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
