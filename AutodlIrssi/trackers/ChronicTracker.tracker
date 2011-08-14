@@ -38,7 +38,7 @@
 		<server
 			network="P2P-NET"
 			serverNames="irc.p2p-network.net,irc.p2p-irc.net"
-			channelNames="#ct.announce"
+			channelNames="#ct.announce,#chronictracker"
 			announcerNames="Chronic"
 			/>
 	</servers>
@@ -48,10 +48,28 @@
 			<!--=- Name: The.Listener.S02E11.HDTV.XviD-BiA -=-->
 			<!--=- URL:  http://www.ChronicTracker.com/details.php?id=88222 -=-->
 			<!--||=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=||-->
+			<extract optional="true">
+				<regex value="^=- New torrent was uploaded -="/>
+				<vars />
+			</extract>
 			<extract>
 				<regex value="^=- Name:(.*)-="/>
 				<vars>
 					<var name="torrentName"/>
+				</vars>
+			</extract>
+			<extract optional="true">
+				<regex value="^=- Cat:(.*)=-= Size(.*)in (\d+) Files -="/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentSize"/>
+					<var name="$numFiles"/>
+				</vars>
+			</extract>
+			<extract optional="true">
+				<regex value="^=- Pred:(.*)-="/>
+				<vars>
+					<var name="preTime"/>
 				</vars>
 			</extract>
 			<extract>
