@@ -82,7 +82,7 @@
 		<linematched>
 			<if srcvar="rsskey" regex="\S">
 				<var name="torrentUrl">
-					<string value="http://polishtracker.org:81/downloadd.php/"/>
+					<string value="http://polishtracker.net:81/downloadd.php/"/>
 					<var name="$torrentId"/>
 					<string value="/"/>
 					<var name="rsskey"/>
@@ -91,7 +91,7 @@
 					<string value=".torrent"/>
 				</var>
 				<var name="torrentSslUrl">
-					<string value="https://polishtracker.org/downloaddssl.php/"/>
+					<string value="https://polishtracker.net/downloaddssl.php/"/>
 					<var name="$torrentId"/>
 					<string value="/"/>
 					<var name="rsskey"/>
@@ -102,7 +102,7 @@
 			</if>
 			<if srcvar="rsskey" regex="^\s*$">
 				<var name="torrentUrl">
-					<string value="https://polishtracker.org/download.php/"/>
+					<string value="https://polishtracker.net/download.php/"/>
 					<var name="$torrentId"/>
 					<string value="/"/>
 					<varenc name="torrentName"/>
@@ -112,7 +112,7 @@
 					<var name="cookie"/>
 				</http>
 				<http name="Referer">
-					<string value="https://polishtracker.org/browse.php"/>
+					<string value="https://polishtracker.net/browse.php"/>
 				</http>
 			</if>
 
