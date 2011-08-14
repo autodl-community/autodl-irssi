@@ -27,7 +27,7 @@
 	type="pt"
 	shortName="PT"
 	longName="PolishTracker"
-	siteName="polishtracker.org">
+	siteName="polishtracker.net">
 
 	<settings>
 		<description text="Only one of rsskey or cookie is needed. RSS is for Power Users and above."/> 
@@ -47,7 +47,7 @@
 	<servers>
 		<server
 			network="PolishTracker"
-			serverNames="irc.polishtracker.org"
+			serverNames="irc.polishtracker.net"
 			channelNames="#pt-announce"
 			announcerNames="PT-BOT"
 			/>
