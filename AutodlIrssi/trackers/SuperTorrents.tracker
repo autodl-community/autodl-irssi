@@ -39,7 +39,7 @@
 			network="P2PIRC"
 			serverNames="irc.p2pirc.org,california.us.p2pirc.org,chicago.us.p2pirc.org,texas.us.p2pirc.org,amsterdam.eu.p2pirc.org,london.eu.p2pirc.org,montreal.ca.p2pirc.org"
 			channelNames="#supertorrents,#stm-spam"
-			announcerNames="ST-Bot"
+			announcerNames="ST"
 			/>
 	</servers>
 
