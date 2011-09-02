@@ -60,8 +60,7 @@
 		</linepatterns>
 		<linematched>
 			<var name="torrentUrl">
-				<string value="http://"/>
-				<var name="$baseUrl"/>
+				<string value="http://www.fano.lv/"/>
 				<string value="download.php?id="/>
 				<var name="$torrentId"/>
 				<string value="&amp;name="/>
