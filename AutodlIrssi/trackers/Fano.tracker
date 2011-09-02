@@ -30,10 +30,8 @@
 	siteName="www.fano.lv">
 
 	<settings>
-		<description text="Your passkey"/>
-		<passkey
-			tooltiptext="Your passkey"
-			/>
+		<cookie_description/>
+		<cookie/>
 	</settings>
 
 	<servers>
@@ -64,9 +62,14 @@
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="rssdl.php?passkey="/>
-				<var name="passkey"/>
+				<string value="download.php?id="/>
+				<var name="$torrentId"/>
+				<string value="&amp;name="/>
+				<varenc name="torrentName"/>
 			</var>
+			<http name="cookie">
+				<var name="cookie"/>
+			</http>
 		</linematched>
 		<ignore>
 		</ignore>
