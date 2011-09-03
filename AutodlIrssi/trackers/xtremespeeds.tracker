@@ -50,7 +50,7 @@
 		<linepatterns>
 			<extract>
 				<!-- -  (  Storage.Wars.S02E11.Almost.the.Greatest.Show.on.Earth.HDTV.XviD ) Size: ( 367.50 MB )  Cat: ( TV-XviD ) By: ( Deno ) URL: ( http://xspeeds.com/details.php?id=161060 )-->
-				<regex value="^\s*-\s*\(([^)]*)\) Size: \(([^)]*)\)  Cat: \(([^)]*)\) By: \(([^)]*)\) URL: \(\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<regex value="^\s*-\s*\((.*)\) Size: \(([^)]*)\)  Cat: \(([^)]*)\) By: \(([^)]*)\) URL: \(\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="torrentSize"/>
