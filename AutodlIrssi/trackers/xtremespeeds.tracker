@@ -49,8 +49,8 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!-- -  (  Storage.Wars.S02E11.Almost.the.Greatest.Show.on.Earth.HDTV.XviD ) Size: ( 367.50 MB )  Cat: ( TV-XviD ) By: ( Deno ) URL: ( http://xspeeds.com/details.php?id=161060 )-->
-				<regex value="^\s*-\s*\((.*)\) Size: \(([^)]*)\)  Cat: \(([^)]*)\) By: \(([^)]*)\) URL: \(\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!-- xspeeds.com - New Torrent: ( Many Mega HD Wallpapers Pack - mama ) Size: ( 721.47 MB )  Category: ( Pictures ) Uploader: ( mama ) Link: ( http://xspeeds.com/details.php?id=161391 )-->
+				<regex value="^\s*xspeeds.com\s*-\s*New Torrent:\s*\((.*)\) Size: \(([^)]*)\)\s*Category:\s*\(([^)]*)\)\s*Uploader:\s*\(([^)]*)\)\s*Link:\s*\(\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="torrentSize"/>
