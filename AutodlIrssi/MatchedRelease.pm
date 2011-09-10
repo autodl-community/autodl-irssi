@@ -550,7 +550,7 @@ sub _getRtAddress {
 
 	if ($rtAddress eq "" && open(my $fh, '<', getAbsPath('~/.rtorrent.rc'))) {
 		while (<$fh>) {
-			if (/^\s*scgi_(?:local|port)\s*=\s*(.*)/) {
+			if (/^\s*(?:scgi_(?:local|port)|network\.scgi\.open_(?:port|local))\s*=\s*(.*)/) {
 				$rtAddress = trim $1;
 				if (substr($rtAddress, 0, 1) eq '"') {
 					$rtAddress =~ s/^"//;
