@@ -39,7 +39,7 @@
 			network="Station51"
 			serverNames="irc.thegft.org,irc.station51.net"
 			channelNames="#gftracker-spam"
-			announcerNames="GFT-Announce"
+			announcerNames="Spannage"
 			/>
 	</servers>
 
