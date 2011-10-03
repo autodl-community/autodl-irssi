@@ -51,9 +51,8 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--Paranormal.Activity.ALTERNATE.CUT.720p.BluRay.x264-BestHD 42531 Movies/HD-->
-				<!--[Eclipse] Full Metal Alchemist 2 Brotherhood 37 720p 42555 Anime/Manga-->
-				<regex value="^(.*)\s(\d+)\s(\S+)$"/>
+				<!--New Torrent: EPL.2011.10.02.Bolton.Wanderers.vs.Chelsea.720p.HDTV.x264-FAIRPLAY 114324 TV/HD-->
+				<regex value="^New Torrent:(.*)\s(\d+)\s(\S+)$"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$torrentId"/>
