@@ -52,7 +52,7 @@
 		<linepatterns>
 			<extract>
 				<!--New Torrent: EPL.2011.10.02.Bolton.Wanderers.vs.Chelsea.720p.HDTV.x264-FAIRPLAY 114324 TV/HD-->
-				<regex value="^New Torrent:(.*)\s(\d+)\s(\S+)$"/>
+				<regex value="^New Torrent:(.*)\s(\d+)\s(\S+(?:/\S+ \S+)?)$"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$torrentId"/>
