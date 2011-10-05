@@ -250,7 +250,7 @@ sub convertToTimeSinceString {
 
 # Returns the canonicalized release name
 sub canonicalizeReleaseName {
-	shift =~ /^(.*?)(?:\.avi|\.mkv|\.mpg|\.mpeg|\.wmv|\.ts)?$/i;
+	shift =~ /^(.*?)(?:\.avi|\.mkv|\.mpg|\.mpeg|\.wmv|\.ts|\.mp4)?$/i;
 	my $rv = $1;
 	# Replace all non alpha numerics < 0x80 with spaces
 	$rv =~ s/[\x00-\x1F\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/ /g;
