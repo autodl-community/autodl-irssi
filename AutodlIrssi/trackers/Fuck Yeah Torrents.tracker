@@ -47,7 +47,8 @@
 		<linepatterns>
 			<extract>
 				<!--New Torrent Uploaded: <TV-XVID> Name: 'MythBusters.S09E03.Running.on.Water.HDTV.XviD-FQM' Size: 358.75 MB Files: 22 https://fuckyeahtorrents.com/details.php?id=54140-->
-				<regex value="^New Torrent Uploaded: &lt;([^&lt;]*)&gt; Name: '(.*)'\s*Size:\s*(\S+\s*\S*)\s*Files:\s*(\S*)\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!-- New Torrent Uploaded: <XXX-0DAY> Name: '18Eighteen.11.10.12.Elizabeth.Bentley.Anal.Thermometers.And.Hot.Sex.XXX.720p.WMV-SEXORS' Size: 325.25 MB Files: 25 https://fuckyeahtorrents.com/details.php?id=168535-->
+				<regex value="^\s*New Torrent Uploaded:\s*&lt;([^&gt;]*)&gt;\s*Name:\s*'(.*)'\s*Size:\s*(\S+\s*\S*)\s*Files:\s*(\S*)\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
