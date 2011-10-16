@@ -48,7 +48,8 @@
 		<linepatterns>
 			<extract>
 				<!--New Torrent Uploaded :: Movies/x264 :: Maniac.Cop.1988.720p.BluRay.x264-PSYCHD :: http://www.torrentshack.net/torrents.php?id=47636&torrentid=47636#torrent47636 :: PreTime: 10m 26s-->
-				<regex value="^New Torrent Uploaded ::(.*)::(.*):: https?\:\/\/([^\/]+\/).*[&amp;\?]torrentid=(\d+)\S*\s*:: PreTime:(.*)"/>
+				<!--New Torrent Uploaded :: TV/x264 :: Wizards.Of.Waverly.Place.S04E19.Alex.The.Puppetmaster.720p.HDTV.x264-PREMiER :: http://www.torrentshack.net/torrents.php?id=48372&torrentid=48372#torrent48372-->
+				<regex value="^New Torrent Uploaded ::(.*)::(.*):: https?\:\/\/([^\/]+\/).*[&amp;\?]torrentid=(\d+)\S*\s*(?::: PreTime:(.*))?"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
