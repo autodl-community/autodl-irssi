@@ -103,6 +103,8 @@ sub addTorrentInfo {
 
 	$self->add("Site", $ti->{site});
 
+	$self->add("FilterName", $ti->{filter}{name}) if defined $ti->{filter};
+
 	# ti.tracker isn't saved when serializing 'ti'
 	if ($ti->{announceParser}) {
 		my $trackerInfo = $ti->{announceParser}->getTrackerInfo();
