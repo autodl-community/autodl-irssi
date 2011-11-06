@@ -47,13 +47,12 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--NEW!  Star.Wars.The.Clone.Wars.S02E18.The.Zillo.Beast.HDTV.XviD-FQM (185.78 MB of Adventure / Sci-Fi) was uploaded in TV/Episodes. Details at http://www.iplay.ro/details.php?id=110536 .-->
-				<!--NEW! (Request)  Celine.2008.DVDRip.XviD-aAF (703.77 MB of Drama / Musical) was uploaded in Movies/XVID. Details at http://www.iplay.ro/details.php?id=112976 . More at  http://www.imdb.com/title/tt1010387/-->
-				<regex value="^NEW!\s*(?:\(Request\))?(.*)\(([\d\.,]* .[bB])[^)]*\) was uploaded in (.*)\. Details at https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
+				<!--New in TV/Episodes -> Cops.S24E04.Evading.Arrests.HDTV.XviD-2HD Size: 174.88 MB Link: http://www.iplay.ro/details.php?id=153205  -->
+				<regex value="^New in (.*) -> (.*) Size: (.*B) Link:\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
+					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="torrentSize"/>
-					<var name="category"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
@@ -75,7 +74,6 @@
 			</http>
 		</linematched>
 		<ignore>
-			<regex value="^NEW!" expected="false"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
