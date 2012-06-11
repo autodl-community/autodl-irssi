@@ -27,7 +27,7 @@
 	type="scc"
 	shortName="SCC"
 	longName="SceneAccess"
-	siteName="www.sceneaccess.org">
+	siteName="www.sceneaccess.eu">
 
 	<settings>
 		<description text="Paste (Ctrl+V) any SceneAccess torrent download link into the text box below to automatically extract authkey."/>
@@ -40,7 +40,7 @@
 	<servers>
 		<server
 			network="SceneAccess"
-			serverNames="irc.sceneaccess.org"
+			serverNames="irc.sceneaccess.eu,irc.sceneaccess.org"
 			channelNames="#announce"
 			announcerNames="SCC"
 			/>
@@ -74,8 +74,7 @@
 		</linepatterns>
 		<linematched>
 			<var name="torrentUrl">
-				<string value="https://"/>
-				<var name="$baseUrl"/>
+				<string value="https://sceneaccess.eu/"/>
 				<string value="download/"/>
 				<var name="$torrentId"/>
 				<string value="/"/>
