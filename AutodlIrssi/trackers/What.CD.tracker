@@ -126,7 +126,7 @@
 			</extracttags>
 
 			<var name="torrentUrl">
-				<string value="http://"/>
+				<string value="https://"/>
 				<var name="$baseUrl"/>
 				<string value="torrents.php?action=download&amp;id="/>
 				<var name="$torrentId"/>
