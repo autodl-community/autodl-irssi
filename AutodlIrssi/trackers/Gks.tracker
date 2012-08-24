@@ -39,7 +39,7 @@
 			network="irc.gks.gs"
 			serverNames="irc.gks.gs"
 			channelNames="#GKS"
-			announcerNames="ZooKeeper"
+			announcerNames="GKS"
 			/>
 	</servers>
 
