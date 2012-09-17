@@ -26,8 +26,8 @@
 <trackerinfo
 	type="fano"
 	shortName="Fano"
-	longName="Fano.lv"
-	siteName="www.fano.lv">
+	longName="Fano.in"
+	siteName="www.fano.in">
 
 	<settings>
 		<cookie_description/>
@@ -60,7 +60,7 @@
 		</linepatterns>
 		<linematched>
 			<var name="torrentUrl">
-				<string value="http://www.fano.lv/"/>
+				<string value="http://www.fano.in/"/>
 				<string value="download.php?id="/>
 				<var name="$torrentId"/>
 				<string value="&amp;name="/>
