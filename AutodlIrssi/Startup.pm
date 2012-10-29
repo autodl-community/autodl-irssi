@@ -68,7 +68,7 @@ use constant CHECK_FOR_UPDATES_SECS => 60*60;
 #
 use constant MAX_CONNECTION_WAIT_SECS => 10*60;
 
-my $version = '1.31';
+my $version = '1.32';
 my $trackersVersion = -1;
 
 # Called when we're enabled
@@ -76,7 +76,7 @@ sub enable {
 	$AutodlIrssi::g->{messageBuffer} = new AutodlIrssi::MessageBuffer();
 
 	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now enabled! :-)";
-	message 3, "\x02\x0309Help forum\x03\x02 \x02http://sourceforge.net/apps/phpbb/autodl-irssi/\x02";
+	message 3, "\x02\x0309Bugs and Requests\x03\x02 \x02https://github.com/autodl-irssi-community/autodl-irssi/issues/\x02";
 
 	createDirectories(getAutodlSettingsDir());
 
