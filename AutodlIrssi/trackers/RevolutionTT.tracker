@@ -27,7 +27,7 @@
 	type="rtt"
 	shortName="RevoTT"
 	longName="RevolutionTT"
-	siteName="www.revolutiontt.net">
+	siteName="revolutiontt.me">
 
 	<settings>
 		<description text="Paste (Ctrl+V) any RevolutionTT torrent download link into the text box below to automatically extract passkey."/>
@@ -37,8 +37,8 @@
 	<servers>
 		<server
 			network="revolutiontt"
-			serverNames="irc.revolutiontt.net"
-			channelNames="#vip"
+			serverNames="irc.revolutiontt.me"
+			channelNames="#RevolutionTT,#vip"
 			announcerNames="RevoTT"
 			/>
 	</servers>
