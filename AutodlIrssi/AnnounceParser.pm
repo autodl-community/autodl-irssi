@@ -178,6 +178,7 @@ sub onNewLine {
 	$line = decodeHtmlEntities($line);
 
 	my $ti = {
+		releaseType		=> "",		
 		category		=> "",
 		torrentName		=> "",
 		uploader		=> "",

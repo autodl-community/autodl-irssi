@@ -48,6 +48,7 @@
 		<linepatterns>
 			<extract>
 				<!--Roy Buchanan - Loading Zone [1977] - FLAC / Lossless / Log / 100% / Cue / CD - http://what.cd/torrents.php?id=97614 / http://what.cd/torrents.php?action=download&id=1382972 - blues, rock, classic.rock,jazz,blues.rock,electric.blues-->
+				<!--Heirloom - Road to the Isles [1998] [Album] - FLAC / Lossless / Log / 100% / Cue / CD - http://what.cd/torrents.php?id=72158898 / http://what.cd/torrents.php?action=download&id=29910415 - 1990s, folk, world_music, celtic-->
 				<regex value="^(.*)\s+-\s+https?:.*[&amp;\?]id=.*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s*-\s*(.*)"/>
 				<vars>
 					<var name="torrentName"/>
@@ -82,11 +83,17 @@
 			<extractone>
 				<!--Should match all music releases-->
 				<extract srcvar="torrentName">
-					<regex value="^(.+?) - ([^\[]+).*\[(\d{4})\]\s*-([^\-\[\]]+)"/>
+				<!--Roy Buchanan - Loading Zone [1977] - FLAC / Lossless / Log / 100% / Cue / CD - http://what.cd/torrents.php?id=97614 / http://what.cd/torrents.php?action=download&id=1382972 - blues, rock, classic.rock,jazz,blues.rock,electric.blues-->
+				<!--Heirloom - Road to the Isles [1998] [Album] - FLAC / Lossless / Log / 100% / Cue / CD - http://what.cd/torrents.php?id=72158898 / http://what.cd/torrents.php?action=download&id=29910415 - 1990s, folk, world_music, celtic-->
+				<!--Rascal Flatts - Changed [2012] [Album] - MP3 / 320 / CD - http://what.cd/torrents.php?id=72176696 /
+                http://what.cd/torrents.php?action=download&id=29983793 - country, pop-->
+					<!--<regex value="^(.+?) - ([^\[]+).*\[(\d{4})\].*-([^\-\[\]]+)"/>-->
+					<regex value="^(.+?) - ([^\[]+).*\[(\d{4})\] \[([^\[]+)\] - ([^\-\[\]]+)"/>
 					<vars>
 						<var name="name1"/>
 						<var name="name2"/>
 						<var name="year"/>
+						<var name="releaseType"/>
 						<var name="$releaseTags"/>
 					</vars>
 				</extract>
@@ -108,12 +115,12 @@
 			</extractone>
 
 			<extracttags srcvar="$releaseTags" split="/">
-				<setvarif varName="format" regex="^(?:MP3|FLAC|Ogg|AAC|AC3|DTS)$"/>
+				<setvarif varName="format" regex="^(?:MP3|FLAC|Ogg Vorbis|AAC|AC3|DTS)$"/>
 
 				<setvarif varName="bitrate" regex="Lossless$"/>
 				<setvarif varName="bitrate" regex="^(?:vbr|aps|apx|v\d|\d{2,4}|\d+\.\d+|q\d+\.[\dx]+|Other)?(?:\s*kbps|\s*kbits?|\s*k)?(?:\s*\(?(?:vbr|cbr)\)?)?$"/>
 
-				<setvarif varName="media" regex="^(?:CD|DVD|Vinyl|Soundboard|SACD|DAT|Cassette|WEB)$"/>
+				<setvarif varName="media" regex="^(?:CD|DVD|Vinyl|Soundboard|SACD|DAT|Cassette|WEB|Blu-ray|Other)$"/>
 
 				<setvarif varName="scene" value="Scene" newValue="true"/>
 				<setvarif varName="log" value="Log" newValue="true"/>

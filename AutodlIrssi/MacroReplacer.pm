@@ -91,6 +91,7 @@ sub addTorrentInfo {
 	$self->add("Episode", $ti->{episode});
 	$self->add("Episode2", $fmtNum->("%02d", $ti->{episode}));
 	$self->add("Resolution", $ti->{resolution});
+	$self->add("ReleaseType", $ti->{releaseType});
 	$self->add("Source", $ti->{source});
 	$self->add("Encoder", $ti->{encoder});
 	$self->add("Format", $ti->{format});

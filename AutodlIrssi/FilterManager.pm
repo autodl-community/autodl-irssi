@@ -106,6 +106,9 @@ sub checkFilter {
 	return 0 if $filter->{matchCategories} ne '' && !checkFilterStrings($ti->{category}, $filter->{matchCategories});
 	return 0 if $filter->{exceptCategories} ne '' && checkFilterStrings($ti->{category}, $filter->{exceptCategories});
 
+	return 0 if $filter->{matchReleaseTypes} ne '' && !checkFilterStrings($ti->{releaseType}, $filter->{matchReleaseTypes});
+	return 0 if $filter->{exceptReleaseTypes} ne '' && checkFilterStrings($ti->{releaseType}, $filter->{exceptReleaseTypes});	
+
 	return 0 if $filter->{artists} ne '' && !checkName($ti->{name1}, $filter->{artists});
 	return 0 if $filter->{albums} ne '' && !checkName($ti->{name2}, $filter->{albums});
 

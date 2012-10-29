@@ -88,10 +88,26 @@ our $tvEncoders = [
 	["WMV", "WMV-HD"],
 ];
 
+our $musicReleaseTypes = [
+	["Album"],
+	["Soundtrack"],
+	["EP"],
+	["Anthology"],
+	["Compilation"],
+	["DJ Mix"],
+	["Single"],
+	["Live album"],
+	["Remix"],
+	["Bootleg"],
+	["Interview"],
+	["Mixtape"],
+	["Unknown"],
+];
+
 our $musicFormats = [
 	["MP3"],
 	["FLAC"],
-	["Ogg"],
+	["Ogg","Ogg Vorbis"],
 	["AAC"],
 	["AC3"],
 	["DTS"],
