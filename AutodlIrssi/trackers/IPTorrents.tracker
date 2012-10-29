@@ -30,8 +30,8 @@
 	siteName="www.iptorrents.com">
 
 	<settings>
-		<cookie_description text="FireFox -> Preferences -> Privacy -> Show Cookies and find the uid and pass cookies. Example: uid=1234; pass=asdf12347asdf13"/>
-		<cookie/>
+		<description text="Go to IPTorrents site and click on your username under the logo to find your passkey."/>
+		<passkey tooltiptext="Copy the passkey from your details page"/>
 	</settings>
 
 	<servers>
@@ -76,11 +76,9 @@
 				<var name="$torrentId"/>
 				<string value="/"/>
 				<varenc name="torrentName"/>
-				<string value=".torrent"/>
+				<string value=".torrent?torrent_pass="/>
+				<var name="passkey"/>
 			</var>
-			<http name="cookie">
-				<var name="cookie"/>
-			</http>
 		</linematched>
 		<ignore>
 			<regex value="details\.php\?id=\d+" expected="false"/>
