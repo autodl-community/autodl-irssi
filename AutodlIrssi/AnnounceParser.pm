@@ -178,8 +178,9 @@ sub onNewLine {
 	$line = decodeHtmlEntities($line);
 
 	my $ti = {
-		releaseType		=> "",		
-		category		=> "",
+		releaseType 	=> "",
+		freeleech 	=>	"",
+		category 	=> "",
 		torrentName		=> "",
 		uploader		=> "",
 		torrentSize		=> "",
@@ -493,6 +494,7 @@ sub onAllLinesMatched {
 	$ti->{torrentSize} = convertToByteSizeString(convertByteSizeString($ti->{torrentSize})) || "";
 	$ti->{preTime} = convertToTimeSinceString(convertTimeSinceString($ti->{preTime})) || "";
 	$ti->{scene} = convertStringToBoolean($ti->{scene}) if $ti->{scene};
+	$ti->{freeleech} = convertStringToBoolean($ti->{freeleech}) if $ti->{freeleech};
 	$ti->{log} = convertStringToBoolean($ti->{log}) if $ti->{log};
 	$ti->{cue} = convertStringToBoolean($ti->{cue}) if $ti->{cue};
 

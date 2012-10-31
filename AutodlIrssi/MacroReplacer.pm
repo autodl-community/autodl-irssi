@@ -99,6 +99,7 @@ sub addTorrentInfo {
 	$self->add("Media", $ti->{media});
 	$self->add("Tags", $ti->{tags});
 	$self->add("Scene", $ti->{scene});
+	$self->add("Freeleech", $ti->{freeleech});
 	$self->add("Log", $ti->{log});
 	$self->add("Cue", $ti->{cue});
 

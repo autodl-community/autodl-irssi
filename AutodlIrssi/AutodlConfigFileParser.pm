@@ -268,6 +268,7 @@ sub doHeaderFilter {
 			exceptTags => '',
 			exceptTagsAny => 1,
 			scene => '',
+			freeleech => '',
 			log => '',
 			cue => '',
 			maxDownloads => '',
@@ -323,6 +324,7 @@ sub doHeaderFilter {
 			'except-tags' => 'exceptTags',
 			'except-tags-any' => 'exceptTagsAny',
 			'scene' => 'scene',
+			'freeleech' => 'freeleech',
 			'log' => 'log',
 			'cue' => 'cue',
 			'max-downloads' => 'maxDownloads',
@@ -352,6 +354,7 @@ sub doHeaderFilter {
 		}
 		$filter->{enabled} = convertStringToBoolean($filter->{enabled});
 		$filter->{scene} = convertStringToBoolean($filter->{scene}) if $filter->{scene};
+		$filter->{freeleech} = convertStringToBoolean($filter->{freeleech}) if $filter->{freeleech};
 		$filter->{log} = convertStringToBoolean($filter->{log}) if $filter->{log};
 		$filter->{cue} = convertStringToBoolean($filter->{cue}) if $filter->{cue};
 		$filter->{maxDownloads} = convertStringToInteger($filter->{maxDownloads}, -1);
