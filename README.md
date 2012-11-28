@@ -23,17 +23,6 @@ Features:
 * Automatically connects to IRC servers and channels
 * Wake on LAN
 
-It can be downloaded here: http://sourceforge.net/projects/autodl-irssi/
-
-[![filters1](http://img38.imageshack.us/img38/3294/filters1.png)](http://img38.imageshack.us/i/filters1.png/)
-[![filters2e](http://img197.imageshack.us/img197/1296/filters2e.png)](http://img197.imageshack.us/i/filters2e.png/)
-[![filters3](http://img163.imageshack.us/img163/9039/filters3.png)](http://img163.imageshack.us/i/filters3.png/)
-[![prefs1](http://img535.imageshack.us/img535/6194/prefs1.png)](http://img535.imageshack.us/i/prefs1.png/)
-[![servers1](http://img39.imageshack.us/img39/153/servers1.png)](http://img39.imageshack.us/i/servers1.png/)
-
-
-
-
 ## Installation
 
 The install script will install autodl-irssi and optionally also ruTorrent, the ruTorrent plugin and any other dependencies required to have a fully working ruTorrent install. It will ask a few questions and then install whatever you selected.
@@ -41,7 +30,7 @@ The install script will install autodl-irssi and optionally also ruTorrent, the 
 ### Ubuntu and Ubuntu clones
 
 	cd
-	wget --no-check-certificate -O autodl-setup http://sourceforge.net/projects/autodl-irssi/files/autodl-setup/download
+	wget --no-check-certificate -O autodl-setup https://github.com/downloads/autodl-irssi-community/autodl-irssi/autodl-setup
 	sudo sh autodl-setup
 
 ### Any other OS
@@ -49,7 +38,7 @@ Log in as root:
 	su -
 Then install it:
 
-	wget --no-check-certificate -O autodl-setup http://sourceforge.net/projects/autodl-irssi/files/autodl-setup/download
+	wget --no-check-certificate -O autodl-setup https://github.com/downloads/autodl-irssi-community/autodl-irssi/autodl-setup
 	sh autodl-setup
 
 
@@ -127,7 +116,7 @@ Installing autodl-irssi. Note: Make sure you're **not** root when you execute th
 
 	mkdir -p ~/.irssi/scripts/autorun
 	cd ~/.irssi/scripts
-	wget -O autodl-irssi.zip http://sourceforge.net/projects/autodl-irssi/files/autodl-irssi-v1.31.zip/download
+	wget -O autodl-irssi.zip https://github.com/downloads/autodl-irssi-community/autodl-irssi/autodl-setup
 	unzip -o autodl-irssi.zip
 	rm autodl-irssi.zip
 	cp autodl-irssi.pl autorun/
