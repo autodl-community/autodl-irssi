@@ -46,13 +46,14 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--NEW :: Important.Things.with.Demetri.Martin.S02E01.720p.HDTV.X264-DIMENSION :: TV-X264 :: http://www.thegft.org/details.php?id=225329 :: 1 minutes and 23 seconds after pre.-->
-				<regex value="^NEW\s*::(.*)::(.*)::\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s*::(.*)"/>
+				<!--NEW :: JaydenJaymes.12.12.01.Jayden.Jaymes.And.Sandy.Pretty.In.Pink.XXX.WMV-YAPG :: XXX/0DAY :: http://www.thegft.org/details.php?id=889191 :: 616.77 MB :: 28 seconds after pre.-->
+				<regex value="^NEW\s*::(.*)::(.*)::\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)\s*::(.*)::(.*)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="category"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
+					<var name="torrentSize"/>
 					<var name="preTime"/>
 				</vars>
 			</extract>
