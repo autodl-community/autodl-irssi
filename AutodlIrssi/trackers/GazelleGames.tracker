@@ -39,7 +39,7 @@
 		<server
 			network="GGn"
 			serverNames="irc.gazellegames.net"
-			channelNames="#gazellegames"
+			channelNames="#Announce"
 			announcerNames="Vertigo"
 			/>
 	</servers>
