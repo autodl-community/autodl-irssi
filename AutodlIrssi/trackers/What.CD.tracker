@@ -125,6 +125,7 @@
 				<setvarif varName="scene" value="Scene" newValue="true"/>
 				<setvarif varName="log" value="Log" newValue="true"/>
 				<setvarif varName="cue" value="Cue" newValue="true"/>
+				<setvarif varName="freeleech" value="Freeleech!" newValue="true"/>
 
 				<setvarif varName="$logpercent" regex="^[\d\.]+%$"/>
 
