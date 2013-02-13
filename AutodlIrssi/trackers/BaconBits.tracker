@@ -107,6 +107,8 @@
 				<regex value="^(?:5\.1 Audio|\.m4a|Various.*|~.*|&gt;.*)$"/>
 			</extracttags>
 
+			<varreplace name="logScore" srcvar="$logpercent" regex="%" replace=""/>
+
 			<var name="torrentUrl">
 				<string value="https://"/>
 				<var name="$baseUrl"/>
