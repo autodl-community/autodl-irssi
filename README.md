@@ -4,7 +4,7 @@ autodl-irssi is licensed under the [Mozilla Public License 1.1](https://www.mozi
 Repository: https://github.com/autodl-irssi-community/autodl-irssi  
 Issue Tracker: https://github.com/autodl-irssi-community/autodl-irssi/issues  
 Downloads: https://code.google.com/p/autodl-irssi-community/downloads/list  
-IRC: irc://irc.rizon.net/autodl-irssi-community  
+IRC: [#autodl-irssi-community on Rizon](irc://irc.rizon.net/autodl-irssi-community)  
 E-Mail: autodl.irssi.community@gmail.com  
 
 # autodl-irssi
