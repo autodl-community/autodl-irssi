@@ -201,6 +201,7 @@ sub onNewLine {
 		tags			=> "",
 		scene			=> "",
 		log				=> "",
+		logScore		=> "",
 		cue				=> "",
 		line			=> $line,
 		origLine		=> $origLine,

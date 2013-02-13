@@ -121,6 +121,7 @@ sub checkFilter {
 	return 0 if $filter->{scene} ne '' && !$ti->{scene} != !$filter->{scene};
 	return 0 if $filter->{freeleech} ne '' && !$ti->{freeleech} != !$filter->{freeleech};
 	return 0 if $filter->{log} ne '' && !$ti->{log} != !$filter->{log};
+	return 0 if $filter->{logScores} ne '' && !checkFilterStrings($ti->{logScore}, $filter->{logScores});
 	return 0 if $filter->{cue} ne '' && !$ti->{cue} != !$filter->{cue};
 
 	return 0 if $filter->{matchUploaders} ne '' && !checkFilterStrings($ti->{uploader}, $filter->{matchUploaders});
