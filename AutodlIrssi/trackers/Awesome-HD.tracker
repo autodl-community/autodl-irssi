@@ -65,6 +65,8 @@
 				<setvarif varName="source" regex="^(?:HDTV|BluRay|Blu\-Ray|WEB\-DL|WEB|HDDVD|HD\-DVD)$"/>
 				<setvarif varName="encoder" regex="^(?:x264|h\.264 Remux|h264 Remux|VC-1 Remux|VC1 Remux|h\.264|h264|mpeg2|VC\-1|VC1)$"/>
 
+				<setvarif varName="$freePer" regex="^(?:25% Freeleech|50% Freeleech|75% Freeleech)$"/>
+
 				<!--Ignored-->
 				<regex value=""/>
 			</extracttags>
@@ -76,6 +78,8 @@
 					<var name="year"/>
 				</vars>
 			</extract>
+
+			<varreplace name="freeleechPercent" srcvar="$freePer" regex="%\s*Freeleech" replace=""/>
 
 			<var name="torrentUrl">
 				<string value="http://awesome-hd.net/"/>
