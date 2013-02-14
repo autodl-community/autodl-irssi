@@ -180,6 +180,7 @@ sub onNewLine {
 	my $ti = {
 		releaseType 	=> "",
 		freeleech 	=>	"",
+		freeleechPercent	=> "",
 		category 	=> "",
 		torrentName		=> "",
 		uploader		=> "",
