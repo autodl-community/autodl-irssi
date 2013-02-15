@@ -60,6 +60,8 @@
 			</extract>
 		</linepatterns>
 		<linematched>
+			<varreplace name="tags" srcvar="$releaseTags" regex="[\/]" replace=","/>
+
 			<extracttags srcvar="$releaseTags" split="/">
 				<setvarif varName="resolution" regex="^(?:720p|1080p|1080i)$"/>
 				<setvarif varName="source" regex="^(?:HDTV|BluRay|Blu\-Ray|WEB\-DL|WEB|HDDVD|HD\-DVD)$"/>
