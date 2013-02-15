@@ -120,9 +120,9 @@ sub checkFilter {
 	return 0 if $filter->{exceptTags} ne '' && checkFilterTags($ti->{tags}, $filter->{exceptTags}, $filter->{exceptTagsAny});
 	return 0 if $filter->{scene} ne '' && !$ti->{scene} != !$filter->{scene};
 	return 0 if $filter->{freeleech} ne '' && !$ti->{freeleech} != !$filter->{freeleech};
-	return 0 if $filter->{freeleechPercents} ne '' && !checkFilterStrings($ti->{freeleechPercent}, $filter->{freeleechPercents});
+	return 0 if $filter->{freeleechPercents} ne '' && !checkFilterNumbers($ti->{freeleechPercent}, $filter->{freeleechPercents});
 	return 0 if $filter->{log} ne '' && !$ti->{log} != !$filter->{log};
-	return 0 if $filter->{logScores} ne '' && !checkFilterStrings($ti->{logScore}, $filter->{logScores});
+	return 0 if $filter->{logScores} ne '' && !checkFilterNumbers($ti->{logScore}, $filter->{logScores});
 	return 0 if $filter->{cue} ne '' && !$ti->{cue} != !$filter->{cue};
 
 	return 0 if $filter->{matchUploaders} ne '' && !checkFilterStrings($ti->{uploader}, $filter->{matchUploaders});
