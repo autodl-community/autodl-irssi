@@ -5,5 +5,5 @@ Repository: https://github.com/autodl-irssi-community/autodl-irssi
 Wiki: https://github.com/autodl-irssi-community/autodl-irssi/wiki
 Issue Tracker: https://github.com/autodl-irssi-community/autodl-irssi/issues  
 Downloads: https://code.google.com/p/autodl-irssi-community/downloads/list  
-IRC: [#autodl-irssi-community on Rizon](irc://irc.rizon.net/autodl-irssi-community)  
+IRC: ``#autodl-irssi-community on Rizon``  
 E-Mail: autodl.irssi.community@gmail.com  
