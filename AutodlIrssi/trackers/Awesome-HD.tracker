@@ -47,14 +47,15 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--MOVIE: 5 Days of War [2011] - HiFi / Blu-Ray / 1080p / mkv / h.264 Remux / DTS / AHD Gold / DXVA / 75% Freeleech - http://awesome-hd.net/torrents.php?id=4607 / http://awesome-hd.net/torrents.php?action=download&id=11489-->
-				<!--TV-SHOW: The Walking Dead [2010] - decibeL / Blu-Ray / 1080p / mkv / TrueHD / TrueHD / AHD Gold / DXVA / 75% Freeleech - http://awesome-hd.net/torrents.php?id=6985 / http://awesome-hd.net/torrents.php?action=download&id=11490-->
-				<!--AUDIO-TRACK: Indiana Jones and the Last Crusade [1989] - D-Z0N3 /  / DTS / DTS / DTS / 75% Freeleech - https://ssl.awesome-hd.net/torrents.php?id=6978 / https://ssl.awesome-hd.net/torrents.php?action=download&id=11479-->
-				<regex value="^(MOVIE|TV-SHOW|AUDIO-TRACK):\s+(.*?)\s+\/\s+(.*?)\s+-.*download.id=(\d+)"/>
+				<!--MOVIE: The Hobbit: An Unexpected Journey [2012] - HiFi / Blu-Ray / 1080p / mkv / h.264 Remux / DTSHD-MA / AHD Gold / DXVA / 75% Freeleech - https://awesome-hd.net/torrents.php?id=7892 / https://awesome-hd.net/torrents.php?action=download&id=13462 -->
+				<!--TV-SHOW: Homeland [2011] - WiKi / Blu-Ray / 720p / mkv / x264 / DTS / AHD Gold / 0% Freeleech - https://awesome-hd.net/torrents.php?id=7905 / https://awesome-hd.net/torrents.php?action=download&id=13459-->
+				<!--AUDIO-TRACK: Indiana Jones and the Last Crusade [1989] - D-Z0N3 /  / DTS / DTS / DTS / 75% Freeleech - https://awesome-hd.net/torrents.php?id=6978 / https://awesome-hd.net/torrents.php?action=download&id=11479-->
+				<regex value="^(MOVIE|TV-SHOW|AUDIO-TRACK):\s+(.*?)\s+\/\s+(.*?)\s+-\s+https?:.*[&amp;\?]id=.*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="$releaseTags"/>
+					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 				</vars>
 			</extract>
@@ -84,16 +85,8 @@
 			<varreplace name="freeleechPercent" srcvar="$freePer" regex="%\s*Freeleech" replace=""/>
 
 			<var name="torrentUrl">
-				<string value="http://awesome-hd.net/"/>
-				<string value="torrents.php?action=download&amp;id="/>
-				<var name="$torrentId"/>
-				<string value="&amp;authkey="/>
-				<var name="authkey"/>
-				<string value="&amp;torrent_pass="/>
-				<var name="torrent_pass"/>
-			</var>
-			<var name="torrentSslUrl">
-				<string value="https://ssl.awesome-hd.net/"/>
+				<string value="https://"/>
+				<var name="$baseUrl"/>
 				<string value="torrents.php?action=download&amp;id="/>
 				<var name="$torrentId"/>
 				<string value="&amp;authkey="/>
