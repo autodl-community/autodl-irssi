@@ -49,7 +49,7 @@
 				<!--New in 720P: Rabbit.Without.Ears.II.2009.ROSUB.720p.BluRay.x264-ZoNE with 4.37 GB in 2F @ https://PTN/moviedetails.php?movieid=7036 https://PTN/details.php?id=65157> -->
 				<regex value="^New in (.*)\:(.*) with (.*) in .*\s*https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
 				<vars>
-					<var name="$quality"/>
+					<var name="category"/>
 					<var name="torrentName"/>
 					<var name="torrentSize"/>
 					<var name="$baseUrl"/>
