@@ -47,9 +47,9 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--Various Artists - Samurai Girl Real Bout High School Official Soundtrack [2003] :: MP3 / 320 / CD || http://tracker.url/torrents2.php?id=14923&torrentid=50957 || soundtrack || Uploaded by: Username-->
-				<!--Yume Kui: Tsurumiku Shiki Game Seisaku - OVA [2011] :: DVD / MKV / h264 / 704x396 / AAC / Softsubs (SubDESU-H) / Hentai (Censored) || http://tracker.url/torrents.php?id=8370&torrentid=50958 || nudity, sex, rape, virgins, erotic.game || Uploaded by: Username-->
-				<regex value="(.*) :: (.*) \|\| https?\:\/\/animebytes.tv/(torrents.*)\?.*[&amp;\?]torrentid=(\d+) \|\| (.*) \|\|\s+Uploaded by: (.*)"/>
+				<!--Various Artists - Samurai Girl Real Bout High School Official Soundtrack [2003] :: MP3 / 320 / CD || https://tracker.url/torrents2.php?id=14923&torrentid=50957 || soundtrack || Uploaded by: Username-->
+				<!--Yume Kui: Tsurumiku Shiki Game Seisaku - OVA [2011] :: DVD / MKV / h264 / 704x396 / AAC / Softsubs (SubDESU-H) / Hentai (Censored) || https://tracker.url/torrents.php?id=8370&torrentid=50958 || nudity, sex, rape, virgins, erotic.game || Uploaded by: Username-->
+				<regex value="(.*) :: (.*) \|\| https?\:\/\/(.*)\?.*[&amp;\?]torrentid=(\d+) \|\| (.*) \|\|\s+Uploaded by: (.*)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$releaseTags"/>
@@ -60,9 +60,9 @@
 				</vars>
 			</extract>
 			<extract>
-				<!--Juubee Ninpuuchou - Movie [1993] :: Bluray / MKV / h264 / 960x720 / AC3 / Dual Audio / Softsubs (BluDragon) || http://tracker.url/torrents.php?id=788&torrentid=48514 || drama, ecchi, fantasy, historical, horror, martial.arts, seinen, supernatural, violence, nudity, ninjas, samurai, gore, action-->
-				<!--Stereopony - More! More!! More!!! [2011] :: FLAC / Lossless / CD || http://tracker.url/torrents2.php?id=13120&torrentid=48574 || pop, vocal-->
-				<regex value="(.*) :: (.*) \|\| https?\:\/\/animebytes.tv/(torrents.*)\?.*[&amp;\?]torrentid=(\d+) \|\| (.*)"/>
+				<!--Juubee Ninpuuchou - Movie [1993] :: Bluray / MKV / h264 / 960x720 / AC3 / Dual Audio / Softsubs (BluDragon) || https://tracker.url/torrents.php?id=788&torrentid=48514 || drama, ecchi, fantasy, historical, horror, martial.arts, seinen, supernatural, violence, nudity, ninjas, samurai, gore, action-->
+				<!--Stereopony - More! More!! More!!! [2011] :: FLAC / Lossless / CD || https://tracker.url/torrents2.php?id=13120&torrentid=48574 || pop, vocal-->
+				<regex value="(.*) :: (.*) \|\| https?\:\/\/(.*)\?.*[&amp;\?]torrentid=(\d+) \|\| (.*)"/>
 				<vars>
 					<var name="torrentName"/>
 					<var name="$releaseTags"/>
@@ -97,7 +97,7 @@
 			</extract>
 			
 			<var name="torrentUrl">
-				<string value="https://yuki.animebytes.tv/"/>
+				<string value="https://"/>
 				<var name="$baseUrl"/>
 				<string value="?action=download&amp;id="/>
 				<var name="$torrentId"/>
