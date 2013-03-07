@@ -45,7 +45,7 @@
 	</servers>
 
 	<parseinfo>
-		<linepatterns>
+		<multilinepatterns>
 			<extract>
 				<!--[New Shit] S.W.A.T.Firefight.2011.PROPER.NTSC.MULTi.DVDR-BonG [Movies] @ https://www.funfile.org/details.php?id=131267-->
 				<regex value="^\[New Shit\] (.*) \[([^\]]+)\] @ https?\:\/\/([^\/]+\/).*[&amp;\?]id=(\d+)"/>
@@ -56,8 +56,22 @@
 					<var name="$torrentId"/>
 				</vars>
 			</extract>
-		</linepatterns>
+			<extract optional="true">
+				<!--[Scene] Uploaded 33 secs after pre-->
+				<regex value="^(\[Scene\])\s+Uploaded(.*)after pre"/>
+				<vars>
+					<var name="$scene"/>
+					<var name="preTime"/>
+				</vars>
+			</extract>
+		</multilinepatterns>
 		<linematched>
+			<var name="scene">
+				<string value="false"/>
+			</var>
+
+			<setregex srcvar="$scene" regex="Scene" varName="scene" newValue="true"/>
+			
 			<var name="torrentUrl">
 				<string value="https://"/>
 				<var name="$baseUrl"/>
