@@ -46,11 +46,12 @@
 	<parseinfo>
 		<linepatterns>
 			<extract>
-				<!--[TV/Packs] Star Blazers US S01-02 DVDRip XviD-SPRiNTER [FreeLeech] - http://www.iptorrents.com/details.php?id=396777 - 9.416 GB-->
-				<regex value="^\[([^\]]*)](.*)\[FreeLeech]\s*-\s+https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)\s*-(.*)"/>
+				<!--[Movie/XXX] Audrey Bitoni HD Pack FREELEECH - http://www.iptorrents.com/details.php?id=789421 - 14.112 GB-->
+				<regex value="^\[([^\]]*)](.*)(FREELEECH)\s*-\s+https?\:\/\/([^\/]+).*[&amp;\?]id=(\d+)\s*-(.*)"/>
 				<vars>
 					<var name="category"/>
 					<var name="torrentName"/>
+					<var name="$freeleech"/>
 					<var name="$baseUrl"/>
 					<var name="$torrentId"/>
 					<var name="torrentSize"/>
@@ -69,6 +70,11 @@
 			</extract>
 		</linepatterns>
 		<linematched>
+			<var name="freeleech">
+				<string value="false"/>
+			</var>
+			<setregex srcvar="$freeleech" regex="FREELEECH" varName="freeleech" newValue="true"/>
+		
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
