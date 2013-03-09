@@ -70,7 +70,7 @@
 			<setregex srcvar="origLine" regex="^\| Blackcats[^:]*: Recycled Torrent" varName="tags" newValue="recycled"/>
 
 			<var name="torrentUrl">
-				<string value="http://"/>
+				<string value="https://"/>
 				<var name="$baseUrl"/>
 				<string value="download_new.php/"/>
 				<var name="passkey"/>
