@@ -30,8 +30,11 @@
 	siteName="www.blackcats-games.net">
 
 	<settings>
-		<cookie_description text="FireFox -> Options -> Privacy -> Show Cookies and find the uid and pass cookies. Example: uid=1234; pass=asdf12347asdf13"/>
-		<cookie/>
+		<description text="Go to https://www.blackcats-games.net/feeds.php and click on Generate RSS feed!, copy the Generated RSS Feed from the top"/>
+		<passkey
+			tooltiptext="The passkey in your blackcats-games rss feed"
+			pasteRegex="[\?&amp;]passkey=([\da-fA-F]{32})"
+		/>
 	</settings>
 
 	<servers>
@@ -69,15 +72,14 @@
 			<var name="torrentUrl">
 				<string value="http://"/>
 				<var name="$baseUrl"/>
-				<string value="download.php/"/>
+				<string value="download_new.php/"/>
+				<var name="passkey"/>
+				<string value="/"/>
 				<var name="$torrentId"/>
 				<string value="/"/>
 				<varenc name="torrentName"/>
 				<string value=".torrent"/>
 			</var>
-			<http name="cookie">
-				<var name="cookie"/>
-			</http>
 		</linematched>
 		<ignore>
 			<regex value="^\| Blackcats[^:]*:" expected="false"/>
