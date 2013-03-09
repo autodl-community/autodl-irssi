@@ -68,6 +68,9 @@
 			<var name="cue">
 				<string value="false"/>
 			</var>
+            <var name="freeleech">
+				<string value="false"/>
+			</var>
 
 			<!--Some use dots some use underscores, but replace all with spaces-->
 			<varreplace name="tags" srcvar="tags" regex="[\._]" replace=" "/>
