@@ -78,6 +78,7 @@
 			<regex value="^\s*New thread:"/>
 			<regex value="^\s*User not found"/>
 			<regex value="^\s*\[ .* \] ::  \[ Class"/>
+			<regex value="^New Game Request:"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
