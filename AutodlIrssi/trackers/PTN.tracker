@@ -68,7 +68,7 @@
 			</var>
 		</linematched>
 		<ignore>
-			<regex value="^[DiAM0ND F0UND]"/>
+			<regex value="^\[DiAM0ND F0UND\]"/>
 			<regex value="^Welcome To Our"/>
 			<regex value="^User:"/>
 			<regex value="^Sending help to"/>
@@ -80,18 +80,19 @@
 			<regex value="^No matches found for"/>
 			<regex value="^Error"/>
 			<regex value="^Flood-Control:"/>
-			<regex value="^[Title]"/>
-			<regex value="^[Directed By]"/>
-			<regex value="^[Released]"/>
-			<regex value="^[Cast]"/>
-			<regex value="^[Plot]"/>
-			<regex value="^[Poster]"/>
-			<regex value="^[Runtime]"/>
-			<regex value="^[Link]"/>
+			<regex value="^\[Title\]"/>
+			<regex value="^\[Directed By\]"/>
+			<regex value="^\[Released\]"/>
+			<regex value="^\[Cast\]"/>
+			<regex value="^\[Plot\]"/>
+			<regex value="^\[Poster\]"/>
+			<regex value="^\[Runtime\]"/>
+			<regex value="^\[Link\]"/>
 			<regex value="^Torrent:"/>
 			<regex value="^Link:"/>
 			<regex value="^Size:"/>
 			<regex value="^Found"/>
+			<regex value="^\[PTN B-DAY GiFT\]"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
