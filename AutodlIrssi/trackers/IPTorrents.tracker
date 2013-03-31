@@ -76,7 +76,7 @@
 			<setregex srcvar="$freeleech" regex="FREELEECH" varName="freeleech" newValue="true"/>
 		
 			<var name="torrentUrl">
-				<string value="http://"/>
+				<string value="https://"/>
 				<var name="$baseUrl"/>
 				<string value="/download.php/"/>
 				<var name="$torrentId"/>
