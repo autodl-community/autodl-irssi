@@ -93,6 +93,7 @@
 			<regex value="^Size:"/>
 			<regex value="^Found"/>
 			<regex value="^\[PTN B-DAY GiFT\]"/>
+			<regex value="^No matches :"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
