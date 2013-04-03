@@ -38,7 +38,7 @@
 	<servers>
 		<server
 			network="AnimeBytes"
-			serverNames="mei.animebyt.es"
+			serverNames="irc.animebytes.tv"
 			channelNames="#announce"
 			announcerNames="Satsuki"
 		/>
