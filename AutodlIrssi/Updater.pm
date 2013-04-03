@@ -40,7 +40,7 @@ use File::Spec;
 use File::Copy;
 use Archive::Zip qw/ :ERROR_CODES /;
 use constant {
-	UPDATE_URL => 'https://autodl-irssi-community.googlecode.com/files/update.xml',
+	UPDATE_URL => 'https://autodl-irssi-community.googlecode.com/files/update.xml?nocache',
 
 	# This must not be a popular web browser's user agent or the update may fail
 	# since SourceForge checks the user agent and sends different results depending
