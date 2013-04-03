@@ -86,8 +86,7 @@ our $tvEncoders = [
 	["mpeg2", "mpeg-2"],
 	["VC-1", "VC1"],
 	["WMV", "WMV-HD"],
-	["h.264 Remux", "h264 Remux"],
-	["VC-1 Remux", "VC1 Remux"],
+	["h.264 Remux", "h264 Remux", "VC-1 Remux", "VC1 Remux", "Remux"],
 ];
 
 our $musicReleaseTypes = [
