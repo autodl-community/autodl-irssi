@@ -95,6 +95,7 @@
 			<regex value="^\[PTN B-DAY GiFT\]"/>
 			<regex value="^No matches :"/>
 			<regex value="^New request:"/>
+			<regex value="^\[Announcement\]"/>
 		</ignore>
 	</parseinfo>
 </trackerinfo>
