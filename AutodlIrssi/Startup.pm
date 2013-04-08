@@ -76,7 +76,7 @@ sub enable {
 	$AutodlIrssi::g->{messageBuffer} = new AutodlIrssi::MessageBuffer();
 
 	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now enabled! :-)";
-	message 3, "\x02\x0309Bugs and Requests\x03\x02 \x02https://github.com/autodl-irssi-community/autodl-irssi/issues/\x02";
+	message 3, "\x02\x0309Bugs and Requests\x03\x02 \x02https://github.com/autodl-community/autodl-irssi/issues/\x02";
 
 	createDirectories(getAutodlSettingsDir());
 
