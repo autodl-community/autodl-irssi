@@ -153,6 +153,7 @@ sub _fixServerInfo {
 	$info->{server} = canonicalizeServerName($info->{server});
 	$info->{identPassword} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{identEmail} =~ s/[\x00-\x1F\s]/_/g;
+	$info->{serverPassword} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{ssl} = convertStringToBoolean($info->{ssl});
 	$info->{enabled} = convertStringToBoolean($info->{enabled});
 
@@ -517,7 +518,7 @@ sub connect {
 		$cmd .= " -ssl" if $self->{info}{ssl};
 		$cmd .= " $self->{info}{server}";
 		$cmd .= ' ' . $self->_getServerPort();
-		$cmd .= ' ""';	# Password
+		$cmd .= " $self->{info}{serverPassword}";
 		$cmd .= " $self->{info}{nick}";
 		irssi_command($cmd);
 	}
