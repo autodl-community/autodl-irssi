@@ -25,56 +25,56 @@
    - ***** END LICENSE BLOCK ***** -->
 
 <trackerinfo
-  type="hdts"
-  shortName="HDTS"
-  longName="HD-Torrents"
-  siteName="www.hd-torrents.org">
+	type="hdts"
+	shortName="HDTS"
+	longName="HD-Torrents"
+	siteName="www.hd-torrents.org">
 
-  <settings>
-    <cookie_description text="FireFox -> Preferences -> Privacy -> Show Cookies and find the uid and pass cookies. Example: uid=1234; pass=asdf12347asdf13"/>
-    <cookie/>
-  </settings>
+	<settings>
+		<cookie_description text="FireFox -> Preferences -> Privacy -> Show Cookies and find the uid and pass cookies. Example: uid=1234; pass=asdf12347asdf13"/>
+		<cookie/>
+	</settings>
 
-  <servers>
-    <server
-      network="P2P-NET"
-      serverNames="irc.p2p-network.net"
-      channelNames="#HD-Torrents.Announce"
-      announcerNames="Staff"
-      />
-  </servers>
+	<servers>
+		<server
+			network="P2P-NET"
+			serverNames="irc.p2p-network.net"
+			channelNames="#HD-Torrents.Announce"
+			announcerNames="Staff"
+			/>
+	</servers>
 
-  <parseinfo>
-    <linepatterns>
-      <extract>
-        <!--New Torrent by Ms89 [Remux] Barry Munday 2010 BluRay Remux 1080p AVC DTS-HD MA 5 1 (16.28 GB) uploaded! Download: http://hdts.ru/download.php?id=fa193a789afbcdba6d76186766a262d8a79f5d3b-->
-        <regex value="^New Torrent by (.*) \[([^\]]*)\] (.*) \(([^\)]*)\) uploaded! Download\: https?\:\/\/([^\/]+\/).*[&amp;\?]id=([a-f0-9]+)"/>
-        <vars>
-          <var name="uploader"/>
-          <var name="category"/>
-          <var name="torrentName"/>
-          <var name="torrentSize"/>
-          <var name="$baseUrl"/>
-          <var name="$torrentId"/>
-        </vars>
-      </extract>
-    </linepatterns>
-    <linematched>
-      <var name="torrentUrl">
-        <string value="http://"/>
-        <var name="$baseUrl"/>
-        <string value="/download.php?id="/>
-        <var name="$torrentId"/>
-        <string value="&amp;f="/>
-        <varenc name="torrentName"/>
-        <string value=".torrent"/>
-      </var>
-      <http name="cookie">
-        <var name="cookie"/>
-      </http>
-    </linematched>
-    <ignore>
-      <regex value="/download\.php" expected="false"/>
-    </ignore>
-  </parseinfo>
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!--New Torrent by Ms89 [Remux] Barry Munday 2010 BluRay Remux 1080p AVC DTS-HD MA 5 1 (16.28 GB) uploaded! Download: http://hdts.ru/download.php?id=fa193a789afbcdba6d76186766a262d8a79f5d3b-->
+				<regex value="^New Torrent by (.*) \[([^\]]*)\] (.*) \(([^\)]*)\) uploaded! Download\: https?\:\/\/([^\/]+\/).*[&amp;\?]id=([a-f0-9]+)"/>
+				<vars>
+					<var name="uploader"/>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="torrentSize"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="http://"/>
+				<var name="$baseUrl"/>
+				<string value="/download.php?id="/>
+				<var name="$torrentId"/>
+				<string value="&amp;f="/>
+				<varenc name="torrentName"/>
+				<string value=".torrent"/>
+			</var>
+			<http name="cookie">
+				<var name="cookie"/>
+			</http>
+		</linematched>
+		<ignore>
+			<regex value="/download\.php" expected="false"/>
+		</ignore>
+	</parseinfo>
 </trackerinfo>
