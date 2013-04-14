@@ -156,6 +156,7 @@ sub _fixServerInfo {
 	$info->{serverPassword} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{ssl} = convertStringToBoolean($info->{ssl});
 	$info->{enabled} = convertStringToBoolean($info->{enabled});
+	$info->{bnc} = convertStringToBoolean($info->{bnc});
 
 	$info->{port} = convertStringToInteger($info->{port}, undef, 1, 65535);
 	if (!defined $info->{port}) {
@@ -610,7 +611,10 @@ sub _hasCorrectNick {
 sub _setNick {
 	my $self = shift;
 
-	if (!$self->_hasCorrectNick()) {
+	if ($self->{info}{bnc}) {
+		# Do nothing
+	}
+	elsif (!$self->_hasCorrectNick()) {
 		$self->_forceSetNick();
 	}
 	else {
@@ -1221,7 +1225,7 @@ sub setServers {
 	my $removedServers = {%$oldServers};
 	my $newServers = {};
 	while (my ($key, $serverInfo) = each %$serverInfos) {
-		next if $serverInfo->{nick} eq "";
+		next if $serverInfo->{nick} eq "" && !$serverInfo->{bnc};
 
 		my $serverName = canonicalizeServerName($serverInfo->{server});
 		next if $serverName eq "";
