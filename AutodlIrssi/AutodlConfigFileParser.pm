@@ -530,9 +530,11 @@ sub getServerInfo {
 			port => "",
 			ssl => "",
 			nick => "",
+			bnc=>'false',
 			identPassword => "",
 			identEmail => "",
 			channels => {},
+			serverPassword => "",
 		};
 	}
 	return $serverInfo;
@@ -548,8 +550,10 @@ sub doHeaderServer {
 			port => 'port',
 			ssl => 'ssl',
 			nick => 'nick',
+			bnc => 'bnc',
 			'ident-password' => 'identPassword',
 			'ident-email' => 'identEmail',
+			'server-password' => 'serverPassword',
 		});
 	}
 }

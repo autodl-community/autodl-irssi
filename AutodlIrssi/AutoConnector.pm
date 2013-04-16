@@ -153,8 +153,10 @@ sub _fixServerInfo {
 	$info->{server} = canonicalizeServerName($info->{server});
 	$info->{identPassword} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{identEmail} =~ s/[\x00-\x1F\s]/_/g;
+	$info->{serverPassword} =~ s/[\x00-\x1F\s]/_/g;
 	$info->{ssl} = convertStringToBoolean($info->{ssl});
 	$info->{enabled} = convertStringToBoolean($info->{enabled});
+	$info->{bnc} = convertStringToBoolean($info->{bnc});
 
 	$info->{port} = convertStringToInteger($info->{port}, undef, 1, 65535);
 	if (!defined $info->{port}) {
@@ -517,7 +519,7 @@ sub connect {
 		$cmd .= " -ssl" if $self->{info}{ssl};
 		$cmd .= " $self->{info}{server}";
 		$cmd .= ' ' . $self->_getServerPort();
-		$cmd .= ' ""';	# Password
+		$cmd .= " $self->{info}{serverPassword}";
 		$cmd .= " $self->{info}{nick}";
 		irssi_command($cmd);
 	}
@@ -609,7 +611,10 @@ sub _hasCorrectNick {
 sub _setNick {
 	my $self = shift;
 
-	if (!$self->_hasCorrectNick()) {
+	if ($self->{info}{bnc}) {
+		# Do nothing
+	}
+	elsif (!$self->_hasCorrectNick()) {
 		$self->_forceSetNick();
 	}
 	else {
@@ -1220,7 +1225,7 @@ sub setServers {
 	my $removedServers = {%$oldServers};
 	my $newServers = {};
 	while (my ($key, $serverInfo) = each %$serverInfos) {
-		next if $serverInfo->{nick} eq "";
+		next if $serverInfo->{nick} eq "" && !$serverInfo->{bnc};
 
 		my $serverName = canonicalizeServerName($serverInfo->{server});
 		next if $serverName eq "";

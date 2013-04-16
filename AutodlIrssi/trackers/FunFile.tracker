@@ -32,7 +32,7 @@
 
 	<settings>
 		<description text="Copy the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
-		<authkey />
+		<passkey tooltiptext="The passkey in your FunFile RSS feed link."/>
 	</settings>
 
 	<servers>
@@ -78,7 +78,7 @@
 				<string value="download.php/"/>
 				<var name="$torrentId"/>
 				<string value="/"/>
-				<var name="authkey"/>
+				<var name="passkey"/>
 				<string value="/"/>
 				<varenc name="torrentName"/>
 				<string value=".torrent"/>
