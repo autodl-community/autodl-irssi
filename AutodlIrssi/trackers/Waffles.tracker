@@ -139,7 +139,7 @@
 			</extracttags>
 
 			<var name="torrentUrl">
-				<string value="http://"/>
+				<string value="https://"/>
 				<var name="$baseUrl"/>
 				<string value="download.php/"/>
 				<var name="uid"/>
