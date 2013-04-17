@@ -332,7 +332,9 @@ sub _saveTorrentFile {
 	return unless $self->_checkMethodAllowed("watchdir");
 
 	eval {
-		my $watchDir = getAbsPath($self->{uploadMethod}{uploadWatchDir});
+		my $filename = $self->_writeTempFile($self->{torrentFileData});
+		my $macroReplacer = $self->_getMacroReplacer($filename);
+		my $watchDir = getAbsPath($macroReplacer->replace($self->{uploadMethod}{uploadWatchDir}));
 
 		# Save it to a temporary name with a different extension, and when all data has been written
 		# to the file, rename it to the real filename.
