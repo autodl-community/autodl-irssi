@@ -253,7 +253,7 @@ sub _onTorrentDownloaded {
 sub _onTorrentUploadWait {
 	my $self = shift;
 
-	my $uploadDelaySecs = $self->{ti}{announceParser}->readOption("upload-delay-secs");
+	my $uploadDelaySecs = $self->{ti}{filter}{uploadDelaySecs} ? $self->{ti}{filter}{uploadDelaySecs} : $self->{ti}{announceParser}->readOption("upload-delay-secs");
 	if (!$uploadDelaySecs || $uploadDelaySecs <= 0) {
 		$self->_onTorrentFileDownloaded();
 	}

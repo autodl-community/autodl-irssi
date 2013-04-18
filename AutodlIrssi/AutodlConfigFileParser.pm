@@ -292,6 +292,7 @@ sub doHeaderFilter {
 			wolMacAddress => '',
 			wolIpAddress => '',
 			wolPort => '',
+			uploadDelaySecs => 0,
 		};
 
 		my $options = $header->{options};
@@ -350,6 +351,7 @@ sub doHeaderFilter {
 			'wol-mac-address' => 'wolMacAddress',
 			'wol-ip-address' => 'wolIpAddress',
 			'wol-port' => 'wolPort',
+			'upload-delay-secs' => 'uploadDelaySecs',
 		});
 		$filter->{name} = $header->{name};
 
@@ -367,6 +369,7 @@ sub doHeaderFilter {
 		$filter->{rtDontAddName} = convertStringToBoolean($filter->{rtDontAddName});
 		$filter->{tagsAny} = convertStringToBoolean($filter->{tagsAny});
 		$filter->{exceptTagsAny} = convertStringToBoolean($filter->{exceptTagsAny});
+		$filter->{uploadDelaySecs} = convertStringToInteger($filter->{uploadDelaySecs}, -1);
 
 		push @{$self->{filters}}, $filter;
 	}
