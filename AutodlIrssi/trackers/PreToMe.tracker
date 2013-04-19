@@ -30,15 +30,18 @@
 	siteName="pretome.info">
 
 	<settings>
-		<cookie_description/>
-		<cookie/>
+		<description text="Copy the RSS feed link. Paste it (Ctrl+V) into the text box below to automatically extract passkey."/>
+		<passkey
+			tooltiptext="The passkey in your PreToMe rss feed"
+			pasteRegex="[\?&amp;]key=([\da-fA-F]{32})"
+		/>
 	</settings>
 
 	<servers>
 		<server
 			network="PreToMe"
 			serverNames="irc.pretome.info"
-			channelNames="#announce"
+			channelNames="#announce,#pretome"
 			announcerNames="tehDude"
 			/>
 	</servers>
@@ -65,12 +68,11 @@
 				<string value="/download.php/"/>
 				<var name="$torrentId"/>
 				<string value="/"/>
+				<var name="passkey"/>
+				<string value="/"/>
 				<varenc name="torrentName"/>
 				<string value=".torrent"/>
 			</var>
-			<http name="cookie">
-				<var name="cookie"/>
-			</http>
 		</linematched>
 		<ignore>
 		</ignore>
