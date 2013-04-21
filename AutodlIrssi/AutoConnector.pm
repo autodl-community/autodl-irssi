@@ -519,7 +519,12 @@ sub connect {
 		$cmd .= " -ssl" if $self->{info}{ssl};
 		$cmd .= " $self->{info}{server}";
 		$cmd .= ' ' . $self->_getServerPort();
-		$cmd .= " $self->{info}{serverPassword}";
+		if (!$self->{info}{serverPassword}) {
+			$cmd .= " -";
+		}
+		else {
+			$cmd .= " $self->{info}{serverPassword}";
+		}
 		$cmd .= " $self->{info}{nick}";
 		irssi_command($cmd);
 	}
