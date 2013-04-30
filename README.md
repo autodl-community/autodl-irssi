@@ -10,4 +10,4 @@ It is licensed under the [Mozilla Public License 1.1](https://www.mozilla.org/MP
 ## Contributing
 * [Fork us](https://help.github.com/articles/fork-a-repo) - Please make all [Pull Requests](https://help.github.com/articles/creating-a-pull-request) off the [devel branch](https://github.com/autodl-community/autodl-irssi/tree/devel)
 * Submit a bug or request on our [Issue Tracker](https://github.com/autodl-community/autodl-irssi/issues)
-* E-mail us at autodl.community@gmail.com or on IRC at ``#autodl-community`` on ``irc.p2p-network.net``
+* E-mail us at autodl.community@gmail.com or join us on IRC at ``#autodl-community`` on ``irc.p2p-network.net``
