@@ -51,10 +51,16 @@ use AutodlIrssi::WOL;
 use AutodlIrssi::Scgi;
 use AutodlIrssi::XmlRpcSimpleCall;
 use AutodlIrssi::RtorrentCommands;
-use Digest::SHA1 qw/ sha1 /;
 use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
 use Errno qw/ :POSIX /;
+
+if (eval { require Digest::SHA;1; }) {
+	Digest::SHA->import(qw(sha1));
+}
+else {
+	Digest::SHA1->import(qw(sha1));
+}
 
 sub new {
 	my ($class, $downloadHistory) = @_;
