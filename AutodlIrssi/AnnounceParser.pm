@@ -683,7 +683,7 @@ sub extractReleaseNameInfo {
 	my $indexSeason;
 	if (($data = $findLast->($canonReleaseName, qr/\sS(\d+)\s?[ED]\d+/i)) ||
 		($data = $findLast->($canonReleaseName, qr/\s(?:S|Season\s*)(\d+)/i)) ||
-		($data = $findLast->($canonReleaseName, qr/\s(\d+)x\d+/i))) {
+		($data = $findLast->($canonReleaseName, qr/\s((?<!\d)\d{1,2})x\d+/i))) {
 		$indexSeason = $data->{index};
 		$setVariable->("season", 0 + $data->{value});
 	}
@@ -691,7 +691,7 @@ sub extractReleaseNameInfo {
 	my $indexEpisode;
 	if (($data = $findLast->($canonReleaseName, qr/\sS\d+\s?E(\d+)/i)) ||
 		($data = $findLast->($canonReleaseName, qr/\s(?:E|Episode\s*)(\d+)/i)) ||
-		($data = $findLast->($canonReleaseName, qr/\s\d+x(\d+)/i))) {
+		($data = $findLast->($canonReleaseName, qr/\s(?<!\d)\d{1,2}x(\d+)/i))) {
 		$indexEpisode = $data->{index};
 		$setVariable->("episode", 0 + $data->{value});
 	}
