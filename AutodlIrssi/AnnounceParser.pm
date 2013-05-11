@@ -390,88 +390,6 @@ sub postProcess {
 	}
 }
 
-# Deobfuscate an FTN obfuscated string
-sub ftnDeobfuscate {
-	my $ob = shift;
-
-	my $simpleFix = sub {
-		my ($s, $fixedChars) = @_;
-
-		my $rv = "";
-		my @chars = split //, $s;
-		for (my $i = 0; $i < @chars; $i++) {
-			my $c = $chars[$i];
-
-			my $fixed = 1;
-			if ($c eq "0") {
-				$rv .= "O";
-			}
-			elsif ($c eq "O") {
-				$rv .= "0";
-			}
-			elsif ($c eq "I") {
-				$rv .= "1";
-			}
-			else {
-				$rv .= $c;
-				$fixed = 0;
-			}
-
-			if ($fixed) {
-				$fixedChars->{$i} = 1;
-			}
-		}
-		return $rv;
-	};
-
-	my $countChars = sub {
-		my ($s, $regex) = @_;
-		$s =~ s/$regex//g;
-		return length $s;
-	};
-
-	$ob =~ s/[^a-zA-Z\d]/ /g;
-	$ob = trim($ob);
-	my @words = split /\s+/, $ob;
-	for my $aword (@words) {
-		my $fixedChars = {};
-		my $word = $simpleFix->($aword, $fixedChars);
-
-		my $numUppercase = $countChars->($word, qr/[^A-Z]/);
-		my $numLowercase = $countChars->($word, qr/[^a-z]/);
-
-		# 1 should be converted to l or I
-		my ($newWord, $c) = ("", undef);
-		my @chars = split //, $word;
-		for (my $j = 0; $j < @chars; $j++) {
-
-			my $wc = substr $word, $j, 1;
-			if ($fixedChars->{$j} || $wc ne "1") {
-				$c = $wc;
-			}
-			# if it's the beginning of a word, convert to I
-			elsif ($j == 0) {
-				$c = "I";
-			}
-			# if most chars are uppercase, convert to I
-			elsif ($numUppercase > $numLowercase) {
-				$c = "I";
-			}
-			# if most chars are lowercase, convert to l
-			elsif ($numUppercase < $numLowercase) {
-				$c = "l";
-			}
-			else {
-				$c = "l";
-			}
-			$newWord .= $c;
-		}
-
-		$aword = $newWord;
-	}
-	return join " ", @words;
-}
-
 sub onAllLinesMatched {
 	my ($self, $ti, $tempVariables) = @_;
 
@@ -488,9 +406,6 @@ sub onAllLinesMatched {
 		}
 	}
 
-	if ($self->{trackerInfo}{deobfuscate} eq 'ftn') {
-		$ti->{torrentName} = ftnDeobfuscate($ti->{torrentName});
-	}
 	extractReleaseNameInfo($ti, $ti->{torrentName});
 
 	$ti->{torrentSize} = convertToByteSizeString(convertByteSizeString($ti->{torrentSize})) || "";
