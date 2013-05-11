@@ -90,6 +90,7 @@ sub defaultOptions {
 			realName => '',
 			outputServer => '',
 			outputChannel => '',
+			closeNickserv => 0,
 		}
 	};
 }
@@ -477,9 +478,11 @@ sub doHeaderIrc {
 		'real-name' => 'realName',
 		'output-server' => 'outputServer',
 		'output-channel' => 'outputChannel',
+		'close-nickserv' => 'closeNickserv',
 	});
 
 	$self->{options}{irc}{autoConnect} = convertStringToBoolean($self->{options}{irc}{autoConnect});
+	$self->{options}{irc}{closeNickserv} = convertStringToBoolean($self->{options}{irc}{closeNickserv});
 }
 
 # Initialize options from all [tracker] headers

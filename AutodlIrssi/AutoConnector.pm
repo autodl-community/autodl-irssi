@@ -214,6 +214,13 @@ sub command {
 	$server->command($command);
 }
 
+sub closeNickservWindow {
+	my $self = shift;
+
+	$self->command("window goto " . NICKSERV_NICK);
+	$self->command("window close");
+}
+
 sub setServerInfo {
 	my ($self, $info) = @_;
 
@@ -766,10 +773,16 @@ sub _identifyReply {
 			elsif ($code eq 'wasidentified') {
 				$self->_message(4, "Your nick has already been identified!");
 				$self->_clearJoinChannelVars();
+				if ($AutodlIrssi::g->{options}{irc}{closeNickserv}) {
+					$self->closeNickservWindow();
+				}
 			}
 			elsif ($code eq 'identified') {
 				$self->_message(3, "Identified nick!");
 				$self->_clearJoinChannelVars();
+				if ($AutodlIrssi::g->{options}{irc}{closeNickserv}) {
+					$self->closeNickservWindow();
+				}
 			}
 			elsif ($code eq 'badpassword') {
 				$self->_message(0, "Invalid nick password!");
@@ -886,9 +899,15 @@ sub _registerReply {
 			elsif ($code eq 'registered') {
 				$self->_message(3, "Registered nick! NickServ reply:\n" . join("\n", @$lines));
 				$self->_clearJoinChannelVars();
+				if ($AutodlIrssi::g->{options}{irc}{closeNickserv}) {
+					$self->closeNickservWindow();
+				}
 			}
 			elsif ($code eq 'alreadyregistered') {
 				$self->_message(0, "Can't register nick! It's already been registered!");
+				if ($AutodlIrssi::g->{options}{irc}{closeNickserv}) {
+					$self->closeNickservWindow();
+				}
 			}
 			elsif ($code eq 'emailverification') {
 				$self->_message(0, "Nick REGISTER reply:\n" . join("\n", @$lines));
@@ -1130,6 +1149,7 @@ sub new {
 		noticeObservable => new AutodlIrssi::NoticeObservable(),
 		userName => "",
 		realName => "",
+		closeNickserv => 0,
 	}, $class;
 }
 
