@@ -133,7 +133,7 @@ sub fixUserCommand {
 
 	$userCmd = fixCommandString($userCmd);
 	return "" if $userCmd eq "";
-	if ($userCmd =~ /^(?:msg|quote)\s/i) {
+	if ($userCmd =~ /^(?:msg|quote|eval)\s/i) {
 		# Allowed
 	}
 	else {
