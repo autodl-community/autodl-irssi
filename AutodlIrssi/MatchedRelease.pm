@@ -54,6 +54,7 @@ use AutodlIrssi::RtorrentCommands;
 use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
 use Errno qw/ :POSIX /;
+use POSIX qw/ strftime /;
 
 if (eval { require Digest::SHA;1; }) {
 	Digest::SHA->import(qw(sha1));
@@ -173,6 +174,21 @@ sub start {
 	}
 
 	message(3, "Matched " . $self->_getTorrentInfoString());
+
+	if ($self->{ti}{filter}{maxDownloads} >= 0) {
+		if ($self->{ti}{filter}{maxDownloadsPer} eq "day") {
+			my $dayTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{day}{date});
+			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{day}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the day starting \x02\x0308$dayTime\x02\x03");
+		}
+		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "week") {
+			my $weekTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{week}{date});
+			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{week}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the week starting \x02\x0308$weekTime\x02\x03");
+		}
+		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "month") {
+			my $monthTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{month}{date});
+			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{month}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the month starting \x02\x0308$monthTime\x02\x03");
+		}
+	}
 
 	$self->{filename} = $self->_getFilename($self->{ti}{torrentName});
 	$self->{uploadMethod} = $self->{ti}{filter}{uploadType} ? $self->{ti}{filter} : $AutodlIrssi::g->{options};
