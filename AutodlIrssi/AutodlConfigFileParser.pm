@@ -276,6 +276,7 @@ sub doHeaderFilter {
 			cue => '',
 			maxDownloads => '',
 			maxDownloadsPer => '',
+			downloadDupeReleases => 0,
 			uploadType => '',
 			uploadWatchDir => '',
 			uploadFtpPath => '',
@@ -335,6 +336,7 @@ sub doHeaderFilter {
 			'cue' => 'cue',
 			'max-downloads' => 'maxDownloads',
 			'max-downloads-per' => 'maxDownloadsPer',
+			'download-duplicates' => 'downloadDupeReleases',
 			'upload-type' => 'uploadType',
 			'upload-watch-dir' => 'uploadWatchDir',
 			'upload-ftp-path' => 'uploadFtpPath',
@@ -365,6 +367,7 @@ sub doHeaderFilter {
 		$filter->{log} = convertStringToBoolean($filter->{log}) if $filter->{log};
 		$filter->{cue} = convertStringToBoolean($filter->{cue}) if $filter->{cue};
 		$filter->{maxDownloads} = convertStringToInteger($filter->{maxDownloads}, -1);
+		$filter->{downloadDupeReleases} = convertStringToBoolean($filter->{downloadDupeReleases});
 		$filter->{rtPriority} = _convertPriority($filter->{rtPriority});
 		$filter->{rtIgnoreScheduler} = convertStringToBoolean($filter->{rtIgnoreScheduler});
 		$filter->{rtDontAddName} = convertStringToBoolean($filter->{rtDontAddName});

@@ -97,7 +97,7 @@ sub hasDownloaded {
 # Returns true if we can download the release
 sub canDownload {
 	my ($self, $ti) = @_;
-	return !$self->hasDownloaded($ti) || $AutodlIrssi::g->{options}{downloadDupeReleases};
+	return !$self->hasDownloaded($ti) || $ti->{filter}{downloadDupeReleases} || $AutodlIrssi::g->{options}{downloadDupeReleases};
 }
 
 sub addDownload {
