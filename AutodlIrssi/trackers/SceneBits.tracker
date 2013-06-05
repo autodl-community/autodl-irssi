@@ -36,8 +36,8 @@
 
 	<servers>
 		<server
-			network="TiK-T0K"
-			serverNames="irc.pirate-net.info"
+			network="SceneBits"
+			serverNames="irc.scenebits.info"
 			channelNames="#sbits-announce"
 			announcerNames="ScB-Bot"
 			/>
