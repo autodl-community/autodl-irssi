@@ -150,6 +150,9 @@ sub checkFilter {
 		elsif ($filter->{maxDownloadsPer} eq "month") {
 			$numDownloads = $state->getMonthDownloads();
 		}
+		elsif ($filter->{maxDownloadsPer} eq "") {
+			$numDownloads = $state->getTotalDownloads();
+		}
 		return 0 if defined $numDownloads && $numDownloads >= $filter->{maxDownloads};
 	}
 

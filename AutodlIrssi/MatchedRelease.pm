@@ -188,6 +188,10 @@ sub start {
 			my $monthTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{month}{date});
 			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{month}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the month starting \x02\x0308$monthTime\x02\x03");
 		}
+		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "") {
+			my $totalTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{total}{date});
+			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{total}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 since \x02\x0308$totalTime\x02\x03");
+		}
 	}
 
 	$self->{filename} = $self->_getFilename($self->{ti}{torrentName});

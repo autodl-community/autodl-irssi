@@ -98,6 +98,11 @@ sub readFilters {
 		my $monthElem = $self->getTheChildElement($filterElem, "month-downloads");
 		$state->setMonthInfo($self->readAttributeInteger($monthElem, "time"), $self->readAttributeInteger($monthElem, "downloads"));
 
+		my $totalElem = $self->getOptionalChildElement($filterElem, "total-downloads");
+		if ($totalElem) {
+			$state->setTotalInfo($self->readAttributeInteger($totalElem, "time"), $self->readAttributeInteger($totalElem, "downloads"));
+		}
+
 		$states->{$filterName} = $state;
 	}
 
@@ -162,6 +167,11 @@ sub writeFilters {
 		$filterElem->appendChild($monthElem);
 		$monthElem->setAttribute("time", $state->getMonthTime());
 		$monthElem->setAttribute("downloads", $state->getMonthDownloads());
+
+		my $totalElem = $doc->createElement("total-downloads");
+		$filterElem->appendChild($totalElem);
+		$totalElem->setAttribute("time", $state->getTotalTime());
+		$totalElem->setAttribute("downloads", $state->getTotalDownloads());
 	}
 
 	return $filtersElem;

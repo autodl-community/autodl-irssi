@@ -51,6 +51,7 @@ sub new {
 		day => _createInfo(),
 		week => _createInfo(),
 		month => _createInfo(),
+		total => _createInfo(),
 	}, $class;
 
 	$self->initializeTime(time());
@@ -81,6 +82,10 @@ sub initializeTime {
 	if ($self->{month}{date} != $monthTime) {
 		$self->{month} = _createInfo($monthTime, 0);
 	}
+
+	if ($self->{total}{date} != $dayTime) {
+		$self->{total} = _createInfo($dayTime, 0);
+	}
 }
 
 sub setDayInfo {
@@ -96,6 +101,11 @@ sub setWeekInfo {
 sub setMonthInfo {
 	my ($self, $time, $downloads) = @_;
 	$self->{month} = _createInfo($time, $downloads);
+}
+
+sub setTotalInfo {
+	my ($self, $time, $downloads) = @_;
+	$self->{total} = _createInfo($time, $downloads);
 }
 
 sub getDayTime {
@@ -122,17 +132,27 @@ sub getMonthDownloads {
 	return shift->{month}{downloads};
 }
 
+sub getTotalTime {
+	return shift->{total}{date};
+}
+
+sub getTotalDownloads {
+	return shift->{total}{downloads};
+}
+
 sub incrementDownloads {
 	my $self = shift;
 
 	$self->{day}{downloads}++;
 	$self->{week}{downloads}++;
 	$self->{month}{downloads}++;
+	$self->{total}{downloads}++;
 
 	return {
 		day => $self->{day},
 		week => $self->{week},
 		month => $self->{month},
+		total => $self->{total},
 	};
 }
 
@@ -143,8 +163,9 @@ sub restoreDownloadCount {
 	$self->{day}{downloads}-- if $self->{day} == $obj->{day};
 	$self->{week}{downloads}-- if $self->{week} == $obj->{week};
 	$self->{month}{downloads}-- if $self->{month} == $obj->{month};
+	$self->{total}{downloads}-- if $self->{total} == $obj->{total};
 
-	$obj->{day} = $obj->{week} = $obj->{month} = undef;
+	$obj->{day} = $obj->{week} = $obj->{month} = $obj->{total} = undef;
 }
 
 1;
