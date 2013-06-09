@@ -192,6 +192,9 @@ sub command_autodl {
 		elsif ($data =~ /^\s*dumpvars\s*(\S+)\s*$/i) {
 			dumpTrackerVars($1);
 		}
+		elsif ($data =~ /^\s*reload\s*$/i) {
+			irssi_command('script load autodl-irssi');
+		}
 		elsif ($data =~ /^\s*reloadtrackers\s*$/i) {
 			reloadTrackerFiles();
 		}
@@ -199,6 +202,7 @@ sub command_autodl {
 			message 0, "Usage:";
 			message 0, "    /autodl update";
 			message 0, "    /autodl whatsnew";
+			message 0, "    /autodl reload";
 			message 0, "    /autodl reloadtrackers";
 			message 0, "    /autodl dumpvars tracker-type";
 		}
