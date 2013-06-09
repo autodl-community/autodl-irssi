@@ -192,10 +192,14 @@ sub command_autodl {
 		elsif ($data =~ /^\s*dumpvars\s*(\S+)\s*$/i) {
 			dumpTrackerVars($1);
 		}
+		elsif ($data =~ /^\s*reloadtrackers\s*$/i) {
+			reloadTrackerFiles();
+		}
 		else {
 			message 0, "Usage:";
 			message 0, "    /autodl update";
 			message 0, "    /autodl whatsnew";
+			message 0, "    /autodl reloadtrackers";
 			message 0, "    /autodl dumpvars tracker-type";
 		}
 	};
@@ -240,6 +244,9 @@ sub reloadTrackerFiles {
 	};
 	if ($@) {
 		message 0, "Error when reading tracker files: " . formatException($@);
+	}
+	else {
+		message 3, "Successfully loaded tracker files";
 	}
 }
 
