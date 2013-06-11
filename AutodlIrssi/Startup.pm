@@ -75,9 +75,7 @@ my $trackersVersion = -1;
 sub enable {
 	$AutodlIrssi::g->{messageBuffer} = new AutodlIrssi::MessageBuffer();
 
-	message 3, "\x02autodl-irssi\x02 \x02v$version\x02 is now enabled! :-)";
-	message 3, "\x02\x0309Bugs and Requests\x03\x02 \x02https://github.com/autodl-community/autodl-irssi/issues\x02";
-	message 3, "\x02\x0309Help and Discussion\x03\x02 \x02#autodl-community on irc.p2p-network.net\x02";
+	printVersionInfo();
 
 	createDirectories(getAutodlSettingsDir());
 
@@ -189,6 +187,9 @@ sub command_autodl {
 		elsif ($data =~ /^\s*whatsnew\s*$/i) {
 			showWhatsNew();
 		}
+		elsif ($data =~ /^\s*version\s*$/i) {
+			printVersionInfo();
+		}
 		elsif ($data =~ /^\s*dumpvars\s*(\S+)\s*$/i) {
 			dumpTrackerVars($1);
 		}
@@ -202,6 +203,7 @@ sub command_autodl {
 			message 0, "Usage:";
 			message 0, "    /autodl update";
 			message 0, "    /autodl whatsnew";
+			message 0, "    /autodl version";
 			message 0, "    /autodl reload";
 			message 0, "    /autodl reloadtrackers";
 			message 0, "    /autodl dumpvars tracker-type";
@@ -211,6 +213,12 @@ sub command_autodl {
 		chomp $@;
 		message 0, "command_autodl: ex: $@";
 	}
+}
+
+sub printVersionInfo {
+	message 3, "You are running \x02autodl-irssi\x02 \x02v$version\x02";
+	message 3, "\x02\x0309Bugs and Requests\x03\x02 \x02https://github.com/autodl-community/autodl-irssi/issues\x02";
+	message 3, "\x02\x0309Help and Discussion\x03\x02 \x02#autodl-community on irc.p2p-network.net\x02";
 }
 
 sub dumpTrackerVars {
