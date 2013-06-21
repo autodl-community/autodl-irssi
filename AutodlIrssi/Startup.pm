@@ -507,7 +507,7 @@ sub getActiveAnnounceParserTypes {
 
 		if ($updateCheck eq 'manual') {
 			if (!$autodlUpdateAvailable) {
-				message 3, "\x0309You are using the latest version!\x03";
+				message 3, "\x0309You are using the latest version,\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 			}
 		}
 		elsif ($updateCheck eq 'auto') {
@@ -521,7 +521,7 @@ sub getActiveAnnounceParserTypes {
 		}
 		elsif ($updateCheck eq 'whatsnew') {
 			if (!$autodlUpdateAvailable) {
-				message 3, "\x0309You are using the latest version!\x03";
+				message 3, "\x0309You are using the latest version,\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 			}
 			else {
 				message 3, "New:\n" . $updater->getAutodlWhatsNew();
