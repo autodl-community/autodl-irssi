@@ -48,6 +48,7 @@ sub new {
 	my $class = shift;
 
 	my $self = bless {
+		hour => _createInfo(),
 		day => _createInfo(),
 		week => _createInfo(),
 		month => _createInfo(),
@@ -66,6 +67,11 @@ sub initializeTime {
 
 	my ($sec, $min, $hour, $mday, $mon, $year, $wday) = gmtime $time;
 	$wday = ($wday - 1) % 7;	# Sunday is last day of the week
+
+	my $hourTime = timegm 0, 0, $hour, $mday, $mon, $year;
+	if ($self->{hour}{date} != $hourTime) {
+		$self->{hour} = _createInfo($hourTime, 0);
+	}
 
 	my $dayTime = timegm 0, 0, 0, $mday, $mon, $year;
 	if ($self->{day}{date} != $dayTime) {
@@ -88,6 +94,11 @@ sub initializeTime {
 	}
 }
 
+sub setHourInfo {
+	my ($self, $time, $downloads) = @_;
+	$self->{hour} = _createInfo($time, $downloads);
+}
+
 sub setDayInfo {
 	my ($self, $time, $downloads) = @_;
 	$self->{day} = _createInfo($time, $downloads);
@@ -106,6 +117,14 @@ sub setMonthInfo {
 sub setTotalInfo {
 	my ($self, $time, $downloads) = @_;
 	$self->{total} = _createInfo($time, $downloads);
+}
+
+sub getHourTime {
+	return shift->{hour}{date};
+}
+
+sub getHourDownloads {
+	return shift->{hour}{downloads};
 }
 
 sub getDayTime {
@@ -143,12 +162,14 @@ sub getTotalDownloads {
 sub incrementDownloads {
 	my $self = shift;
 
+	$self->{hour}{downloads}++;
 	$self->{day}{downloads}++;
 	$self->{week}{downloads}++;
 	$self->{month}{downloads}++;
 	$self->{total}{downloads}++;
 
 	return {
+		hour => $self->{hour},
 		day => $self->{day},
 		week => $self->{week},
 		month => $self->{month},
@@ -160,12 +181,13 @@ sub restoreDownloadCount {
 	my ($self, $obj) = @_;
 
 	# Make sure we don't decrement it if it's a new day/week/month
+	$self->{hour}{downloads}-- if $self->{hour} == $obj->{hour};
 	$self->{day}{downloads}-- if $self->{day} == $obj->{day};
 	$self->{week}{downloads}-- if $self->{week} == $obj->{week};
 	$self->{month}{downloads}-- if $self->{month} == $obj->{month};
 	$self->{total}{downloads}-- if $self->{total} == $obj->{total};
 
-	$obj->{day} = $obj->{week} = $obj->{month} = $obj->{total} = undef;
+	$obj->{hour} = $obj->{day} = $obj->{week} = $obj->{month} = $obj->{total} = undef;
 }
 
 1;

@@ -176,7 +176,11 @@ sub start {
 	message(3, "Matched " . $self->_getTorrentInfoString());
 
 	if ($self->{ti}{filter}{maxDownloads} >= 0) {
-		if ($self->{ti}{filter}{maxDownloadsPer} eq "day") {
+		if ($self->{ti}{filter}{maxDownloadsPer} eq "hour") {
+			my $hourTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{hour}{date});
+			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{hour}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the hour starting \x02\x0308$hourTime\x02\x03");
+		}
+		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "day") {
 			my $dayTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{day}{date});
 			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{day}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the day starting \x02\x0308$dayTime\x02\x03");
 		}

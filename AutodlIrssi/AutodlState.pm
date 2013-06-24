@@ -89,6 +89,11 @@ sub readFilters {
 
 		my $state = new AutodlIrssi::FilterState();
 
+		my $hourElem = $self->getOptionalChildElement($filterElem, "hour-downloads");
+		if ($hourElem) {
+			$state->setHourInfo($self->readAttributeInteger($hourElem, "time"), $self->readAttributeInteger($hourElem, "downloads"));
+		}
+
 		my $dayElem = $self->getTheChildElement($filterElem, "day-downloads");
 		$state->setDayInfo($self->readAttributeInteger($dayElem, "time"), $self->readAttributeInteger($dayElem, "downloads"));
 
@@ -152,6 +157,11 @@ sub writeFilters {
 		my $filterElem = $doc->createElement("filter");
 		$filtersElem->appendChild($filterElem);
 		$filterElem->setAttribute("name", $name);
+
+		my $hourElem = $doc->createElement("hour-downloads");
+		$filterElem->appendChild($hourElem);
+		$hourElem->setAttribute("time", $state->getHourTime());
+		$hourElem->setAttribute("downloads", $state->getHourDownloads());
 
 		my $dayElem = $doc->createElement("day-downloads");
 		$filterElem->appendChild($dayElem);

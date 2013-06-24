@@ -141,7 +141,10 @@ sub checkFilter {
 	$state->initializeTime();
 	if ($filter->{maxDownloads} >= 0) {
 		my $numDownloads;
-		if ($filter->{maxDownloadsPer} eq "day") {
+		if ($filter->{maxDownloadsPer} eq "hour") {
+			$numDownloads = $state->getHourDownloads();
+		}
+		elsif ($filter->{maxDownloadsPer} eq "day") {
 			$numDownloads = $state->getDayDownloads();
 		}
 		elsif ($filter->{maxDownloadsPer} eq "week") {
