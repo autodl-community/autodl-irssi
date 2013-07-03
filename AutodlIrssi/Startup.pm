@@ -75,14 +75,14 @@ my $trackersVersion = -1;
 sub enable {
 	$AutodlIrssi::g->{messageBuffer} = new AutodlIrssi::MessageBuffer();
 
-	printVersionInfo();
-
 	createDirectories(getAutodlSettingsDir());
 
 	message 0, "Missing configuration file: " . getAutodlCfgFile() unless -f getAutodlCfgFile();
 
 	my $autodlState = readAutodlState();
 	$trackersVersion = $autodlState->{trackersVersion};
+
+	printVersionInfo();
 
 	my $autodlCmd = {
 		update => sub { manualCheckForUpdates() },
@@ -216,7 +216,7 @@ sub command_autodl {
 }
 
 sub printVersionInfo {
-	message 3, "You are running \x02autodl-irssi\x02 \x02v$version\x02";
+	message 3, "You are running \x02autodl-irssi\x02 \x02v$version\x02 | \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 	message 3, "\x02\x0309Bugs and Requests\x03\x02 \x02https://github.com/autodl-community/autodl-irssi/issues\x02";
 	message 3, "\x02\x0309Help and Discussion\x03\x02 \x02#autodl-community on irc.p2p-network.net\x02";
 }
@@ -507,7 +507,7 @@ sub getActiveAnnounceParserTypes {
 
 		if ($updateCheck eq 'manual') {
 			if (!$autodlUpdateAvailable) {
-				message 3, "\x0309You are using the latest version,\x03 \x02autodl-irssi\x02 \x02v$version\x02";
+				message 3, "\x0309You are using the latest version,\x03 \x02autodl-irssi\x02 \x02v$version\x02 | \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 			}
 		}
 		elsif ($updateCheck eq 'auto') {
@@ -521,7 +521,7 @@ sub getActiveAnnounceParserTypes {
 		}
 		elsif ($updateCheck eq 'whatsnew') {
 			if (!$autodlUpdateAvailable) {
-				message 3, "\x0309You are using the latest version,\x03 \x02autodl-irssi\x02 \x02v$version\x02";
+				message 3, "\x0309You are using the latest version,\x03 \x02autodl-irssi\x02 \x02v$version\x02 | \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 			}
 			else {
 				message 3, "New:\n" . $updater->getAutodlWhatsNew();
