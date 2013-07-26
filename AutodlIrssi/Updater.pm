@@ -40,13 +40,17 @@ use File::Spec;
 use File::Copy;
 use Archive::Zip qw/ :ERROR_CODES /;
 use constant {
-	UPDATE_URL => 'https://autodl-irssi-community.googlecode.com/files/update.xml?nocache',
+
+	UPDATE_URL => 'https://autodl-irssi-community.googlecode.com/files/update.xml',
 
 	# This must not be a popular web browser's user agent or the update may fail
 	# since SourceForge checks the user agent and sends different results depending
 	# on the UA.
 	UPDATE_USER_AGENT => 'autodl-irssi',
 };
+
+our @chars = ("A" .. "Z", "a" .. "z", 0 .. 9);
+our $randString = join("", @chars[ map { rand @chars } ( 1 .. 6) ]);
 
 sub new {
 	my $class = shift;
@@ -128,7 +132,7 @@ sub check {
 
 	$self->{handler} = $handler || sub {};
 	$self->_createHttpRequest();
-	$self->{request}->sendRequest("GET", "", UPDATE_URL, {}, sub {
+	$self->{request}->sendRequest("GET", "", UPDATE_URL . "?$randString", {}, sub {
 		$self->_onRequestReceived(@_);
 	});
 }
@@ -169,7 +173,7 @@ sub updateTrackers {
 
 	$self->{handler} = $handler || sub {};
 	$self->_createHttpRequest();
-	$self->{request}->sendRequest("GET", "", $self->{trackers}{url}, {}, sub {
+	$self->{request}->sendRequest("GET", "", $self->{trackers}{url} . "?$randString", {}, sub {
 		$self->_onDownloadedTrackersFile(@_, $destDir);
 	});
 }
@@ -205,7 +209,7 @@ sub updateAutodl {
 
 	$self->{handler} = $handler || sub {};
 	$self->_createHttpRequest();
-	$self->{request}->sendRequest("GET", "", $self->{autodl}{url}, {}, sub {
+	$self->{request}->sendRequest("GET", "", $self->{autodl}{url} . "?$randString", {}, sub {
 		$self->_onDownloadedAutodlFile(@_, $destDir);
 	});
 }
