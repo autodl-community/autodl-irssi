@@ -36,6 +36,7 @@ use AutodlIrssi::TextUtils;
 use AutodlIrssi::UpdaterXmlParser;
 use AutodlIrssi::FileUtils;
 use AutodlIrssi::HttpRequest;
+use AutodlIrssi::Dirs;
 use File::Spec;
 use File::Copy;
 use Archive::Zip qw/ :ERROR_CODES /;
@@ -279,6 +280,11 @@ sub _extractZipFile {
 				close $fh;
 			}
 		}
+
+		for my $trackerFile ($AutodlIrssi::g->{trackerManager}->getTrackerFiles(getTrackerFilesDir())) {
+			message 5, "Deleting file $trackerFile";
+			unlink $trackerFile;
+		}		
 
 		# Now write all data to disk. This shouldn't fail... :)
 		for my $info (@fileInfos) {
