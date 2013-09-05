@@ -507,7 +507,7 @@ sub getActiveAnnounceParserTypes {
 
 		if ($updateCheck eq 'manual') {
 			if (!$autodlUpdateAvailable) {
-				message 3, "\x0309You are using the latest version\x03 \x02autodl-irssi\x02 \x02v$version\x02 | \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
+				message 3, "\x0309You are using the latest\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 			}
 		}
 		elsif ($updateCheck eq 'auto') {
@@ -521,7 +521,7 @@ sub getActiveAnnounceParserTypes {
 		}
 		elsif ($updateCheck eq 'whatsnew') {
 			if (!$autodlUpdateAvailable) {
-				message 3, "\x0309You are using the latest version\x03 \x02autodl-irssi\x02 \x02v$version\x02 | \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
+				message 3, "\x0309You are using the latest\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 			}
 			else {
 				message 3, "New:\n" . $updater->getAutodlWhatsNew();
@@ -549,6 +549,9 @@ sub getActiveAnnounceParserTypes {
 				$updater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
 				return;
 			}
+			else {
+				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
+			}
 		}
 
 		$updater = undef;
@@ -563,6 +566,7 @@ sub getActiveAnnounceParserTypes {
 		# Reset trackersVersion since we may have overwritten with older files
 		$trackersVersion = 0;
 		message 3, "Reloading autodl-irssi...";
+		message 3, "\x0309You are now using\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 		irssi_command('script load autodl-irssi');
 	}
 
@@ -571,8 +575,9 @@ sub getActiveAnnounceParserTypes {
 
 		return updateFailed("Could not update trackers: $errorMessage") if $errorMessage;
 
-		dmessage 4, "Trackers updated";
+		message 3, "Trackers updated";
 		$trackersVersion = $updater->getTrackersVersion();
+		message 3, "\x0309You are now using\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 		$updater = undef;
 		reloadTrackerFiles();
 	}
