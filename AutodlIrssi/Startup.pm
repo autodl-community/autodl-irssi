@@ -543,10 +543,12 @@ sub getActiveAnnounceParserTypes {
 			}
 		}
 
-		if ($updater->hasTrackersUpdate($trackersVersion)) {
-			message 4, "Updating tracker files...";
-			$updater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
-			return;
+		if ($updateCheck eq 'manual' || $updateCheck eq 'auto') {
+			if ($updater->hasTrackersUpdate($trackersVersion)) {
+				message 4, "Updating tracker files...";
+				$updater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
+				return;
+			}
 		}
 
 		$updater = undef;
