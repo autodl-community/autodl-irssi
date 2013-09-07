@@ -266,12 +266,12 @@ sub _onTorrentDownloaded {
 	$self->{ti}{torrentSizeInBytes} = $self->{torrentFiles}{totalSize};
 
 	if (!AutodlIrssi::FilterManager::checkFilterSize($self->{ti}{torrentSizeInBytes}, $self->{ti}{filter})) {
-		my $msg = "Torrent ";
+		my $msg = "\x0304WARNING\x03: Torrent not downloaded. ";
 		$msg .= $self->_getTorrentInfoString({
 			torrentName => $self->{ti}{torrentName},
 			announceParser => $self->{ti}{announceParser},
 		});
-		$msg .= " is too big/small, size: \x02" . convertToByteSizeString($self->{ti}{torrentSizeInBytes}) . "\x02. Not downloaded.";
+		$msg .= " is too big/small. Size: \x02" . convertToByteSizeString($self->{ti}{torrentSizeInBytes}) . "\x02.";
 		$self->_messageFail(3, $msg);
 		return;
 	}
