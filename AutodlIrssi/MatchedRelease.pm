@@ -618,6 +618,7 @@ sub _sendRtorrent {
 		my $rtDir = getAbsPath($self->{uploadMethod}{rtDir});
 		my $rtCommands = $macroReplacer->replace($self->{uploadMethod}{rtCommands});
 		my $rtLabel = toUrlEncode($macroReplacer->replace($self->{uploadMethod}{rtLabel}));
+		my $rtThrottle = toUrlEncode($macroReplacer->replace($self->{uploadMethod}{rtThrottle}));
 		my $rtRatioGroup = $self->{uploadMethod}{rtRatioGroup};
 		my $rtChannel = $self->{uploadMethod}{rtChannel};
 		my $rtPriority = $self->{uploadMethod}{rtPriority};
@@ -640,6 +641,7 @@ sub _sendRtorrent {
 			}
 		}
 		$rt->func('d.set_custom1', $rtLabel) if $rtLabel ne "";
+		$rt->func('d.set_throttle_name', $rtThrottle) if $rtThrottle ne "";
 		$rt->func('d.views.push_back_unique', $rtRatioGroup)->func('view.set_visible', $rtRatioGroup) if $rtRatioGroup ne "";
 		$rt->func('d.set_throttle_name', $rtChannel) if $rtChannel ne "";
 		$rt->func('d.set_priority', $rtPriority) if $rtPriority ne "";
