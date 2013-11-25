@@ -503,11 +503,15 @@ sub getActiveAnnounceParserTypes {
 		message 5, "Downloaded update.xml";
 
 		my $autodlUpdateAvailable = $updater->hasAutodlUpdate($version);
+		my $trackerUpdateAvailable = $updater->hasTrackersUpdate($trackersVersion);
 		my $updateAutodl = $autodlUpdateAvailable;
 
 		if ($updateCheck eq 'manual') {
 			if (!$autodlUpdateAvailable) {
 				message 3, "\x0309You are using the latest\x03 \x02autodl-irssi\x02 \x02v$version\x02";
+			}
+			if (!$trackerUpdateAvailable) {
+				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 			}
 		}
 		elsif ($updateCheck eq 'auto') {
@@ -515,7 +519,10 @@ sub getActiveAnnounceParserTypes {
 		}
 		elsif ($updateCheck eq 'ask') {
 			if ($autodlUpdateAvailable) {
-				message 3, "\x0309A new version is available!\x03 Type \x02/autodl update\x02 to update or \x02/autodl whatsnew\x02.";
+				message 3, "\x0309A new autodl version is available!\x03 Type \x02/autodl update\x02 to update or \x02/autodl whatsnew\x02.";
+			}
+			if ($trackerUpdateAvailable) {
+				message 3, "\x0309A new trackers version is available!\x03 Type \x02/autodl update\x02 to update or \x02/autodl whatsnew\x02.";
 			}
 			$updateAutodl = 0;
 		}
@@ -525,6 +532,12 @@ sub getActiveAnnounceParserTypes {
 			}
 			else {
 				message 3, "New:\n" . $updater->getAutodlWhatsNew();
+			}
+			if (!$trackerUpdateAvailable) {
+				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
+			}
+			else {
+				message 3, "New tracker updates are available";
 			}
 			$updateAutodl = 0;
 		}
@@ -544,13 +557,10 @@ sub getActiveAnnounceParserTypes {
 		}
 
 		if ($updateCheck eq 'manual' || $updateCheck eq 'auto') {
-			if ($updater->hasTrackersUpdate($trackersVersion)) {
+			if ($trackerUpdateAvailable) {
 				message 4, "Updating tracker files...";
 				$updater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
 				return;
-			}
-			else {
-				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 			}
 		}
 
