@@ -417,6 +417,15 @@ sub _doCommandAutodl {
 	elsif ($subcmd eq 'whatsnew') {
 		$self->{autodlCmd}{whatsnew}->();
 	}
+	elsif ($subcmd eq 'version') {
+		$self->{autodlCmd}{version}->();
+	}
+	elsif ($subcmd eq 'reload') {
+		$self->{autodlCmd}{reload}->();
+	}
+	elsif ($subcmd eq 'reloadtrackers') {
+		$self->{autodlCmd}{reloadtrackers}->();
+	}
 	else {
 		die "Invalid /autodl command\n";
 	}

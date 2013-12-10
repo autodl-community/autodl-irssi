@@ -87,6 +87,9 @@ sub enable {
 	my $autodlCmd = {
 		update => sub { manualCheckForUpdates() },
 		whatsnew => sub { showWhatsNew() },
+		version => sub { printVersionInfo() },
+		reload => sub { irssi_command('script load autodl-irssi') },
+		reloadtrackers => sub { reloadTrackerFiles() },
 	};
 
 	$AutodlIrssi::g->{eventManager} = new AutodlIrssi::EventManager();
