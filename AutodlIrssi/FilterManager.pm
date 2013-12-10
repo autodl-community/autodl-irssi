@@ -107,7 +107,7 @@ sub checkFilter {
 	return 0 if $filter->{exceptCategories} ne '' && checkFilterStrings($ti->{category}, $filter->{exceptCategories});
 
 	return 0 if $filter->{matchReleaseTypes} ne '' && !checkFilterStrings($ti->{releaseType}, $filter->{matchReleaseTypes});
-	return 0 if $filter->{exceptReleaseTypes} ne '' && checkFilterStrings($ti->{releaseType}, $filter->{exceptReleaseTypes});	
+	return 0 if $filter->{exceptReleaseTypes} ne '' && checkFilterStrings($ti->{releaseType}, $filter->{exceptReleaseTypes});
 
 	return 0 if $filter->{artists} ne '' && !checkName($ti->{name1}, $filter->{artists});
 	return 0 if $filter->{albums} ne '' && !checkName($ti->{name2}, $filter->{albums});
@@ -153,7 +153,7 @@ sub checkFilter {
 		elsif ($filter->{maxDownloadsPer} eq "month") {
 			$numDownloads = $state->getMonthDownloads();
 		}
-		elsif ($filter->{maxDownloadsPer} eq "") {
+		elsif ($filter->{maxDownloadsPer} eq "" || $filter->{maxDownloadsPer} eq "forever") {
 			$numDownloads = $state->getTotalDownloads();
 		}
 		return 0 if defined $numDownloads && $numDownloads >= $filter->{maxDownloads};
