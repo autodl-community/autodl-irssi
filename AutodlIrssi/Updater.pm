@@ -81,7 +81,7 @@ sub _notifyHandler {
 
 	eval {
 		my $handler = $self->{handler};
-	
+
 		# Clean up before calling the handler
 		$self->{handler} = undef;
 		$self->{request} = undef;
@@ -284,7 +284,7 @@ sub _extractZipFile {
 		for my $trackerFile ($AutodlIrssi::g->{trackerManager}->getTrackerFiles(getTrackerFilesDir())) {
 			message 5, "Deleting file $trackerFile";
 			unlink $trackerFile;
-		}		
+		}
 
 		# Now write all data to disk. This shouldn't fail... :)
 		for my $info (@fileInfos) {
@@ -422,6 +422,10 @@ sub hasAutodlUpdate {
 
 	$self->_verifyCheckHasBeenCalled();
 	return $self->{autodl}{version} gt $version;
+}
+
+sub getTrackersWhatsNew {
+	return shift->{trackers}{whatsNew};
 }
 
 # Returns true if there's a trackers update available

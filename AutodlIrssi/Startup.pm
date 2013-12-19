@@ -534,13 +534,13 @@ sub getActiveAnnounceParserTypes {
 				message 3, "\x0309You are using the latest\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 			}
 			else {
-				message 3, "New:\n" . $updater->getAutodlWhatsNew();
+				message 3, "\x0309Changes in\x03 \x02autodl-irssi\x02 \x02v$updater->{autodl}{version}:\x02\n" . $updater->getAutodlWhatsNew();
 			}
 			if (!$trackerUpdateAvailable) {
 				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 			}
 			else {
-				message 3, "New tracker updates are available";
+				message 3, "\x0309Changes in\x03 \x02autodl-trackers\x02 \x02v$updater->{trackers}{version}:\x02\n" . $updater->getTrackersWhatsNew();
 			}
 			$updateAutodl = 0;
 		}

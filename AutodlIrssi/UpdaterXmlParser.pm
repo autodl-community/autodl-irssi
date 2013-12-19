@@ -78,12 +78,14 @@ sub _parseTrackersElement {
 
 	$self->{trackers} = {
 		version	=> $self->readTextNode($trackersElem, "version"),
+		whatsNew	=> $self->readTextNode($trackersElem, "whats-new"),
 		url		=> $self->readTextNode($trackersElem, "url"),
 	};
-	if (!defined $self->{trackers}{version} || !defined $self->{trackers}{url} ||
-		$self->{trackers}{version} !~ /^\d+$/) {
+	if (!defined $self->{trackers}{version} || !defined $self->{trackers}{whatsNew}
+		|| !defined $self->{trackers}{url} || $self->{trackers}{version} !~ /^\d+$/) {
 		die "Invalid XML file\n";
 	}
+	$self->{trackers}{whatsNew} =~ s/^\s+//mg;
 }
 
 1;
