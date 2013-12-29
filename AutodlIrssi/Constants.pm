@@ -68,7 +68,7 @@ our $tvSources = [
 	["BRRip", "BLURAYRiP"],
 	["DVDR", "MDVDR", "DVD"],
 	["HDDVD", "HD-DVD"],
-	["HDDVDRip"],
+	["HDDVDRip", "HD-DVDRip"],
 	["BluRay", "Blu-Ray", "MBluRay"],
 	["WEB-DL", "WEB", "WEBDL"],
 	["Webrip", "WebRip", "WEBRip", "WEBRIP"],
@@ -77,6 +77,11 @@ our $tvSources = [
 	["R2", "R5", "R6"],
 	["TELESYNC", "TS"],
 	["TELECINE", "TC"],
+	["SiteRip"],
+	["PPV"],
+	["VHSRip"],
+	["IMGSet"],
+	["Mixed"],
 ];
 
 our $tvEncoders = [
