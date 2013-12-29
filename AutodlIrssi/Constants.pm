@@ -60,7 +60,7 @@ our $tvSources = [
 	["HR.PDTV"],
 	["HR.HDTV"],
 	["DVDRip"],
-	["DVDSCR", "DVDScr", "DVDSCREENER", ,"DVDScreener", "DVD-SCREENER", "DVD-Screener", "SCR", "Scr", "SCREENER", "Screener"],
+	["DVDSCR", "DVDScr", "DVDSCREENER", "DVDScreener", "DVD-SCREENER", "DVD-Screener", "SCR", "Scr", "SCREENER", "Screener"],
 	["BDr"],
 	["BD5"],
 	["BD9"],
