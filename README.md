@@ -26,5 +26,7 @@ Donations are accepted to finance hosting for autodl-irssi updates, website, and
 ### Other Ways to Contribute
 
 * Join ``#autodl-community`` on ``irc.p2p-network.net`` to help other users install and use autodl-irssi.
+
 * Report issues with supported trackers by e-mail (autodl.community@gmail.com) or on IRC.
-* Use our referral links to sign up at [Coinbase](https://coinbase.com/?r=533a0d846d997b3338000006&utm_campaign=user-referral&src=referral-link) or [Digital Ocean](https://www.digitalocean.com/?refcode=3823208a0597).
+
+* Use our referral links to sign up at [Coinbase](http://bit.ly/autodlcb) or [Digital Ocean](http://bit.ly/autodldo).
