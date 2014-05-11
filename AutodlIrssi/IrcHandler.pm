@@ -68,6 +68,7 @@ sub _createSignalsTable {
 	$self->{signals} = [
 		["event privmsg", sub { $self->onPrivmsg(@_) }],
 		["event notice", sub { $self->onPrivmsg(@_) }],
+		["ctcp action", sub { $self->onCtcpAction(@_) }],
 	];
 }
 
@@ -98,6 +99,23 @@ sub onPrivmsg {
 	};
 	if ($@) {
 		message 0, "Exception in onPrivmsg: " . formatException($@);
+	}
+}
+
+# Called on each CTCP ACTION
+sub onCtcpAction {
+	my ($self, $server, $line, $nick, $address, $channelName) = @_;
+
+	eval {
+		return unless $channelName =~ /^#/;
+		my $serverName = $server->{address};
+		my $userName = $nick;
+		my $networkName = $server->isupport('NETWORK');
+
+		$self->onNewIrcLine($line, $networkName, $serverName, $channelName, $userName);
+	};
+	if ($@) {
+		message 0, "Exception in onCtcpAction: " . formatException($@);
 	}
 }
 
