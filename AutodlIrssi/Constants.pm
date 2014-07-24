@@ -77,6 +77,7 @@ our $tvSources = [
 	["HDCAM", "HD-CAM", "HD CAM"],
 	["R2", "R5", "R6"],
 	["TELESYNC", "TS"],
+	["HDTS", "HD-TS", "HD TS"],
 	["TELECINE", "TC"],
 	["SiteRip"],
 	["PPV"],
