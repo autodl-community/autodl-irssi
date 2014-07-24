@@ -74,6 +74,7 @@ our $tvSources = [
 	["Webrip", "WebRip", "WEBRip", "WEBRIP"],
 	["TVRip", "TV"],
 	["CAM"],
+	["HDCAM", "HD-CAM", "HD CAM"],
 	["R2", "R5", "R6"],
 	["TELESYNC", "TS"],
 	["TELECINE", "TC"],

@@ -677,8 +677,8 @@ sub extractReleaseNameInfo {
 			my $source = lc $out->{source};
 			if ($source eq "dsr" || $source eq "pdtv" || $source eq "hdtv" || $source eq "hr.pdtv" ||
 				$source eq "hr.hdtv" || $source eq "dvdrip" || $source eq "dvdscr" || $source eq "tvrip" ||
-				$source eq "cam" || $source eq "telesync" || $source eq "ts" || $source eq "telecine" ||
-				$source eq "tc" || $source eq "brrip" || $source eq "bdrip") {
+				$source eq "cam" || $source eq "hdcam" || $source eq "telesync" || $source eq "ts" ||
+				$source eq "telecine" || $source eq "tc" || $source eq "brrip" || $source eq "bdrip") {
 				$setVariable->("encoder", "XviD");
 			}
 			elsif ($source eq "hddvd" || $source eq "hd-dvd" || $source eq "bluray" ||
