@@ -66,7 +66,7 @@ our $tvSources = [
 	["BD9"],
 	["BDRip"],
 	["BRRip", "BLURAYRiP"],
-	["DVDR", "MDVDR", "DVD"],
+	["DVDR", "MDVDR", "DVD", "DVD-R"],
 	["HDDVD", "HD-DVD"],
 	["HDDVDRip", "HD-DVDRip"],
 	["BluRay", "Blu-Ray", "MBluRay"],
