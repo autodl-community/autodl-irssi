@@ -674,25 +674,6 @@ sub extractReleaseNameInfo {
 						$out->{encoder} || $out->{season} || $out->{episode});
 
 	if ($isTvOrMovie) {
-		if ($out->{source}) {
-			my $source = lc $out->{source};
-			if ($source eq "dsr" || $source eq "pdtv" || $source eq "hdtv" || $source eq "hr.pdtv" ||
-				$source eq "hr.hdtv" || $source eq "dvdrip" || $source eq "dvdscr" || $source eq "tvrip" ||
-				$source eq "cam" || $source eq "hdcam" || $source eq "telesync" || $source eq "ts" ||
-				$source eq "telecine" || $source eq "tc" || $source eq "brrip" || $source eq "bdrip") {
-				$setVariable->("encoder", "XviD");
-			}
-			elsif ($source eq "hddvd" || $source eq "hd-dvd" || $source eq "bluray" ||
-					$source eq "blu-ray") {
-				$setVariable->("encoder", "x264");
-				$setVariable->("resolution", "720p");
-			}
-			elsif ($source eq "web-dl") {
-				$setVariable->("encoder", "h.264");
-				$setVariable->("resolution", "720p");
-			}
-		}
-
 		# Don't use the year index if it's a TV show since the year may be part of the name.
 		my $yindex = $indexYear;
 		if ($out->{season} || $out->{episode} || ($out->{source} && $out->{source} =~ /HDTV|PDTV/i)) {
@@ -710,10 +691,6 @@ sub extractReleaseNameInfo {
 			$name1 = trim $name1;
 			$setVariable->("name1", $name1);
 		}
-	}
-
-	if ($isTvOrMovie && !$out->{resolution}) {
-		$setVariable->("resolution", "SD");
 	}
 }
 
