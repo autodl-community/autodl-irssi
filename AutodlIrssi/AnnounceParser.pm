@@ -182,6 +182,7 @@ sub onNewLine {
 		freeleech			=> "",
 		freeleechPercent	=> "",
 		origin				=> "",
+		releaseGroup		=> "",
 		category			=> "",
 		torrentName			=> "",
 		uploader			=> "",

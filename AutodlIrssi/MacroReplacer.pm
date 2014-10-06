@@ -103,6 +103,7 @@ sub addTorrentInfo {
 	$self->add("Freeleech", $ti->{freeleech});
 	$self->add("FreeleechPercent", $ti->{freeleechPercent});
 	$self->add("Origin", $ti->{origin});
+	$self->add("ReleaseGroup", $ti->{releaseGroup});
 	$self->add("Log", $ti->{log});
 	$self->add("LogScore", $ti->{logScore});
 	$self->add("Cue", $ti->{cue});
