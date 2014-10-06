@@ -173,31 +173,6 @@ sub start {
 		return;
 	}
 
-	message(3, "Matched " . $self->_getTorrentInfoString());
-
-	if ($self->{ti}{filter}{maxDownloads} >= 0) {
-		if ($self->{ti}{filter}{maxDownloadsPer} eq "hour") {
-			my $hourTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{hour}{date});
-			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{hour}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the hour starting \x02\x0308$hourTime\x02\x03");
-		}
-		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "day") {
-			my $dayTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{day}{date});
-			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{day}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the day starting \x02\x0308$dayTime\x02\x03");
-		}
-		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "week") {
-			my $weekTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{week}{date});
-			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{week}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the week starting \x02\x0308$weekTime\x02\x03");
-		}
-		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "month") {
-			my $monthTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{month}{date});
-			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{month}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the month starting \x02\x0308$monthTime\x02\x03");
-		}
-		elsif ($self->{ti}{filter}{maxDownloadsPer} eq "" || $self->{ti}{filter}{maxDownloadsPer} eq "forever") {
-			my $totalTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($ti->{filter}{state}{total}{date});
-			message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$ti->{filter}{state}{total}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 since \x02\x0308$totalTime\x02\x03");
-		}
-	}
-
 	$self->{filename} = $self->_getFilename($self->{ti}{torrentName});
 	$self->{uploadMethod} = $self->{ti}{filter}{uploadType} ? $self->{ti}{filter} : $AutodlIrssi::g->{options};
 
@@ -269,6 +244,33 @@ sub _onTorrentDownloaded {
 		$self->{ti}{filter}{state}->restoreDownloadCount($self->{filterDlState});
 		return;
 	}
+	else {
+		message(3, "Matched " . $self->_getTorrentInfoString());
+
+		if ($self->{ti}{filter}{maxDownloads} >= 0) {
+			if ($self->{ti}{filter}{maxDownloadsPer} eq "hour") {
+				my $hourTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($self->{ti}{filter}{state}{hour}{date});
+				message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$self->{ti}{filter}{state}{hour}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the hour starting \x02\x0308$hourTime\x02\x03");
+			}
+			elsif ($self->{ti}{filter}{maxDownloadsPer} eq "day") {
+				my $dayTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($self->{ti}{filter}{state}{day}{date});
+				message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$self->{ti}{filter}{state}{day}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the day starting \x02\x0308$dayTime\x02\x03");
+			}
+			elsif ($self->{ti}{filter}{maxDownloadsPer} eq "week") {
+				my $weekTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($self->{ti}{filter}{state}{week}{date});
+				message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$self->{ti}{filter}{state}{week}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the week starting \x02\x0308$weekTime\x02\x03");
+			}
+			elsif ($self->{ti}{filter}{maxDownloadsPer} eq "month") {
+				my $monthTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($self->{ti}{filter}{state}{month}{date});
+				message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$self->{ti}{filter}{state}{month}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 for the month starting \x02\x0308$monthTime\x02\x03");
+			}
+			elsif ($self->{ti}{filter}{maxDownloadsPer} eq "" || $self->{ti}{filter}{maxDownloadsPer} eq "forever") {
+				my $totalTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($self->{ti}{filter}{state}{total}{date});
+				message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$self->{ti}{filter}{state}{total}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 since \x02\x0308$totalTime\x02\x03");
+			}
+		}
+	}
+
 	$self->{ti}{torrentSize} = convertToByteSizeString($self->{ti}{torrentSizeInBytes});
 
 	$self->_onTorrentUploadWait();
