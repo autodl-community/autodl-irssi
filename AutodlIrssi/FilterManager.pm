@@ -95,6 +95,7 @@ sub checkFilter {
 	return 0 if $filter->{resolutions} ne '' && !checkArySynonyms($ti->{resolution}, $filter->{resolutions}, $AutodlIrssi::Constants::tvResolutions);
 	return 0 if $filter->{sources} ne '' && !checkArySynonyms($ti->{source}, $filter->{sources}, $AutodlIrssi::Constants::tvSources);
 	return 0 if $filter->{encoders} ne '' && !checkArySynonyms($ti->{encoder}, $filter->{encoders}, $AutodlIrssi::Constants::tvEncoders);
+	return 0 if $filter->{containers} ne '' && !checkFilterStrings($ti->{container}, $filter->{containers});
 
 	return 0 if $filter->{years} ne '' && !checkFilterNumbers($ti->{year}, $filter->{years});
 	return 0 if $filter->{seasons} ne '' && !checkFilterNumbers($ti->{season}, $filter->{seasons});

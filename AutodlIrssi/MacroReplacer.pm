@@ -94,6 +94,7 @@ sub addTorrentInfo {
 	$self->add("ReleaseType", $ti->{releaseType});
 	$self->add("Source", $ti->{source});
 	$self->add("Encoder", $ti->{encoder});
+	$self->add("Container", $ti->{container});
 	$self->add("Format", $ti->{format});
 	$self->add("Bitrate", $ti->{bitrate});
 	$self->add("Media", $ti->{media});

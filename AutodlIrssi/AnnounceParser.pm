@@ -197,6 +197,7 @@ sub onNewLine {
 		resolution			=> "",
 		source				=> "",
 		encoder				=> "",
+		container			=> "",
 		format				=> "",
 		bitrate				=> "",
 		media				=> "",
