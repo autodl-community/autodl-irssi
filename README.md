@@ -19,7 +19,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on submitting bugs, 
 
 Donations are accepted, but not expected.
 
-[![Bitcoin](http://img.shields.io/badge/bitcoin-donate-green.svg?style=flat-square)](https://coinbase.com/autodlcommunity) [![Flattr](http://img.shields.io/badge/flattr-donate-green.svg?style=flat-square)](https://flattr.com/thing/1457186) [![PayPal](http://img.shields.io/badge/paypal-donate-green.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=88QE9ABP2X3RU&lc=US&item_name=autodl%2dcommunity&currency_code=USD)
+[![Bitcoin](http://img.shields.io/badge/bitcoin-donate-green.svg?style=flat-square)](https://coinbase.com/autodlcommunity) [![Flattr](http://img.shields.io/badge/flattr-donate-green.svg?style=flat-square)](https://flattr.com/thing/1457186) [![PayPal](http://img.shields.io/badge/paypal-donate-green.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=88QE9ABP2X3RU&lc=US&item_name=autodl%2dcommunity&currency_code=USD)  
 [![Coinbase](http://img.shields.io/badge/coinbase-referral-orange.svg?style=flat-square)](https://www.coinbase.com/?r=533a0d846d997b3338000006&utm_campaign=user-referral&src=referral-link) [![Digital Ocean](http://img.shields.io/badge/digital ocean-referral-orange.svg?style=flat-square)](https://www.digitalocean.com/?refcode=3823208a0597)  [![Namecheap](http://img.shields.io/badge/namecheap-referral-orange.svg?style=flat-square)](http://www.namecheap.com/?aff=67208)
 
 ### Other Ways to Contribute
