@@ -1,3 +1,4 @@
 [submodule "AutodlIrssi/trackers"]
 	path = AutodlIrssi/trackers
 	url = https://github.com/autodl-community/autodl-trackers.git
+	branch = master
