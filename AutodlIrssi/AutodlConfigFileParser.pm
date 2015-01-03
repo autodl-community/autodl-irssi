@@ -47,6 +47,7 @@ sub defaultOptions {
 		maxDownloadRetryTimeSeconds => 5*60,
 		level => 3,
 		debug => 0,
+		useRegex => 0,
 		uploadType => AutodlIrssi::Constants::UPLOAD_WATCH_FOLDER(),
 		uploadWatchDir => '',
 		uploadFtpPath => '',
@@ -281,6 +282,7 @@ sub doHeaderFilter {
 			maxDownloads => '',
 			maxDownloadsPer => '',
 			downloadDupeReleases => 0,
+			useRegex => 0,
 			uploadType => '',
 			uploadWatchDir => '',
 			uploadFtpPath => '',
@@ -345,6 +347,7 @@ sub doHeaderFilter {
 			'max-downloads' => 'maxDownloads',
 			'max-downloads-per' => 'maxDownloadsPer',
 			'download-duplicates' => 'downloadDupeReleases',
+			'use-regex' => 'useRegex',
 			'upload-type' => 'uploadType',
 			'upload-watch-dir' => 'uploadWatchDir',
 			'upload-ftp-path' => 'uploadFtpPath',
@@ -376,6 +379,7 @@ sub doHeaderFilter {
 		$filter->{cue} = convertStringToBoolean($filter->{cue}) if $filter->{cue};
 		$filter->{maxDownloads} = convertStringToInteger($filter->{maxDownloads}, -1);
 		$filter->{downloadDupeReleases} = convertStringToBoolean($filter->{downloadDupeReleases});
+		$filter->{useRegex} = convertStringToBoolean($filter->{useRegex});
 		$filter->{rtPriority} = _convertPriority($filter->{rtPriority});
 		$filter->{rtIgnoreScheduler} = convertStringToBoolean($filter->{rtIgnoreScheduler});
 		$filter->{rtDontAddName} = convertStringToBoolean($filter->{rtDontAddName});
@@ -403,6 +407,7 @@ sub doHeaderOptions {
 		'download-retry-time-seconds' => 'maxDownloadRetryTimeSeconds',
 		'output-level' => 'level',
 		'debug' => 'debug',
+		'use-regex' => 'useRegex',
 		'upload-type' => 'uploadType',
 		'upload-watch-dir' => 'uploadWatchDir',
 		'upload-ftp-path' => 'uploadFtpPath',
@@ -433,6 +438,7 @@ sub doHeaderOptions {
 	$self->{options}{maxDownloadRetryTimeSeconds} = convertStringToInteger($self->{options}{maxDownloadRetryTimeSeconds}, 5*60, 0);
 	$self->{options}{level} = convertStringToInteger($self->{options}{level}, 3, -1, 5);
 	$self->{options}{debug} = convertStringToBoolean($self->{options}{debug});
+	$self->{options}{useRegex} = convertStringToBoolean($self->{options}{useRegex});
 	$self->{options}{memoryLeakCheck} = convertStringToBoolean($self->{options}{memoryLeakCheck});
 	$self->{options}{uniqueTorrentNames} = convertStringToBoolean($self->{options}{uniqueTorrentNames});
 	if ($self->{options}{updateCheck} ne "auto" &&

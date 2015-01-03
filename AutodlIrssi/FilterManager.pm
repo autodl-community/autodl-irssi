@@ -101,8 +101,14 @@ sub checkFilter {
 	return 0 if $filter->{seasons} ne '' && !checkFilterNumbers($ti->{season}, $filter->{seasons});
 	return 0 if $filter->{episodes} ne '' && !checkFilterNumbers($ti->{episode}, $filter->{episodes});
 
-	return 0 if $filter->{matchReleases} ne '' && !checkFilterStrings($ti->{torrentName}, $filter->{matchReleases});
-	return 0 if $filter->{exceptReleases} ne '' && checkFilterStrings($ti->{torrentName}, $filter->{exceptReleases});
+	if ($filter->{useRegex} || $AutodlIrssi::g->{options}{useRegex}) {
+		return 0 if $filter->{matchReleases} ne '' && !checkFilterRegex($ti->{torrentName}, $filter->{matchReleases});
+		return 0 if $filter->{exceptReleases} ne '' && checkFilterRegex($ti->{torrentName}, $filter->{exceptReleases});
+	}
+	else {
+		return 0 if $filter->{matchReleases} ne '' && !checkFilterStrings($ti->{torrentName}, $filter->{matchReleases});
+		return 0 if $filter->{exceptReleases} ne '' && checkFilterStrings($ti->{torrentName}, $filter->{exceptReleases});
+	}
 
 	return 0 if $filter->{matchCategories} ne '' && !checkFilterStrings($ti->{category}, $filter->{matchCategories});
 	return 0 if $filter->{exceptCategories} ne '' && checkFilterStrings($ti->{category}, $filter->{exceptCategories});
@@ -166,9 +172,9 @@ sub checkFilter {
 	return 1;
 }
 
-sub checkFilterStrings {
+sub checkFilterRegex {
 	my ($name, $filterList) = @_;
-	my @ary = split /,/, regexEscapeWildcardString($filterList);
+	my @ary = split /,/, $filterList;
 	return checkRegexArray($name, \@ary);
 }
 
@@ -176,6 +182,27 @@ sub checkFilterStrings {
 #	@param name	The string to check
 #	@param filterWordsAry	Array containing all regex strings
 sub checkRegexArray {
+	my ($name, $filterWordsAry) = @_;
+
+	for my $temp (@$filterWordsAry) {
+		my $filterWord = trim $temp;
+		next unless $filterWord;
+		return 1 if $name =~ /$filterWord/i;
+	}
+
+	return 0;
+}
+
+sub checkFilterStrings {
+	my ($name, $filterList) = @_;
+	my @ary = split /,/, regexEscapeWildcardString($filterList);
+	return checkStringArray($name, \@ary);
+}
+
+# Returns true if name matches one of the words in filterWordsAry
+#	@param name	The string to check
+#	@param filterWordsAry	Array containing all regex strings
+sub checkStringArray {
 	my ($name, $filterWordsAry) = @_;
 
 	for my $temp (@$filterWordsAry) {
