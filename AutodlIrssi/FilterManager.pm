@@ -124,6 +124,7 @@ sub checkFilter {
 	return 0 if $filter->{freeleechPercents} ne '' && !checkFilterNumbers($ti->{freeleechPercent}, $filter->{freeleechPercents});
 	return 0 if $filter->{origins} ne '' && !checkFilterStrings($ti->{origin}, $filter->{origins});
 	return 0 if $filter->{releaseGroups} ne '' && !checkFilterStrings($ti->{releaseGroup}, $filter->{releaseGroups});
+	return 0 if $filter->{exceptReleaseGroups} ne '' && checkFilterStrings($ti->{exceptReleaseGroup}, $filter->{exceptReleaseGroups});
 	return 0 if $filter->{log} ne '' && !$ti->{log} != !$filter->{log};
 	return 0 if $filter->{logScores} ne '' && !checkFilterNumbers($ti->{logScore}, $filter->{logScores});
 	return 0 if $filter->{cue} ne '' && !$ti->{cue} != !$filter->{cue};
