@@ -18,7 +18,7 @@ For simple, single file changes/additions, sending or linking your modified file
 
 ### Pull Requests
 
-You should create a separate [feature branch][fb] in your [fork][fork] to commit your changes to. [Pull Requests][https://help.github.com/articles/creating-a-pull-request] will only be accepted if made from a [feature branch][fb] and against the [devel](https://github.com/autodl-community/autodl-irssi/tree/devel) branch of this repository.
+You should create a separate [feature branch][fb] in your [fork][fork] to commit your changes to. [Pull Requests](https://help.github.com/articles/creating-a-pull-request) will only be accepted if made from a [feature branch][fb] and against the [devel](https://github.com/autodl-community/autodl-irssi/tree/devel) branch of this repository.
 
 Commit messages should be written in a [well-formed, consistent](https://sethrobertson.github.io/GitBestPractices/#usemsg) manner. See the [commit log](https://github.com/autodl-community/autodl-irssi/commits/devel) for acceptable examples.
 
