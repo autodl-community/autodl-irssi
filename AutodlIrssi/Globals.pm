@@ -37,6 +37,7 @@ our $g = {
 	options => {
 		level => 3,
 		debug => 0,
+		advancedOutputSites => '',
 	},
 	trackerManager => undef,
 	downloadHistory => undef,
@@ -54,7 +55,7 @@ package AutodlIrssi::Globals;
 use AutodlIrssi::Irssi;
 use AutodlIrssi::TextUtils;
 use base qw/ Exporter /;
-our @EXPORT = qw/ message dmessage currentTime formatException /;
+our @EXPORT = qw/ message dmessage umessage currentTime formatException /;
 our @EXPORT_OK = qw//;
 
 sub currentTime {
@@ -107,6 +108,27 @@ sub message {
 		else {
 			irssi_print($msg);
 		}
+	}
+}
+
+sub umessage {
+	my ($msg) = shift;
+
+	eval { $AutodlIrssi::g->{messageBuffer}->onMessage($msg) } if $AutodlIrssi::g->{messageBuffer};
+
+	if ($AutodlIrssi::g->{options}{irc} && $AutodlIrssi::g->{options}{irc}{outputServer} &&
+		$AutodlIrssi::g->{options}{irc}{outputChannel}) {
+		messageChannel($AutodlIrssi::g->{options}{irc}{outputServer},
+						$AutodlIrssi::g->{options}{irc}{outputChannel}, $msg);
+	}
+
+	$msg =~ s/%/%%/g;
+	my $window = Irssi::window_find_name("autodl");
+	if ($window) {
+		$window->print($msg);
+	}
+	else {
+		irssi_print($msg);
 	}
 }
 

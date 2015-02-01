@@ -63,6 +63,10 @@ sub getTrackerInfo {
 	return $_[0]->{trackerInfo};
 }
 
+sub getTrackerType {
+	return $_[0]->{trackerInfo}->{type};
+}
+
 sub getTrackerName {
 	return $_[0]->{trackerInfo}->{longName};
 }
@@ -437,7 +441,9 @@ sub onAllLinesMatched {
 
 	$ti->{canonicalizedName} = canonicalizeReleaseName($ti->{torrentName});
 
-	if ($AutodlIrssi::g->{options}{level} >= 5) {
+	my @outputSites = split /,/, $AutodlIrssi::g->{options}{advancedOutputSites};
+
+	if (checkRegexArray($self->getTrackerType(), \@outputSites)) {
 		my $msg = "\x02\x0303" . $self->getTrackerName() . "\x03\x02";
 		my $dumpVars = sub {
 			my $base = shift;
@@ -446,18 +452,45 @@ sub onAllLinesMatched {
 				my $v = $base->{$o};
 				next if !defined $v || $v eq "" || ref $v;
 				next if $o eq "line" || $o eq "origLine";
+				if ($o eq "cookie") {
+					$v =~ s/(?<=[=])(.+?)(?=;|$)/<removed>/g;
+				}
 				$msg .= " : \x02\x0306" . $o . "\x03\x02: '\x02\x0304" . $v . "\x03\x02'";
 			}
 		};
 		$dumpVars->($ti);
 		$dumpVars->($tempVariables);
 		$dumpVars->($ti->{httpHeaders});
-		message 5, $msg;
+
+		# Censor private information from torrentUrl.
+		$msg =~ s/(?<=authkey=)([\da-zA-Z]+)/<removed>/;
+		$msg =~ s/(?<=passkey=)([\da-zA-Z]+)/<removed>/;
+		$msg =~ s/(?<=torrent_pass=)([\da-zA-Z]+)/<removed>/;
+
+		# Special treatment for some trackers is needed.
+		$msg =~ s/(\/(?:rss\/download|rssdownload\.php|download\.php)\/\d+\/)([\da-zA-Z]+)(\/.*.torrent)/$1<removed>$3/;
+		$msg =~ s/(?<=secret_key=)([\da-zA-Z]+)/<removed>/;
+		$msg =~ s/(?<=pk=)([\da-zA-Z]+)/<removed>/;
+
+		umessage $msg;
 	}
 
 	if ($ti->{torrentSslUrl} eq "") {
 		($ti->{torrentSslUrl} = $ti->{torrentUrl}) =~ s/^https?/https/;
 	}
+}
+
+sub checkRegexArray {
+	my ($name, $filterWordsAry) = @_;
+
+	for my $temp (@$filterWordsAry) {
+		my $filterWord = trim $temp;
+		next unless $filterWord;
+		my $s = '^' . $filterWord . '$';
+		return 1 if $name =~ /$s/i || $filterWord eq "all";
+	}
+
+	return 0;
 }
 
 sub handleExtractTags {
