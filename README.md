@@ -1,7 +1,9 @@
 # autodl-irssi-community
 
 [autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) is a fork of the original [autodl-irssi](http://sourceforge.net/projects/autodl-irssi/).  
-It is licensed under the [Mozilla Public License 1.1](https://www.mozilla.org/MPL/1.1/)  
+It is licensed under the [Mozilla Public License 1.1](https://www.mozilla.org/MPL/1.1/)
+
+See [CHANGELOG.md](https://github.com/autodl-community/autodl-irssi/blob/master/CHANGELOG.md) for a history of the project.
 
 ## Getting Started
 
@@ -13,7 +15,7 @@ It is licensed under the [Mozilla Public License 1.1](https://www.mozilla.org/MP
 
 ### Code
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on submitting bugs, requests, and code.
+See [CONTRIBUTING.md](https://github.com/autodl-community/autodl-irssi/blob/master/CONTRIBUTING.md) for more information on submitting bugs, requests, and code.
 
 ### Donate
 
