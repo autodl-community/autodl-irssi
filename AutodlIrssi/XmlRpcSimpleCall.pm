@@ -40,6 +40,7 @@ sub method {
 	$self->_addElems('<methodCall><methodName>');
 	$self->_addUserData($methodName);
 	$self->_addElems('</methodName><params>');
+	$self->_addElems('<param><value><string></string></value></param>');
 
 	return $self;
 }

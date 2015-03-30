@@ -629,18 +629,18 @@ sub _sendRtorrent {
 		my $rt = new AutodlIrssi::RtorrentCommands();
 		if ($rtDir ne "") {
 			if ($self->{uploadMethod}{rtDontAddName}) {
-				$rt->func('d.set_directory_base', $rtDir);
+				$rt->func('d.directory_base.set', $rtDir);
 			}
 			else {
-				$rt->func('d.set_directory', $rtDir);
+				$rt->func('d.directory.set', $rtDir);
 			}
 		}
-		$rt->func('d.set_custom1', $rtLabel) if $rtLabel ne "";
+		$rt->func('d.custom1.set', $rtLabel) if $rtLabel ne "";
 		$rt->func('d.views.push_back_unique', $rtRatioGroup)->func('view.set_visible', $rtRatioGroup) if $rtRatioGroup ne "";
-		$rt->func('d.set_throttle_name', $rtChannel) if $rtChannel ne "";
-		$rt->func('d.set_priority', $rtPriority) if $rtPriority ne "";
-		$rt->func('d.set_throttle_name', 'NULL')->func('d.set_custom', 'sch_ignore', '1') if $rtIgnoreScheduler;
-		$rt->func('d.set_tied_to_file');
+		$rt->func('d.throttle_name.set', $rtChannel) if $rtChannel ne "";
+		$rt->func('d.priority.set', $rtPriority) if $rtPriority ne "";
+		$rt->func('d.throttle_name.set', 'NULL')->func('d.custom.set', 'sch_ignore', '1') if $rtIgnoreScheduler;
+		$rt->func('d.tied_to_file.set');
 		my $cmds = $rt->get();
 		$cmds .= ";$rtCommands" if $rtCommands ne "";
 		dmessage 5, "rtorrent commands: '$cmds'";
@@ -651,7 +651,7 @@ sub _sendRtorrent {
 		# Set REMOTE_ADDR since there could be user commands
 		my $scgi = new AutodlIrssi::Scgi($rtAddress, {REMOTE_ADDR => "127.0.0.1"});
 		my $xmlrpc = new AutodlIrssi::XmlRpcSimpleCall($scgi);
-		$xmlrpc->method($rtPriority eq '0' ? 'load' : 'load_start');
+		$xmlrpc->method($rtPriority eq '0' ? 'load.normal' : 'load.start');
 		$xmlrpc->string($filename);
 		$xmlrpc->string($cmds) if $cmds ne "";
 		$xmlrpc->methodEnd();
