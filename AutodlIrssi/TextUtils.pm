@@ -253,7 +253,7 @@ sub canonicalizeReleaseName {
 	shift =~ /^(.*?)(?:\.avi|\.mkv|\.mpg|\.mpeg|\.wmv|\.ts|\.mp4)?$/i;
 	my $rv = $1;
 	# Replace most non alpha numerics < 0x80 with spaces
-	$rv =~ s/[\x00-\x1F\x2E\x5F\x7F]+/ /g;
+	$rv =~ s/[\x00-\x1F\x2D\x2E\x5F\x7F]+/ /g;
 #	$rv =~ s/[\x00-\x1F\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/ /g;
 	$rv =~ s/\s+/ /g;
 	$rv = lc trim $rv;
