@@ -3,6 +3,16 @@
 Notable changes for the [autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) project.
 
 
+## [community-v1.53](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.53) (2015-04-16)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.52...community-v1.53)
+
+### Changed
+
+* Re-add '-' to replacement list for canonicalization.
+* Change rTorrent commands/mehtods to use new style.
+
+
 ## [community-v1.52](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.52) (2015-03-13)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.51...community-v1.52)
