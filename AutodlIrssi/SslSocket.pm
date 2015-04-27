@@ -84,10 +84,8 @@ sub connect {
 
 		$self->{ssl} = Net::SSLeay::new($AutodlIrssi::g->{ssl_ctx}) or die "Could not create SSL\n";
 		Net::SSLeay::set_fd($self->{ssl}, fileno($self->{socket}));
-		if ($hostname =~ /[[:alpha:]]/) {
-			Net::SSLeay::set_tlsext_host_name($self->{ssl}, $hostname);
-		}
 		Net::SSLeay::set_connect_state($self->{ssl});
+		Net::SSLeay::set_tlsext_host_name($self->{ssl}, $hostname);
 
 		$self->_startConnect($hostname, $port);
 		$self->_installHandshakeHandler(0, $callback);
