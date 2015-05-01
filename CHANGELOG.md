@@ -3,6 +3,16 @@
 Notable changes for the [autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) project.
 
 
+## [community-v1.54](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.54) (2015-04-30)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.53...community-v1.54)
+
+### Added
+
+* Add regex for sensitive data censoring.
+* Add SNI support to SSLSocket.
+
+
 ## [community-v1.53](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.53) (2015-04-16)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.52...community-v1.53)
