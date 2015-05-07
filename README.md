@@ -26,4 +26,4 @@ Donations are accepted, but not expected.
 
 ### Other Ways to Contribute
 
-* Join ``#autodl-community`` on ``irc.p2p-network.net`` to help and discuss autodl.
+* Join ``#autodl-community`` on ``irc.p2p-network.net`` to help and discuss autodl. You can use the preconfigured web-based client [Mibbit](http://widget.mibbit.com/?settings=acc887926984c5c6e62412b13d9fbfbc&server=irc.p2p-network.net&channel=%23autodl-community&nick=autodler%3F%3F).
