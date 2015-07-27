@@ -230,6 +230,12 @@ sub setOptions {
 
 		my $value = $option->{value};
 		next if $value eq '';
+
+		if ($value =~ m/^[*?]+$/) {
+			$self->error($option->{lineNumber}, "$name set to bare wildcard. This is unnecessary and unsupported by some options.");
+			next;
+		}
+
 		$dest->{$destName} = $value;
 	}
 }
