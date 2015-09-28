@@ -33,20 +33,16 @@ use warnings;
 package AutodlIrssi::Updater;
 use AutodlIrssi::Globals;
 use AutodlIrssi::TextUtils;
-use AutodlIrssi::UpdaterXmlParser;
 use AutodlIrssi::FileUtils;
 use AutodlIrssi::HttpRequest;
+use AutodlIrssi::InternetUtils qw/ decodeJson /;
 use AutodlIrssi::Dirs;
 use File::Spec;
 use File::Copy;
 use Archive::Zip qw/ :ERROR_CODES /;
 use constant {
-
-	UPDATE_URL => 'http://update.autodl-community.com/update.xml',
-
-	# This must not be a popular web browser's user agent or the update may fail
-	# since SourceForge checks the user agent and sends different results depending
-	# on the UA.
+	AUTODL_UPDATE_URL => 'https://api.github.com/repos/autodl-community/autodl-irssi/releases/latest',
+	TRACKERS_UPDATE_URL => 'https://api.github.com/repos/autodl-community/autodl-trackers/releases/latest',
 	UPDATE_USER_AGENT => 'autodl-irssi',
 };
 
@@ -55,13 +51,14 @@ sub new {
 	bless {
 		handler => undef,
 		request => undef,
+		githubToken => $AutodlIrssi::g->{options}{githubToken},
 	}, $class;
 }
 
 # Throws an exception if check() hasn't been called.
 sub _verifyCheckHasBeenCalled {
 	my $self = shift;
-	die "check() hasn't been called!\n" unless $self->{autodl};
+	die "update check hasn't been called!\n" unless $self->{autodl} || $self->{trackers};
 }
 
 # Returns true if we're checking for updates, or downloading something else
@@ -122,15 +119,74 @@ sub _createHttpRequest {
 	$self->{request}->setFollowNewLocation();
 }
 
-# Check for updates. $handler->($errorMessage) will be notified.
-sub check {
+sub _parseAutodlUpdate {
+	my ($self, $autodlData) = @_;
+
+	my $autodlTagName = my $autodlVersion = $autodlData->{tag_name};
+	$autodlVersion =~ s/community-v//;
+	my $autodlDownloadUrl = "https://github.com/autodl-community/autodl-irssi/releases/download/$autodlTagName/autodl-irssi-community-v$autodlVersion.zip";
+	my $autodlChangeLog = $autodlData->{body};
+
+	$self->{autodl} = {
+		version		=> $autodlVersion,
+		whatsNew	=> $autodlChangeLog,
+		url			=> $autodlDownloadUrl,
+	};
+
+	$self->{autodl}{whatsNew} =~ s/\r//mg;
+}
+
+sub _parseTrackersUpdate {
+	my ($self, $trackersData) = @_;
+
+	my $trackersTagName = my $trackersVersion = $trackersData->{tag_name};
+	$trackersVersion =~ s/community-v//;
+	my $trackersDownloadUrl = "https://github.com/autodl-community/autodl-trackers/releases/download/$trackersTagName/autodl-trackers-v$trackersVersion.zip";
+	my $trackersChangeLog = $trackersData->{body};
+
+	$self->{trackers} = {
+		version		=> $trackersVersion,
+		whatsNew	=> $trackersChangeLog,
+		url			=> $trackersDownloadUrl,
+	};
+
+	$self->{trackers}{whatsNew} =~ s/\r//mg;
+}
+
+# Check for autodl updates. $handler->($errorMessage) will be notified.
+sub checkAutodlUpdate {
 	my ($self, $handler) = @_;
 
 	die "Already checking for updates\n" if $self->_isChecking();
 
 	$self->{handler} = $handler || sub {};
 	$self->_createHttpRequest();
-	$self->{request}->sendRequest("GET", "", UPDATE_URL, {}, sub {
+
+	$self->{updateUrl} = AUTODL_UPDATE_URL;
+	if ($self->{githubToken}) {
+		$self->{updateUrl} .= "?access_token=$self->{githubToken}";
+	}
+
+	$self->{request}->sendRequest("GET", "", $self->{updateUrl} , {}, sub {
+		$self->_onRequestReceived(@_);
+	});
+}
+
+# Check for trackers updates. $handler->($errorMessage) will be notified.
+sub checkTrackersUpdate {
+	my ($self, $handler) = @_;
+
+	die "Already checking for updates\n" if $self->_isChecking();
+
+	$self->{handler} = $handler || sub {};
+	$self->_createHttpRequest();
+
+	$self->{updateUrl} = TRACKERS_UPDATE_URL;
+	if ($self->{githubToken}) {
+		$self->{updateUrl} .= "?access_token=$self->{githubToken}";
+	}
+
+	$self->{request}->sendRequest("GET", "", $self->{updateUrl} , {}, sub {
 		$self->_onRequestReceived(@_);
 	});
 }
@@ -146,19 +202,25 @@ sub _onRequestReceived {
 			return $self->_error("Error getting update info: " . $self->{request}->getResponseStatusText());
 		}
 
-		my $xmlData = $self->{request}->getResponseData();
-		my $updateParser = new AutodlIrssi::UpdaterXmlParser();
-		$updateParser->parse($xmlData);
-		$self->{autodl} = $updateParser->{autodl};
-		$self->{trackers} = $updateParser->{trackers};
+		my $jsonData = decodeJson($self->{request}->getResponseData());
 
-		$self->_findMissingModules();
+		if ($self->{request}{url} =~ /autodl-irssi/) {
+			$self->_parseAutodlUpdate($jsonData);
+		}
+		elsif ($self->{request}{url} =~ /autodl-trackers/) {
+			$self->_parseTrackersUpdate($jsonData);
+		}
 
 		$self->_notifyHandler("");
 	};
 	if ($@) {
 		chomp $@;
-		$self->_error("Could not parse update.xml: $@");
+		if ($self->{request}{url} =~ /autodl-irssi/) {
+			$self->_error("Could not parse autodl update data: $@");
+		}
+		elsif ($self->{request}{url} =~ /autodl-trackers/) {
+			$self->_error("Could not parse trackers update data: $@");
+		}
 	}
 }
 
@@ -167,7 +229,7 @@ sub updateTrackers {
 	my ($self, $destDir, $handler) = @_;
 
 	$self->_verifyCheckHasBeenCalled();
-	die "Already checking for updates\n" if $self->_isChecking();
+	die "Already checking for trackers updates\n" if $self->_isChecking();
 
 	$self->{handler} = $handler || sub {};
 	$self->_createHttpRequest();
@@ -202,8 +264,7 @@ sub updateAutodl {
 	my ($self, $destDir, $handler) = @_;
 
 	$self->_verifyCheckHasBeenCalled();
-	die "Already checking for updates\n" if $self->_isChecking();
-	die "Can't update. Missing these Perl modules: @{$self->{missingModules}}\n" if $self->isMissingModules();
+	die "Already checking for autodl updates\n" if $self->_isChecking();
 
 	$self->{handler} = $handler || sub {};
 	$self->_createHttpRequest();
@@ -300,115 +361,6 @@ sub _extractZipFile {
 	die $@ if $@;
 }
 
-# Updates $self->{missingModules} array with a list of all missing Perl modules
-sub _findMissingModules {
-	my $self = shift;
-
-	$self->{missingModules} = [];
-	for my $module (@{$self->{autodl}{modules}}) {
-		eval "require $module->{name};";
-		if ($@) {
-			push @{$self->{missingModules}}, $module->{name};
-		}
-	}
-}
-
-sub isMissingModules {
-	return @{shift->{missingModules}} != 0;
-}
-
-my @osInfo = (
-	{
-		os => 'Ubuntu, Debian',
-		command => 'apt-get -y install MODULES',
-		convertName => sub {
-			my $module = shift;
-			$module = lc $module;
-			$module =~ s/::/-/g;
-			return "lib$module-perl";
-		},
-	},
-	{
-		os => 'Fedora, CentOS',
-		command => 'yum -y install MODULES',
-		convertName => sub {
-			my $module = shift;
-			$module =~ s/::/-/g;
-			return "perl-$module";
-		},
-	},
-	{
-		os => 'OpenSUSE',
-		command => 'yast -i MODULES',
-		convertName => sub {
-			my $module = shift;
-			$module =~ s/::/-/g;
-			return "perl-$module";
-		},
-	},
-	{
-		os => 'PCLinuxOS',
-		command => 'apt-get -y install MODULES',
-		convertName => sub {
-			my $module = shift;
-			$module =~ s/::/-/g;
-			return "perl-$module";
-		},
-	},
-	{
-		os => 'Mandriva Linux',
-		command => 'urpmi MODULES',
-		convertName => sub {
-			my $module = shift;
-			$module =~ s/::/-/g;
-			return "perl-$module";
-		},
-	},
-	{
-		os => 'Arch Linux',
-		command => 'pacman -S MODULES',
-		convertName => sub {
-			my $module = shift;
-			$module = lc $module;
-			$module =~ s/::/-/g;
-			return "perl-$module";
-		},
-	},
-	{
-		os => 'FreeBSD',
-		command => 'pkg_add -r MODULES',
-		convertName => sub {
-			my $module = shift;
-			$module =~ s/::/-/g;
-			return "p5-$module";
-		},
-	},
-);
-
-sub printMissingModules {
-	my $self = shift;
-
-	return unless $self->isMissingModules();
-
-	message 3, "The following Perl module(s) are required, but missing:";
-	message 3, "    \x0309@{$self->{missingModules}}\x03";
-	message 3, "Execute one of these commands as the \x02root user\x02 to install them:";
-
-	for my $info (@osInfo) {
-		message 3, "\x0303$info->{os}\x03:";
-
-		my $modules = "";
-		for my $moduleName (@{$self->{missingModules}}) {
-			my $name = $info->{convertName}->($moduleName);
-			$modules .= " " if $modules;
-			$modules .= $name;
-		}
-		my $command = $info->{command};
-		$command =~ s/MODULES/$modules/g;
-		message 3, "    \x0308$command\x03";
-	}
-}
-
 sub getAutodlWhatsNew {
 	return shift->{autodl}{whatsNew};
 }
@@ -430,7 +382,7 @@ sub hasTrackersUpdate {
 	my ($self, $version) = @_;
 
 	$self->_verifyCheckHasBeenCalled();
-	return $self->getTrackersVersion() > $version;
+	return $self->getTrackersVersion() gt $version;
 }
 
 sub getTrackersVersion {

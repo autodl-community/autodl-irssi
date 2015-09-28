@@ -69,7 +69,7 @@ use constant CHECK_FOR_UPDATES_SECS => 60*60*24;
 use constant MAX_CONNECTION_WAIT_SECS => 10*60;
 
 my $version = '1.54';
-my $trackersVersion = -1;
+my $trackersVersion = '0';
 
 # Called when we're enabled
 sub enable {
@@ -149,7 +149,7 @@ sub disable {
 sub readAutodlState {
 
 	my $autodlState = {
-		trackersVersion => -1,
+		trackersVersion => '0',
 		trackerStates => {},
 		filterStates => {},
 	};
@@ -216,6 +216,16 @@ sub command_autodl {
 		chomp $@;
 		message 0, "command_autodl: ex: $@";
 	}
+}
+
+sub manualCheckForUpdates {
+	manualCheckForAutodlUpdates();
+	manualCheckForTrackersUpdates();
+}
+
+sub showWhatsNew {
+	showAutodlWhatsNew();
+	showTrackersWhatsNew();
 }
 
 sub printVersionInfo {
@@ -380,7 +390,8 @@ sub secondTimer {
 		activeConnectionsCheck();
 		reportBrokenAnnouncers();
 		$AutodlIrssi::g->{messageBuffer}->secondTimer();
-		checkForUpdates();
+		checkForAutodlUpdates();
+		checkForTrackersUpdates();
 	};
 	if ($@) {
 		message 0, "secondTimer: ex: " . formatException($@);
@@ -432,89 +443,85 @@ sub getActiveAnnounceParserTypes {
 }
 
 {
-	my $updater;
+	my $autodlUpdater;
 	my $lastUpdateCheck;
 	my $updateCheck;
 
-	sub checkForUpdates {
+	sub checkForAutodlUpdates {
 		eval {
 			my $elapsedSecs = defined $lastUpdateCheck ? time - $lastUpdateCheck : -1;
-			if ($elapsedSecs >= MAX_CONNECTION_WAIT_SECS && defined $updater && $updater->isSendingRequest()) {
+			if ($elapsedSecs >= MAX_CONNECTION_WAIT_SECS && defined $autodlUpdater && $autodlUpdater->isSendingRequest()) {
 				cancelCheckForUpdates("Stuck connection!");
 				return;
 			}
 			return if $elapsedSecs >= 0 && $elapsedSecs < CHECK_FOR_UPDATES_SECS;
 			$updateCheck = $AutodlIrssi::g->{options}{updateCheck} || 'ask';
-			forceCheckForUpdates();
+			_checkForAutodlUpdates();
 		};
 		if ($@) {
 			chomp $@;
-			message 0, "checkForUpdates: ex: $@";
+			message 0, "checkForAutodlUpdates: ex: $@";
 		}
 	}
 
-	sub manualCheckForUpdates {
+	sub manualCheckForAutodlUpdates {
 		eval {
 			$updateCheck = 'manual';
-			forceCheckForUpdates();
+			_checkForAutodlUpdates();
 		};
 		if ($@) {
 			chomp $@;
-			message 0, "manualCheckForUpdates: ex: $@";
+			message 0, "manualCheckForAutodlUpdates: ex: $@";
 		}
 	}
 
-	sub showWhatsNew {
+	sub showAutodlWhatsNew {
 		eval {
 			$updateCheck = 'whatsnew';
-			forceCheckForUpdates();
+			_checkForAutodlUpdates();
 		};
 		if ($@) {
 			chomp $@;
-			message 0, "manualCheckForUpdates: ex: $@";
+			message 0, "showAutodlWhatsNew: ex: $@";
 		}
 	}
 
-	sub updateFailed {
+	sub updateAutodlFailed {
 		my $errorMessage = shift;
-		$updater = undef;
+		$autodlUpdater = undef;
 		message 0, $errorMessage;
 	}
 
-	sub cancelCheckForUpdates {
+	sub cancelCheckForAutodlUpdates {
 		my $errorMessage = shift;
 
 		$errorMessage ||= "Cancelling update!";
-		return unless defined $updater;
+		return unless defined $autodlUpdater;
 
-		$updater->cancel($errorMessage);
-		$updater = undef;
+		$autodlUpdater->cancel($errorMessage);
+		$autodlUpdater = undef;
 	}
 
-	sub forceCheckForUpdates {
-		cancelCheckForUpdates('Update check cancelled!');
-		message 5, "Checking for updates...";
+	sub _checkForAutodlUpdates {
+		cancelCheckForAutodlUpdates('Update autodl check cancelled!');
+		message 5, "Checking for autodl updates...";
 		$lastUpdateCheck = time;
-		$updater = new AutodlIrssi::Updater();
-		$updater->check(\&onUpdateFileDownloaded);
+		$autodlUpdater = new AutodlIrssi::Updater();
+		$autodlUpdater->checkAutodlUpdate(\&onAutodlUpdateDataDownloaded);
 	}
 
-	sub onUpdateFileDownloaded {
+	sub onAutodlUpdateDataDownloaded {
 		my $errorMessage = shift;
 
-		return updateFailed("Could not check for updates: $errorMessage") if $errorMessage;
-		message 5, "Downloaded update.xml";
+		return updateAutodlFailed("Could not check for autodl updates: $errorMessage") if $errorMessage;
+		message 5, "Downloaded autodl update data";
 
-		my $autodlUpdateAvailable = $updater->hasAutodlUpdate($version);
-		my $trackerUpdateAvailable = $updater->hasTrackersUpdate($trackersVersion);
+		my $autodlUpdateAvailable = $autodlUpdater->hasAutodlUpdate($version);
 		my $updateAutodl = $autodlUpdateAvailable;
 
 		if ($updateCheck eq 'manual') {
 			if (!$autodlUpdateAvailable) {
 				message 3, "\x0309You are using the latest\x03 \x02autodl-irssi\x02 \x02v$version\x02";
-			}
-			if (!$trackerUpdateAvailable) {
-				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
 			}
 		}
 		elsif ($updateCheck eq 'auto') {
@@ -524,9 +531,6 @@ sub getActiveAnnounceParserTypes {
 			if ($autodlUpdateAvailable) {
 				message 3, "\x0309A new autodl version is available!\x03 Type \x02/autodl update\x02 to update or \x02/autodl whatsnew\x02.";
 			}
-			if ($trackerUpdateAvailable) {
-				message 3, "\x0309A new trackers version is available!\x03 Type \x02/autodl update\x02 to update or \x02/autodl whatsnew\x02.";
-			}
 			$updateAutodl = 0;
 		}
 		elsif ($updateCheck eq 'whatsnew') {
@@ -534,13 +538,7 @@ sub getActiveAnnounceParserTypes {
 				message 3, "\x0309You are using the latest\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 			}
 			else {
-				message 3, "\x0309Changes in\x03 \x02autodl-irssi\x02 \x02v$updater->{autodl}{version}:\x02\n" . $updater->getAutodlWhatsNew();
-			}
-			if (!$trackerUpdateAvailable) {
-				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
-			}
-			else {
-				message 3, "\x0309Changes in\x03 \x02autodl-trackers\x02 \x02v$updater->{trackers}{version}:\x02\n" . $updater->getTrackersWhatsNew();
+				message 3, "\x0309Changes in\x03 \x02autodl-irssi\x02 \x02v$autodlUpdater->{autodl}{version}:\x02\n" . $autodlUpdater->getAutodlWhatsNew();
 			}
 			$updateAutodl = 0;
 		}
@@ -549,38 +547,140 @@ sub getActiveAnnounceParserTypes {
 		}
 
 		if ($updateAutodl) {
-			if ($updater->isMissingModules()) {
-				$updater->printMissingModules();
-			}
-			else {
-				message 3, "Downloading update...";
-				$updater->updateAutodl(getIrssiScriptDir(), \&onUpdatedAutodl);
-				return;
-			}
+			message 3, "Downloading autodl update...";
+			$autodlUpdater->updateAutodl(getIrssiScriptDir(), \&onUpdatedAutodl);
+			return;
 		}
 
-		if ($updateCheck eq 'manual' || $updateCheck eq 'auto') {
-			if ($trackerUpdateAvailable) {
-				message 4, "Updating tracker files...";
-				$updater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
-				return;
-			}
-		}
-
-		$updater = undef;
+		$autodlUpdater = undef;
 	}
 
 	sub onUpdatedAutodl {
 		my $errorMessage = shift;
 
-		$updater = undef;
+		$autodlUpdater = undef;
 		return updateFailed("Could not update autodl-irssi: $errorMessage") if $errorMessage;
 
-		# Reset trackersVersion since we may have overwritten with older files
-		$trackersVersion = 0;
 		message 3, "Reloading autodl-irssi...";
 		message 3, "\x0309You are now using\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 		irssi_command('script load autodl-irssi');
+	}
+}
+
+{
+	my $trackersUpdater;
+	my $lastUpdateCheck;
+	my $updateCheck;
+
+	sub checkForTrackersUpdates {
+		eval {
+			my $elapsedSecs = defined $lastUpdateCheck ? time - $lastUpdateCheck : -1;
+			if ($elapsedSecs >= MAX_CONNECTION_WAIT_SECS && defined $trackersUpdater && $trackersUpdater->isSendingRequest()) {
+				cancelCheckForUpdates("Stuck connection!");
+				return;
+			}
+			return if $elapsedSecs >= 0 && $elapsedSecs < CHECK_FOR_UPDATES_SECS;
+			$updateCheck = $AutodlIrssi::g->{options}{updateCheck} || 'ask';
+			_checkForTrackersUpdates();
+		};
+		if ($@) {
+			chomp $@;
+			message 0, "checkForTrackersUpdates: ex: $@";
+		}
+	}
+
+	sub manualCheckForTrackersUpdates {
+		eval {
+			$updateCheck = 'manual';
+			_checkForTrackersUpdates();
+		};
+		if ($@) {
+			chomp $@;
+			message 0, "manualCheckForTrackersUpdates: ex: $@";
+		}
+	}
+
+	sub showTrackersWhatsNew {
+		eval {
+			$updateCheck = 'whatsnew';
+			_checkForTrackersUpdates();
+		};
+		if ($@) {
+			chomp $@;
+			message 0, "showTrackersWhatsNew: ex: $@";
+		}
+	}
+
+	sub updateTrackersFailed {
+		my $errorMessage = shift;
+		$trackersUpdater = undef;
+		message 0, $errorMessage;
+	}
+
+	sub cancelCheckForTrackersUpdates {
+		my $errorMessage = shift;
+
+		$errorMessage ||= "Cancelling update!";
+		return unless defined $trackersUpdater;
+
+		$trackersUpdater->cancel($errorMessage);
+		$trackersUpdater = undef;
+	}
+
+	sub _checkForTrackersUpdates {
+		cancelCheckForTrackersUpdates('Update trackers check cancelled!');
+		message 5, "Checking for trackers updates...";
+		$lastUpdateCheck = time;
+		$trackersUpdater = undef;
+		$trackersUpdater = new AutodlIrssi::Updater();
+		$trackersUpdater->checkTrackersUpdate(\&onTrackersUpdateDataDownloaded);
+	}
+
+	sub onTrackersUpdateDataDownloaded {
+		my $errorMessage = shift;
+
+		return updateTrackersFailed("Could not check for trackers updates: $errorMessage") if $errorMessage;
+		message 5, "Downloaded trackers update data";
+
+		my $trackerUpdateAvailable = $trackersUpdater->hasTrackersUpdate($trackersVersion);
+		my $updateTrackers = $trackerUpdateAvailable;
+
+		if ($updateCheck eq 'manual') {
+			if (!$trackerUpdateAvailable) {
+				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
+			}
+		}
+		elsif ($updateCheck eq 'auto') {
+			# Nothing
+		}
+		elsif ($updateCheck eq 'ask') {
+			if ($trackerUpdateAvailable) {
+				message 3, "\x0309A new trackers version is available!\x03 Type \x02/autodl update\x02 to update or \x02/autodl whatsnew\x02.";
+			}
+			$updateTrackers = 0;
+		}
+		elsif ($updateCheck eq 'whatsnew') {
+			if (!$trackerUpdateAvailable) {
+				message 3, "\x0309You are using the latest\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
+			}
+			else {
+				message 3, "\x0309Changes in\x03 \x02autodl-trackers\x02 \x02v$trackersUpdater->{trackers}{version}:\x02\n" . $trackersUpdater->getTrackersWhatsNew();
+			}
+			$updateTrackers = 0;
+		}
+		else {	# 'disabled' or unknown
+			$updateTrackers = 0;
+		}
+
+		if ($updateCheck eq 'manual' || $updateCheck eq 'auto') {
+			if ($trackerUpdateAvailable) {
+				message 4, "Updating tracker files...";
+				$trackersUpdater->updateTrackers(getTrackerFilesDir(), \&onUpdatedTrackers);
+				return;
+			}
+		}
+
+		$trackersUpdater = undef;
 	}
 
 	sub onUpdatedTrackers {
@@ -589,9 +689,9 @@ sub getActiveAnnounceParserTypes {
 		return updateFailed("Could not update trackers: $errorMessage") if $errorMessage;
 
 		message 3, "Trackers updated";
-		$trackersVersion = $updater->getTrackersVersion();
+		$trackersVersion = $trackersUpdater->getTrackersVersion();
 		message 3, "\x0309You are now using\x03 \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
-		$updater = undef;
+		$trackersUpdater = undef;
 		reloadTrackerFiles();
 	}
 }

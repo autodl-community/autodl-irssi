@@ -38,6 +38,7 @@ our $g = {
 		level => 3,
 		debug => 0,
 		advancedOutputSites => '',
+		githubToken => '',
 	},
 	trackerManager => undef,
 	downloadHistory => undef,

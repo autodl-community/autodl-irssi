@@ -38,6 +38,7 @@ use base qw/ AutodlIrssi::ConfigFileParser /;
 sub defaultOptions {
 	return {
 		updateCheck => 'ask',	# auto, ask, disabled
+		githubToken => '',
 		userAgent => 'autodl-irssi',
 		userAgentTracker => '',
 		peerId => '',
@@ -407,6 +408,7 @@ sub doHeaderOptions {
 	my $options = mergeHeaderOptions($aryHeader);
 	$self->setOptions('OPTIONS', $self->{options}, $options, {
 		'update-check' => 'updateCheck',
+		'github-token' => 'githubToken',
 		'user-agent' => 'userAgent',
 		'user-agent-tracker' => 'userAgentTracker',	# Not used anymore
 		'peer-id' => 'peerId',						# Not used anymore
