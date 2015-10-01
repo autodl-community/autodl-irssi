@@ -3,6 +3,16 @@
 Notable changes for the [autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) project.
 
 
+## [community-v1.60](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.60) (2015-10-01)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.54...community-v1.60)
+
+### Changed
+
+* Add warning message for using bare wildcards in filter options. Filters using bare wildcards will no longer work.
+* Change updater to use GitHub's Releases API.
+
+
 ## [community-v1.54](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.54) (2015-04-30)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.53...community-v1.54)
