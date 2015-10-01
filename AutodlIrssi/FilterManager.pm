@@ -76,7 +76,7 @@ sub getNumFilters {
 sub findFilter {
 	my ($self, $ti) = @_;
 
-	for my $filter (@{$self->{filters}}) {
+	for my $filter (reverse sort {$a->{priority} <=> $b->{priority} or $b->{name} cmp $a->{name}} @{$self->{filters}}) {
 		return $filter if $self->checkFilter($ti, $filter);
 	}
 
