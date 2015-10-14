@@ -108,6 +108,15 @@ sub readFilters {
 			$state->setTotalInfo($self->readAttributeInteger($totalElem, "time"), $self->readAttributeInteger($totalElem, "downloads"));
 		}
 
+		my $smartElem = $self->getOptionalChildElement($filterElem, "smart-episode");
+		if ($smartElem) {
+			$state->setSmartInfo(
+				$self->readAttributeInteger($smartElem, "season"), $self->readAttributeInteger($smartElem, "episode"),
+				$self->readAttributeInteger($smartElem, "year"), $self->readAttributeInteger($smartElem, "month"),
+				$self->readAttributeInteger($smartElem, "day")
+			);
+		}
+
 		$states->{$filterName} = $state;
 	}
 
@@ -182,6 +191,14 @@ sub writeFilters {
 		$filterElem->appendChild($totalElem);
 		$totalElem->setAttribute("time", $state->getTotalTime());
 		$totalElem->setAttribute("downloads", $state->getTotalDownloads());
+
+		my $smartElem = $doc->createElement("smart-episode");
+		$filterElem->appendChild($smartElem);
+		$smartElem->setAttribute("season", $state->getSmartSeason());
+		$smartElem->setAttribute("episode", $state->getSmartEpisode());
+		$smartElem->setAttribute("year", $state->getSmartYear());
+		$smartElem->setAttribute("month", $state->getSmartMonth());
+		$smartElem->setAttribute("day", $state->getSmartDay());
 	}
 
 	return $filtersElem;

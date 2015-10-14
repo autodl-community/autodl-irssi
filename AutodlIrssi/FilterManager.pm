@@ -34,6 +34,7 @@ package AutodlIrssi::FilterManager;
 use AutodlIrssi::TextUtils;
 use AutodlIrssi::Constants;
 use AutodlIrssi::FilterState;
+use AutodlIrssi::Globals;
 
 sub new {
 	my ($class, $filterStates) = @_;
@@ -150,6 +151,7 @@ sub checkFilter {
 
 	my $state = $filter->{state};
 	$state->initializeTime();
+
 	if ($filter->{maxDownloads} >= 0) {
 		my $numDownloads;
 		if ($filter->{maxDownloadsPer} eq "hour") {

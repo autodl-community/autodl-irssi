@@ -44,6 +44,24 @@ sub _createInfo {
 	};
 }
 
+sub _createSmartInfo {
+	my ($season, $episode, $year, $month, $day) = @_;
+
+	$season = 0 unless defined $season;
+	$episode = 0 unless defined $episode;
+	$year = 0 unless defined $year;
+	$month = 0 unless defined $month;
+	$day = 0 unless defined $day;
+
+	return {
+		season => $season,
+		episode => $episode,
+		year => $year,
+		month => $month,
+		day => $day,
+	};
+}
+
 sub new {
 	my $class = shift;
 
@@ -53,6 +71,7 @@ sub new {
 		week => _createInfo(),
 		month => _createInfo(),
 		total => _createInfo(),
+		smart => _createSmartInfo(),
 	}, $class;
 
 	$self->initializeTime(time());
@@ -119,6 +138,11 @@ sub setTotalInfo {
 	$self->{total} = _createInfo($time, $downloads);
 }
 
+sub setSmartInfo {
+	my ($self, $season, $episode, $year, $month, $day) = @_;
+	$self->{smart} = _createSmartInfo($season, $episode, $year, $month, $day);
+}
+
 sub getHourTime {
 	return shift->{hour}{date};
 }
@@ -159,6 +183,26 @@ sub getTotalDownloads {
 	return shift->{total}{downloads};
 }
 
+sub getSmartSeason {
+	return shift->{smart}{season};
+}
+
+sub getSmartEpisode {
+	return shift->{smart}{episode};
+}
+
+sub getSmartYear {
+	return shift->{smart}{year};
+}
+
+sub getSmartMonth {
+	return shift->{smart}{month};
+}
+
+sub getSmartDay {
+	return shift->{smart}{day};
+}
+
 sub incrementDownloads {
 	my $self = shift;
 
@@ -188,6 +232,20 @@ sub restoreDownloadCount {
 	$self->{total}{downloads}-- if $self->{total} == $obj->{total};
 
 	$obj->{hour} = $obj->{day} = $obj->{week} = $obj->{month} = $obj->{total} = undef;
+}
+
+sub updateSmartInfo {
+	my ($self, $season, $episode, $year, $month, $day) = @_;
+
+	$self->{smart}{season} = $season;
+	$self->{smart}{episode} = $episode;
+	$self->{smart}{year} = $year;
+	$self->{smart}{month} = $month;
+	$self->{smart}{day} = $day;
+
+	return {
+		smart => $self->{smart},
+	}
 }
 
 1;

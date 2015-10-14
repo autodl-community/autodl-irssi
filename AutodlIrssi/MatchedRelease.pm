@@ -89,17 +89,55 @@ sub _messageFail {
 	message $level, $msg;
 }
 
-# Returns false if torrent hasn't been downloaded, or returns true if it has, and also prints an
+# Returns false if torrent has been downloaded, or returns true if it hasn't, and also prints an
 # error message to the user.
-sub _checkAlreadyDownloaded {
+sub _canDownload {
 	my $self = shift;
+	my $ti = $self->{ti};
+	my $filter = $self->{ti}{filter};
+	my $state = $self->{ti}{filter}{state};
 
-	if (!$self->{downloadHistory}->canDownload($self->{ti})) {
-		$self->_releaseAlreadyDownloaded();
-		return 1;
+	my $canDownload = 1;
+
+	if ($filter->{smartEpisode}) {
+		if ($ti->{episode} && $ti->{season}) {
+			if ($ti->{season} <= $state->{smart}{season} && $ti->{episode} <= $state->{smart}{episode}) {
+				$canDownload =0;
+			}
+		}
+		elsif ($ti->{episode} && !$ti->{season}) {
+			if ($ti->{episode} <= $state->{smart}{episode}) {
+				$canDownload = 0;
+			}
+		}
+		elsif ($ti->{ymd}) {
+			my ($year, $month, $day) = split(/ /, $ti->{ymd});
+
+			if ($year < $state->{smart}{year}) {
+				$canDownload = 0;
+			}
+
+			if ($month < $state->{smart}{month}) {
+				$canDownload = 0;
+			}
+
+			if ($day <= $state->{smart}{day}) {
+				$canDownload = 0;
+			}
+		}
 	}
 
-	return 0;
+	if (!$self->{downloadHistory}->canDownload($self->{ti})) {
+		$canDownload = 0;
+	}
+
+	if (!$canDownload) {
+		$self->_releaseAlreadyDownloaded();
+	}
+
+	# print "Can Download: $canDownload";
+
+	return $canDownload;
 }
 
 sub _releaseAlreadyDownloaded {
@@ -162,7 +200,8 @@ sub start {
 	die "start() already called\n" if defined $self->{connId};
 	$self->{connId} = $AutodlIrssi::g->{activeConnections}->add($self, "Release: '$self->{ti}{torrentName}', tracker: $self->{trackerInfo}{longName}");
 
-	return if $self->_checkAlreadyDownloaded();
+	return if !$self->_canDownload();
+	# print "Can Download";
 
 	my $missing = $self->{ti}{announceParser}->getUninitializedDownloadVars();
 	if (@$missing) {
@@ -191,8 +230,6 @@ sub start {
 
 sub _onTorrentDownloaded {
 	my ($self, $errorMessage) = @_;
-
-	return if $self->_checkAlreadyDownloaded();
 
 	if ($errorMessage) {
 		# Yeah this is ugly
@@ -268,6 +305,22 @@ sub _onTorrentDownloaded {
 				my $totalTime = strftime "%a %b %e %H:%M:%S GMT", gmtime($self->{ti}{filter}{state}{total}{date});
 				message(3, "(\x02\x0313$self->{ti}{filter}{name}\x02\x03) Download \x02\x0309$self->{ti}{filter}{state}{total}{downloads}\x03\x02 / \x02\x0309$self->{ti}{filter}{maxDownloads}\x03\x02 since \x02\x0308$totalTime\x02\x03");
 			}
+		}
+	}
+
+	if ($self->{ti}{filter}{smartEpisode}) {
+		my $episode = $self->{ti}{episode} ? $self->{ti}{episode} : 0;
+		my $season = $self->{ti}{season} ? $self->{ti}{season} : 0;
+
+		# print "Update";
+
+		my ($year, $month, $day) = (0) x 3;
+		if ($self->{ti}{ymd}) {
+			($year, $month, $day) = split(/ /, $self->{ti}{ymd});
+		}
+
+		if ($self->{ti}{episode} || $self->{ti}{ymd}) {
+			$self->{ti}{filter}{state}->updateSmartInfo($season, $episode, $year, $month, $day);
 		}
 	}
 
@@ -354,7 +407,6 @@ sub _sendWOL {
 sub _saveTorrentFile {
 	my $self = shift;
 
-	return if $self->_checkAlreadyDownloaded();
 	return unless $self->_checkMethodAllowed("watchdir");
 
 	eval {
@@ -381,7 +433,6 @@ sub _saveTorrentFile {
 sub _sendTorrentFileWebui {
 	my $self = shift;
 
-	return if $self->_checkAlreadyDownloaded();
 	return unless $self->_checkMethodAllowed("webui");
 
 	eval {
@@ -420,7 +471,6 @@ sub _onWebuiUploadComplete {
 sub _sendTorrentFileFtp {
 	my $self = shift;
 
-	return if $self->_checkAlreadyDownloaded();
 	return unless $self->_checkMethodAllowed("ftp");
 
 	eval {
@@ -500,7 +550,6 @@ sub _writeCreatedTempFile {
 sub _runProgram {
 	my $self = shift;
 
-	return if $self->_checkAlreadyDownloaded();
 	return unless $self->_checkMethodAllowed("exec");
 
 	eval {
@@ -523,7 +572,6 @@ sub _runProgram {
 sub _runUtorrentDir {
 	my $self = shift;
 
-	return if $self->_checkAlreadyDownloaded();
 	return unless $self->_checkMethodAllowed("dyndir");
 
 	eval {
@@ -599,7 +647,6 @@ sub _getRtAddress {
 sub _sendRtorrent {
 	my $self = shift;
 
-	return if $self->_checkAlreadyDownloaded();
 	return unless $self->_checkMethodAllowed("rtorrent");
 
 	eval {
