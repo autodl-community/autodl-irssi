@@ -375,6 +375,8 @@ sub reloadAutodlConfigFile {
 		else {
 			$AutodlIrssi::g->{autoConnector}->disable();
 		}
+
+		message 3, "Configuration files loaded";
 	};
 	if ($@) {
 		chomp $@;
