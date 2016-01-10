@@ -291,7 +291,7 @@ sub doHeaderFilter {
 			maxDownloads => '',
 			maxDownloadsPer => '',
 			downloadDupeReleases => 0,
-			priority => 1,
+			priority => 0,
 			useRegex => 0,
 			uploadType => '',
 			uploadWatchDir => '',
