@@ -130,8 +130,8 @@ sub checkFilter {
 	return 0 if $filter->{freeleechPercents} ne '' && !checkFilterNumbers($ti->{freeleechPercent}, $filter->{freeleechPercents});
 	return 0 if $filter->{origins} ne '' && !checkFilterStrings($ti->{origin}, $filter->{origins});
 	return 0 if $filter->{releaseGroups} ne '' && !checkFilterStrings($ti->{releaseGroup}, $filter->{matchReleaseGroups});
-	return 0 if $filter->{matchReleaseGroups} ne '' && !checkFilterStrings($ti->{releaseGroup}, $filter->{matchReleaseGroups});
-	return 0 if $filter->{exceptReleaseGroups} ne '' && checkFilterStrings($ti->{releaseGroup}, $filter->{exceptReleaseGroups});
+	return 0 if $filter->{matchReleaseGroups} ne '' && !checkFilterReleaseGroups($ti, $filter->{matchReleaseGroups});
+	return 0 if $filter->{exceptReleaseGroups} ne '' && checkFilterReleaseGroups($ti, $filter->{exceptReleaseGroups});
 	return 0 if $filter->{log} ne '' && !$ti->{log} != !$filter->{log};
 	return 0 if $filter->{logScores} ne '' && !checkFilterNumbers($ti->{logScore}, $filter->{logScores});
 	return 0 if $filter->{cue} ne '' && !$ti->{cue} != !$filter->{cue};
@@ -189,6 +189,28 @@ sub checkRegexArray {
 		my $filterWord = trim $temp;
 		next unless $filterWord;
 		return 1 if $name =~ /$filterWord/i;
+	}
+
+	return 0;
+}
+
+sub checkFilterReleaseGroups {
+	my ($ti, $releaseGroups) = @_;
+
+	if ($ti->{releaseGroup}) {
+		return checkFilterStrings($ti->{releaseGroup}, $releaseGroups);
+	}
+	else {
+		my @ary = split /,/, regexEscapeWildcardString($releaseGroups);
+
+		for my $temp (@ary) {
+			my $releaseGroup = trim $temp;
+
+			if ($ti->{torrentName} =~ /^\[$releaseGroup\]|\[$releaseGroup\]$|-\s*$releaseGroup$/i) {
+				$ti->{releaseGroup} = $releaseGroup;
+				return 1;
+			}
+		}
 	}
 
 	return 0;
