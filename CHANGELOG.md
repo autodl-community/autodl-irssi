@@ -3,6 +3,20 @@
 Notable changes for the [autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) project.
 
 
+## [community-v1.61](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.61) (2016-01-25)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.60...community-v1.61)
+
+### Added
+
+* Add priority filter option.
+* Add message for successful loading of configuration files
+
+### Changed
+
+* Changed method for matching release groups
+
+
 ## [community-v1.60](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.60) (2015-10-01)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.54...community-v1.60)

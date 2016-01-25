@@ -68,7 +68,7 @@ use constant CHECK_FOR_UPDATES_SECS => 60*60*24;
 #
 use constant MAX_CONNECTION_WAIT_SECS => 10*60;
 
-my $version = '1.60';
+my $version = '1.61';
 my $trackersVersion = '0';
 
 # Called when we're enabled
