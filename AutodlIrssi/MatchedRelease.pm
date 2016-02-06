@@ -210,7 +210,7 @@ sub _onTorrentDownloaded {
 
 	my $statusCode = $self->{httpRequest}->getResponseStatusCode();
 	if (substr($statusCode, 0, 1) == 3) {
-		$self->_messageFail(0, "Got HTTP $statusCode, check your cookie settings! Torrent: $self->{ti}{torrentName}, tracker: $self->{trackerInfo}{longName}");
+		$self->_messageFail(0, "Got HTTP $statusCode, check your tracker settings for $self->{trackerInfo}{longName}! Torrent: $self->{ti}{torrentName}");
 		return;
 	}
 	if ($statusCode != 200) {
