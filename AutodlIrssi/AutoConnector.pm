@@ -746,7 +746,7 @@ sub _identifyReply {
 				},
 				{
 					code	=> "identified",
-					regex	=> qr/^(?:[Pp]assword accepted|You are now identified|You have identified as)/,
+					regex	=> qr/^(?:[Pp]assword accepted|You are now identified|You have identified as|AUTHENTICATION SUCCESSFUL)/,
 				},
 				{
 					code	=> "badpassword",
