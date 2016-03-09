@@ -68,6 +68,11 @@ use constant CHECK_FOR_UPDATES_SECS => 60*60*24;
 #
 use constant MAX_CONNECTION_WAIT_SECS => 10*60;
 
+#
+# How often we'll update the AutodlState.xml file. Default is 1 min.
+#
+use constant UPDATE_AUTODL_STATE_SECS => 60;
+
 my $version = '1.61';
 my $trackersVersion = '0';
 
@@ -391,6 +396,7 @@ sub secondTimer {
 		reloadAutodlConfigFile();
 		activeConnectionsCheck();
 		reportBrokenAnnouncers();
+		updateAutodlState();
 		$AutodlIrssi::g->{messageBuffer}->secondTimer();
 		checkForAutodlUpdates();
 		checkForTrackersUpdates();
@@ -418,11 +424,26 @@ sub secondTimer {
 		eval {
 			my $channels = getActiveAnnounceParserTypes();
 			$AutodlIrssi::g->{trackerManager}->reportBrokenAnnouncers($channels);
-			saveAutodlState();
 		};
 		if ($@) {
 			chomp $@;
 			message 0, "reportBrokenAnnouncers: ex: $@";
+		}
+	}
+}
+
+{
+	my $counter = 0;
+	sub updateAutodlState {
+		return unless ++$counter >= UPDATE_AUTODL_STATE_SECS;
+		$counter = 0;
+
+		eval {
+			saveAutodlState();
+		};
+		if ($@) {
+			chomp $@;
+			message 0, "updateAutodlState: ex: $@";
 		}
 	}
 }
