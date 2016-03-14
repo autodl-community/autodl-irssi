@@ -3,6 +3,15 @@
 Notable changes for the [autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) project.
 
 
+## [community-v1.62](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.62) (2016-03-14)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.61...community-v1.62)
+
+### Added
+
+* Add smart-episode filter option
+
+
 ## [community-v1.61](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.61) (2016-01-25)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.60...community-v1.61)
