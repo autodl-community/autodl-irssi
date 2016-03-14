@@ -585,7 +585,6 @@ sub getActiveAnnounceParserTypes {
 		return updateFailed("Could not update autodl-irssi: $errorMessage") if $errorMessage;
 
 		message 3, "Reloading autodl-irssi...";
-		message 3, "\x0309You are now using\x03 \x02autodl-irssi\x02 \x02v$version\x02";
 		irssi_command('script load autodl-irssi');
 	}
 }
