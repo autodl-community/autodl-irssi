@@ -102,7 +102,7 @@ sub _canDownload {
 	if ($filter->{smartEpisode}) {
 		if ($ti->{episode} && $ti->{season}) {
 			if ($ti->{season} <= $state->{smart}{season} && $ti->{episode} <= $state->{smart}{episode}) {
-				$canDownload =0;
+				$canDownload = 0;
 			}
 		}
 		elsif ($ti->{episode} && !$ti->{season}) {
@@ -134,8 +134,6 @@ sub _canDownload {
 	if (!$canDownload) {
 		$self->_releaseAlreadyDownloaded();
 	}
-
-	# print "Can Download: $canDownload";
 
 	return $canDownload;
 }
@@ -201,7 +199,6 @@ sub start {
 	$self->{connId} = $AutodlIrssi::g->{activeConnections}->add($self, "Release: '$self->{ti}{torrentName}', tracker: $self->{trackerInfo}{longName}");
 
 	return if !$self->_canDownload();
-	# print "Can Download";
 
 	my $missing = $self->{ti}{announceParser}->getUninitializedDownloadVars();
 	if (@$missing) {
@@ -311,8 +308,6 @@ sub _onTorrentDownloaded {
 	if ($self->{ti}{filter}{smartEpisode}) {
 		my $episode = $self->{ti}{episode} ? $self->{ti}{episode} : 0;
 		my $season = $self->{ti}{season} ? $self->{ti}{season} : 0;
-
-		# print "Update";
 
 		my ($year, $month, $day) = (0) x 3;
 		if ($self->{ti}{ymd}) {
