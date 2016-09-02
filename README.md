@@ -21,8 +21,8 @@ See [CONTRIBUTING.md](https://github.com/autodl-community/autodl-irssi/blob/mast
 
 Donations are accepted, but not expected.
 
-[![Bitcoin](http://img.shields.io/badge/bitcoin-donate-green.svg?style=flat-square)](https://coinbase.com/autodlcommunity) [![Flattr](http://img.shields.io/badge/flattr-donate-green.svg?style=flat-square)](https://flattr.com/thing/1457186) [![PayPal](http://img.shields.io/badge/paypal-donate-green.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=88QE9ABP2X3RU&lc=US&item_name=autodl%2dcommunity&currency_code=USD)  
-[![Coinbase](http://img.shields.io/badge/coinbase-referral-orange.svg?style=flat-square)](https://www.coinbase.com/?r=533a0d846d997b3338000006&utm_campaign=user-referral&src=referral-link) [![Digital Ocean](http://img.shields.io/badge/digital ocean-referral-orange.svg?style=flat-square)](https://www.digitalocean.com/?refcode=3823208a0597)  [![Namecheap](http://img.shields.io/badge/namecheap-referral-orange.svg?style=flat-square)](http://www.namecheap.com/?aff=67208)
+[![Bitcoin](http://img.shields.io/badge/bitcoin-donate-green.svg?style=flat-square)](https://coinbase.com/thebigmunch) [![PayPal](http://img.shields.io/badge/paypal-donate-green.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DHDVLSYW8V8N4&lc=US&item_name=thebigmunch&currency_code=USD)  
+[![Coinbase](http://img.shields.io/badge/coinbase-referral-orange.svg?style=flat-square)](https://coinbase.com/?r=52502f01e0fdd4d3ef000253&utm_campaign=user-referral&src=referral-link) [![Digital Ocean](http://img.shields.io/badge/digital ocean-referral-orange.svg?style=flat-square)](https://www.digitalocean.com/?refcode=3823208a0597) [![Namecheap](http://img.shields.io/badge/namecheap-referral-orange.svg?style=flat-square)](http://www.namecheap.com/?aff=67208)
 
 ### Other Ways to Contribute
 
