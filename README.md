@@ -5,9 +5,7 @@ autodl-irssi is a plugin for [irssi](https://irssi.org/) that monitors IRC annou
 
 ## Getting Started
 
-* Installation and configuration instructions are provided in the [Wiki](https://github.com/autodl-community/autodl-irssi/wiki)
-* Download current and previous releases from the [release archives](http:/releases.autodl-community.com).
-* Read the [CHANGELOG.md](https://github.com/autodl-community/autodl-irssi/blob/master/CHANGELOG.md).
+* Read the [docs](https://autodl-community.github.io/autodl-irssi)
 * Find help in the IRC channel: ``#autodl-community`` on ``irc.p2p-network.net``
 
 

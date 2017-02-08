@@ -1,5 +1,3 @@
-# Change Log
-
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 

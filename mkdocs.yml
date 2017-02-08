@@ -1,0 +1,44 @@
+site_name: autodl-irssi
+repo_url: https://github.com/autodl-community/autodl-irssi
+
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: deep orange
+  author:
+    github: autodl-community
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - nl2br
+  - sane_lists
+  - toc(permalink=true)
+  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tilde
+
+pages:
+  - Home: index.md
+  - FAQ: faq.md
+  - Installation: installation.md
+  - Configuration:
+    - Overview: configuration/overview.md
+    - Options: configuration/options.md
+    - IRC: configuration/irc.md
+    - Server: configuration/server.md
+    - Channel: configuration/channel.md
+    - Tracker: configuration/tracker.md
+    - Filter: configuration/filter.md
+    - WebUI: configuration/webui.md
+    - FTP: configuration/ftp.md
+  - Changelog: changelog.md
