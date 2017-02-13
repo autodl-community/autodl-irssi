@@ -283,6 +283,8 @@ sub _onTorrentDownloaded {
 		return;
 	}
 	else {
+		$self->_addDownload();
+
 		message(3, "Matched " . $self->_getTorrentInfoString());
 
 		if ($self->{ti}{filter}{maxDownloads} >= 0) {
@@ -421,7 +423,6 @@ sub _saveTorrentFile {
 		saveRawDataToFile($tempname, $self->{torrentFileData});
 		rename $tempname, $pathname or die "Could not rename $tempname => $pathname\n";
 
-		$self->_addDownload();
 		$self->_onTorrentFileUploaded("Saved torrent");
 	};
 	if ($@) {
@@ -436,7 +437,6 @@ sub _sendTorrentFileWebui {
 
 	eval {
 		$self->_sendWOL($AutodlIrssi::g->{options}{webui}{hostname});
-		$self->_addDownload();
 
 		message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): Starting webui upload.");
 
@@ -474,7 +474,6 @@ sub _sendTorrentFileFtp {
 
 	eval {
 		$self->_sendWOL($AutodlIrssi::g->{options}{ftp}{hostname});
-		$self->_addDownload();
 
 		message(4, "Torrent '$self->{ti}{torrentName}' ($self->{trackerInfo}{longName}): Starting ftp upload.");
 
@@ -560,7 +559,6 @@ sub _runProgram {
 
 		AutodlIrssi::Exec::run($command, $args);
 
-		$self->_addDownload();
 		$self->_onTorrentFileUploaded("Started command: '$command', args: '$args'");
 	};
 	if ($@) {
@@ -611,7 +609,6 @@ sub _runUtorrentDir {
 
 		AutodlIrssi::Exec::run($command, $args);
 
-		$self->_addDownload();
 		$self->_onTorrentFileUploaded("Added torrent to '$destDir'");
 	};
 	if ($@) {
@@ -702,8 +699,6 @@ sub _sendRtorrent {
 		$xmlrpc->string($cmds) if $cmds ne "";
 		$xmlrpc->methodEnd();
 		$xmlrpc->send(sub { $self->_onRtorrentUploadComplete(@_) });
-
-		$self->_addDownload();
 	};
 	if ($@) {
 		$self->_messageFail(0, "Could not send rtorrent commands, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
