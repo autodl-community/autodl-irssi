@@ -101,7 +101,11 @@ sub _canDownload {
 
 	if ($filter->{smartEpisode}) {
 		if ($ti->{episode} && $ti->{season}) {
-			if ($ti->{season} <= $state->{smart}{season} && $ti->{episode} <= $state->{smart}{episode}) {
+			if ($ti->{season} < $state->{smart}{season}) {
+				$canDownload = 0;
+			}
+
+			if ($ti->{season} == $state->{smart}{season} && $ti->{episode} <= $state->{smart}{episode}) {
 				$canDownload = 0;
 			}
 		}
