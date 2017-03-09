@@ -73,7 +73,7 @@ use constant MAX_CONNECTION_WAIT_SECS => 10*60;
 #
 use constant UPDATE_AUTODL_STATE_SECS => 60;
 
-my $version = '1.62';
+my $version = '1.63';
 my $trackersVersion = '0';
 
 # Called when we're enabled
