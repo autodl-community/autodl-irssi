@@ -3,6 +3,19 @@
 Notable changes for the [autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) project.
 
 
+## [community-v1.64](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.64) (2017-03-18)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.63...community-v1.64)
+
+### Added
+
+* Add HEVC/x265 constants.
+
+### Fixed
+
+* Fixed update callback references.
+
+
 ## [community-v1.63](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.63) (2017-03-09)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.62...community-v1.63)
