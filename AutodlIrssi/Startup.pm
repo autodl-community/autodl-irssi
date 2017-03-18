@@ -582,7 +582,7 @@ sub getActiveAnnounceParserTypes {
 		my $errorMessage = shift;
 
 		$autodlUpdater = undef;
-		return updateFailed("Could not update autodl-irssi: $errorMessage") if $errorMessage;
+		return updateAutodlFailed("Could not update autodl-irssi: $errorMessage") if $errorMessage;
 
 		message 3, "Reloading autodl-irssi...";
 		irssi_command('script load autodl-irssi');
@@ -708,7 +708,7 @@ sub getActiveAnnounceParserTypes {
 	sub onUpdatedTrackers {
 		my $errorMessage = shift;
 
-		return updateFailed("Could not update trackers: $errorMessage") if $errorMessage;
+		return updateTrackersFailed("Could not update trackers: $errorMessage") if $errorMessage;
 
 		message 3, "Trackers updated";
 		$trackersVersion = $trackersUpdater->getTrackersVersion();
