@@ -474,7 +474,7 @@ sub getActiveAnnounceParserTypes {
 		eval {
 			my $elapsedSecs = defined $lastUpdateCheck ? time - $lastUpdateCheck : -1;
 			if ($elapsedSecs >= MAX_CONNECTION_WAIT_SECS && defined $autodlUpdater && $autodlUpdater->isSendingRequest()) {
-				cancelCheckForUpdates("Stuck connection!");
+				cancelCheckForAutodlUpdates("Stuck connection!");
 				return;
 			}
 			return if $elapsedSecs >= 0 && $elapsedSecs < CHECK_FOR_UPDATES_SECS;
@@ -598,7 +598,7 @@ sub getActiveAnnounceParserTypes {
 		eval {
 			my $elapsedSecs = defined $lastUpdateCheck ? time - $lastUpdateCheck : -1;
 			if ($elapsedSecs >= MAX_CONNECTION_WAIT_SECS && defined $trackersUpdater && $trackersUpdater->isSendingRequest()) {
-				cancelCheckForUpdates("Stuck connection!");
+				cancelCheckForTrackersUpdates("Stuck connection!");
 				return;
 			}
 			return if $elapsedSecs >= 0 && $elapsedSecs < CHECK_FOR_UPDATES_SECS;
