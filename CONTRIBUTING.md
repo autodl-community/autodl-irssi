@@ -34,6 +34,3 @@ Please make all tracker bug reports, requests, and modifications to the [autodl-
 ## ruTorrent plugin
 
 Please make all ruTorrent plugin bug reports, requests, and modifications to the [autodl-rutorrent](https://github.com/autodl-community/autodl-rutorrent) repository.
-
-## Misc
-For anything else, contact us by e-mail at autodl.community@gmail.com or on IRC in ``#autodl-community`` on ``irc.p2p-network.net``. You can use the preconfigured web-based client [Mibbit](http://widget.mibbit.com/?settings=acc887926984c5c6e62412b13d9fbfbc&server=irc.p2p-network.net&channel=%23autodl-community&nick=autodler%3F%3F).
