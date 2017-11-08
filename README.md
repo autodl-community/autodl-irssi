@@ -1,14 +1,13 @@
-# autodl-irssi-community
+# autodl-irssi
 
-[autodl-irssi-community](https://github.com/autodl-community/autodl-irssi) is a fork of the original [autodl-irssi](http://sourceforge.net/projects/autodl-irssi/).
-It is licensed under the [Mozilla Public License 1.1](https://www.mozilla.org/MPL/1.1/)
+autodl-irssi is a plugin for [irssi](https://irssi.org/) that monitors IRC announce channels and downloads torrent files based on user-defined filters.
 
-See [CHANGELOG.md](https://github.com/autodl-community/autodl-irssi/blob/master/CHANGELOG.md) for a history of the project.
 
 ## Getting Started
 
 * Installation and configuration instructions are provided in the [Wiki](https://github.com/autodl-community/autodl-irssi/wiki)
 * Download current and previous releases from the [release archives](http:/releases.autodl-community.com).
+* Read the [CHANGELOG.md](https://github.com/autodl-community/autodl-irssi/blob/master/CHANGELOG.md).
 * Find help in the IRC channel: ``#autodl-community`` on ``irc.p2p-network.net``
 
 
