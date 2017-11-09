@@ -1,16 +1,3 @@
-* [General](#general-options)
-* [Torrent Actions](#torrent-actions)
-	* [rTorrent](#rtorrent)
-	* [Watch Directory](#watch-directory)
-	* [uTorrent WebUI](#utorrent-webui)
-	* [FTP](#ftp)
-	* [Execute a Command](#execute-a-command)
-	* [uTorrent Dynamic Directory](#utorrent-dynamic-directory)
-* [Macros](#macros)
-* [Wake on LAN](#wake-on-lan)
-
-## General Options
-
 These options change the behavior of autodl-irssi. Place these options below the **[options]** header.
 
 ##### rt-address
