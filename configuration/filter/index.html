@@ -591,64 +591,64 @@
                 <p>Create one [filter] header per filter like <strong>[filter MY FILTER NAME]</strong>. All filter options are optional! If you don't use any filter options, then everything will be downloaded because your filter doesn't filter out anything.</p>
 <p><strong>Note:</strong> Not all filter options are supported on all trackers.</p>
 <h2 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h2>
-<h5 id="enabled">enabled<a class="headerlink" href="#enabled" title="Permanent link">&para;</a></h5>
+<h4 id="enabled">enabled<a class="headerlink" href="#enabled" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Default:</strong> true<br />
 <strong>Example:</strong> enabled = false<br />
 <strong>Description:</strong> Use it to disable a filter. All filters are enabled by default.</p>
 </blockquote>
-<h5 id="priority">priority<a class="headerlink" href="#priority" title="Permanent link">&para;</a></h5>
+<h4 id="priority">priority<a class="headerlink" href="#priority" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Integer<br />
 <strong>Default:</strong> 0<br />
 <strong>Example:</strong> priority = 10<br />
 <strong>Description:</strong> Use it to determine the order by which filters are checked. Negative numbers are allowed.</p>
 </blockquote>
-<h5 id="match-sites">match-sites<a class="headerlink" href="#match-sites" title="Permanent link">&para;</a></h5>
+<h4 id="match-sites">match-sites<a class="headerlink" href="#match-sites" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> match-sites = tracker1, tracker2, tracker3<br />
 <strong>Description:</strong> It's compared against the tracker. Use the full tracker name, eg. MyTracker or use one of the tracker types found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker. Open one of the files and locate the <strong>type="XYZ"</strong> line. Use the value inside the quotes, eg. <strong>XYZ</strong>.</p>
 </blockquote>
-<h5 id="except-sites">except-sites<a class="headerlink" href="#except-sites" title="Permanent link">&para;</a></h5>
+<h4 id="except-sites">except-sites<a class="headerlink" href="#except-sites" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Description:</strong> The exact opposite of <strong>match-sites</strong>. If a release matches this option, then it's NOT downloaded.</p>
 </blockquote>
-<h5 id="min-size">min-size<a class="headerlink" href="#min-size" title="Permanent link">&para;</a></h5>
+<h4 id="min-size">min-size<a class="headerlink" href="#min-size" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Size<br />
 <strong>Example:</strong> min-size = 200MB<br />
 <strong>Default:</strong> 0<br />
 <strong>Description:</strong> Used to filter out too small torrents.</p>
 </blockquote>
-<h5 id="max-size">max-size<a class="headerlink" href="#max-size" title="Permanent link">&para;</a></h5>
+<h4 id="max-size">max-size<a class="headerlink" href="#max-size" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Size<br />
 <strong>Example:</strong> max-size = 2.5GB<br />
 <strong>Default:</strong> any size is allowed<br />
 <strong>Description:</strong> Used to filter out too big torrents. Set it to a reasonable value, eg. for TV-shows, set it to about twice the size of a normal episode (just in case it's a double-episode).</p>
 </blockquote>
-<h5 id="upload-delay-secs">upload-delay-secs<a class="headerlink" href="#upload-delay-secs" title="Permanent link">&para;</a></h5>
+<h4 id="upload-delay-secs">upload-delay-secs<a class="headerlink" href="#upload-delay-secs" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Integer<br />
 <strong>Default:</strong> 0 (no wait)<br />
 <strong>Example:</strong> upload-delay-secs = 10<br />
 <strong>Description:</strong> The number of seconds autodl-irssi should wait before uploading/saving the torrent.</p>
 </blockquote>
-<h5 id="max-downloads">max-downloads<a class="headerlink" href="#max-downloads" title="Permanent link">&para;</a></h5>
+<h4 id="max-downloads">max-downloads<a class="headerlink" href="#max-downloads" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Integer<br />
 <strong>Example:</strong> max-downloads = 15<br />
 <strong>Description:</strong> Download no more than this number of torrents per week/month (see <strong>max-downloads-per</strong>). Remove the filter option or set it to a negative number to disable it.</p>
 </blockquote>
-<h5 id="max-downloads-per">max-downloads-per<a class="headerlink" href="#max-downloads-per" title="Permanent link">&para;</a></h5>
+<h4 id="max-downloads-per">max-downloads-per<a class="headerlink" href="#max-downloads-per" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> String<br />
 <strong>Example:</strong> max-downloads-per = week<br />
 <strong>Description:</strong> Valid values are <strong>day</strong>, <strong>week</strong>, and <strong>month</strong>. See <strong>max-downloads</strong>.</p>
 </blockquote>
-<h5 id="download-duplicates">download-duplicates<a class="headerlink" href="#download-duplicates" title="Permanent link">&para;</a></h5>
+<h4 id="download-duplicates">download-duplicates<a class="headerlink" href="#download-duplicates" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Default:</strong> false<br />
@@ -656,168 +656,168 @@
 <strong>Description:</strong> By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release if it's re-announced or announced by multiple trackers.</p>
 </blockquote>
 <h2 id="p2p">P2P<a class="headerlink" href="#p2p" title="Permanent link">&para;</a></h2>
-<h5 id="match-releases">match-releases<a class="headerlink" href="#match-releases" title="Permanent link">&para;</a></h5>
+<h4 id="match-releases">match-releases<a class="headerlink" href="#match-releases" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> match-releases = The?Simpsons*, American?Dad*<br />
 <strong>Description:</strong> It's compared against the torrent name, eg. <strong>Some.release.720p.HDTV-GROUP</strong>. If the filter should only match TV-shows or movies, it's easier to use the <strong>shows</strong> filter option since it doesn't require wildcards.</p>
 </blockquote>
-<h5 id="except-releases">except-releases<a class="headerlink" href="#except-releases" title="Permanent link">&para;</a></h5>
+<h4 id="except-releases">except-releases<a class="headerlink" href="#except-releases" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Description:</strong> The exact opposite of <strong>match-releases</strong>. If a release matches this option, then it's NOT downloaded.</p>
 </blockquote>
-<h5 id="use-regex">use-regex<a class="headerlink" href="#use-regex" title="Permanent link">&para;</a></h5>
+<h4 id="use-regex">use-regex<a class="headerlink" href="#use-regex" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Default:</strong> false<br />
 <strong>Description:</strong> Changes match/except-releases filter options to use regex instead of wildcard syntax globally. This can also be set globally in the options header.</p>
 </blockquote>
-<h5 id="match-release-groups">match-release-groups<a class="headerlink" href="#match-release-groups" title="Permanent link">&para;</a></h5>
+<h4 id="match-release-groups">match-release-groups<a class="headerlink" href="#match-release-groups" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Description:</strong> Unless the release matches one of the release groups, it's not downloaded.</p>
 </blockquote>
-<h5 id="except-release-groups">except-release-groups<a class="headerlink" href="#except-release-groups" title="Permanent link">&para;</a></h5>
+<h4 id="except-release-groups">except-release-groups<a class="headerlink" href="#except-release-groups" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Description:</strong> Opposite of match-release-groups. If the release matches one of the release gorups, it's not downloaded.</p>
 </blockquote>
-<h5 id="max-pretime">max-pretime<a class="headerlink" href="#max-pretime" title="Permanent link">&para;</a></h5>
+<h4 id="max-pretime">max-pretime<a class="headerlink" href="#max-pretime" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> time-since string<br />
 <strong>Example:</strong> max-pretime = 2 mins 3 secs<br />
 <strong>Description:</strong> Some sites announce the pretime of the release. Use this to filter out old releases.</p>
 </blockquote>
-<h5 id="scene">scene<a class="headerlink" href="#scene" title="Permanent link">&para;</a></h5>
+<h4 id="scene">scene<a class="headerlink" href="#scene" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Example:</strong> scene = true<br />
 <strong>Description:</strong> Some sites mark a release as scene or non-scene. Set it to true if you want only scene releases, false if you only want non-scene releases, or don't use this option if you don't care.</p>
 </blockquote>
-<h5 id="origins">origins<a class="headerlink" href="#origins" title="Permanent link">&para;</a></h5>
+<h4 id="origins">origins<a class="headerlink" href="#origins" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> origins = P2P, Internal<br />
 <strong>Description:</strong> Some trackers set the origin of a release in a more fine-grained manner than scene/non-scene.</p>
 </blockquote>
-<h5 id="freeleech">freeleech<a class="headerlink" href="#freeleech" title="Permanent link">&para;</a></h5>
+<h4 id="freeleech">freeleech<a class="headerlink" href="#freeleech" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Example:</strong> freeleech = true<br />
 <strong>Description:</strong> Only supported on a few trackers. Set to true if you only want to download freeleech releases. Set to false if you only want non-freeleech releases. Don't set if you don't care.</p>
 </blockquote>
-<h5 id="freeleech-percents">freeleech-percents<a class="headerlink" href="#freeleech-percents" title="Permanent link">&para;</a></h5>
+<h4 id="freeleech-percents">freeleech-percents<a class="headerlink" href="#freeleech-percents" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Number list<br />
 <strong>Example:</strong> freeleech-percents = 50,75<br />
 <strong>Description:</strong> Some trackers have multiple levels of freeleech. Set a Number list representing the percentages (without the % sign) of the releases you want to download.</p>
 </blockquote>
 <h2 id="tvmovies">TV/Movies<a class="headerlink" href="#tvmovies" title="Permanent link">&para;</a></h2>
-<h5 id="shows">shows<a class="headerlink" href="#shows" title="Permanent link">&para;</a></h5>
+<h4 id="shows">shows<a class="headerlink" href="#shows" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> shows = The Simpsons, American Dad<br />
 <strong>Description:</strong> This is for TV-shows and movies. autodl-irssi will automatically extract the TV-show/movie name from a scene release name. Example, The.Simpsons.S35E24.720p.HDTV-BLAH will match a <strong>shows</strong> option set to <strong>the simpsons</strong>. You don't need wildcards at all, though it's possible to use wildcards. It's recommended to use <strong>shows</strong> instead of <strong>match-releases</strong> if all you want is for the filter to match TV-shows or movies.</p>
 </blockquote>
-<h5 id="seasons">seasons<a class="headerlink" href="#seasons" title="Permanent link">&para;</a></h5>
+<h4 id="seasons">seasons<a class="headerlink" href="#seasons" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Number list<br />
 <strong>Example:</strong> seasons = 1, 3, 5-10<br />
 <strong>Description:</strong> This is for TV-shows only. Unless the release matches one of the seasons, it's not downloaded.</p>
 </blockquote>
-<h5 id="episodes">episodes<a class="headerlink" href="#episodes" title="Permanent link">&para;</a></h5>
+<h4 id="episodes">episodes<a class="headerlink" href="#episodes" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Number list<br />
 <strong>Example:</strong> episodes = 1, 3, 5-10<br />
 <strong>Description:</strong> This is for TV-shows only. Unless the release matches one of the episodes, it's not downloaded.</p>
 </blockquote>
-<h5 id="smart-episode">smart-episode<a class="headerlink" href="#smart-episode" title="Permanent link">&para;</a></h5>
+<h4 id="smart-episode">smart-episode<a class="headerlink" href="#smart-episode" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Default:</strong> false<br />
 <strong>Example:</strong> smart-episode = true<br />
 <strong>Description:</strong> Set to true to prevent downloading earlier episodes than your latest download. This option is set per filter, not per show, so it only makes sense to set one show per filter.</p>
 </blockquote>
-<h5 id="resolutions">resolutions<a class="headerlink" href="#resolutions" title="Permanent link">&para;</a></h5>
+<h4 id="resolutions">resolutions<a class="headerlink" href="#resolutions" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> resolutions = SD, 720p, 1080p<br />
 <strong>Description:</strong> This is for TV-shows and movies only. Unless the release matches one of the resolutions, it's not downloaded. Valid resolutions are one or more of the following: <strong>SD</strong>, <strong>480i</strong>, <strong>480p</strong>, <strong>576p</strong>, <strong>720p</strong>, <strong>810p</strong>, <strong>1080i</strong>, <strong>1080p</strong>.</p>
 </blockquote>
-<h5 id="encoders">encoders<a class="headerlink" href="#encoders" title="Permanent link">&para;</a></h5>
+<h4 id="encoders">encoders<a class="headerlink" href="#encoders" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> encoders = x264, xvid<br />
 <strong>Description:</strong> If you don't want windows WMV files, this option could be useful. :) Valid encoders are: <strong>XviD</strong>, <strong>DivX</strong>, <strong>x264</strong>, <strong>h.264</strong> (or <strong>h264</strong>), <strong>mpeg2</strong> (or <strong>mpeg-2</strong>), <strong>VC-1</strong> (or <strong>VC1</strong>), <strong>WMV</strong>, <strong>Remux</strong> (or <strong>h.264 Remux</strong>, <strong>h264 Remux</strong>, <strong>VC-1 Remux</strong>, <strong>VC1 Remux</strong>).</p>
 </blockquote>
-<h5 id="sources">sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h5>
+<h4 id="sources">sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> sources = HDTV, DVDRip, BluRay<br />
 <strong>Description:</strong> This is for TV-shows and movies only. Unless the release matches one of the sources, it's not downloaded. Valid sources are one or more of the following: <strong>DSR</strong>, <strong>PDTV</strong>, <strong>HDTV</strong>, <strong>HR.PDTV</strong>, <strong>HR.HDTV</strong>, <strong>DVDRip</strong>, <strong>DVDScr</strong>, <strong>BDr</strong>, <strong>BD5</strong>, <strong>BD9</strong>, <strong>BDRip</strong>, <strong>BRRip</strong>, <strong>DVDR</strong>, <strong>MDVDR</strong>, <strong>HDDVD</strong>, <strong>HDDVDRip</strong>, <strong>BluRay</strong>, <strong>WEB-DL</strong>, <strong>TVRip</strong>, <strong>CAM</strong>, <strong>R5</strong>, <strong>TELESYNC</strong>, <strong>TS</strong>, <strong>TELECINE</strong>, <strong>TC</strong>. <strong>TELESYNC</strong> and <strong>TS</strong> are synonyms (you don't need both). Same for <strong>TELECINE</strong> and <strong>TC</strong>.</p>
 </blockquote>
-<h5 id="containers">containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h5>
+<h4 id="containers">containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> containers = mkv, mp4<br />
 <strong>Description:</strong> Unless the release matches one of the containers, it's not downloaded.</p>
 </blockquote>
-<h5 id="years">years<a class="headerlink" href="#years" title="Permanent link">&para;</a></h5>
+<h4 id="years">years<a class="headerlink" href="#years" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Number list<br />
 <strong>Example:</strong> years = 1999, 2005-2010<br />
 <strong>Description:</strong> Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.</p>
 </blockquote>
 <h1 id="music">Music<a class="headerlink" href="#music" title="Permanent link">&para;</a></h1>
-<h5 id="years_1">years<a class="headerlink" href="#years_1" title="Permanent link">&para;</a></h5>
+<h4 id="years_1">years<a class="headerlink" href="#years_1" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Number list<br />
 <strong>Example:</strong> years = 1999, 2005-2010<br />
 <strong>Description:</strong> Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.</p>
 </blockquote>
-<h5 id="artists">artists<a class="headerlink" href="#artists" title="Permanent link">&para;</a></h5>
+<h4 id="artists">artists<a class="headerlink" href="#artists" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> shows = Muse, Modest Mouse<br />
 <strong>Description:</strong> This is for artists/groups. You don't need wildcards at all, though it's possible to use wildcards.</p>
 </blockquote>
-<h5 id="albums">albums<a class="headerlink" href="#albums" title="Permanent link">&para;</a></h5>
+<h4 id="albums">albums<a class="headerlink" href="#albums" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> albums = Some album, Some other album, yet another one<br />
 <strong>Description:</strong></p>
 </blockquote>
-<h5 id="formats">formats<a class="headerlink" href="#formats" title="Permanent link">&para;</a></h5>
+<h4 id="formats">formats<a class="headerlink" href="#formats" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> formats = MP3, FLAC<br />
 <strong>Description:</strong> List the formats you want. Valid formats are: <strong>MP3</strong>, <strong>FLAC</strong>, <strong>Ogg</strong>, <strong>AAC</strong>, <strong>AC3</strong>, <strong>DTS</strong>.</p>
 </blockquote>
-<h5 id="bitrates">bitrates<a class="headerlink" href="#bitrates" title="Permanent link">&para;</a></h5>
+<h4 id="bitrates">bitrates<a class="headerlink" href="#bitrates" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> bitrates = 192, V0 (vbr), lossless<br />
 <strong>Description:</strong> List the bitrates you want. Some example values: <strong>192</strong>, <strong>320</strong>, <strong>APS (VBR)</strong>, <strong>V2 (VBR)</strong>, <strong>V1 (VBR)</strong>, <strong>APX (VBR)</strong>, <strong>V0 (VBR)</strong>, <strong>q8.x (VBR)</strong>, <strong>Lossless</strong>, <strong>24bit Lossless</strong>, <strong>Other</strong>.</p>
 </blockquote>
-<h5 id="media">media<a class="headerlink" href="#media" title="Permanent link">&para;</a></h5>
+<h4 id="media">media<a class="headerlink" href="#media" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> media = CD, WEB<br />
 <strong>Description:</strong> List the media you want. Valid media are: <strong>CD</strong>, <strong>DVD</strong>, <strong>Vinyl</strong>, <strong>Soundboard</strong>, <strong>SACD</strong>, <strong>DAT</strong>, <strong>Cassette</strong>, <strong>WEB</strong>, <strong>Other</strong>.</p>
 </blockquote>
-<h5 id="cue">cue<a class="headerlink" href="#cue" title="Permanent link">&para;</a></h5>
+<h4 id="cue">cue<a class="headerlink" href="#cue" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Example:</strong> cue = true<br />
 <strong>Description:</strong> what.cd. Set it to true if you only want releases with a cue file, false if you don't want releases with cue files, or don't use this option if you don't care.</p>
 </blockquote>
-<h5 id="log">log<a class="headerlink" href="#log" title="Permanent link">&para;</a></h5>
+<h4 id="log">log<a class="headerlink" href="#log" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Example:</strong> log = true<br />
 <strong>Description:</strong> Set it to true if you only want releases with a log file, false if you don't want releases with log files, or don't use this option if you don't care.</p>
 </blockquote>
-<h5 id="log-scores">log-scores<a class="headerlink" href="#log-scores" title="Permanent link">&para;</a></h5>
+<h4 id="log-scores">log-scores<a class="headerlink" href="#log-scores" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Number list<br />
 <strong>Default:</strong> Any score allowed<br />
@@ -825,46 +825,46 @@
 <strong>Description:</strong> Set the log scores of the releases you want to match.</p>
 </blockquote>
 <h2 id="advanced">Advanced<a class="headerlink" href="#advanced" title="Permanent link">&para;</a></h2>
-<h5 id="match-categories">match-categories<a class="headerlink" href="#match-categories" title="Permanent link">&para;</a></h5>
+<h4 id="match-categories">match-categories<a class="headerlink" href="#match-categories" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> match-categories = <em>MP3</em>, TV/XVID<br />
 <strong>Description:</strong> It's compared against the torrent category.</p>
 </blockquote>
-<h5 id="except-categories">except-categories<a class="headerlink" href="#except-categories" title="Permanent link">&para;</a></h5>
+<h4 id="except-categories">except-categories<a class="headerlink" href="#except-categories" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Description:</strong> The exact opposite of <strong>except-categories</strong>. If a release matches this option, then it's NOT downloaded.</p>
 </blockquote>
-<h5 id="match-uploaders">match-uploaders<a class="headerlink" href="#match-uploaders" title="Permanent link">&para;</a></h5>
+<h4 id="match-uploaders">match-uploaders<a class="headerlink" href="#match-uploaders" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> match-uploaders = uploader1, uploader2<br />
 <strong>Description:</strong> Use it to only download from certain uploaders.</p>
 </blockquote>
-<h5 id="except-uploaders">except-uploaders<a class="headerlink" href="#except-uploaders" title="Permanent link">&para;</a></h5>
+<h4 id="except-uploaders">except-uploaders<a class="headerlink" href="#except-uploaders" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Description:</strong> The exact opposite of <strong>match-uploaders</strong>. If a release matches this option, then it's NOT downloaded.</p>
 </blockquote>
-<h5 id="tags">tags<a class="headerlink" href="#tags" title="Permanent link">&para;</a></h5>
+<h4 id="tags">tags<a class="headerlink" href="#tags" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> tags = hip hop, rock<br />
 <strong>Description:</strong> Unless at least one of your tags matches the release's tags, it's not downloaded. See also <strong>except-tags</strong> and <strong>tags-any</strong>.</p>
 </blockquote>
-<h5 id="except-tags">except-tags<a class="headerlink" href="#except-tags" title="Permanent link">&para;</a></h5>
+<h4 id="except-tags">except-tags<a class="headerlink" href="#except-tags" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Comma separated list<br />
 <strong>Example:</strong> except-tags = hip hop, rock<br />
 <strong>Description:</strong> Same as <strong>tags</strong> except if it matches any/all of these, it's not downloaded. See also <strong>tags</strong> and <strong>except-tags-any</strong>.</p>
 </blockquote>
-<h5 id="tags-any">tags-any<a class="headerlink" href="#tags-any" title="Permanent link">&para;</a></h5>
+<h4 id="tags-any">tags-any<a class="headerlink" href="#tags-any" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Default:</strong> true<br />
 <strong>Example:</strong> tags-any = false<br />
 <strong>Description:</strong> Decides how to match the <strong>tags</strong> option, ie., if any or all of the tags must match.</p>
 </blockquote>
-<h5 id="except-tags-any">except-tags-any<a class="headerlink" href="#except-tags-any" title="Permanent link">&para;</a></h5>
+<h4 id="except-tags-any">except-tags-any<a class="headerlink" href="#except-tags-any" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>Type:</strong> Boolean<br />
 <strong>Default:</strong> true<br />
