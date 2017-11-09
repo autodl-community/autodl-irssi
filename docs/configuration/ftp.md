@@ -6,14 +6,14 @@ hostname =
 port =
 ```
 
-##### user
+#### user
 > Your FTP user name.
 
-##### password
+#### password
 > Your FTP password.
 
-##### hostname
+#### hostname
 > The hostname/IP-address of your FTP server.
 
-##### port
+#### port
 > The port of your FTP server.

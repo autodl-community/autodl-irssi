@@ -10,20 +10,20 @@ invite-http-data =
 
 Create a separate **[channel]** header for each channel on each server.
 
-##### name
+#### name
 > The name of the channel to join.
 
-##### password
+#### password
 > The channel password. This is usually not needed.
 
-##### invite-command
+#### invite-command
 > Optional. The IRC command that invites you into the channel.
 
-##### invite-http-url
+#### invite-http-url
 > Optional. URL for HTTP invite request.
 
-##### invite-http-header
+#### invite-http-header
 > Optional. HTTP header to send, eg: Cookie: uid=12345; pass=asdfqwersdf
 
-##### invite-http-data
+#### invite-http-data
 > The HTTP POST data.

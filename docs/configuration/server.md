@@ -10,26 +10,26 @@ server-password =
 bnc =
 ```
 
-##### enabled
+#### enabled
 > Default(unset) is true. Set to false to disable connecting to that server.
 
-##### port
+#### port
 > The IRC server port. Default 6667 or 6697 (SSL).
 
-##### ssl
+#### ssl
 > Set to true to use SSL connection.
 
-##### nick
+#### nick
 > Your IRC nick.
 
-##### ident-password
+#### ident-password
 > The password required to identify your IRC nick to NickServ. If it's not already registered, autodl-irssi will attempt to register it for you.
 
-##### ident-email
+#### ident-email
 > Optional. Required if autodl-irssi needs to register your nick.
 
-##### server-password
+#### server-password
 > The IRC server password. This allows connection to some IRC bouncers.
 
-##### bnc
+#### bnc
 > Set to true if you are using an IRC bouncer so you won't have to set a nick in the server header.

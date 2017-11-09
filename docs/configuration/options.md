@@ -1,68 +1,68 @@
 These options change the behavior of autodl-irssi. Place these options below the **[options]** header.
 
-##### rt-address
+#### rt-address
 > **Type:** string
 **Default:** Whatever is found in ~/.rtorrent.rc
 **Example:** rt-address = 127.0.0.1:5000
 **Description:** If you use the 'rtorrent' action (**upload-method**), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. **NOTE:** This option can only be set in autodl2.cfg, **not** autodl.cfg.
 
-##### update-check
+#### update-check
 > **Type:** string
 **Default:** ask
 **Example:** update-check = auto
 **Description:** autodl-irssi can auto update itself. Valid values are **ask**, **auto**, and **disabled**. **ask** will print a message when there's a new version. **auto** will automatically update it when there's a new version. **disabled** won't do a thing when there's a new update.
 
-##### output-level
+#### output-level
 > **Type:** Integer greater than or equal to 0.
 **Default:** 3
 **Description:** Set the verbosity of autodl.
 
-##### debug
+#### debug
 > **Type:** Boolean
 **Default:** false
 **Description:** Enable lower level debug messages at set **output-level**.
 
-##### advanced-output-sites
+#### advanced-output-sites
 > **Type:** Comma separated list
 **Example:** advanced-output-sites = tracker1, tracker2, tracker3
 **Description:** Output captured variables from announces. It's compared against the tracker type found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker as used by the **matched-sites** filter option. Open one of the files and locate the **type="XYZ"** line. Use the value inside the quotes, eg. **XYZ**. Setting ``advanced-output-sites = all`` will enable advanced output for all trackers.
 
-##### use-regex
+#### use-regex
 > **Type:** Boolean
 **Default:** false
 **Description:** Changes match/except-releases filter options to use regex instead of wildcard syntax globally. This can also be set per filter.
 
-##### max-saved-releases
+#### max-saved-releases
 > **Type:** Integer greater than or equal to 0.
 **Default:** 1000
 **Example:** max-saved-releases = 200
 **Description:** autodl-irssi will remember the last **max-saved-releases** releases you have downloaded so it won't re-download the same file again. Only useful if **save-download-history** is enabled.
 
-##### save-download-history
+#### save-download-history
 > **Type:** Boolean
 **Default:** true
 **Example:** save-download-history = true
 **Description:** Set it to false to disable writing the last N (= **max-saved-releases**) downloaded releases to ~/.autodl/DownloadHistory.txt.
 
-##### download-duplicates
+#### download-duplicates
 > **Type:** Boolean
 **Default:** false
 **Example:** download-duplicates = true
 **Description:** By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release if it's re-announced or announced by multiple trackers.
 
-##### unique-torrent-names
+#### unique-torrent-names
 > **Type:** Boolean
 **Default:** false
 **Example:** unique-torrent-names = true
 **Description:** If true, all saved torrent filenames are unique (the site name is prepended to the filename). Set it to false to use the torrent release name as the filename.
 
-##### download-retry-time-seconds
+#### download-retry-time-seconds
 > **Type:** Integer
 **Default:** 300
 **Example:** download-retry-time-seconds = 120
 **Description:** If a download fails, autodl-irssi will try to re-download it every 3 seconds for  **download-retry-time-seconds** seconds. It will give up after **download-retry-time-seconds** and report an error.
 
-##### path-utorrent
+#### path-utorrent
 > **Type:** String
 **Default:** nothing
 **Example:** path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe
@@ -87,28 +87,28 @@ rt-priority = high
 #rt-dont-add-name = false
 ```
 
-##### rt-dir
+#### rt-dir
 > The destination directory. The torrent data will be saved here. Supports [macros](#macros).
 
-##### rt-commands
+#### rt-commands
 > Execute the given rTorrent commands when loading the torrent file.
 
-##### rt-label
+#### rt-label
 > Set a ruTorrent label.
 
-##### rt-ratio-group
+#### rt-ratio-group
 > Set a ruTorrent ratio group. Valid names are rat_0, rat_1, ..., rat_7. You must have the ratio ruTorrent plugin installed.
 
-##### rt-channel
+#### rt-channel
 > Set a ruTorrent channel. Valid names are thr_0, thr_1, ..., thr_9. You must have the throttle ruTorrent plugin installed.
 
-##### rt-priority
+#### rt-priority
 > Set the torrent priority. Valid values are 0, dont-download, 1, low, 2, normal, 3, high. If you set it to dont-download (or 0), the torrent is loaded, but not started.
 
-##### rt-ignore-scheduler
+#### rt-ignore-scheduler
 > Set it to true to disable the ruTorrent scheduler.
 
-##### rt-dont-add-name
+#### rt-dont-add-name
 > Set it to true if you don't want the torrent name to be added to the path.
 
 
@@ -118,7 +118,7 @@ upload-type = watchdir
 upload-watch-dir = /home/myusername/mywatchdir
 ```
 
-##### upload-watch-dir
+#### upload-watch-dir
 > Your torrent client's watch directory. Supports [macros](#macros).
 
 ### uTorrent WebUI
@@ -143,10 +143,10 @@ upload-command = /path/to/program
 upload-args = all arguments here
 ```
 
-##### upload-command
+#### upload-command
 > The program or script to execute. Supports [macros](#macros).
 
-##### upload-args
+#### upload-args
 > The arguments given to the **upload-command**. Supports [macros](#macros).
 
 
@@ -160,7 +160,7 @@ _You need to initialize **path-utorrent** below [options] or it won't work!_
 
 **Important:** autodl-irssi assumes that the Z: drive is mapped to your / (root) directory if you're using Wine to run uTorrent.
 
-##### upload-dyndir
+#### upload-dyndir
 > The directory to save the torrent. Supports [macros](#macros).
 
 ## Macros
