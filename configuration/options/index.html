@@ -1,0 +1,1312 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.1, mkdocs-material-2.0.4">
+    
+    
+      
+        <title>Options - autodl-irssi</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application-709eec9410.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-23f75ab9c7.palette.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    
+    
+    
+      <body data-md-color-primary="blue" data-md-color-accent="deep-orange">
+    
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="autodl-irssi" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Configuration
+                </span>
+              
+            
+            Options
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/autodl-community/autodl-irssi/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    autodl-irssi
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/autodl-community/autodl-irssi/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../faq/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Configuration
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Configuration
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../overview/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Options
+      </label>
+    
+    <a href="./" title="Options" class="md-nav__link md-nav__link--active">
+      Options
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-options" title="General Options" class="md-nav__link">
+    General Options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rt-address" title="rt-address" class="md-nav__link">
+    rt-address
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-check" title="update-check" class="md-nav__link">
+    update-check
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-level" title="output-level" class="md-nav__link">
+    output-level
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug" title="debug" class="md-nav__link">
+    debug
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-output-sites" title="advanced-output-sites" class="md-nav__link">
+    advanced-output-sites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-regex" title="use-regex" class="md-nav__link">
+    use-regex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max-saved-releases" title="max-saved-releases" class="md-nav__link">
+    max-saved-releases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-download-history" title="save-download-history" class="md-nav__link">
+    save-download-history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#download-duplicates" title="download-duplicates" class="md-nav__link">
+    download-duplicates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique-torrent-names" title="unique-torrent-names" class="md-nav__link">
+    unique-torrent-names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#download-retry-time-seconds" title="download-retry-time-seconds" class="md-nav__link">
+    download-retry-time-seconds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-utorrent" title="path-utorrent" class="md-nav__link">
+    path-utorrent
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrent-actions" title="Torrent Actions" class="md-nav__link">
+    Torrent Actions
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rtorrent" title="rTorrent" class="md-nav__link">
+    rTorrent
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rt-dir" title="rt-dir" class="md-nav__link">
+    rt-dir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-commands" title="rt-commands" class="md-nav__link">
+    rt-commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-label" title="rt-label" class="md-nav__link">
+    rt-label
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-ratio-group" title="rt-ratio-group" class="md-nav__link">
+    rt-ratio-group
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-channel" title="rt-channel" class="md-nav__link">
+    rt-channel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-priority" title="rt-priority" class="md-nav__link">
+    rt-priority
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-ignore-scheduler" title="rt-ignore-scheduler" class="md-nav__link">
+    rt-ignore-scheduler
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-dont-add-name" title="rt-dont-add-name" class="md-nav__link">
+    rt-dont-add-name
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watch-directory" title="Watch Directory" class="md-nav__link">
+    Watch Directory
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-watch-dir" title="upload-watch-dir" class="md-nav__link">
+    upload-watch-dir
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utorrent-webui" title="uTorrent WebUI" class="md-nav__link">
+    uTorrent WebUI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ftp" title="FTP" class="md-nav__link">
+    FTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-a-command" title="Execute a Command" class="md-nav__link">
+    Execute a Command
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-command" title="upload-command" class="md-nav__link">
+    upload-command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload-args" title="upload-args" class="md-nav__link">
+    upload-args
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utorrent-dynamic-directory" title="uTorrent Dynamic Directory" class="md-nav__link">
+    uTorrent Dynamic Directory
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-dyndir" title="upload-dyndir" class="md-nav__link">
+    upload-dyndir
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macros" title="Macros" class="md-nav__link">
+    Macros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wake-on-lan" title="Wake on LAN" class="md-nav__link">
+    Wake on LAN
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../irc/" title="IRC" class="md-nav__link">
+      IRC
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../server/" title="Server" class="md-nav__link">
+      Server
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../channel/" title="Channel" class="md-nav__link">
+      Channel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tracker/" title="Tracker" class="md-nav__link">
+      Tracker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../filter/" title="Filter" class="md-nav__link">
+      Filter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../webui/" title="WebUI" class="md-nav__link">
+      WebUI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ftp/" title="FTP" class="md-nav__link">
+      FTP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-options" title="General Options" class="md-nav__link">
+    General Options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rt-address" title="rt-address" class="md-nav__link">
+    rt-address
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-check" title="update-check" class="md-nav__link">
+    update-check
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-level" title="output-level" class="md-nav__link">
+    output-level
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug" title="debug" class="md-nav__link">
+    debug
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-output-sites" title="advanced-output-sites" class="md-nav__link">
+    advanced-output-sites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-regex" title="use-regex" class="md-nav__link">
+    use-regex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max-saved-releases" title="max-saved-releases" class="md-nav__link">
+    max-saved-releases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-download-history" title="save-download-history" class="md-nav__link">
+    save-download-history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#download-duplicates" title="download-duplicates" class="md-nav__link">
+    download-duplicates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique-torrent-names" title="unique-torrent-names" class="md-nav__link">
+    unique-torrent-names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#download-retry-time-seconds" title="download-retry-time-seconds" class="md-nav__link">
+    download-retry-time-seconds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-utorrent" title="path-utorrent" class="md-nav__link">
+    path-utorrent
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torrent-actions" title="Torrent Actions" class="md-nav__link">
+    Torrent Actions
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rtorrent" title="rTorrent" class="md-nav__link">
+    rTorrent
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rt-dir" title="rt-dir" class="md-nav__link">
+    rt-dir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-commands" title="rt-commands" class="md-nav__link">
+    rt-commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-label" title="rt-label" class="md-nav__link">
+    rt-label
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-ratio-group" title="rt-ratio-group" class="md-nav__link">
+    rt-ratio-group
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-channel" title="rt-channel" class="md-nav__link">
+    rt-channel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-priority" title="rt-priority" class="md-nav__link">
+    rt-priority
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-ignore-scheduler" title="rt-ignore-scheduler" class="md-nav__link">
+    rt-ignore-scheduler
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rt-dont-add-name" title="rt-dont-add-name" class="md-nav__link">
+    rt-dont-add-name
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watch-directory" title="Watch Directory" class="md-nav__link">
+    Watch Directory
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-watch-dir" title="upload-watch-dir" class="md-nav__link">
+    upload-watch-dir
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utorrent-webui" title="uTorrent WebUI" class="md-nav__link">
+    uTorrent WebUI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ftp" title="FTP" class="md-nav__link">
+    FTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-a-command" title="Execute a Command" class="md-nav__link">
+    Execute a Command
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-command" title="upload-command" class="md-nav__link">
+    upload-command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload-args" title="upload-args" class="md-nav__link">
+    upload-args
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utorrent-dynamic-directory" title="uTorrent Dynamic Directory" class="md-nav__link">
+    uTorrent Dynamic Directory
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-dyndir" title="upload-dyndir" class="md-nav__link">
+    upload-dyndir
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macros" title="Macros" class="md-nav__link">
+    Macros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wake-on-lan" title="Wake on LAN" class="md-nav__link">
+    Wake on LAN
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/autodl-community/autodl-irssi/edit/master/docs/configuration/options.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Options</h1>
+                
+                <ul>
+<li><a href="#general-options">General</a></li>
+<li><a href="#torrent-actions">Torrent Actions</a><ul>
+<li><a href="#rtorrent">rTorrent</a></li>
+<li><a href="#watch-directory">Watch Directory</a></li>
+<li><a href="#utorrent-webui">uTorrent WebUI</a></li>
+<li><a href="#ftp">FTP</a></li>
+<li><a href="#execute-a-command">Execute a Command</a></li>
+<li><a href="#utorrent-dynamic-directory">uTorrent Dynamic Directory</a></li>
+</ul>
+</li>
+<li><a href="#macros">Macros</a></li>
+<li><a href="#wake-on-lan">Wake on LAN</a></li>
+</ul>
+<h2 id="general-options">General Options<a class="headerlink" href="#general-options" title="Permanent link">&para;</a></h2>
+<p>These options change the behavior of autodl-irssi. Place these options below the <strong>[options]</strong> header.</p>
+<h5 id="rt-address">rt-address<a class="headerlink" href="#rt-address" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> string<br />
+<strong>Default:</strong> Whatever is found in ~/.rtorrent.rc<br />
+<strong>Example:</strong> rt-address = 127.0.0.1:5000<br />
+<strong>Description:</strong> If you use the 'rtorrent' action (<strong>upload-method</strong>), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. <strong>NOTE:</strong> This option can only be set in autodl2.cfg, <strong>not</strong> autodl.cfg.</p>
+</blockquote>
+<h5 id="update-check">update-check<a class="headerlink" href="#update-check" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> string<br />
+<strong>Default:</strong> ask<br />
+<strong>Example:</strong> update-check = auto<br />
+<strong>Description:</strong> autodl-irssi can auto update itself. Valid values are <strong>ask</strong>, <strong>auto</strong>, and <strong>disabled</strong>. <strong>ask</strong> will print a message when there's a new version. <strong>auto</strong> will automatically update it when there's a new version. <strong>disabled</strong> won't do a thing when there's a new update.</p>
+</blockquote>
+<h5 id="output-level">output-level<a class="headerlink" href="#output-level" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Integer greater than or equal to 0.<br />
+<strong>Default:</strong> 3<br />
+<strong>Description:</strong> Set the verbosity of autodl.</p>
+</blockquote>
+<h5 id="debug">debug<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Boolean<br />
+<strong>Default:</strong> false<br />
+<strong>Description:</strong> Enable lower level debug messages at set <strong>output-level</strong>.</p>
+</blockquote>
+<h5 id="advanced-output-sites">advanced-output-sites<a class="headerlink" href="#advanced-output-sites" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Comma separated list<br />
+<strong>Example:</strong> advanced-output-sites = tracker1, tracker2, tracker3<br />
+<strong>Description:</strong> Output captured variables from announces. It's compared against the tracker type found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker as used by the <strong>matched-sites</strong> filter option. Open one of the files and locate the <strong>type="XYZ"</strong> line. Use the value inside the quotes, eg. <strong>XYZ</strong>. Setting <code class="codehilite">advanced-output-sites = all</code> will enable advanced output for all trackers.</p>
+</blockquote>
+<h5 id="use-regex">use-regex<a class="headerlink" href="#use-regex" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Boolean<br />
+<strong>Default:</strong> false<br />
+<strong>Description:</strong> Changes match/except-releases filter options to use regex instead of wildcard syntax globally. This can also be set per filter.</p>
+</blockquote>
+<h5 id="max-saved-releases">max-saved-releases<a class="headerlink" href="#max-saved-releases" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Integer greater than or equal to 0.<br />
+<strong>Default:</strong> 1000<br />
+<strong>Example:</strong> max-saved-releases = 200<br />
+<strong>Description:</strong> autodl-irssi will remember the last <strong>max-saved-releases</strong> releases you have downloaded so it won't re-download the same file again. Only useful if <strong>save-download-history</strong> is enabled.</p>
+</blockquote>
+<h5 id="save-download-history">save-download-history<a class="headerlink" href="#save-download-history" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Boolean<br />
+<strong>Default:</strong> true<br />
+<strong>Example:</strong> save-download-history = true<br />
+<strong>Description:</strong> Set it to false to disable writing the last N (= <strong>max-saved-releases</strong>) downloaded releases to ~/.autodl/DownloadHistory.txt.</p>
+</blockquote>
+<h5 id="download-duplicates">download-duplicates<a class="headerlink" href="#download-duplicates" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Boolean<br />
+<strong>Default:</strong> false<br />
+<strong>Example:</strong> download-duplicates = true<br />
+<strong>Description:</strong> By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release if it's re-announced or announced by multiple trackers.</p>
+</blockquote>
+<h5 id="unique-torrent-names">unique-torrent-names<a class="headerlink" href="#unique-torrent-names" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Boolean<br />
+<strong>Default:</strong> false<br />
+<strong>Example:</strong> unique-torrent-names = true<br />
+<strong>Description:</strong> If true, all saved torrent filenames are unique (the site name is prepended to the filename). Set it to false to use the torrent release name as the filename.</p>
+</blockquote>
+<h5 id="download-retry-time-seconds">download-retry-time-seconds<a class="headerlink" href="#download-retry-time-seconds" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> Integer<br />
+<strong>Default:</strong> 300<br />
+<strong>Example:</strong> download-retry-time-seconds = 120<br />
+<strong>Description:</strong> If a download fails, autodl-irssi will try to re-download it every 3 seconds for  <strong>download-retry-time-seconds</strong> seconds. It will give up after <strong>download-retry-time-seconds</strong> and report an error.</p>
+</blockquote>
+<h5 id="path-utorrent">path-utorrent<a class="headerlink" href="#path-utorrent" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p><strong>Type:</strong> String<br />
+<strong>Default:</strong> nothing<br />
+<strong>Example:</strong> path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe<br />
+<strong>Description:</strong> Set it to the path of uTorrent if you're using an <strong>upload-type</strong> equal to <strong>dyndir</strong>.</p>
+</blockquote>
+<h2 id="torrent-actions">Torrent Actions<a class="headerlink" href="#torrent-actions" title="Permanent link">&para;</a></h2>
+<p>autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.</p>
+<p>By default, the global action set in your <strong>[options]</strong> header is used, but you can override it in any filter by placing a new <strong>upload-type</strong> in the <strong>[filter]</strong> header.</p>
+<h3 id="rtorrent">rTorrent<a class="headerlink" href="#rtorrent" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><span class="nt">upload-type</span> <span class="o">=</span> <span class="nt">rtorrent</span>
+<span class="nt">rt-dir</span> <span class="o">=</span> <span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">YOURNAME</span><span class="o">/</span><span class="nt">downloads</span><span class="o">/$(</span><span class="nt">Month</span><span class="o">)$(</span><span class="nt">Day</span><span class="o">)/$(</span><span class="nt">Tracker</span><span class="o">)</span>
+<span class="nt">rt-commands</span> <span class="o">=</span> <span class="nt">print</span><span class="o">=</span><span class="s2">&quot;Added: $(TorrentName)&quot;</span><span class="o">;</span> <span class="nt">print</span><span class="o">=</span><span class="s2">&quot;Hello, world!&quot;</span>
+<span class="nt">rt-label</span> <span class="o">=</span> <span class="o">$(</span><span class="nt">Tracker</span><span class="o">)</span>
+<span class="p">#</span><span class="nn">rt-ratio-group</span> <span class="o">=</span> <span class="nt">rat_3</span>
+<span class="p">#</span><span class="nn">rt-channel</span> <span class="o">=</span> <span class="nt">thr_2</span>
+<span class="nt">rt-priority</span> <span class="o">=</span> <span class="nt">high</span>
+<span class="p">#</span><span class="nn">rt-ignore-scheduler</span> <span class="o">=</span> <span class="nt">true</span>
+<span class="p">#</span><span class="nn">rt-dont-add-name</span> <span class="o">=</span> <span class="nt">false</span>
+</pre></div>
+
+<h5 id="rt-dir">rt-dir<a class="headerlink" href="#rt-dir" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>The destination directory. The torrent data will be saved here. Supports <a href="#macros">macros</a>.</p>
+</blockquote>
+<h5 id="rt-commands">rt-commands<a class="headerlink" href="#rt-commands" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Execute the given rTorrent commands when loading the torrent file.</p>
+</blockquote>
+<h5 id="rt-label">rt-label<a class="headerlink" href="#rt-label" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Set a ruTorrent label.</p>
+</blockquote>
+<h5 id="rt-ratio-group">rt-ratio-group<a class="headerlink" href="#rt-ratio-group" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Set a ruTorrent ratio group. Valid names are rat_0, rat_1, ..., rat_7. You must have the ratio ruTorrent plugin installed.</p>
+</blockquote>
+<h5 id="rt-channel">rt-channel<a class="headerlink" href="#rt-channel" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Set a ruTorrent channel. Valid names are thr_0, thr_1, ..., thr_9. You must have the throttle ruTorrent plugin installed.</p>
+</blockquote>
+<h5 id="rt-priority">rt-priority<a class="headerlink" href="#rt-priority" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Set the torrent priority. Valid values are 0, dont-download, 1, low, 2, normal, 3, high. If you set it to dont-download (or 0), the torrent is loaded, but not started.</p>
+</blockquote>
+<h5 id="rt-ignore-scheduler">rt-ignore-scheduler<a class="headerlink" href="#rt-ignore-scheduler" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Set it to true to disable the ruTorrent scheduler.</p>
+</blockquote>
+<h5 id="rt-dont-add-name">rt-dont-add-name<a class="headerlink" href="#rt-dont-add-name" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Set it to true if you don't want the torrent name to be added to the path.</p>
+</blockquote>
+<h3 id="watch-directory">Watch Directory<a class="headerlink" href="#watch-directory" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>upload-type = watchdir
+upload-watch-dir = /home/myusername/mywatchdir
+</pre></div>
+
+<h5 id="upload-watch-dir">upload-watch-dir<a class="headerlink" href="#upload-watch-dir" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>Your torrent client's watch directory. Supports <a href="#macros">macros</a>.</p>
+</blockquote>
+<h3 id="utorrent-webui">uTorrent WebUI<a class="headerlink" href="#utorrent-webui" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>upload-type = webui
+</pre></div>
+
+<p><em>Set webui user, password, etc below the <strong>[webui]</strong> header!</em></p>
+<h3 id="ftp">FTP<a class="headerlink" href="#ftp" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>upload-type = ftp
+upload-ftp-path = /path/to/directory
+</pre></div>
+
+<p><em>Set FTP user, password, etc in the <strong>[ftp]</strong> header!</em></p>
+<h3 id="execute-a-command">Execute a Command<a class="headerlink" href="#execute-a-command" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>upload-type = exec
+upload-command = /path/to/program
+upload-args = all arguments here
+</pre></div>
+
+<h5 id="upload-command">upload-command<a class="headerlink" href="#upload-command" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>The program or script to execute. Supports <a href="#macros">macros</a>.</p>
+</blockquote>
+<h5 id="upload-args">upload-args<a class="headerlink" href="#upload-args" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>The arguments given to the <strong>upload-command</strong>. Supports <a href="#macros">macros</a>.</p>
+</blockquote>
+<h3 id="utorrent-dynamic-directory">uTorrent Dynamic Directory<a class="headerlink" href="#utorrent-dynamic-directory" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>upload-type = dyndir
+upload-dyndir = c:\the\windows\path\$(macro)$(macro2)\$(macro3)
+</pre></div>
+
+<p><em>You need to initialize <strong>path-utorrent</strong> below [options] or it won't work!</em></p>
+<p><strong>Important:</strong> autodl-irssi assumes that the Z: drive is mapped to your / (root) directory if you're using Wine to run uTorrent.</p>
+<h5 id="upload-dyndir">upload-dyndir<a class="headerlink" href="#upload-dyndir" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>The directory to save the torrent. Supports <a href="#macros">macros</a>.</p>
+</blockquote>
+<h2 id="macros">Macros<a class="headerlink" href="#macros" title="Permanent link">&para;</a></h2>
+<p><em>Enclose the macro in double quotes if it's possible that the macro contains spaces.</em></p>
+<blockquote>
+<p><strong>$(year)</strong> - Current year.<br />
+<strong>$(month)</strong> - Current month.<br />
+<strong>$(day)</strong> - Current day.<br />
+<strong>$(hour)</strong> - Current hour.<br />
+<strong>$(minute)</strong> - Current minute.<br />
+<strong>$(second)</strong> - Current second.<br />
+<strong>$(milli)</strong> - Current millisecond.<br />
+<strong>$(FilterName)</strong> - Name of matched filter.<br />
+<strong>$(Site)</strong> - Tracker type from the tracker file.<br />
+<strong>$(Tracker)</strong> - The long tracker name from the tracker file.<br />
+<strong>$(TrackerShort)</strong> - The short tracker name from the tracker file.<br />
+<strong>$(TorrentPathName)</strong> - The path to the .torrent file (unix path if you're using cygwin).<br />
+<strong>$(WinTorrentPathName)</strong> - The windows path to the .torrent file.<br />
+<strong>$(InfoHash)</strong> - The info hash of the torrent file.<br />
+<strong>$(TYear)</strong> - Torrent release year.<br />
+<strong>$(Name1)</strong>, <strong>$(Artist)</strong>, <strong>$(Show)</strong>, <strong>$(Movie)</strong> - Equivalent to the shows/artist value.<br />
+<strong>$(Name2)</strong>, <strong>$(Album)</strong> - Equivalent to the album value.<br />
+<strong>$(Category)</strong><br />
+<strong>$(TorrentName)</strong><br />
+<strong>$(Uploader)</strong><br />
+<strong>$(TorrentSize)</strong><br />
+<strong>$(PreTime)</strong><br />
+<strong>$(TorrentUrl)</strong><br />
+<strong>$(TorrentSslUrl)</strong><br />
+<strong>$(Season)</strong><br />
+<strong>$(Season2)</strong> - Two digit season number.<br />
+<strong>$(Episode)</strong><br />
+<strong>$(Episode2)</strong> - Two digit episode number.<br />
+<strong>$(Resolution)</strong><br />
+<strong>$(Source)</strong><br />
+<strong>$(Encoder)</strong><br />
+<strong>$(Container)</strong><br />
+<strong>$(Format)</strong><br />
+<strong>$(Bitrate)</strong><br />
+<strong>$(Media)</strong><br />
+<strong>$(Tags)</strong><br />
+<strong>$(Scene)</strong><br />
+<strong>$(ReleaseGroup)</strong><br />
+<strong>$(Log)</strong><br />
+<strong>$(Cue)</strong></p>
+</blockquote>
+<h2 id="wake-on-lan">Wake on LAN<a class="headerlink" href="#wake-on-lan" title="Permanent link">&para;</a></h2>
+<p>It's possible to wake up the computer before uploading the torrent (uTorrent webui or FTP upload). You may need to make sure your BIOS and network card have WOL enabled.</p>
+<p>wol-mac-address = 00:11:22:33:44:55<br />
+wol-ip-address = 12.34.56.78  (or a DNS name, eg. <a href="http://www.blah.com">www.blah.com</a>)<br />
+wol-port = 9 (defaults to 9 if you leave it blank)</p>
+<p><strong>wol-mac-address</strong> is the MAC (or hardware) address of the computer's network card. Use ifconfig /all (windows) or ifconfig -a (Linux) to find out your network card's MAC address.</p>
+<p>If you have a router, then set <strong>wol-ip-address</strong> to your router's public IP address, and make sure the router forwards UDP packets to port <strong>wol-port</strong> (default 9) to your router's internal broadcast address (usually 192.168.0.255).</p>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../overview/" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Overview
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../irc/" title="IRC" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                IRC
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application-8e4952e681.js"></script>
+      
+      <script>app.initialize({version:"0.17.1",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

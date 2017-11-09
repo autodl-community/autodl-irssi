@@ -1,0 +1,1054 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "autodl-irssi is a plugin for irssi that monitors IRC announce channels for torrent trackers and downloads torrent files based on user-defined filters.",
+            "title": "Home"
+        },
+        {
+            "location": "/faq/",
+            "text": "How do I get a new tracker added to autodl-irssi?\n\u00b6\n\n\nFirst, check with tracker staff to get permission; some trackers don't want people autodownloading.\n\n\nIf you know how to create a new tracker file or edit an existing tracker file to suit your needs, you can submit a Pull Request to the \ntrackers repository\n following the \ncontributing guidelines\n. If you need it to be created by a member of autodl-community, \nsubmit an issue\n to the \ntrackers repository\n or come to the IRC channel in the footer with the following information:\n\n\n\n\nTracker name\n\n\nTracker abbreviation (if applicable)\n\n\nTracker IRC server address\n\n\nTracker IRC announce channel\n\n\nTracker IRC announcer name\n\n\nA decent size sampling of announces from the announce channel (at least 5-10)\n\n\n\n\nPreferably, this information should be provided using a pastebin site. More information may be requested if necessary.\n\n\nWhat's this \nCould not connect (111)\n error?\n\u00b6\n\n\nError downloading files. Make sure autodl-irssi is started and configured properly (eg. password, port number): Error getting files listing: Error: Could not connect: (111) Connection refused\n\n\nThis is an error that occurs in the ruTorrent plugin when it can't communicate with autodl-irssi. This could be for a number of reasons:\n\n\n\n\nirssi may not be running\n\n\nautodl-irssi may not be enabled in irssi\n\n\nmultiple instances of irssi with autodl-irssi enabled could be running\n\n\nyour gui-server and gui-server-password settings may not be set in your autodl.cfg file\n\n\nyour gui-server and gui-server-password settings may not be set in the ruTorrent plugin's conf.php\n\n\nthe gui-server and gui-server-password settings in your autodl.cfg may not match the settings in the ruTorrent plugin's conf.php\n\n\nyou may be using a seedbox from Feral Hosting; follow \ntheir instructions\n to get it working\n\n\n\n\nWhat's this error about bare wildcards?\n\u00b6\n\n\n_____ is set to bare wildcard. This is unnecessary and unsupported by some options.\n\n\nMany people believe they need to set a filter option to a bare asterisk to grab everything based on that filter option. If that were true, they would have to set ALL filter options to a bare asterisk. However, a filter in autodl-irssi, when enabled, matches everything until you set filter options to limit (aka filter) the results. Also, autodl-irssi supports using wildcards in only one type of option, \ncomma separated lists\n. This mistaken belief can cause people to use bare asterisks in options that don't even support it.\n\n\nTL/DR\n If you're not limiting/filtering by an option, you don't need to set it to anything.",
+            "title": "FAQ"
+        },
+        {
+            "location": "/faq/#how-do-i-get-a-new-tracker-added-to-autodl-irssi",
+            "text": "First, check with tracker staff to get permission; some trackers don't want people autodownloading.  If you know how to create a new tracker file or edit an existing tracker file to suit your needs, you can submit a Pull Request to the  trackers repository  following the  contributing guidelines . If you need it to be created by a member of autodl-community,  submit an issue  to the  trackers repository  or come to the IRC channel in the footer with the following information:   Tracker name  Tracker abbreviation (if applicable)  Tracker IRC server address  Tracker IRC announce channel  Tracker IRC announcer name  A decent size sampling of announces from the announce channel (at least 5-10)   Preferably, this information should be provided using a pastebin site. More information may be requested if necessary.",
+            "title": "How do I get a new tracker added to autodl-irssi?"
+        },
+        {
+            "location": "/faq/#whats-this-could-not-connect-111-error",
+            "text": "Error downloading files. Make sure autodl-irssi is started and configured properly (eg. password, port number): Error getting files listing: Error: Could not connect: (111) Connection refused  This is an error that occurs in the ruTorrent plugin when it can't communicate with autodl-irssi. This could be for a number of reasons:   irssi may not be running  autodl-irssi may not be enabled in irssi  multiple instances of irssi with autodl-irssi enabled could be running  your gui-server and gui-server-password settings may not be set in your autodl.cfg file  your gui-server and gui-server-password settings may not be set in the ruTorrent plugin's conf.php  the gui-server and gui-server-password settings in your autodl.cfg may not match the settings in the ruTorrent plugin's conf.php  you may be using a seedbox from Feral Hosting; follow  their instructions  to get it working",
+            "title": "What's this Could not connect (111) error?"
+        },
+        {
+            "location": "/faq/#whats-this-error-about-bare-wildcards",
+            "text": "_____ is set to bare wildcard. This is unnecessary and unsupported by some options.  Many people believe they need to set a filter option to a bare asterisk to grab everything based on that filter option. If that were true, they would have to set ALL filter options to a bare asterisk. However, a filter in autodl-irssi, when enabled, matches everything until you set filter options to limit (aka filter) the results. Also, autodl-irssi supports using wildcards in only one type of option,  comma separated lists . This mistaken belief can cause people to use bare asterisks in options that don't even support it.  TL/DR  If you're not limiting/filtering by an option, you don't need to set it to anything.",
+            "title": "What's this error about bare wildcards?"
+        },
+        {
+            "location": "/installation/",
+            "text": "Requirements\n\u00b6\n\n\nautodl-irssi requires irssi compiled with Perl support.\n\n\nautodl-irssi has the following Perl module dependencies:\n\n* Archive::Zip\n\n* Net::SSLeay\n\n* HTML::Entities\n\n* XML::LibXML\n\n* Digest::SHA\n\n* JSON\n\n* JSON::XS (optional)\n\n\nUse your package manager to install them or use the CPAN utility. If you use CPAN, you will need a build environment already installed, eg. gcc, make, etc.\n\n\ncpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA JSON JSON::XS\n\n\n\n\n\nInstallation\n\u00b6\n\n\nNote: Make sure you're \nnot\n root when you execute the following commands.\n\n\nmkdir -p ~/.irssi/scripts/autorun\n\ncd\n ~/.irssi/scripts\ncurl -sL http://git.io/vlcND \n|\n grep -Po \n'(?<=\"browser_download_url\": \")(.*-v[\\d.]+.zip)'\n \n|\n xargs wget --quiet -O autodl-irssi.zip\nunzip -o autodl-irssi.zip\nrm autodl-irssi.zip\ncp autodl-irssi.pl autorun/\nmkdir -p ~/.autodl\ntouch ~/.autodl/autodl.cfg\n\n\n\n\nThe autodl-irssi startup script has been copied to the autorun directory so it will be started automatically when irssi is started.\n\n\nPost installation\n\u00b6\n\n\nautodl Window\n\u00b6\n\n\nBy default, all autodl-irssi output goes to the \n(status)\n window. If you want to send all autodl-irssi output to its own window, you can create a window in irssi named \nautodl\n. Use these irssi commands to create a new window named \nautodl\n and place it right after the status window (i.e., window position 2)\n\n\n/window new hidden\n/window name autodl\n/window move 2\n/layout save\n/save\n\n\n\n\n\nruTorrent Plugin\n\u00b6\n\n\nIf you want to install the ruTorrent plugin, see the instructions \nhere\n.",
+            "title": "Installation"
+        },
+        {
+            "location": "/installation/#requirements",
+            "text": "autodl-irssi requires irssi compiled with Perl support.  autodl-irssi has the following Perl module dependencies: \n* Archive::Zip \n* Net::SSLeay \n* HTML::Entities \n* XML::LibXML \n* Digest::SHA \n* JSON \n* JSON::XS (optional)  Use your package manager to install them or use the CPAN utility. If you use CPAN, you will need a build environment already installed, eg. gcc, make, etc.  cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA JSON JSON::XS",
+            "title": "Requirements"
+        },
+        {
+            "location": "/installation/#installation",
+            "text": "Note: Make sure you're  not  root when you execute the following commands.  mkdir -p ~/.irssi/scripts/autorun cd  ~/.irssi/scripts\ncurl -sL http://git.io/vlcND  |  grep -Po  '(?<=\"browser_download_url\": \")(.*-v[\\d.]+.zip)'   |  xargs wget --quiet -O autodl-irssi.zip\nunzip -o autodl-irssi.zip\nrm autodl-irssi.zip\ncp autodl-irssi.pl autorun/\nmkdir -p ~/.autodl\ntouch ~/.autodl/autodl.cfg  The autodl-irssi startup script has been copied to the autorun directory so it will be started automatically when irssi is started.",
+            "title": "Installation"
+        },
+        {
+            "location": "/installation/#post-installation",
+            "text": "",
+            "title": "Post installation"
+        },
+        {
+            "location": "/installation/#autodl-window",
+            "text": "By default, all autodl-irssi output goes to the  (status)  window. If you want to send all autodl-irssi output to its own window, you can create a window in irssi named  autodl . Use these irssi commands to create a new window named  autodl  and place it right after the status window (i.e., window position 2)  /window new hidden\n/window name autodl\n/window move 2\n/layout save\n/save",
+            "title": "autodl Window"
+        },
+        {
+            "location": "/installation/#rutorrent-plugin",
+            "text": "If you want to install the ruTorrent plugin, see the instructions  here .",
+            "title": "ruTorrent Plugin"
+        },
+        {
+            "location": "/configuration/overview/",
+            "text": "All filters and options are read from ~/.autodl/autodl.cfg. The file will be automatically re-read when changes are made to it when autodl-irssi is running. If you use non-ASCII characters, set the encoding (aka character coding) to UTF-8 before saving.\n\n\nFormatting\n\u00b6\n\n\nAll lines starting with the # character are ignored as comments. You may use this to disable options.\n\n\nThe options are in the form of \noption-name = value\n. All value options are case-insensitive.\n\n\nThere are different option types:\n\n* Comma separated lists (value1, value2, value3)\n\n* Number lists (1980-1999, 2010, 2012)\n\n* Strings\n\n* Integers\n\n* Booleans (True/False)\n\n* Sizes (120MB, 4.5GB)\n\n\nThe comma separated list type supports wildcards, where \n*\n means 0 or more characters and \n?\n means exactly one character.\n\n\nHeaders\n\u00b6\n\n\nThe file is made up of headers in the form of \n[headername]\n with the options for that header immediately below.\n\n\nThe headers are:\n\n\n\n\nOptions\n - Global options for autodl-irssi\n\n\nIRC\n - General IRC configuration for autodl-irssi\n\n\nServer\n - Settings for tracker IRC servers\n\n\nChannel\n - Settings for tracker announce channels\n\n\nTracker\n - Tracker authentication options\n\n\nFilter\n - Settings to filter announces\n\n\nWebUI\n - uTorrent WebUI torrent action settings\n\n\nFTP\n - FTP torrent action settings",
+            "title": "Overview"
+        },
+        {
+            "location": "/configuration/overview/#formatting",
+            "text": "All lines starting with the # character are ignored as comments. You may use this to disable options.  The options are in the form of  option-name = value . All value options are case-insensitive.  There are different option types: \n* Comma separated lists (value1, value2, value3) \n* Number lists (1980-1999, 2010, 2012) \n* Strings \n* Integers \n* Booleans (True/False) \n* Sizes (120MB, 4.5GB)  The comma separated list type supports wildcards, where  *  means 0 or more characters and  ?  means exactly one character.",
+            "title": "Formatting"
+        },
+        {
+            "location": "/configuration/overview/#headers",
+            "text": "The file is made up of headers in the form of  [headername]  with the options for that header immediately below.  The headers are:   Options  - Global options for autodl-irssi  IRC  - General IRC configuration for autodl-irssi  Server  - Settings for tracker IRC servers  Channel  - Settings for tracker announce channels  Tracker  - Tracker authentication options  Filter  - Settings to filter announces  WebUI  - uTorrent WebUI torrent action settings  FTP  - FTP torrent action settings",
+            "title": "Headers"
+        },
+        {
+            "location": "/configuration/options/",
+            "text": "General\n\n\nTorrent Actions\n\n\nrTorrent\n\n\nWatch Directory\n\n\nuTorrent WebUI\n\n\nFTP\n\n\nExecute a Command\n\n\nuTorrent Dynamic Directory\n\n\n\n\n\n\nMacros\n\n\nWake on LAN\n\n\n\n\nGeneral Options\n\u00b6\n\n\nThese options change the behavior of autodl-irssi. Place these options below the \n[options]\n header.\n\n\nrt-address\n\u00b6\n\n\n\n\nType:\n string\n\n\nDefault:\n Whatever is found in ~/.rtorrent.rc\n\n\nExample:\n rt-address = 127.0.0.1:5000\n\n\nDescription:\n If you use the 'rtorrent' action (\nupload-method\n), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. \nNOTE:\n This option can only be set in autodl2.cfg, \nnot\n autodl.cfg.\n\n\n\n\nupdate-check\n\u00b6\n\n\n\n\nType:\n string\n\n\nDefault:\n ask\n\n\nExample:\n update-check = auto\n\n\nDescription:\n autodl-irssi can auto update itself. Valid values are \nask\n, \nauto\n, and \ndisabled\n. \nask\n will print a message when there's a new version. \nauto\n will automatically update it when there's a new version. \ndisabled\n won't do a thing when there's a new update.\n\n\n\n\noutput-level\n\u00b6\n\n\n\n\nType:\n Integer greater than or equal to 0.\n\n\nDefault:\n 3\n\n\nDescription:\n Set the verbosity of autodl.\n\n\n\n\ndebug\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n false\n\n\nDescription:\n Enable lower level debug messages at set \noutput-level\n.\n\n\n\n\nadvanced-output-sites\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n advanced-output-sites = tracker1, tracker2, tracker3\n\n\nDescription:\n Output captured variables from announces. It's compared against the tracker type found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker as used by the \nmatched-sites\n filter option. Open one of the files and locate the \ntype=\"XYZ\"\n line. Use the value inside the quotes, eg. \nXYZ\n. Setting \nadvanced-output-sites = all\n will enable advanced output for all trackers.\n\n\n\n\nuse-regex\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n false\n\n\nDescription:\n Changes match/except-releases filter options to use regex instead of wildcard syntax globally. This can also be set per filter.\n\n\n\n\nmax-saved-releases\n\u00b6\n\n\n\n\nType:\n Integer greater than or equal to 0.\n\n\nDefault:\n 1000\n\n\nExample:\n max-saved-releases = 200\n\n\nDescription:\n autodl-irssi will remember the last \nmax-saved-releases\n releases you have downloaded so it won't re-download the same file again. Only useful if \nsave-download-history\n is enabled.\n\n\n\n\nsave-download-history\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n true\n\n\nExample:\n save-download-history = true\n\n\nDescription:\n Set it to false to disable writing the last N (= \nmax-saved-releases\n) downloaded releases to ~/.autodl/DownloadHistory.txt.\n\n\n\n\ndownload-duplicates\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n false\n\n\nExample:\n download-duplicates = true\n\n\nDescription:\n By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release if it's re-announced or announced by multiple trackers.\n\n\n\n\nunique-torrent-names\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n false\n\n\nExample:\n unique-torrent-names = true\n\n\nDescription:\n If true, all saved torrent filenames are unique (the site name is prepended to the filename). Set it to false to use the torrent release name as the filename.\n\n\n\n\ndownload-retry-time-seconds\n\u00b6\n\n\n\n\nType:\n Integer\n\n\nDefault:\n 300\n\n\nExample:\n download-retry-time-seconds = 120\n\n\nDescription:\n If a download fails, autodl-irssi will try to re-download it every 3 seconds for  \ndownload-retry-time-seconds\n seconds. It will give up after \ndownload-retry-time-seconds\n and report an error.\n\n\n\n\npath-utorrent\n\u00b6\n\n\n\n\nType:\n String\n\n\nDefault:\n nothing\n\n\nExample:\n path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe\n\n\nDescription:\n Set it to the path of uTorrent if you're using an \nupload-type\n equal to \ndyndir\n.\n\n\n\n\nTorrent Actions\n\u00b6\n\n\nautodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.\n\n\nBy default, the global action set in your \n[options]\n header is used, but you can override it in any filter by placing a new \nupload-type\n in the \n[filter]\n header.\n\n\nrTorrent\n\u00b6\n\n\nupload-type\n \n=\n \nrtorrent\n\n\nrt-dir\n \n=\n \n/\nhome\n/\nYOURNAME\n/\ndownloads\n/$(\nMonth\n)$(\nDay\n)/$(\nTracker\n)\n\n\nrt-commands\n \n=\n \nprint\n=\n\"Added: $(TorrentName)\"\n;\n \nprint\n=\n\"Hello, world!\"\n\n\nrt-label\n \n=\n \n$(\nTracker\n)\n\n\n#\nrt-ratio-group\n \n=\n \nrat_3\n\n\n#\nrt-channel\n \n=\n \nthr_2\n\n\nrt-priority\n \n=\n \nhigh\n\n\n#\nrt-ignore-scheduler\n \n=\n \ntrue\n\n\n#\nrt-dont-add-name\n \n=\n \nfalse\n\n\n\n\n\nrt-dir\n\u00b6\n\n\n\n\nThe destination directory. The torrent data will be saved here. Supports \nmacros\n.\n\n\n\n\nrt-commands\n\u00b6\n\n\n\n\nExecute the given rTorrent commands when loading the torrent file.\n\n\n\n\nrt-label\n\u00b6\n\n\n\n\nSet a ruTorrent label.\n\n\n\n\nrt-ratio-group\n\u00b6\n\n\n\n\nSet a ruTorrent ratio group. Valid names are rat_0, rat_1, ..., rat_7. You must have the ratio ruTorrent plugin installed.\n\n\n\n\nrt-channel\n\u00b6\n\n\n\n\nSet a ruTorrent channel. Valid names are thr_0, thr_1, ..., thr_9. You must have the throttle ruTorrent plugin installed.\n\n\n\n\nrt-priority\n\u00b6\n\n\n\n\nSet the torrent priority. Valid values are 0, dont-download, 1, low, 2, normal, 3, high. If you set it to dont-download (or 0), the torrent is loaded, but not started.\n\n\n\n\nrt-ignore-scheduler\n\u00b6\n\n\n\n\nSet it to true to disable the ruTorrent scheduler.\n\n\n\n\nrt-dont-add-name\n\u00b6\n\n\n\n\nSet it to true if you don't want the torrent name to be added to the path.\n\n\n\n\nWatch Directory\n\u00b6\n\n\nupload-type = watchdir\nupload-watch-dir = /home/myusername/mywatchdir\n\n\n\n\nupload-watch-dir\n\u00b6\n\n\n\n\nYour torrent client's watch directory. Supports \nmacros\n.\n\n\n\n\nuTorrent WebUI\n\u00b6\n\n\nupload-type = webui\n\n\n\n\nSet webui user, password, etc below the \n[webui]\n header!\n\n\nFTP\n\u00b6\n\n\nupload-type = ftp\nupload-ftp-path = /path/to/directory\n\n\n\n\nSet FTP user, password, etc in the \n[ftp]\n header!\n\n\nExecute a Command\n\u00b6\n\n\nupload-type = exec\nupload-command = /path/to/program\nupload-args = all arguments here\n\n\n\n\nupload-command\n\u00b6\n\n\n\n\nThe program or script to execute. Supports \nmacros\n.\n\n\n\n\nupload-args\n\u00b6\n\n\n\n\nThe arguments given to the \nupload-command\n. Supports \nmacros\n.\n\n\n\n\nuTorrent Dynamic Directory\n\u00b6\n\n\nupload-type = dyndir\nupload-dyndir = c:\\the\\windows\\path\\$(macro)$(macro2)\\$(macro3)\n\n\n\n\nYou need to initialize \npath-utorrent\n below [options] or it won't work!\n\n\nImportant:\n autodl-irssi assumes that the Z: drive is mapped to your / (root) directory if you're using Wine to run uTorrent.\n\n\nupload-dyndir\n\u00b6\n\n\n\n\nThe directory to save the torrent. Supports \nmacros\n.\n\n\n\n\nMacros\n\u00b6\n\n\nEnclose the macro in double quotes if it's possible that the macro contains spaces.\n\n\n\n\n$(year)\n - Current year.\n\n\n$(month)\n - Current month.\n\n\n$(day)\n - Current day.\n\n\n$(hour)\n - Current hour.\n\n\n$(minute)\n - Current minute.\n\n\n$(second)\n - Current second.\n\n\n$(milli)\n - Current millisecond.\n\n\n$(FilterName)\n - Name of matched filter.\n\n\n$(Site)\n - Tracker type from the tracker file.\n\n\n$(Tracker)\n - The long tracker name from the tracker file.\n\n\n$(TrackerShort)\n - The short tracker name from the tracker file.\n\n\n$(TorrentPathName)\n - The path to the .torrent file (unix path if you're using cygwin).\n\n\n$(WinTorrentPathName)\n - The windows path to the .torrent file.\n\n\n$(InfoHash)\n - The info hash of the torrent file.\n\n\n$(TYear)\n - Torrent release year.\n\n\n$(Name1)\n, \n$(Artist)\n, \n$(Show)\n, \n$(Movie)\n - Equivalent to the shows/artist value.\n\n\n$(Name2)\n, \n$(Album)\n - Equivalent to the album value.\n\n\n$(Category)\n\n\n$(TorrentName)\n\n\n$(Uploader)\n\n\n$(TorrentSize)\n\n\n$(PreTime)\n\n\n$(TorrentUrl)\n\n\n$(TorrentSslUrl)\n\n\n$(Season)\n\n\n$(Season2)\n - Two digit season number.\n\n\n$(Episode)\n\n\n$(Episode2)\n - Two digit episode number.\n\n\n$(Resolution)\n\n\n$(Source)\n\n\n$(Encoder)\n\n\n$(Container)\n\n\n$(Format)\n\n\n$(Bitrate)\n\n\n$(Media)\n\n\n$(Tags)\n\n\n$(Scene)\n\n\n$(ReleaseGroup)\n\n\n$(Log)\n\n\n$(Cue)\n\n\n\n\nWake on LAN\n\u00b6\n\n\nIt's possible to wake up the computer before uploading the torrent (uTorrent webui or FTP upload). You may need to make sure your BIOS and network card have WOL enabled.\n\n\nwol-mac-address = 00:11:22:33:44:55\n\nwol-ip-address = 12.34.56.78  (or a DNS name, eg. \nwww.blah.com\n)\n\nwol-port = 9 (defaults to 9 if you leave it blank)\n\n\nwol-mac-address\n is the MAC (or hardware) address of the computer's network card. Use ifconfig /all (windows) or ifconfig -a (Linux) to find out your network card's MAC address.\n\n\nIf you have a router, then set \nwol-ip-address\n to your router's public IP address, and make sure the router forwards UDP packets to port \nwol-port\n (default 9) to your router's internal broadcast address (usually 192.168.0.255).",
+            "title": "Options"
+        },
+        {
+            "location": "/configuration/options/#general-options",
+            "text": "These options change the behavior of autodl-irssi. Place these options below the  [options]  header.",
+            "title": "General Options"
+        },
+        {
+            "location": "/configuration/options/#rt-address",
+            "text": "Type:  string  Default:  Whatever is found in ~/.rtorrent.rc  Example:  rt-address = 127.0.0.1:5000  Description:  If you use the 'rtorrent' action ( upload-method ), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket.  NOTE:  This option can only be set in autodl2.cfg,  not  autodl.cfg.",
+            "title": "rt-address"
+        },
+        {
+            "location": "/configuration/options/#update-check",
+            "text": "Type:  string  Default:  ask  Example:  update-check = auto  Description:  autodl-irssi can auto update itself. Valid values are  ask ,  auto , and  disabled .  ask  will print a message when there's a new version.  auto  will automatically update it when there's a new version.  disabled  won't do a thing when there's a new update.",
+            "title": "update-check"
+        },
+        {
+            "location": "/configuration/options/#output-level",
+            "text": "Type:  Integer greater than or equal to 0.  Default:  3  Description:  Set the verbosity of autodl.",
+            "title": "output-level"
+        },
+        {
+            "location": "/configuration/options/#debug",
+            "text": "Type:  Boolean  Default:  false  Description:  Enable lower level debug messages at set  output-level .",
+            "title": "debug"
+        },
+        {
+            "location": "/configuration/options/#advanced-output-sites",
+            "text": "Type:  Comma separated list  Example:  advanced-output-sites = tracker1, tracker2, tracker3  Description:  Output captured variables from announces. It's compared against the tracker type found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker as used by the  matched-sites  filter option. Open one of the files and locate the  type=\"XYZ\"  line. Use the value inside the quotes, eg.  XYZ . Setting  advanced-output-sites = all  will enable advanced output for all trackers.",
+            "title": "advanced-output-sites"
+        },
+        {
+            "location": "/configuration/options/#use-regex",
+            "text": "Type:  Boolean  Default:  false  Description:  Changes match/except-releases filter options to use regex instead of wildcard syntax globally. This can also be set per filter.",
+            "title": "use-regex"
+        },
+        {
+            "location": "/configuration/options/#max-saved-releases",
+            "text": "Type:  Integer greater than or equal to 0.  Default:  1000  Example:  max-saved-releases = 200  Description:  autodl-irssi will remember the last  max-saved-releases  releases you have downloaded so it won't re-download the same file again. Only useful if  save-download-history  is enabled.",
+            "title": "max-saved-releases"
+        },
+        {
+            "location": "/configuration/options/#save-download-history",
+            "text": "Type:  Boolean  Default:  true  Example:  save-download-history = true  Description:  Set it to false to disable writing the last N (=  max-saved-releases ) downloaded releases to ~/.autodl/DownloadHistory.txt.",
+            "title": "save-download-history"
+        },
+        {
+            "location": "/configuration/options/#download-duplicates",
+            "text": "Type:  Boolean  Default:  false  Example:  download-duplicates = true  Description:  By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release if it's re-announced or announced by multiple trackers.",
+            "title": "download-duplicates"
+        },
+        {
+            "location": "/configuration/options/#unique-torrent-names",
+            "text": "Type:  Boolean  Default:  false  Example:  unique-torrent-names = true  Description:  If true, all saved torrent filenames are unique (the site name is prepended to the filename). Set it to false to use the torrent release name as the filename.",
+            "title": "unique-torrent-names"
+        },
+        {
+            "location": "/configuration/options/#download-retry-time-seconds",
+            "text": "Type:  Integer  Default:  300  Example:  download-retry-time-seconds = 120  Description:  If a download fails, autodl-irssi will try to re-download it every 3 seconds for   download-retry-time-seconds  seconds. It will give up after  download-retry-time-seconds  and report an error.",
+            "title": "download-retry-time-seconds"
+        },
+        {
+            "location": "/configuration/options/#path-utorrent",
+            "text": "Type:  String  Default:  nothing  Example:  path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe  Description:  Set it to the path of uTorrent if you're using an  upload-type  equal to  dyndir .",
+            "title": "path-utorrent"
+        },
+        {
+            "location": "/configuration/options/#torrent-actions",
+            "text": "autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.  By default, the global action set in your  [options]  header is used, but you can override it in any filter by placing a new  upload-type  in the  [filter]  header.",
+            "title": "Torrent Actions"
+        },
+        {
+            "location": "/configuration/options/#rtorrent",
+            "text": "upload-type   =   rtorrent  rt-dir   =   / home / YOURNAME / downloads /$( Month )$( Day )/$( Tracker )  rt-commands   =   print = \"Added: $(TorrentName)\" ;   print = \"Hello, world!\"  rt-label   =   $( Tracker )  # rt-ratio-group   =   rat_3  # rt-channel   =   thr_2  rt-priority   =   high  # rt-ignore-scheduler   =   true  # rt-dont-add-name   =   false",
+            "title": "rTorrent"
+        },
+        {
+            "location": "/configuration/options/#rt-dir",
+            "text": "The destination directory. The torrent data will be saved here. Supports  macros .",
+            "title": "rt-dir"
+        },
+        {
+            "location": "/configuration/options/#rt-commands",
+            "text": "Execute the given rTorrent commands when loading the torrent file.",
+            "title": "rt-commands"
+        },
+        {
+            "location": "/configuration/options/#rt-label",
+            "text": "Set a ruTorrent label.",
+            "title": "rt-label"
+        },
+        {
+            "location": "/configuration/options/#rt-ratio-group",
+            "text": "Set a ruTorrent ratio group. Valid names are rat_0, rat_1, ..., rat_7. You must have the ratio ruTorrent plugin installed.",
+            "title": "rt-ratio-group"
+        },
+        {
+            "location": "/configuration/options/#rt-channel",
+            "text": "Set a ruTorrent channel. Valid names are thr_0, thr_1, ..., thr_9. You must have the throttle ruTorrent plugin installed.",
+            "title": "rt-channel"
+        },
+        {
+            "location": "/configuration/options/#rt-priority",
+            "text": "Set the torrent priority. Valid values are 0, dont-download, 1, low, 2, normal, 3, high. If you set it to dont-download (or 0), the torrent is loaded, but not started.",
+            "title": "rt-priority"
+        },
+        {
+            "location": "/configuration/options/#rt-ignore-scheduler",
+            "text": "Set it to true to disable the ruTorrent scheduler.",
+            "title": "rt-ignore-scheduler"
+        },
+        {
+            "location": "/configuration/options/#rt-dont-add-name",
+            "text": "Set it to true if you don't want the torrent name to be added to the path.",
+            "title": "rt-dont-add-name"
+        },
+        {
+            "location": "/configuration/options/#watch-directory",
+            "text": "upload-type = watchdir\nupload-watch-dir = /home/myusername/mywatchdir",
+            "title": "Watch Directory"
+        },
+        {
+            "location": "/configuration/options/#upload-watch-dir",
+            "text": "Your torrent client's watch directory. Supports  macros .",
+            "title": "upload-watch-dir"
+        },
+        {
+            "location": "/configuration/options/#utorrent-webui",
+            "text": "upload-type = webui  Set webui user, password, etc below the  [webui]  header!",
+            "title": "uTorrent WebUI"
+        },
+        {
+            "location": "/configuration/options/#ftp",
+            "text": "upload-type = ftp\nupload-ftp-path = /path/to/directory  Set FTP user, password, etc in the  [ftp]  header!",
+            "title": "FTP"
+        },
+        {
+            "location": "/configuration/options/#execute-a-command",
+            "text": "upload-type = exec\nupload-command = /path/to/program\nupload-args = all arguments here",
+            "title": "Execute a Command"
+        },
+        {
+            "location": "/configuration/options/#upload-command",
+            "text": "The program or script to execute. Supports  macros .",
+            "title": "upload-command"
+        },
+        {
+            "location": "/configuration/options/#upload-args",
+            "text": "The arguments given to the  upload-command . Supports  macros .",
+            "title": "upload-args"
+        },
+        {
+            "location": "/configuration/options/#utorrent-dynamic-directory",
+            "text": "upload-type = dyndir\nupload-dyndir = c:\\the\\windows\\path\\$(macro)$(macro2)\\$(macro3)  You need to initialize  path-utorrent  below [options] or it won't work!  Important:  autodl-irssi assumes that the Z: drive is mapped to your / (root) directory if you're using Wine to run uTorrent.",
+            "title": "uTorrent Dynamic Directory"
+        },
+        {
+            "location": "/configuration/options/#upload-dyndir",
+            "text": "The directory to save the torrent. Supports  macros .",
+            "title": "upload-dyndir"
+        },
+        {
+            "location": "/configuration/options/#macros",
+            "text": "Enclose the macro in double quotes if it's possible that the macro contains spaces.   $(year)  - Current year.  $(month)  - Current month.  $(day)  - Current day.  $(hour)  - Current hour.  $(minute)  - Current minute.  $(second)  - Current second.  $(milli)  - Current millisecond.  $(FilterName)  - Name of matched filter.  $(Site)  - Tracker type from the tracker file.  $(Tracker)  - The long tracker name from the tracker file.  $(TrackerShort)  - The short tracker name from the tracker file.  $(TorrentPathName)  - The path to the .torrent file (unix path if you're using cygwin).  $(WinTorrentPathName)  - The windows path to the .torrent file.  $(InfoHash)  - The info hash of the torrent file.  $(TYear)  - Torrent release year.  $(Name1) ,  $(Artist) ,  $(Show) ,  $(Movie)  - Equivalent to the shows/artist value.  $(Name2) ,  $(Album)  - Equivalent to the album value.  $(Category)  $(TorrentName)  $(Uploader)  $(TorrentSize)  $(PreTime)  $(TorrentUrl)  $(TorrentSslUrl)  $(Season)  $(Season2)  - Two digit season number.  $(Episode)  $(Episode2)  - Two digit episode number.  $(Resolution)  $(Source)  $(Encoder)  $(Container)  $(Format)  $(Bitrate)  $(Media)  $(Tags)  $(Scene)  $(ReleaseGroup)  $(Log)  $(Cue)",
+            "title": "Macros"
+        },
+        {
+            "location": "/configuration/options/#wake-on-lan",
+            "text": "It's possible to wake up the computer before uploading the torrent (uTorrent webui or FTP upload). You may need to make sure your BIOS and network card have WOL enabled.  wol-mac-address = 00:11:22:33:44:55 \nwol-ip-address = 12.34.56.78  (or a DNS name, eg.  www.blah.com ) \nwol-port = 9 (defaults to 9 if you leave it blank)  wol-mac-address  is the MAC (or hardware) address of the computer's network card. Use ifconfig /all (windows) or ifconfig -a (Linux) to find out your network card's MAC address.  If you have a router, then set  wol-ip-address  to your router's public IP address, and make sure the router forwards UDP packets to port  wol-port  (default 9) to your router's internal broadcast address (usually 192.168.0.255).",
+            "title": "Wake on LAN"
+        },
+        {
+            "location": "/configuration/irc/",
+            "text": "[irc]\n\n\nauto-connect\n \n=\n\n\nuser-name\n \n=\n\n\nreal-name\n \n=\n\n\noutput-server\n \n=\n\n\noutput-channel\n \n=\n\n\nclose-nickserv\n \n=\n\n\n\n\n\nauto-connect\n\u00b6\n\n\n\n\nDefault (unset) is true. Set to false to disable auto connecting to IRC servers.\n\n\n\n\nuser-name\n\u00b6\n\n\n\n\nIRC user name. Leave blank to use irssi's setting.\n\n\n\n\nreal-name\n\u00b6\n\n\n\n\nIRC real name. Leave blank to use irssi's setting.\n\n\n\n\noutput-server/output-channel\n\u00b6\n\n\n\n\nSend all autodl-irssi output to the specified IRC server and channel. (Make sure you've setup autodl-irssi to auto connect to the IRC server and channel.)\n\n\n\n\nclose-nickserv\n\u00b6\n\n\n\n\nSet to true to have nickserv query windows closed after successful register and identify commands.",
+            "title": "IRC"
+        },
+        {
+            "location": "/configuration/irc/#auto-connect",
+            "text": "Default (unset) is true. Set to false to disable auto connecting to IRC servers.",
+            "title": "auto-connect"
+        },
+        {
+            "location": "/configuration/irc/#user-name",
+            "text": "IRC user name. Leave blank to use irssi's setting.",
+            "title": "user-name"
+        },
+        {
+            "location": "/configuration/irc/#real-name",
+            "text": "IRC real name. Leave blank to use irssi's setting.",
+            "title": "real-name"
+        },
+        {
+            "location": "/configuration/irc/#output-serveroutput-channel",
+            "text": "Send all autodl-irssi output to the specified IRC server and channel. (Make sure you've setup autodl-irssi to auto connect to the IRC server and channel.)",
+            "title": "output-server/output-channel"
+        },
+        {
+            "location": "/configuration/irc/#close-nickserv",
+            "text": "Set to true to have nickserv query windows closed after successful register and identify commands.",
+            "title": "close-nickserv"
+        },
+        {
+            "location": "/configuration/server/",
+            "text": "[server irc.server.com]\n\n\nenabled\n \n=\n\n\nport\n \n=\n\n\nssl\n \n=\n\n\nnick\n \n=\n\n\nident-password\n \n=\n\n\nident-email\n \n=\n\n\nserver-password\n \n=\n\n\nbnc\n \n=\n\n\n\n\n\nenabled\n\u00b6\n\n\n\n\nDefault(unset) is true. Set to false to disable connecting to that server.\n\n\n\n\nport\n\u00b6\n\n\n\n\nThe IRC server port. Default 6667 or 6697 (SSL).\n\n\n\n\nssl\n\u00b6\n\n\n\n\nSet to true to use SSL connection.\n\n\n\n\nnick\n\u00b6\n\n\n\n\nYour IRC nick.\n\n\n\n\nident-password\n\u00b6\n\n\n\n\nThe password required to identify your IRC nick to NickServ. If it's not already registered, autodl-irssi will attempt to register it for you.\n\n\n\n\nident-email\n\u00b6\n\n\n\n\nOptional. Required if autodl-irssi needs to register your nick.\n\n\n\n\nserver-password\n\u00b6\n\n\n\n\nThe IRC server password. This allows connection to some IRC bouncers.\n\n\n\n\nbnc\n\u00b6\n\n\n\n\nSet to true if you are using an IRC bouncer so you won't have to set a nick in the server header.",
+            "title": "Server"
+        },
+        {
+            "location": "/configuration/server/#enabled",
+            "text": "Default(unset) is true. Set to false to disable connecting to that server.",
+            "title": "enabled"
+        },
+        {
+            "location": "/configuration/server/#port",
+            "text": "The IRC server port. Default 6667 or 6697 (SSL).",
+            "title": "port"
+        },
+        {
+            "location": "/configuration/server/#ssl",
+            "text": "Set to true to use SSL connection.",
+            "title": "ssl"
+        },
+        {
+            "location": "/configuration/server/#nick",
+            "text": "Your IRC nick.",
+            "title": "nick"
+        },
+        {
+            "location": "/configuration/server/#ident-password",
+            "text": "The password required to identify your IRC nick to NickServ. If it's not already registered, autodl-irssi will attempt to register it for you.",
+            "title": "ident-password"
+        },
+        {
+            "location": "/configuration/server/#ident-email",
+            "text": "Optional. Required if autodl-irssi needs to register your nick.",
+            "title": "ident-email"
+        },
+        {
+            "location": "/configuration/server/#server-password",
+            "text": "The IRC server password. This allows connection to some IRC bouncers.",
+            "title": "server-password"
+        },
+        {
+            "location": "/configuration/server/#bnc",
+            "text": "Set to true if you are using an IRC bouncer so you won't have to set a nick in the server header.",
+            "title": "bnc"
+        },
+        {
+            "location": "/configuration/channel/",
+            "text": "[channel irc.server.com]\n\n\nname\n \n=\n\n\npassword\n \n=\n\n\ninvite-command\n \n=\n\n\ninvite-http-url\n \n=\n\n\ninvite-http-header\n \n=\n\n\ninvite-http-data\n \n=\n\n\n\n\n\nCreate a separate \n[channel]\n header for each channel on each server.\n\n\nname\n\u00b6\n\n\n\n\nThe name of the channel to join.\n\n\n\n\npassword\n\u00b6\n\n\n\n\nThe channel password. This is usually not needed.\n\n\n\n\ninvite-command\n\u00b6\n\n\n\n\nOptional. The IRC command that invites you into the channel.\n\n\n\n\ninvite-http-url\n\u00b6\n\n\n\n\nOptional. URL for HTTP invite request.\n\n\n\n\ninvite-http-header\n\u00b6\n\n\n\n\nOptional. HTTP header to send, eg: Cookie: uid=12345; pass=asdfqwersdf\n\n\n\n\ninvite-http-data\n\u00b6\n\n\n\n\nThe HTTP POST data.",
+            "title": "Channel"
+        },
+        {
+            "location": "/configuration/channel/#name",
+            "text": "The name of the channel to join.",
+            "title": "name"
+        },
+        {
+            "location": "/configuration/channel/#password",
+            "text": "The channel password. This is usually not needed.",
+            "title": "password"
+        },
+        {
+            "location": "/configuration/channel/#invite-command",
+            "text": "Optional. The IRC command that invites you into the channel.",
+            "title": "invite-command"
+        },
+        {
+            "location": "/configuration/channel/#invite-http-url",
+            "text": "Optional. URL for HTTP invite request.",
+            "title": "invite-http-url"
+        },
+        {
+            "location": "/configuration/channel/#invite-http-header",
+            "text": "Optional. HTTP header to send, eg: Cookie: uid=12345; pass=asdfqwersdf",
+            "title": "invite-http-header"
+        },
+        {
+            "location": "/configuration/channel/#invite-http-data",
+            "text": "The HTTP POST data.",
+            "title": "invite-http-data"
+        },
+        {
+            "location": "/configuration/tracker/",
+            "text": "[tracker TYPE]\n\n\nenabled\n \n=\n\n\nforce-ssl\n \n=\n\n\nupload-delay-secs\n \n=\n\n\ncookie\n \n=\n\n\npasskey\n \n=\n\n\netc...\n\n\n\n\n\nTYPE\n\u00b6\n\n\n\n\nTYPE\n can be found in the \ntype=\"XYZ\"\n line in the corresponding tracker file in \n~/.irssi/scripts/AutodlIrssi/trackers/\n.\n\n\n\n\nenabled\n\u00b6\n\n\n\n\nDefault (unset) is true. Set it to false to disable the tracker.\n\n\n\n\nforce-ssl\n\u00b6\n\n\n\n\nNot all trackers support HTTPS downloads. Leave it blank for the default value (which is HTTP or HTTPS).\n\n\n\n\nupload-delay-secs\n\u00b6\n\n\n\n\nSet the number of seconds autodl-irssi should wait before uploading/saving the torrent. Default is 0 (no wait).\n\n\n\n\ncookie\n\u00b6\n\n\n\n\nLog in to your tracker's home page with your browser.\n\n* \nChrome:\n Options Menu -> Privacy -> Content Settings -> All cookies and site data\n\n* \nFirefox:\n Firefox Menu -> Options -> Privacy -> Show cookies\n\n* \nSafari:\n Action Menu -> Preferences -> Privacy -> Details\n\n\nFind your tracker site in the cookielist. The values needed may vary between trackers. Often these are \nuid\n and \npass\n.\n\nSet the cookie like \nuid=XXX; pass=YYY\n, separating each key=value pair with a semicolon.\n\n\n\n\npasskey\n\u00b6\n\n\n\n\nFirst check a torrent download link if it contains it. If not you can usually find it in the generated RSS-feed URL, which you probably can generate @ yourtracker.com/getrss.php . passkeys are usually exactly 32 characters long. The passkey can also sometimes be found in your profile (click your name).\n\n\n\n\nauthkey\n\u00b6\n\n\n\n\nSee \npasskey\n above. For gazelle sites, it's part of the torrent download link.\n\n\n\n\ntorrent_pass\n\n\n\n\nFor gazelle sites, it's part of the torrent download link.\n\n\n\n\nuid\n\u00b6\n\n\n\n\nClick your username and you should see the id=XXX in the address bar. That's your user id, or uid.",
+            "title": "Tracker"
+        },
+        {
+            "location": "/configuration/tracker/#type",
+            "text": "TYPE  can be found in the  type=\"XYZ\"  line in the corresponding tracker file in  ~/.irssi/scripts/AutodlIrssi/trackers/ .",
+            "title": "TYPE"
+        },
+        {
+            "location": "/configuration/tracker/#enabled",
+            "text": "Default (unset) is true. Set it to false to disable the tracker.",
+            "title": "enabled"
+        },
+        {
+            "location": "/configuration/tracker/#force-ssl",
+            "text": "Not all trackers support HTTPS downloads. Leave it blank for the default value (which is HTTP or HTTPS).",
+            "title": "force-ssl"
+        },
+        {
+            "location": "/configuration/tracker/#upload-delay-secs",
+            "text": "Set the number of seconds autodl-irssi should wait before uploading/saving the torrent. Default is 0 (no wait).",
+            "title": "upload-delay-secs"
+        },
+        {
+            "location": "/configuration/tracker/#cookie",
+            "text": "Log in to your tracker's home page with your browser. \n*  Chrome:  Options Menu -> Privacy -> Content Settings -> All cookies and site data \n*  Firefox:  Firefox Menu -> Options -> Privacy -> Show cookies \n*  Safari:  Action Menu -> Preferences -> Privacy -> Details  Find your tracker site in the cookielist. The values needed may vary between trackers. Often these are  uid  and  pass . \nSet the cookie like  uid=XXX; pass=YYY , separating each key=value pair with a semicolon.",
+            "title": "cookie"
+        },
+        {
+            "location": "/configuration/tracker/#passkey",
+            "text": "First check a torrent download link if it contains it. If not you can usually find it in the generated RSS-feed URL, which you probably can generate @ yourtracker.com/getrss.php . passkeys are usually exactly 32 characters long. The passkey can also sometimes be found in your profile (click your name).",
+            "title": "passkey"
+        },
+        {
+            "location": "/configuration/tracker/#authkey",
+            "text": "See  passkey  above. For gazelle sites, it's part of the torrent download link.   torrent_pass   For gazelle sites, it's part of the torrent download link.",
+            "title": "authkey"
+        },
+        {
+            "location": "/configuration/tracker/#uid",
+            "text": "Click your username and you should see the id=XXX in the address bar. That's your user id, or uid.",
+            "title": "uid"
+        },
+        {
+            "location": "/configuration/filter/",
+            "text": "Create one [filter] header per filter like \n[filter MY FILTER NAME]\n. All filter options are optional! If you don't use any filter options, then everything will be downloaded because your filter doesn't filter out anything.\n\n\nNote:\n Not all filter options are supported on all trackers.\n\n\nGeneral\n\u00b6\n\n\nenabled\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n true\n\n\nExample:\n enabled = false\n\n\nDescription:\n Use it to disable a filter. All filters are enabled by default.\n\n\n\n\npriority\n\u00b6\n\n\n\n\nType:\n Integer\n\n\nDefault:\n 0\n\n\nExample:\n priority = 10\n\n\nDescription:\n Use it to determine the order by which filters are checked. Negative numbers are allowed.\n\n\n\n\nmatch-sites\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n match-sites = tracker1, tracker2, tracker3\n\n\nDescription:\n It's compared against the tracker. Use the full tracker name, eg. MyTracker or use one of the tracker types found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker. Open one of the files and locate the \ntype=\"XYZ\"\n line. Use the value inside the quotes, eg. \nXYZ\n.\n\n\n\n\nexcept-sites\n\u00b6\n\n\n\n\nDescription:\n The exact opposite of \nmatch-sites\n. If a release matches this option, then it's NOT downloaded.\n\n\n\n\nmin-size\n\u00b6\n\n\n\n\nType:\n Size\n\n\nExample:\n min-size = 200MB\n\n\nDefault:\n 0\n\n\nDescription:\n Used to filter out too small torrents.\n\n\n\n\nmax-size\n\u00b6\n\n\n\n\nType:\n Size\n\n\nExample:\n max-size = 2.5GB\n\n\nDefault:\n any size is allowed\n\n\nDescription:\n Used to filter out too big torrents. Set it to a reasonable value, eg. for TV-shows, set it to about twice the size of a normal episode (just in case it's a double-episode).\n\n\n\n\nupload-delay-secs\n\u00b6\n\n\n\n\nType:\n Integer\n\n\nDefault:\n 0 (no wait)\n\n\nExample:\n upload-delay-secs = 10\n\n\nDescription:\n The number of seconds autodl-irssi should wait before uploading/saving the torrent.\n\n\n\n\nmax-downloads\n\u00b6\n\n\n\n\nType:\n Integer\n\n\nExample:\n max-downloads = 15\n\n\nDescription:\n Download no more than this number of torrents per week/month (see \nmax-downloads-per\n). Remove the filter option or set it to a negative number to disable it.\n\n\n\n\nmax-downloads-per\n\u00b6\n\n\n\n\nType:\n String\n\n\nExample:\n max-downloads-per = week\n\n\nDescription:\n Valid values are \nday\n, \nweek\n, and \nmonth\n. See \nmax-downloads\n.\n\n\n\n\ndownload-duplicates\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n false\n\n\nExample:\n download-duplicates = true\n\n\nDescription:\n By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release if it's re-announced or announced by multiple trackers.\n\n\n\n\nP2P\n\u00b6\n\n\nmatch-releases\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n match-releases = The?Simpsons*, American?Dad*\n\n\nDescription:\n It's compared against the torrent name, eg. \nSome.release.720p.HDTV-GROUP\n. If the filter should only match TV-shows or movies, it's easier to use the \nshows\n filter option since it doesn't require wildcards.\n\n\n\n\nexcept-releases\n\u00b6\n\n\n\n\nDescription:\n The exact opposite of \nmatch-releases\n. If a release matches this option, then it's NOT downloaded.\n\n\n\n\nuse-regex\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n false\n\n\nDescription:\n Changes match/except-releases filter options to use regex instead of wildcard syntax globally. This can also be set globally in the options header.\n\n\n\n\nmatch-release-groups\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nDescription:\n Unless the release matches one of the release groups, it's not downloaded.\n\n\n\n\nexcept-release-groups\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nDescription:\n Opposite of match-release-groups. If the release matches one of the release gorups, it's not downloaded.\n\n\n\n\nmax-pretime\n\u00b6\n\n\n\n\nType:\n time-since string\n\n\nExample:\n max-pretime = 2 mins 3 secs\n\n\nDescription:\n Some sites announce the pretime of the release. Use this to filter out old releases.\n\n\n\n\nscene\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nExample:\n scene = true\n\n\nDescription:\n Some sites mark a release as scene or non-scene. Set it to true if you want only scene releases, false if you only want non-scene releases, or don't use this option if you don't care.\n\n\n\n\norigins\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n origins = P2P, Internal\n\n\nDescription:\n Some trackers set the origin of a release in a more fine-grained manner than scene/non-scene.\n\n\n\n\nfreeleech\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nExample:\n freeleech = true\n\n\nDescription:\n Only supported on a few trackers. Set to true if you only want to download freeleech releases. Set to false if you only want non-freeleech releases. Don't set if you don't care.\n\n\n\n\nfreeleech-percents\n\u00b6\n\n\n\n\nType:\n Number list\n\n\nExample:\n freeleech-percents = 50,75\n\n\nDescription:\n Some trackers have multiple levels of freeleech. Set a Number list representing the percentages (without the % sign) of the releases you want to download.\n\n\n\n\nTV/Movies\n\u00b6\n\n\nshows\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n shows = The Simpsons, American Dad\n\n\nDescription:\n This is for TV-shows and movies. autodl-irssi will automatically extract the TV-show/movie name from a scene release name. Example, The.Simpsons.S35E24.720p.HDTV-BLAH will match a \nshows\n option set to \nthe simpsons\n. You don't need wildcards at all, though it's possible to use wildcards. It's recommended to use \nshows\n instead of \nmatch-releases\n if all you want is for the filter to match TV-shows or movies.\n\n\n\n\nseasons\n\u00b6\n\n\n\n\nType:\n Number list\n\n\nExample:\n seasons = 1, 3, 5-10\n\n\nDescription:\n This is for TV-shows only. Unless the release matches one of the seasons, it's not downloaded.\n\n\n\n\nepisodes\n\u00b6\n\n\n\n\nType:\n Number list\n\n\nExample:\n episodes = 1, 3, 5-10\n\n\nDescription:\n This is for TV-shows only. Unless the release matches one of the episodes, it's not downloaded.\n\n\n\n\nsmart-episode\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n false\n\n\nExample:\n smart-episode = true\n\n\nDescription:\n Set to true to prevent downloading earlier episodes than your latest download. This option is set per filter, not per show, so it only makes sense to set one show per filter.\n\n\n\n\nresolutions\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n resolutions = SD, 720p, 1080p\n\n\nDescription:\n This is for TV-shows and movies only. Unless the release matches one of the resolutions, it's not downloaded. Valid resolutions are one or more of the following: \nSD\n, \n480i\n, \n480p\n, \n576p\n, \n720p\n, \n810p\n, \n1080i\n, \n1080p\n.\n\n\n\n\nencoders\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n encoders = x264, xvid\n\n\nDescription:\n If you don't want windows WMV files, this option could be useful. :) Valid encoders are: \nXviD\n, \nDivX\n, \nx264\n, \nh.264\n (or \nh264\n), \nmpeg2\n (or \nmpeg-2\n), \nVC-1\n (or \nVC1\n), \nWMV\n, \nRemux\n (or \nh.264 Remux\n, \nh264 Remux\n, \nVC-1 Remux\n, \nVC1 Remux\n).\n\n\n\n\nsources\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n sources = HDTV, DVDRip, BluRay\n\n\nDescription:\n This is for TV-shows and movies only. Unless the release matches one of the sources, it's not downloaded. Valid sources are one or more of the following: \nDSR\n, \nPDTV\n, \nHDTV\n, \nHR.PDTV\n, \nHR.HDTV\n, \nDVDRip\n, \nDVDScr\n, \nBDr\n, \nBD5\n, \nBD9\n, \nBDRip\n, \nBRRip\n, \nDVDR\n, \nMDVDR\n, \nHDDVD\n, \nHDDVDRip\n, \nBluRay\n, \nWEB-DL\n, \nTVRip\n, \nCAM\n, \nR5\n, \nTELESYNC\n, \nTS\n, \nTELECINE\n, \nTC\n. \nTELESYNC\n and \nTS\n are synonyms (you don't need both). Same for \nTELECINE\n and \nTC\n.\n\n\n\n\ncontainers\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n containers = mkv, mp4\n\n\nDescription:\n Unless the release matches one of the containers, it's not downloaded.\n\n\n\n\nyears\n\u00b6\n\n\n\n\nType:\n Number list\n\n\nExample:\n years = 1999, 2005-2010\n\n\nDescription:\n Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.\n\n\n\n\nMusic\n\u00b6\n\n\nyears\n\u00b6\n\n\n\n\nType:\n Number list\n\n\nExample:\n years = 1999, 2005-2010\n\n\nDescription:\n Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.\n\n\n\n\nartists\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n shows = Muse, Modest Mouse\n\n\nDescription:\n This is for artists/groups. You don't need wildcards at all, though it's possible to use wildcards.\n\n\n\n\nalbums\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n albums = Some album, Some other album, yet another one\n\n\nDescription:\n\n\n\n\nformats\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n formats = MP3, FLAC\n\n\nDescription:\n List the formats you want. Valid formats are: \nMP3\n, \nFLAC\n, \nOgg\n, \nAAC\n, \nAC3\n, \nDTS\n.\n\n\n\n\nbitrates\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n bitrates = 192, V0 (vbr), lossless\n\n\nDescription:\n List the bitrates you want. Some example values: \n192\n, \n320\n, \nAPS (VBR)\n, \nV2 (VBR)\n, \nV1 (VBR)\n, \nAPX (VBR)\n, \nV0 (VBR)\n, \nq8.x (VBR)\n, \nLossless\n, \n24bit Lossless\n, \nOther\n.\n\n\n\n\nmedia\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n media = CD, WEB\n\n\nDescription:\n List the media you want. Valid media are: \nCD\n, \nDVD\n, \nVinyl\n, \nSoundboard\n, \nSACD\n, \nDAT\n, \nCassette\n, \nWEB\n, \nOther\n.\n\n\n\n\ncue\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nExample:\n cue = true\n\n\nDescription:\n what.cd. Set it to true if you only want releases with a cue file, false if you don't want releases with cue files, or don't use this option if you don't care.\n\n\n\n\nlog\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nExample:\n log = true\n\n\nDescription:\n Set it to true if you only want releases with a log file, false if you don't want releases with log files, or don't use this option if you don't care.\n\n\n\n\nlog-scores\n\u00b6\n\n\n\n\nType:\n Number list\n\n\nDefault:\n Any score allowed\n\n\nExample:\n log-scores = 90-95,96,98,100\n\n\nDescription:\n Set the log scores of the releases you want to match.\n\n\n\n\nAdvanced\n\u00b6\n\n\nmatch-categories\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n match-categories = \nMP3\n, TV/XVID\n\n\nDescription:\n It's compared against the torrent category.\n\n\n\n\nexcept-categories\n\u00b6\n\n\n\n\nDescription:\n The exact opposite of \nexcept-categories\n. If a release matches this option, then it's NOT downloaded.\n\n\n\n\nmatch-uploaders\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n match-uploaders = uploader1, uploader2\n\n\nDescription:\n Use it to only download from certain uploaders.\n\n\n\n\nexcept-uploaders\n\u00b6\n\n\n\n\nDescription:\n The exact opposite of \nmatch-uploaders\n. If a release matches this option, then it's NOT downloaded.\n\n\n\n\ntags\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n tags = hip hop, rock\n\n\nDescription:\n Unless at least one of your tags matches the release's tags, it's not downloaded. See also \nexcept-tags\n and \ntags-any\n.\n\n\n\n\nexcept-tags\n\u00b6\n\n\n\n\nType:\n Comma separated list\n\n\nExample:\n except-tags = hip hop, rock\n\n\nDescription:\n Same as \ntags\n except if it matches any/all of these, it's not downloaded. See also \ntags\n and \nexcept-tags-any\n.\n\n\n\n\ntags-any\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n true\n\n\nExample:\n tags-any = false\n\n\nDescription:\n Decides how to match the \ntags\n option, ie., if any or all of the tags must match.\n\n\n\n\nexcept-tags-any\n\u00b6\n\n\n\n\nType:\n Boolean\n\n\nDefault:\n true\n\n\nExample:\n except-tags-any = true\n\n\nDescription:\n Decides how to match the \nexcept-tags\n option, ie., if any or all of the tags must match.",
+            "title": "Filter"
+        },
+        {
+            "location": "/configuration/filter/#general",
+            "text": "",
+            "title": "General"
+        },
+        {
+            "location": "/configuration/filter/#enabled",
+            "text": "Type:  Boolean  Default:  true  Example:  enabled = false  Description:  Use it to disable a filter. All filters are enabled by default.",
+            "title": "enabled"
+        },
+        {
+            "location": "/configuration/filter/#priority",
+            "text": "Type:  Integer  Default:  0  Example:  priority = 10  Description:  Use it to determine the order by which filters are checked. Negative numbers are allowed.",
+            "title": "priority"
+        },
+        {
+            "location": "/configuration/filter/#match-sites",
+            "text": "Type:  Comma separated list  Example:  match-sites = tracker1, tracker2, tracker3  Description:  It's compared against the tracker. Use the full tracker name, eg. MyTracker or use one of the tracker types found in ~/.irssi/scripts/AutodlIrssi/trackers/*.tracker. Open one of the files and locate the  type=\"XYZ\"  line. Use the value inside the quotes, eg.  XYZ .",
+            "title": "match-sites"
+        },
+        {
+            "location": "/configuration/filter/#except-sites",
+            "text": "Description:  The exact opposite of  match-sites . If a release matches this option, then it's NOT downloaded.",
+            "title": "except-sites"
+        },
+        {
+            "location": "/configuration/filter/#min-size",
+            "text": "Type:  Size  Example:  min-size = 200MB  Default:  0  Description:  Used to filter out too small torrents.",
+            "title": "min-size"
+        },
+        {
+            "location": "/configuration/filter/#max-size",
+            "text": "Type:  Size  Example:  max-size = 2.5GB  Default:  any size is allowed  Description:  Used to filter out too big torrents. Set it to a reasonable value, eg. for TV-shows, set it to about twice the size of a normal episode (just in case it's a double-episode).",
+            "title": "max-size"
+        },
+        {
+            "location": "/configuration/filter/#upload-delay-secs",
+            "text": "Type:  Integer  Default:  0 (no wait)  Example:  upload-delay-secs = 10  Description:  The number of seconds autodl-irssi should wait before uploading/saving the torrent.",
+            "title": "upload-delay-secs"
+        },
+        {
+            "location": "/configuration/filter/#max-downloads",
+            "text": "Type:  Integer  Example:  max-downloads = 15  Description:  Download no more than this number of torrents per week/month (see  max-downloads-per ). Remove the filter option or set it to a negative number to disable it.",
+            "title": "max-downloads"
+        },
+        {
+            "location": "/configuration/filter/#max-downloads-per",
+            "text": "Type:  String  Example:  max-downloads-per = week  Description:  Valid values are  day ,  week , and  month . See  max-downloads .",
+            "title": "max-downloads-per"
+        },
+        {
+            "location": "/configuration/filter/#download-duplicates",
+            "text": "Type:  Boolean  Default:  false  Example:  download-duplicates = true  Description:  By default, it's false so no duplicate releases are downloaded. Set it to true if you want to download the same release if it's re-announced or announced by multiple trackers.",
+            "title": "download-duplicates"
+        },
+        {
+            "location": "/configuration/filter/#p2p",
+            "text": "",
+            "title": "P2P"
+        },
+        {
+            "location": "/configuration/filter/#match-releases",
+            "text": "Type:  Comma separated list  Example:  match-releases = The?Simpsons*, American?Dad*  Description:  It's compared against the torrent name, eg.  Some.release.720p.HDTV-GROUP . If the filter should only match TV-shows or movies, it's easier to use the  shows  filter option since it doesn't require wildcards.",
+            "title": "match-releases"
+        },
+        {
+            "location": "/configuration/filter/#except-releases",
+            "text": "Description:  The exact opposite of  match-releases . If a release matches this option, then it's NOT downloaded.",
+            "title": "except-releases"
+        },
+        {
+            "location": "/configuration/filter/#use-regex",
+            "text": "Type:  Boolean  Default:  false  Description:  Changes match/except-releases filter options to use regex instead of wildcard syntax globally. This can also be set globally in the options header.",
+            "title": "use-regex"
+        },
+        {
+            "location": "/configuration/filter/#match-release-groups",
+            "text": "Type:  Comma separated list  Description:  Unless the release matches one of the release groups, it's not downloaded.",
+            "title": "match-release-groups"
+        },
+        {
+            "location": "/configuration/filter/#except-release-groups",
+            "text": "Type:  Comma separated list  Description:  Opposite of match-release-groups. If the release matches one of the release gorups, it's not downloaded.",
+            "title": "except-release-groups"
+        },
+        {
+            "location": "/configuration/filter/#max-pretime",
+            "text": "Type:  time-since string  Example:  max-pretime = 2 mins 3 secs  Description:  Some sites announce the pretime of the release. Use this to filter out old releases.",
+            "title": "max-pretime"
+        },
+        {
+            "location": "/configuration/filter/#scene",
+            "text": "Type:  Boolean  Example:  scene = true  Description:  Some sites mark a release as scene or non-scene. Set it to true if you want only scene releases, false if you only want non-scene releases, or don't use this option if you don't care.",
+            "title": "scene"
+        },
+        {
+            "location": "/configuration/filter/#origins",
+            "text": "Type:  Comma separated list  Example:  origins = P2P, Internal  Description:  Some trackers set the origin of a release in a more fine-grained manner than scene/non-scene.",
+            "title": "origins"
+        },
+        {
+            "location": "/configuration/filter/#freeleech",
+            "text": "Type:  Boolean  Example:  freeleech = true  Description:  Only supported on a few trackers. Set to true if you only want to download freeleech releases. Set to false if you only want non-freeleech releases. Don't set if you don't care.",
+            "title": "freeleech"
+        },
+        {
+            "location": "/configuration/filter/#freeleech-percents",
+            "text": "Type:  Number list  Example:  freeleech-percents = 50,75  Description:  Some trackers have multiple levels of freeleech. Set a Number list representing the percentages (without the % sign) of the releases you want to download.",
+            "title": "freeleech-percents"
+        },
+        {
+            "location": "/configuration/filter/#tvmovies",
+            "text": "",
+            "title": "TV/Movies"
+        },
+        {
+            "location": "/configuration/filter/#shows",
+            "text": "Type:  Comma separated list  Example:  shows = The Simpsons, American Dad  Description:  This is for TV-shows and movies. autodl-irssi will automatically extract the TV-show/movie name from a scene release name. Example, The.Simpsons.S35E24.720p.HDTV-BLAH will match a  shows  option set to  the simpsons . You don't need wildcards at all, though it's possible to use wildcards. It's recommended to use  shows  instead of  match-releases  if all you want is for the filter to match TV-shows or movies.",
+            "title": "shows"
+        },
+        {
+            "location": "/configuration/filter/#seasons",
+            "text": "Type:  Number list  Example:  seasons = 1, 3, 5-10  Description:  This is for TV-shows only. Unless the release matches one of the seasons, it's not downloaded.",
+            "title": "seasons"
+        },
+        {
+            "location": "/configuration/filter/#episodes",
+            "text": "Type:  Number list  Example:  episodes = 1, 3, 5-10  Description:  This is for TV-shows only. Unless the release matches one of the episodes, it's not downloaded.",
+            "title": "episodes"
+        },
+        {
+            "location": "/configuration/filter/#smart-episode",
+            "text": "Type:  Boolean  Default:  false  Example:  smart-episode = true  Description:  Set to true to prevent downloading earlier episodes than your latest download. This option is set per filter, not per show, so it only makes sense to set one show per filter.",
+            "title": "smart-episode"
+        },
+        {
+            "location": "/configuration/filter/#resolutions",
+            "text": "Type:  Comma separated list  Example:  resolutions = SD, 720p, 1080p  Description:  This is for TV-shows and movies only. Unless the release matches one of the resolutions, it's not downloaded. Valid resolutions are one or more of the following:  SD ,  480i ,  480p ,  576p ,  720p ,  810p ,  1080i ,  1080p .",
+            "title": "resolutions"
+        },
+        {
+            "location": "/configuration/filter/#encoders",
+            "text": "Type:  Comma separated list  Example:  encoders = x264, xvid  Description:  If you don't want windows WMV files, this option could be useful. :) Valid encoders are:  XviD ,  DivX ,  x264 ,  h.264  (or  h264 ),  mpeg2  (or  mpeg-2 ),  VC-1  (or  VC1 ),  WMV ,  Remux  (or  h.264 Remux ,  h264 Remux ,  VC-1 Remux ,  VC1 Remux ).",
+            "title": "encoders"
+        },
+        {
+            "location": "/configuration/filter/#sources",
+            "text": "Type:  Comma separated list  Example:  sources = HDTV, DVDRip, BluRay  Description:  This is for TV-shows and movies only. Unless the release matches one of the sources, it's not downloaded. Valid sources are one or more of the following:  DSR ,  PDTV ,  HDTV ,  HR.PDTV ,  HR.HDTV ,  DVDRip ,  DVDScr ,  BDr ,  BD5 ,  BD9 ,  BDRip ,  BRRip ,  DVDR ,  MDVDR ,  HDDVD ,  HDDVDRip ,  BluRay ,  WEB-DL ,  TVRip ,  CAM ,  R5 ,  TELESYNC ,  TS ,  TELECINE ,  TC .  TELESYNC  and  TS  are synonyms (you don't need both). Same for  TELECINE  and  TC .",
+            "title": "sources"
+        },
+        {
+            "location": "/configuration/filter/#containers",
+            "text": "Type:  Comma separated list  Example:  containers = mkv, mp4  Description:  Unless the release matches one of the containers, it's not downloaded.",
+            "title": "containers"
+        },
+        {
+            "location": "/configuration/filter/#years",
+            "text": "Type:  Number list  Example:  years = 1999, 2005-2010  Description:  Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.",
+            "title": "years"
+        },
+        {
+            "location": "/configuration/filter/#music",
+            "text": "",
+            "title": "Music"
+        },
+        {
+            "location": "/configuration/filter/#years_1",
+            "text": "Type:  Number list  Example:  years = 1999, 2005-2010  Description:  Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.",
+            "title": "years"
+        },
+        {
+            "location": "/configuration/filter/#artists",
+            "text": "Type:  Comma separated list  Example:  shows = Muse, Modest Mouse  Description:  This is for artists/groups. You don't need wildcards at all, though it's possible to use wildcards.",
+            "title": "artists"
+        },
+        {
+            "location": "/configuration/filter/#albums",
+            "text": "Type:  Comma separated list  Example:  albums = Some album, Some other album, yet another one  Description:",
+            "title": "albums"
+        },
+        {
+            "location": "/configuration/filter/#formats",
+            "text": "Type:  Comma separated list  Example:  formats = MP3, FLAC  Description:  List the formats you want. Valid formats are:  MP3 ,  FLAC ,  Ogg ,  AAC ,  AC3 ,  DTS .",
+            "title": "formats"
+        },
+        {
+            "location": "/configuration/filter/#bitrates",
+            "text": "Type:  Comma separated list  Example:  bitrates = 192, V0 (vbr), lossless  Description:  List the bitrates you want. Some example values:  192 ,  320 ,  APS (VBR) ,  V2 (VBR) ,  V1 (VBR) ,  APX (VBR) ,  V0 (VBR) ,  q8.x (VBR) ,  Lossless ,  24bit Lossless ,  Other .",
+            "title": "bitrates"
+        },
+        {
+            "location": "/configuration/filter/#media",
+            "text": "Type:  Comma separated list  Example:  media = CD, WEB  Description:  List the media you want. Valid media are:  CD ,  DVD ,  Vinyl ,  Soundboard ,  SACD ,  DAT ,  Cassette ,  WEB ,  Other .",
+            "title": "media"
+        },
+        {
+            "location": "/configuration/filter/#cue",
+            "text": "Type:  Boolean  Example:  cue = true  Description:  what.cd. Set it to true if you only want releases with a cue file, false if you don't want releases with cue files, or don't use this option if you don't care.",
+            "title": "cue"
+        },
+        {
+            "location": "/configuration/filter/#log",
+            "text": "Type:  Boolean  Example:  log = true  Description:  Set it to true if you only want releases with a log file, false if you don't want releases with log files, or don't use this option if you don't care.",
+            "title": "log"
+        },
+        {
+            "location": "/configuration/filter/#log-scores",
+            "text": "Type:  Number list  Default:  Any score allowed  Example:  log-scores = 90-95,96,98,100  Description:  Set the log scores of the releases you want to match.",
+            "title": "log-scores"
+        },
+        {
+            "location": "/configuration/filter/#advanced",
+            "text": "",
+            "title": "Advanced"
+        },
+        {
+            "location": "/configuration/filter/#match-categories",
+            "text": "Type:  Comma separated list  Example:  match-categories =  MP3 , TV/XVID  Description:  It's compared against the torrent category.",
+            "title": "match-categories"
+        },
+        {
+            "location": "/configuration/filter/#except-categories",
+            "text": "Description:  The exact opposite of  except-categories . If a release matches this option, then it's NOT downloaded.",
+            "title": "except-categories"
+        },
+        {
+            "location": "/configuration/filter/#match-uploaders",
+            "text": "Type:  Comma separated list  Example:  match-uploaders = uploader1, uploader2  Description:  Use it to only download from certain uploaders.",
+            "title": "match-uploaders"
+        },
+        {
+            "location": "/configuration/filter/#except-uploaders",
+            "text": "Description:  The exact opposite of  match-uploaders . If a release matches this option, then it's NOT downloaded.",
+            "title": "except-uploaders"
+        },
+        {
+            "location": "/configuration/filter/#tags",
+            "text": "Type:  Comma separated list  Example:  tags = hip hop, rock  Description:  Unless at least one of your tags matches the release's tags, it's not downloaded. See also  except-tags  and  tags-any .",
+            "title": "tags"
+        },
+        {
+            "location": "/configuration/filter/#except-tags",
+            "text": "Type:  Comma separated list  Example:  except-tags = hip hop, rock  Description:  Same as  tags  except if it matches any/all of these, it's not downloaded. See also  tags  and  except-tags-any .",
+            "title": "except-tags"
+        },
+        {
+            "location": "/configuration/filter/#tags-any",
+            "text": "Type:  Boolean  Default:  true  Example:  tags-any = false  Description:  Decides how to match the  tags  option, ie., if any or all of the tags must match.",
+            "title": "tags-any"
+        },
+        {
+            "location": "/configuration/filter/#except-tags-any",
+            "text": "Type:  Boolean  Default:  true  Example:  except-tags-any = true  Description:  Decides how to match the  except-tags  option, ie., if any or all of the tags must match.",
+            "title": "except-tags-any"
+        },
+        {
+            "location": "/configuration/webui/",
+            "text": "[webui]\n\n\nuser\n \n=\n\n\npassword\n \n=\n\n\nhostname\n \n=\n\n\nport\n \n=\n\n\nssl\n \n=\n\n\n\n\n\nuser\n\u00b6\n\n\n\n\nYour WebUI user name.\n\n\n\n\npassword\n\u00b6\n\n\n\n\nYour WebUI password.\n\n\n\n\nhostname\n\u00b6\n\n\n\n\nThe IP address (uTorrent only wants IP addresses) of your WebUI.\n\n\n\n\nport\n\u00b6\n\n\n\n\nThe port of your WebUI.\n\n\n\n\nssl = true\n\u00b6\n\n\n\n\nSet to enable encrypted uploads or false to use normal non-encrypted uploads. Read here on how to enable HTTPS webui: \nhttp://www.utorrent.com/documentation/webui",
+            "title": "WebUI"
+        },
+        {
+            "location": "/configuration/webui/#user",
+            "text": "Your WebUI user name.",
+            "title": "user"
+        },
+        {
+            "location": "/configuration/webui/#password",
+            "text": "Your WebUI password.",
+            "title": "password"
+        },
+        {
+            "location": "/configuration/webui/#hostname",
+            "text": "The IP address (uTorrent only wants IP addresses) of your WebUI.",
+            "title": "hostname"
+        },
+        {
+            "location": "/configuration/webui/#port",
+            "text": "The port of your WebUI.",
+            "title": "port"
+        },
+        {
+            "location": "/configuration/webui/#ssl-true",
+            "text": "Set to enable encrypted uploads or false to use normal non-encrypted uploads. Read here on how to enable HTTPS webui:  http://www.utorrent.com/documentation/webui",
+            "title": "ssl = true"
+        },
+        {
+            "location": "/configuration/ftp/",
+            "text": "[ftp]\n\n\nuser\n \n=\n\n\npassword\n \n=\n\n\nhostname\n \n=\n\n\nport\n \n=\n\n\n\n\n\nuser\n\u00b6\n\n\n\n\nYour FTP user name.\n\n\n\n\npassword\n\u00b6\n\n\n\n\nYour FTP password.\n\n\n\n\nhostname\n\u00b6\n\n\n\n\nThe hostname/IP-address of your FTP server.\n\n\n\n\nport\n\u00b6\n\n\n\n\nThe port of your FTP server.",
+            "title": "FTP"
+        },
+        {
+            "location": "/configuration/ftp/#user",
+            "text": "Your FTP user name.",
+            "title": "user"
+        },
+        {
+            "location": "/configuration/ftp/#password",
+            "text": "Your FTP password.",
+            "title": "password"
+        },
+        {
+            "location": "/configuration/ftp/#hostname",
+            "text": "The hostname/IP-address of your FTP server.",
+            "title": "hostname"
+        },
+        {
+            "location": "/configuration/ftp/#port",
+            "text": "The port of your FTP server.",
+            "title": "port"
+        },
+        {
+            "location": "/changelog/",
+            "text": "Notable changes for \nautodl-irssi\n.\n\n\ncommunity-v1.65\n (2017-08-30)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd 2160p resolution to constants.\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nFix bad subroutine references.\n\n\n\n\ncommunity-v1.64\n (2017-03-18)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd HEVC/x265 constants.\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nFixed update callback references.\n\n\n\n\ncommunity-v1.63\n (2017-03-09)\n\u00b6\n\n\nCommits\n\n\nChanged\n\u00b6\n\n\n\n\nAdd release to download history earlier in the process.\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nFix smart-episode logic.\n\n\n\n\ncommunity-v1.62\n (2016-03-14)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd smart-episode filter option.\n\n\n\n\ncommunity-v1.61\n (2016-01-25)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd priority filter option.\n\n\nAdd message for successful loading of configuration files.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nChanged method for matching release groups.\n\n\n\n\ncommunity-v1.60\n (2015-10-01)\n\u00b6\n\n\nCommits\n\n\nChanged\n\u00b6\n\n\n\n\nAdd warning message for using bare wildcards in filter options. Filters using bare wildcards will no longer work.\n\n\nChange updater to use GitHub's Releases API.\n\n\n\n\ncommunity-v1.54\n (2015-04-30)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd regex for sensitive data censoring.\n\n\nAdd SNI support to SSLSocket.\n\n\n\n\ncommunity-v1.53\n (2015-04-16)\n\u00b6\n\n\nCommits\n\n\nChanged\n\u00b6\n\n\n\n\nRe-add '-' to replacement list for canonicalization.\n\n\nChange rTorrent commands/mehtods to use new style.\n\n\n\n\ncommunity-v1.52\n (2015-03-13)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd match-release-groups filter option. This should be used instead of release-groups.\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nFix except-release groups filter option.\n\n\n\n\ncommunity-v1.51\n (2015-02-25)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd except-release-groups filter options.\n\n\nAdd use-regex option to Option and Filter headers. This allows the use of regex syntax for match/except-releases filter options.\n\n\nAdd advanced-output-sites option.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nSeparate advanced output functionality from the output-level option. Previously, output-level=5 would output variables captured from announces. This functionality is now handled by the advanced-output-sites option.\n\n\n\n\ncommunity-v1.50\n (2015-01-02)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd containers filter option.\n\n\nAdd release-groups filter option.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nRemove torrent size message.\n\n\nMove max-download message to only happen when a release is fully matched.\n\n\n\n\ncommunity-v1.46\n (2014-08-24)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd DVD-R to constants.\n\n\nAdd HDCAM group to constants.\n\n\nAdd HDTS group to constants.\n\n\nAdd origins filter option.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nRemoved faulty assumptions from release name auto extractor. Some were outdated. Some caused invalid values. This specifically causes issues with SD resolution releases where the resolution isn't announced separately by the tracker.\n\n\n\n\ncommunity-v1.45\n (2014-05-15)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd CTCP ACTION handling.\n\n\n\n\ncommunity-v1.44\n (2014-04-18)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd 10-bit x264 constant group.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nChange update check interval to 24 hours.\n\n\nMove update hosting to cloud server.\n\n\n\n\ncommunity-v1.43\n (2014-01-13)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdded more source constants.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nImprove /autodl whatsnew output.\n\n\n\n\ncommunity-v1.42\n (2013-12-17)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd forever to max-download-per filter option.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nMake tracker updates follow update-check rules.\n\n\nImprove update messages.\n\n\nMake 'not downloaded' message more noticeable.\n\n\nSeparate WEB-DL and WEBRip constant groups.\n\n\nMake new slash commands available to gui-server.\n\n\n\n\ncommunity-v1.41\n (2013-08-14)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd MPEG2 Remux constant group.\n\n\nAdd /autodl reloadtrackers command.\n\n\nAdd /autodl reload command.\n\n\nAdd /autodl version command.\n\n\nAdd hour to max-download-per filter option.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nRemove trackers into separate repository and add as submodule.\n\n\nChange max-downloads to work without max-downloads-per.\n\n\nDelete removed tracker files on update.\n\n\n\n\ncommunity-v1.40\n (2013-05-15)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd Beathau5 tracker.\n\n\nAdd macro support to upload-watch-dir.\n\n\nAdd upload-delay-secs filter option.\n\n\nAdd irssi eval command support.\n\n\nAdd close-nickserv option to IRC header.\n\n\nAdd download-duplicates filter option.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nChange PreToMe to use passkey.\n\n\nImprove ep/season parsing logic.\n\n\nAdd DIGEST::SHA compat.\n\n\nAdd count output for max-download filters.\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nUpdate IRC info for My Anonamouse.\n\n\nRemove FTN deobfuscation.\n\n\n\n\ncommunity-v1.35\n (2013-04-16)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd scene and max-pretime filter options to FunFile.\n\n\nAdd freeleech filter option to IPTorrents.\n\n\nAdd server-password option to IRC header.\n\n\nAdd bnc option to server header.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nChange Blackcats to use passkey.\n\n\nAdd ignore to GazelleGames.\n\n\nAdd ignores to PTN.\n\n\nAdd ignore to Empornium.\n\n\nChange authkey to passkey in FunFile.\n\n\n\n\nRemoved\n\u00b6\n\n\n\n\nRemove HDBits tracker\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nForce SSL for Awesome-HD.\n\n\nForce SSL for Blackcats.\n\n\nForce SSL for IPtorrents.\n\n\nForce SSL for Waffles.\n\n\nUpdate regex and download URL for AnimeBytes.\n\n\nUpdate PTN.\n\n\nMove AVC to proper constant group.\n\n\nUpdate server name for AnimeBytes.\n\n\n\n\ncommunity-v1.34\n (2013-02-17)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nRe-add filelist.ro.\n\n\nAdd Empornium tracker.\n\n\nAdd torrent size capture to GFTracker.\n\n\nAdd GazelleGames tracker.\n\n\nAdd AnimeBytes tracker.\n\n\nAdd The Dark Syndicate tracker.\n\n\nRe-add PreToMe with updated info.\n\n\nAdd TSTN tracker.\n\n\nAdd log-scores filter option.\n\n\nAdd log-scores filter option to What.CD.\n\n\nAdd log-scores filter option to BaconBits.\n\n\nAdd freeleech filter option to What.CD.\n\n\nAdd freeleech-percents filter option.\n\n\nAdd freeleech-percents filter option to Awesome-HD.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nChange update URL to Google Code.\n\n\n\n\nRemoved\n\u00b6\n\n\n\n\nRemove bitGAMER.\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nForce SSL for RevolutionTT.\n\n\nUpdate channel name for GazelleGames.\n\n\nUpdate download URL for Animebytes.\n\n\nUpdate PussyTorrents.\n\n\n\n\ncommunity-v1.33\n (2012-10-31)\n\u00b6\n\n\nCommits\n\n\nAdded\n\u00b6\n\n\n\n\nAdd remux formats to constants.\n\n\nAdd freeleech filter option.\n\n\nAdd freeleech filter option to PassThePopcorn.\n\n\n\n\nChanged\n\u00b6\n\n\n\n\nChange IPTorrents to use passkey.\n\n\nModify Awesome-HD.\n\n\n\n\nRemoved\n\u00b6\n\n\n\n\nRemove dead trackers.\n\n\n\n\nFixed\n\u00b6\n\n\n\n\nUpdate RevolutionTT.\n\n\nUpdate Waffles.\n\n\nUpdate PTN.\n\n\n\n\ncommunity-v1.32\n (2012-10-28)\n\u00b6\n\n\nCommits\n\n\n\n\nInitial fork from original project.",
+            "title": "Changelog"
+        },
+        {
+            "location": "/changelog/#community-v165-2017-08-30",
+            "text": "Commits",
+            "title": "community-v1.65 (2017-08-30)"
+        },
+        {
+            "location": "/changelog/#added",
+            "text": "Add 2160p resolution to constants.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#fixed",
+            "text": "Fix bad subroutine references.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v164-2017-03-18",
+            "text": "Commits",
+            "title": "community-v1.64 (2017-03-18)"
+        },
+        {
+            "location": "/changelog/#added_1",
+            "text": "Add HEVC/x265 constants.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#fixed_1",
+            "text": "Fixed update callback references.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v163-2017-03-09",
+            "text": "Commits",
+            "title": "community-v1.63 (2017-03-09)"
+        },
+        {
+            "location": "/changelog/#changed",
+            "text": "Add release to download history earlier in the process.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#fixed_2",
+            "text": "Fix smart-episode logic.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v162-2016-03-14",
+            "text": "Commits",
+            "title": "community-v1.62 (2016-03-14)"
+        },
+        {
+            "location": "/changelog/#added_2",
+            "text": "Add smart-episode filter option.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#community-v161-2016-01-25",
+            "text": "Commits",
+            "title": "community-v1.61 (2016-01-25)"
+        },
+        {
+            "location": "/changelog/#added_3",
+            "text": "Add priority filter option.  Add message for successful loading of configuration files.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_1",
+            "text": "Changed method for matching release groups.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v160-2015-10-01",
+            "text": "Commits",
+            "title": "community-v1.60 (2015-10-01)"
+        },
+        {
+            "location": "/changelog/#changed_2",
+            "text": "Add warning message for using bare wildcards in filter options. Filters using bare wildcards will no longer work.  Change updater to use GitHub's Releases API.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v154-2015-04-30",
+            "text": "Commits",
+            "title": "community-v1.54 (2015-04-30)"
+        },
+        {
+            "location": "/changelog/#added_4",
+            "text": "Add regex for sensitive data censoring.  Add SNI support to SSLSocket.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#community-v153-2015-04-16",
+            "text": "Commits",
+            "title": "community-v1.53 (2015-04-16)"
+        },
+        {
+            "location": "/changelog/#changed_3",
+            "text": "Re-add '-' to replacement list for canonicalization.  Change rTorrent commands/mehtods to use new style.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v152-2015-03-13",
+            "text": "Commits",
+            "title": "community-v1.52 (2015-03-13)"
+        },
+        {
+            "location": "/changelog/#added_5",
+            "text": "Add match-release-groups filter option. This should be used instead of release-groups.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#fixed_3",
+            "text": "Fix except-release groups filter option.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v151-2015-02-25",
+            "text": "Commits",
+            "title": "community-v1.51 (2015-02-25)"
+        },
+        {
+            "location": "/changelog/#added_6",
+            "text": "Add except-release-groups filter options.  Add use-regex option to Option and Filter headers. This allows the use of regex syntax for match/except-releases filter options.  Add advanced-output-sites option.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_4",
+            "text": "Separate advanced output functionality from the output-level option. Previously, output-level=5 would output variables captured from announces. This functionality is now handled by the advanced-output-sites option.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v150-2015-01-02",
+            "text": "Commits",
+            "title": "community-v1.50 (2015-01-02)"
+        },
+        {
+            "location": "/changelog/#added_7",
+            "text": "Add containers filter option.  Add release-groups filter option.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_5",
+            "text": "Remove torrent size message.  Move max-download message to only happen when a release is fully matched.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v146-2014-08-24",
+            "text": "Commits",
+            "title": "community-v1.46 (2014-08-24)"
+        },
+        {
+            "location": "/changelog/#added_8",
+            "text": "Add DVD-R to constants.  Add HDCAM group to constants.  Add HDTS group to constants.  Add origins filter option.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_6",
+            "text": "Removed faulty assumptions from release name auto extractor. Some were outdated. Some caused invalid values. This specifically causes issues with SD resolution releases where the resolution isn't announced separately by the tracker.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v145-2014-05-15",
+            "text": "Commits",
+            "title": "community-v1.45 (2014-05-15)"
+        },
+        {
+            "location": "/changelog/#added_9",
+            "text": "Add CTCP ACTION handling.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#community-v144-2014-04-18",
+            "text": "Commits",
+            "title": "community-v1.44 (2014-04-18)"
+        },
+        {
+            "location": "/changelog/#added_10",
+            "text": "Add 10-bit x264 constant group.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_7",
+            "text": "Change update check interval to 24 hours.  Move update hosting to cloud server.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v143-2014-01-13",
+            "text": "Commits",
+            "title": "community-v1.43 (2014-01-13)"
+        },
+        {
+            "location": "/changelog/#added_11",
+            "text": "Added more source constants.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_8",
+            "text": "Improve /autodl whatsnew output.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v142-2013-12-17",
+            "text": "Commits",
+            "title": "community-v1.42 (2013-12-17)"
+        },
+        {
+            "location": "/changelog/#added_12",
+            "text": "Add forever to max-download-per filter option.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_9",
+            "text": "Make tracker updates follow update-check rules.  Improve update messages.  Make 'not downloaded' message more noticeable.  Separate WEB-DL and WEBRip constant groups.  Make new slash commands available to gui-server.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v141-2013-08-14",
+            "text": "Commits",
+            "title": "community-v1.41 (2013-08-14)"
+        },
+        {
+            "location": "/changelog/#added_13",
+            "text": "Add MPEG2 Remux constant group.  Add /autodl reloadtrackers command.  Add /autodl reload command.  Add /autodl version command.  Add hour to max-download-per filter option.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_10",
+            "text": "Remove trackers into separate repository and add as submodule.  Change max-downloads to work without max-downloads-per.  Delete removed tracker files on update.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#community-v140-2013-05-15",
+            "text": "Commits",
+            "title": "community-v1.40 (2013-05-15)"
+        },
+        {
+            "location": "/changelog/#added_14",
+            "text": "Add Beathau5 tracker.  Add macro support to upload-watch-dir.  Add upload-delay-secs filter option.  Add irssi eval command support.  Add close-nickserv option to IRC header.  Add download-duplicates filter option.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_11",
+            "text": "Change PreToMe to use passkey.  Improve ep/season parsing logic.  Add DIGEST::SHA compat.  Add count output for max-download filters.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#fixed_4",
+            "text": "Update IRC info for My Anonamouse.  Remove FTN deobfuscation.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v135-2013-04-16",
+            "text": "Commits",
+            "title": "community-v1.35 (2013-04-16)"
+        },
+        {
+            "location": "/changelog/#added_15",
+            "text": "Add scene and max-pretime filter options to FunFile.  Add freeleech filter option to IPTorrents.  Add server-password option to IRC header.  Add bnc option to server header.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_12",
+            "text": "Change Blackcats to use passkey.  Add ignore to GazelleGames.  Add ignores to PTN.  Add ignore to Empornium.  Change authkey to passkey in FunFile.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#removed",
+            "text": "Remove HDBits tracker",
+            "title": "Removed"
+        },
+        {
+            "location": "/changelog/#fixed_5",
+            "text": "Force SSL for Awesome-HD.  Force SSL for Blackcats.  Force SSL for IPtorrents.  Force SSL for Waffles.  Update regex and download URL for AnimeBytes.  Update PTN.  Move AVC to proper constant group.  Update server name for AnimeBytes.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v134-2013-02-17",
+            "text": "Commits",
+            "title": "community-v1.34 (2013-02-17)"
+        },
+        {
+            "location": "/changelog/#added_16",
+            "text": "Re-add filelist.ro.  Add Empornium tracker.  Add torrent size capture to GFTracker.  Add GazelleGames tracker.  Add AnimeBytes tracker.  Add The Dark Syndicate tracker.  Re-add PreToMe with updated info.  Add TSTN tracker.  Add log-scores filter option.  Add log-scores filter option to What.CD.  Add log-scores filter option to BaconBits.  Add freeleech filter option to What.CD.  Add freeleech-percents filter option.  Add freeleech-percents filter option to Awesome-HD.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_13",
+            "text": "Change update URL to Google Code.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#removed_1",
+            "text": "Remove bitGAMER.",
+            "title": "Removed"
+        },
+        {
+            "location": "/changelog/#fixed_6",
+            "text": "Force SSL for RevolutionTT.  Update channel name for GazelleGames.  Update download URL for Animebytes.  Update PussyTorrents.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v133-2012-10-31",
+            "text": "Commits",
+            "title": "community-v1.33 (2012-10-31)"
+        },
+        {
+            "location": "/changelog/#added_17",
+            "text": "Add remux formats to constants.  Add freeleech filter option.  Add freeleech filter option to PassThePopcorn.",
+            "title": "Added"
+        },
+        {
+            "location": "/changelog/#changed_14",
+            "text": "Change IPTorrents to use passkey.  Modify Awesome-HD.",
+            "title": "Changed"
+        },
+        {
+            "location": "/changelog/#removed_2",
+            "text": "Remove dead trackers.",
+            "title": "Removed"
+        },
+        {
+            "location": "/changelog/#fixed_7",
+            "text": "Update RevolutionTT.  Update Waffles.  Update PTN.",
+            "title": "Fixed"
+        },
+        {
+            "location": "/changelog/#community-v132-2012-10-28",
+            "text": "Commits   Initial fork from original project.",
+            "title": "community-v1.32 (2012-10-28)"
+        }
+    ]
+}
