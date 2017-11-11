@@ -1,7 +1,17 @@
 These options change the behavior of autodl-irssi. Place these options below the **[options]** header.
 
+#### gui-server-port
+> **Type:** Integer (valid port number)
+**Example:** gui-server-port = 11111
+**Description:** The port used to communicate with the ruTorrent plugin if enabled.
+
+#### gui-server-password
+> **Type:** String
+**Example:** gui-server-password = abcdefg
+**Description:** The password used to secure communication with the ruTorrent plugin if enabled.
+
 #### rt-address
-> **Type:** string
+> **Type:** String
 **Default:** Whatever is found in ~/.rtorrent.rc
 **Example:** rt-address = 127.0.0.1:5000
 **Description:** If you use the 'rtorrent' action (**upload-method**), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. **NOTE:** This option can only be set in autodl2.cfg, **not** autodl.cfg.
