@@ -39,6 +39,7 @@ use constant {
 	UPLOAD_TOOL			=> 'exec',
 	UPLOAD_DYNDIR		=> 'dyndir',
 	UPLOAD_RTORRENT		=> 'rtorrent',
+	UPLOAD_TEST			=> 'test',
 };
 
 our $tvResolutions = [

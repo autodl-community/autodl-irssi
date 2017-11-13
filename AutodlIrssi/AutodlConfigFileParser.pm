@@ -50,7 +50,7 @@ sub defaultOptions {
 		debug => 0,
 		advancedOutputSites => '',
 		useRegex => 0,
-		uploadType => AutodlIrssi::Constants::UPLOAD_WATCH_FOLDER(),
+		uploadType => AutodlIrssi::Constants::UPLOAD_TEST(),
 		uploadWatchDir => '',
 		uploadFtpPath => '',
 		uploadCommand => '',
@@ -191,6 +191,7 @@ sub checkValidUploadType {
 		AutodlIrssi::Constants::UPLOAD_TOOL(),
 		AutodlIrssi::Constants::UPLOAD_DYNDIR(),
 		AutodlIrssi::Constants::UPLOAD_RTORRENT(),
+		AutodlIrssi::Constants::UPLOAD_TEST(),
 	);
 	for my $name (@ary) {
 		return 1 if lc $name eq $uploadType;

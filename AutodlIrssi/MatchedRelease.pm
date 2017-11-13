@@ -376,6 +376,7 @@ sub _onTorrentFileDownloaded {
 		lc AutodlIrssi::Constants::UPLOAD_TOOL()			=> \&_runProgram,
 		lc AutodlIrssi::Constants::UPLOAD_DYNDIR()			=> \&_runUtorrentDir,
 		lc AutodlIrssi::Constants::UPLOAD_RTORRENT()		=> \&_sendRtorrent,
+		lc AutodlIrssi::Constants::UPLOAD_TEST()			=> \&_testFilter,
 	);
 
 	my $func = $funcs{lc $self->{uploadMethod}{uploadType}};
@@ -704,6 +705,8 @@ sub _sendRtorrent {
 		$self->_messageFail(0, "Could not send rtorrent commands, torrent '$self->{ti}{torrentName}', error: " . formatException($@));
 	}
 }
+
+sub _testFilter {};
 
 # Called when the webui upload has completed
 sub _onRtorrentUploadComplete {

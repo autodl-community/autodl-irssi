@@ -84,6 +84,13 @@ autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent
 
 By default, the global action set in your **[options]** header is used, but you can override it in any filter by placing a new **upload-type** in the **[filter]** header.
 
+### Test
+```
+upload-type = test
+```
+
+Take no action after matching an announce.
+
 ### rTorrent
 ```
 upload-type = rtorrent
