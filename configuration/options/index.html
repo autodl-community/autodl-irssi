@@ -298,6 +298,20 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#gui-server-port" title="gui-server-port" class="md-nav__link">
+    gui-server-port
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gui-server-password" title="gui-server-password" class="md-nav__link">
+    gui-server-password
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rt-address" title="rt-address" class="md-nav__link">
     rt-address
   </a>
@@ -388,6 +402,13 @@
   
     <nav class="md-nav">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test" title="Test" class="md-nav__link">
+    Test
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#rtorrent" title="rTorrent" class="md-nav__link">
@@ -687,6 +708,20 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#gui-server-port" title="gui-server-port" class="md-nav__link">
+    gui-server-port
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gui-server-password" title="gui-server-password" class="md-nav__link">
+    gui-server-password
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rt-address" title="rt-address" class="md-nav__link">
     rt-address
   </a>
@@ -777,6 +812,13 @@
   
     <nav class="md-nav">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test" title="Test" class="md-nav__link">
+    Test
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#rtorrent" title="rTorrent" class="md-nav__link">
@@ -967,9 +1009,21 @@
                   <h1>Options</h1>
                 
                 <p>These options change the behavior of autodl-irssi. Place these options below the <strong>[options]</strong> header.</p>
+<h4 id="gui-server-port">gui-server-port<a class="headerlink" href="#gui-server-port" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><strong>Type:</strong> Integer (valid port number)<br />
+<strong>Example:</strong> gui-server-port = 11111<br />
+<strong>Description:</strong> The port used to communicate with the ruTorrent plugin if enabled.</p>
+</blockquote>
+<h4 id="gui-server-password">gui-server-password<a class="headerlink" href="#gui-server-password" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><strong>Type:</strong> String<br />
+<strong>Example:</strong> gui-server-password = abcdefg<br />
+<strong>Description:</strong> The password used to secure communication with the ruTorrent plugin if enabled.</p>
+</blockquote>
 <h4 id="rt-address">rt-address<a class="headerlink" href="#rt-address" title="Permanent link">&para;</a></h4>
 <blockquote>
-<p><strong>Type:</strong> string<br />
+<p><strong>Type:</strong> String<br />
 <strong>Default:</strong> Whatever is found in ~/.rtorrent.rc<br />
 <strong>Example:</strong> rt-address = 127.0.0.1:5000<br />
 <strong>Description:</strong> If you use the 'rtorrent' action (<strong>upload-method</strong>), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. <strong>NOTE:</strong> This option can only be set in autodl2.cfg, <strong>not</strong> autodl.cfg.</p>
@@ -1050,6 +1104,11 @@
 <h2 id="torrent-actions">Torrent Actions<a class="headerlink" href="#torrent-actions" title="Permanent link">&para;</a></h2>
 <p>autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.</p>
 <p>By default, the global action set in your <strong>[options]</strong> header is used, but you can override it in any filter by placing a new <strong>upload-type</strong> in the <strong>[filter]</strong> header.</p>
+<h3 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>upload-type = test
+</pre></div>
+
+<p>Take no action after matching an announce.</p>
 <h3 id="rtorrent">rTorrent<a class="headerlink" href="#rtorrent" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><span class="nt">upload-type</span> <span class="o">=</span> <span class="nt">rtorrent</span>
 <span class="nt">rt-dir</span> <span class="o">=</span> <span class="o">/</span><span class="nt">home</span><span class="o">/</span><span class="nt">YOURNAME</span><span class="o">/</span><span class="nt">downloads</span><span class="o">/$(</span><span class="nt">Month</span><span class="o">)$(</span><span class="nt">Day</span><span class="o">)/$(</span><span class="nt">Tracker</span><span class="o">)</span>
