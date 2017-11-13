@@ -341,11 +341,15 @@ sub reloadAutodlConfigFile {
 
 			$AutodlIrssi::g->{filterManager}->setFilters($configFileParser->getFilters());
 			$AutodlIrssi::g->{options} = $configFileParser->getOptions();
-			$AutodlIrssi::g->{options}{rtAddress} = "";	# It's not allowed in autodl.cfg
 			$servers = $configFileParser->getServers();
 		}
 
 		if ($reloadAutodl2) {
+			if (-s $autodlCfgFiles{autodl2}->{filename}) {
+				message 1, "\x0300,04 Warning: \x03 autodl2.cfg is deprecated and set for removal in a future version.";
+				message 1, "\x0300,04 Warning: \x03 Move all configuration to autodl.cfg and delete autodl2.cfg."
+			}
+
 			$configFileParser = parseConfigFile($autodlCfgFiles{autodl2});
 
 			if ($configFileParser) {

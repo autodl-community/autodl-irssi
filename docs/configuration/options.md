@@ -14,7 +14,7 @@ These options change the behavior of autodl-irssi. Place these options below the
 > **Type:** String
 **Default:** Whatever is found in ~/.rtorrent.rc
 **Example:** rt-address = 127.0.0.1:5000
-**Description:** If you use the 'rtorrent' action (**upload-method**), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. **NOTE:** This option can only be set in autodl2.cfg, **not** autodl.cfg.
+**Description:** If you use the 'rtorrent' action (**upload-method**), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket.
 
 #### update-check
 > **Type:** string
