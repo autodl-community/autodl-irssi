@@ -18,9 +18,9 @@ For simple, single file changes/additions, sending or linking your modified file
 
 ### Pull Requests
 
-You should create a separate [feature branch][fb] in your [fork][fork] to commit your changes to. [Pull Requests](https://help.github.com/articles/creating-a-pull-request) will only be accepted if made from a [feature branch][fb] and against the [devel](https://github.com/autodl-community/autodl-irssi/tree/devel) branch of this repository.
+[Pull Requests](https://help.github.com/articles/creating-a-pull-request) should originate from a [feature branch][fb] in your [fork][fork], not from the **master** branch.
 
-Commit messages should be written in a [well-formed, consistent](https://sethrobertson.github.io/GitBestPractices/#usemsg) manner. See the [commit log](https://github.com/autodl-community/autodl-irssi/commits/devel) for acceptable examples.
+Commit messages should be written in a [well-formed, consistent](https://sethrobertson.github.io/GitBestPractices/#usemsg) manner. See the [commit log](https://github.com/autodl-community/autodl-irssi/commits) for acceptable examples.
 
 Each commit should encompass the smallest logical changeset (e.g. changing two unrelated things in the same file would be two commits rather than one commit of "Change filename".) If you made a mistake in a commit in your Pull Request, you should [amend](https://www.atlassian.com/git/tutorials/rewriting-history/git-commit--amend) or [rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase-i) to change your previous commit(s) then [force push](http://stackoverflow.com/a/12610763) to the [feature branch][fb] in your [fork][fork].
 
