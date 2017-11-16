@@ -1,6 +1,6 @@
 # autodl-irssi
 
-autodl-irssi is a plugin for [irssi](https://irssi.org/) that monitors IRC announce channels and downloads torrent files based on user-defined filters.
+[autodl-irssi](https://github.com/autodl-community/autodl-irssi) is a plugin for [irssi](https://irssi.org/) that monitors IRC announce channels and downloads torrent files based on user-defined filters.
 
 
 ## Getting Started
