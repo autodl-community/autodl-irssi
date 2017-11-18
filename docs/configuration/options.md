@@ -78,6 +78,11 @@ These options change the behavior of autodl-irssi. Place these options below the
 **Example:** path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe
 **Description:** Set it to the path of uTorrent if you're using an **upload-type** equal to **dyndir**.
 
+#### upload-type
+> **Type:** String
+**Default:** test
+**Description:** Set the action to take when an announce is matched. See below for related settings.
+
 
 ## Torrent Actions
 autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.
