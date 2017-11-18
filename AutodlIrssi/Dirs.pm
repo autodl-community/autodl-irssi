@@ -36,7 +36,7 @@ use Irssi;
 use File::Spec;
 use base qw/ Exporter /;
 our @EXPORT = qw/ getHomeDir getIrssiScriptDir getAutodlFilesDir getTrackerFilesDir
-				getAutodlSettingsDir getAutodlCfgFile getAutodl2CfgFile getEtcAutodlCfgFile
+				getAutodlSettingsDir getAutodlCfgFile getAutodl2CfgFile
 				getDownloadHistoryFile getAutodlStateFile getAbsPath /;
 our @EXPORT_OK = qw//;
 
@@ -78,11 +78,6 @@ sub getAutodlCfgFile {
 # Returns pathname of our autodl2.cfg file
 sub getAutodl2CfgFile {
 	return File::Spec->catfile(getAutodlSettingsDir(), "autodl2.cfg");
-}
-
-# Returns pathname of our /etc/autodl.cfg file
-sub getEtcAutodlCfgFile {
-	return '/etc/autodl.cfg';
 }
 
 # Returns pathname of our DownloadHistory.txt file

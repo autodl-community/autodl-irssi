@@ -289,10 +289,6 @@ my %autodlCfgFiles = (
 		filename => getAutodl2CfgFile,
 		mtime => undef,
 	},
-	etc => {
-		filename => getEtcAutodlCfgFile(),
-		mtime => undef,
-	},
 );
 
 sub checkReloadFile {
@@ -330,13 +326,11 @@ sub reloadAutodlConfigFile {
 	eval {
 		my $reloadAutodl = checkReloadFile($autodlCfgFiles{autodl});
 		my $reloadAutodl2 = checkReloadFile($autodlCfgFiles{autodl2});
-		my $reloadEtcAutodl = checkReloadFile($autodlCfgFiles{etc});
 
-		# Always read in this order: autodl.cfg, autodl2.cfg, /etc/autodl.cfg
-		$reloadAutodl2 = $reloadEtcAutodl = 1 if $reloadAutodl;
-		$reloadEtcAutodl = 1 if $reloadAutodl2;
+		# Always read in this order: autodl.cfg, autodl2.cfg
+		$reloadAutodl2 = 1 if $reloadAutodl;
 
-		return unless $reloadAutodl || $reloadAutodl2 || $reloadEtcAutodl;
+		return unless $reloadAutodl || $reloadAutodl2;
 
 		message 3, "Reading configuration files";
 
@@ -359,15 +353,6 @@ sub reloadAutodlConfigFile {
 				$AutodlIrssi::g->{options}{guiServerPort} = $options->{guiServerPort} if $options->{guiServerPort} != 0;
 				$AutodlIrssi::g->{options}{guiServerPassword} = $options->{guiServerPassword} if $options->{guiServerPassword} ne "";
 				$AutodlIrssi::g->{options}{rtAddress} = $options->{rtAddress} if $options->{rtAddress} ne "";
-			}
-		}
-
-		if ($reloadEtcAutodl) {
-			$configFileParser = parseConfigFile($autodlCfgFiles{etc});
-
-			if ($configFileParser) {
-				my $options = $configFileParser->getOptions();
-				$AutodlIrssi::g->{options}{allowed} = $options->{allowed} if $options->{allowed} ne "";
 			}
 		}
 

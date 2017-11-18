@@ -69,7 +69,6 @@ sub defaultOptions {
 		memoryLeakCheck => 0,
 		guiServerPort => 0,
 		guiServerPassword => '',
-		allowed => '',
 		uniqueTorrentNames => 0,
 
 		webui => {
@@ -445,7 +444,6 @@ sub doHeaderOptions {
 		'memory-leak-check' => 'memoryLeakCheck',
 		'gui-server-port' => 'guiServerPort',
 		'gui-server-password' => 'guiServerPassword',
-		'allowed' => 'allowed',
 		'unique-torrent-names' => 'uniqueTorrentNames',
 	});
 

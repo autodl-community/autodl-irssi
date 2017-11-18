@@ -372,20 +372,6 @@ sub _onTorrentUploadWait {
 	}
 }
 
-sub _checkMethodAllowed {
-	my ($self, $method) = @_;
-
-	my $allowed = trim($AutodlIrssi::g->{options}{allowed});
-	return 1 if $allowed eq "";
-
-	for my $s (split /,/, $allowed) {
-		return 1 if trim($s) eq $method;
-	}
-
-	$self->_messageFail(0, "Can't save/upload torrent: Torrent action '$method' is disabled!");
-	return 0;
-}
-
 # Called when the torrent file has been successfully downloaded
 sub _onTorrentFileDownloaded {
 	my $self = shift;
@@ -430,8 +416,6 @@ sub _sendWOL {
 sub _saveTorrentFile {
 	my $self = shift;
 
-	return unless $self->_checkMethodAllowed("watchdir");
-
 	eval {
 		my $filename = $self->_writeTempFile($self->{torrentFileData});
 		my $macroReplacer = $self->_getMacroReplacer($filename);
@@ -454,8 +438,6 @@ sub _saveTorrentFile {
 
 sub _sendTorrentFileWebui {
 	my $self = shift;
-
-	return unless $self->_checkMethodAllowed("webui");
 
 	eval {
 		$self->_sendWOL($AutodlIrssi::g->{options}{webui}{hostname});
@@ -491,8 +473,6 @@ sub _onWebuiUploadComplete {
 
 sub _sendTorrentFileFtp {
 	my $self = shift;
-
-	return unless $self->_checkMethodAllowed("ftp");
 
 	eval {
 		$self->_sendWOL($AutodlIrssi::g->{options}{ftp}{hostname});
@@ -570,8 +550,6 @@ sub _writeCreatedTempFile {
 sub _runProgram {
 	my $self = shift;
 
-	return unless $self->_checkMethodAllowed("exec");
-
 	eval {
 		my $filename = $self->_writeTempFile($self->{torrentFileData});
 
@@ -590,8 +568,6 @@ sub _runProgram {
 
 sub _runUtorrentDir {
 	my $self = shift;
-
-	return unless $self->_checkMethodAllowed("dyndir");
 
 	eval {
 		my $filename = $self->_writeTempFile($self->{torrentFileData});
@@ -664,8 +640,6 @@ sub _getRtAddress {
 
 sub _sendRtorrent {
 	my $self = shift;
-
-	return unless $self->_checkMethodAllowed("rtorrent");
 
 	eval {
 		my $rtAddress = _getRtAddress();
