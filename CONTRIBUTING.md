@@ -22,7 +22,7 @@ For simple, single file changes/additions, sending or linking your modified file
 
 Commit messages should be written in a [well-formed, consistent](https://sethrobertson.github.io/GitBestPractices/#usemsg) manner. See the [commit log](https://github.com/autodl-community/autodl-irssi/commits) for acceptable examples.
 
-Each commit should encompass the smallest logical changeset (e.g. changing two unrelated things in the same file would be two commits rather than one commit of "Change filename".) If you made a mistake in a commit in your Pull Request, you should [amend](https://www.atlassian.com/git/tutorials/rewriting-history/git-commit--amend) or [rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase-i) to change your previous commit(s) then [force push](http://stackoverflow.com/a/12610763) to the [feature branch][fb] in your [fork][fork].
+Each commit should encompass the smallest logical changeset (e.g. changing two unrelated things in the same file would be two commits rather than one commit of "Change filename".) If you made a mistake in a commit in your Pull Request, you should [amend or rebase](https://www.atlassian.com/git/tutorials/rewriting-history) to change your previous commit(s) then [force push](http://stackoverflow.com/a/12610763) to the [feature branch][fb] in your [fork][fork].
 
 [fb]: https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/#creating-a-branch
 [fork]: https://help.github.com/articles/fork-a-repo
