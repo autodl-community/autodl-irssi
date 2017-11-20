@@ -370,7 +370,20 @@ sub hasAutodlUpdate {
 	my ($self, $version) = @_;
 
 	$self->_verifyCheckHasBeenCalled();
-	return $self->{autodl}{version} gt $version;
+
+	my @localInfo = split(/\./, $version);
+	my @updateInfo = split(/\./, $self->{autodl}{version});
+
+	my $maxIndex = scalar @localInfo > scalar @updateInfo ? scalar @localInfo - 1 : scalar @updateInfo - 1;
+
+	for my $i (0 .. $maxIndex) {
+		my $localPart = $localInfo[$i] ? $localInfo[$i] : '0';
+		my $updatePart = $updateInfo[$i] ? $updateInfo[$i] : '0';
+
+		return 1 if ($updatePart > $localPart);
+	}
+
+	return 0;
 }
 
 sub getTrackersWhatsNew {
