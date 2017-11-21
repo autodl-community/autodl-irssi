@@ -21,11 +21,9 @@ This is an error that occurs in the ruTorrent plugin when it can't communicate w
 
 * irssi may not be running
 * autodl-irssi may not be enabled in irssi
-* multiple instances of irssi with autodl-irssi enabled could be running
-* your gui-server and gui-server-password settings may not be set in your autodl.cfg file
-* your gui-server and gui-server-password settings may not be set in the ruTorrent plugin's conf.php
-* the gui-server and gui-server-password settings in your autodl.cfg may not match the settings in the ruTorrent plugin's conf.php
-* you may be using a seedbox from Feral Hosting; follow [their instructions](https://www.feralhosting.com/faq/view?question=142) to get it working
+* Multiple instances of irssi with autodl-irssi enabled could be running
+* gui-server-port and gui-server-password settings may not be set in your autodl.cfg file
+* You may be using a seedbox from Feral Hosting; follow [their instructions](https://www.feralhosting.com/faq/view?question=142) to get it working
 
 ### What's this error about bare wildcards?
 
