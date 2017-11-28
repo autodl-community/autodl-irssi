@@ -121,13 +121,20 @@ sub _canDownload {
 			if ($ti->{season} < $state->{smart}{season}) {
 				$canDownload = 0;
 			}
-
-			if ($ti->{season} == $state->{smart}{season} && $ti->{episode} <= $state->{smart}{episode}) {
-				$canDownload = 0;
+			elsif ($ti->{season} == $state->{smart}{season}) {
+				if ($ti->{episode} < $state->{smart}{episode}) {
+					$canDownload = 0;
+				}
+				elsif ($ti->{episode} == $state->{smart}{episode} && $ti->{torrentName} !~ m/repack|proper/i) {
+					$canDownload = 0;
+				}
 			}
 		}
 		elsif ($ti->{episode} && !$ti->{season}) {
-			if ($ti->{episode} <= $state->{smart}{episode}) {
+			if ($ti->{episode} < $state->{smart}{episode}) {
+				$canDownload = 0;
+			}
+			elsif($ti->{episode} == $state->{smart}{episode} && $ti->{torrentName} !~ m/repack|proper/i) {
 				$canDownload = 0;
 			}
 		}
@@ -137,12 +144,13 @@ sub _canDownload {
 			if ($year < $state->{smart}{year}) {
 				$canDownload = 0;
 			}
-
-			if ($month < $state->{smart}{month}) {
+			elsif ($month < $state->{smart}{month}) {
 				$canDownload = 0;
 			}
-
-			if ($day <= $state->{smart}{day}) {
+			elsif ($day < $state->{smart}{day}) {
+				$canDownload = 0;
+			}
+			elsif ($day == $state->{smart}{day} && $ti->{torrentName} !~ m/repack|proper/i) {
 				$canDownload = 0;
 			}
 		}
@@ -153,16 +161,15 @@ sub _canDownload {
 	}
 
 	if (!$canDownload) {
-		$self->_releaseAlreadyDownloaded();
+		if ($filter->{smartEpisode}) {
+			$self->_messageFail(4, "Release \x02\x0309$self->{ti}{torrentName}\x03\x02 (\x02\x0302$self->{trackerInfo}{longName}\x03\x02) is a previous episode");
+		}
+		else {
+			$self->_messageFail(4, "Release \x02\x0309$self->{ti}{torrentName}\x03\x02 (\x02\x0302$self->{trackerInfo}{longName}\x03\x02) has already been downloaded");
+		}
 	}
 
 	return $canDownload;
-}
-
-sub _releaseAlreadyDownloaded {
-	my $self = shift;
-
-	$self->_messageFail(4, "Release \x02\x0309$self->{ti}{torrentName}\x03\x02 (\x02\x0302$self->{trackerInfo}{longName}\x03\x02) has already been downloaded");
 }
 
 sub _getTorrentInfoString {
