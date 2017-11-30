@@ -1,4 +1,5 @@
 site_name: autodl-irssi
+repo_name: autodl-irssi
 repo_url: https://github.com/autodl-community/autodl-irssi
 
 theme:
