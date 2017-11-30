@@ -28,7 +28,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.1, mkdocs-material-2.0.4">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -36,13 +36,13 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application-709eec9410.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/application-23f75ab9c7.palette.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
-      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
     
     
       
@@ -87,18 +87,18 @@
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Configuration
-                </span>
-              
+              <span class="md-header-nav__topic">
+                autodl-irssi
+              </span>
+              <span class="md-header-nav__topic">
+                Options
+              </span>
             
-            Options
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
@@ -146,7 +146,7 @@
       </div>
     
     <div class="md-source__repository">
-      GitHub
+      autodl-irssi
     </div>
   </a>
 
@@ -158,6 +158,9 @@
 </header>
     
     <div class="md-container">
+      
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -192,7 +195,7 @@
       </div>
     
     <div class="md-source__repository">
-      GitHub
+      autodl-irssi
     </div>
   </a>
 
@@ -391,6 +394,13 @@
         <li class="md-nav__item">
   <a href="#path-utorrent" title="path-utorrent" class="md-nav__link">
     path-utorrent
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upload-type" title="upload-type" class="md-nav__link">
+    upload-type
   </a>
   
 </li>
@@ -806,6 +816,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upload-type" title="upload-type" class="md-nav__link">
+    upload-type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#torrent-actions" title="Torrent Actions" class="md-nav__link">
     Torrent Actions
   </a>
@@ -1026,7 +1043,7 @@
 <p><strong>Type:</strong> String<br />
 <strong>Default:</strong> Whatever is found in ~/.rtorrent.rc<br />
 <strong>Example:</strong> rt-address = 127.0.0.1:5000<br />
-<strong>Description:</strong> If you use the 'rtorrent' action (<strong>upload-method</strong>), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket. <strong>NOTE:</strong> This option can only be set in autodl2.cfg, <strong>not</strong> autodl.cfg.</p>
+<strong>Description:</strong> If you use the 'rtorrent' action (<strong>upload-method</strong>), then you must initialize this to your rtorrent's SCGI address. It can be ip:port (eg. 127.0.0.1:5000) or /path/to/socket.</p>
 </blockquote>
 <h4 id="update-check">update-check<a class="headerlink" href="#update-check" title="Permanent link">&para;</a></h4>
 <blockquote>
@@ -1100,6 +1117,12 @@
 <strong>Default:</strong> nothing<br />
 <strong>Example:</strong> path-utorrent = /cygdrive/c/Program Files (x86)/uTorrent/uTorrent.exe<br />
 <strong>Description:</strong> Set it to the path of uTorrent if you're using an <strong>upload-type</strong> equal to <strong>dyndir</strong>.</p>
+</blockquote>
+<h4 id="upload-type">upload-type<a class="headerlink" href="#upload-type" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><strong>Type:</strong> String<br />
+<strong>Default:</strong> test<br />
+<strong>Description:</strong> Set the action to take when an announce is matched. See below for related settings.</p>
 </blockquote>
 <h2 id="torrent-actions">Torrent Actions<a class="headerlink" href="#torrent-actions" title="Permanent link">&para;</a></h2>
 <p>autodl-irssi can save a torrent file to a watch directory, upload it to uTorrent webui, upload it to an FTP server, execute a program or use uTorrent to save it to a dynamic directory name that depends on the current torrent.</p>
@@ -1304,9 +1327,9 @@ wol-port = 9 (defaults to 9 if you leave it blank)</p>
       <div class="md-footer-copyright">
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1318,9 +1341,9 @@ wol-port = 9 (defaults to 9 if you leave it blank)</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application-8e4952e681.js"></script>
+      <script src="../../assets/javascripts/application.6cdc17f0.js"></script>
       
-      <script>app.initialize({version:"0.17.1",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
       
     
     

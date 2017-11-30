@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,7 @@
     
     <url>
      <loc>/faq/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -20,7 +20,7 @@
     
     <url>
      <loc>/installation/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -29,55 +29,55 @@
         
     <url>
      <loc>/configuration/overview/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/options/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/irc/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/server/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/channel/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/tracker/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/filter/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/webui/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/configuration/ftp/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -86,7 +86,7 @@
     
     <url>
      <loc>/changelog/</loc>
-     <lastmod>2017-11-13</lastmod>
+     <lastmod>2017-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
