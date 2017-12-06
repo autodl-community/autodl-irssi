@@ -235,8 +235,8 @@ sub showWhatsNew {
 
 sub printVersionInfo {
 	message 3, "You are running \x02autodl-irssi\x02 \x02v$version\x02 | \x02autodl-trackers\x02 \x02v$trackersVersion\x02";
-	message 3, "\x02\x0309Bugs and Requests\x03\x02 \x02https://github.com/autodl-community/autodl-irssi/issues\x02";
-	message 3, "\x02\x0309Help and Discussion\x03\x02 \x02#autodl-community on irc.p2p-network.net\x02";
+	message 3, "\x02\x0309Bugs and Requests:\x03\x02 \x02https://github.com/autodl-community/autodl-irssi/issues\x02";
+	message 3, "\x02\x0309Help and Discussion:\x03\x02 \x02http://discord.autodl.community\x02 / \x02#autodl-community on irc.p2p-network.net\x02";
 }
 
 sub dumpTrackerVars {
