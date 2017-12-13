@@ -124,7 +124,7 @@ sub _parseAutodlUpdate {
 
 	my $autodlTagName = my $autodlVersion = $autodlData->{tag_name};
 	$autodlVersion =~ s/community-v//;
-	my $autodlDownloadUrl = "https://github.com/autodl-community/autodl-irssi/releases/download/$autodlTagName/autodl-irssi-community-v$autodlVersion.zip";
+	my $autodlDownloadUrl = "https://github.com/autodl-community/autodl-irssi/releases/download/$autodlTagName/autodl-irssi-v$autodlVersion.zip";
 	my $autodlChangeLog = $autodlData->{body};
 
 	$self->{autodl} = {
