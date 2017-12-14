@@ -123,7 +123,7 @@ sub _parseAutodlUpdate {
 	my ($self, $autodlData) = @_;
 
 	my $autodlTagName = my $autodlVersion = $autodlData->{tag_name};
-	$autodlVersion =~ s/community-v//;
+	$autodlVersion =~ s/.*v//;
 	my $autodlDownloadUrl = "https://github.com/autodl-community/autodl-irssi/releases/download/$autodlTagName/autodl-irssi-v$autodlVersion.zip";
 	my $autodlChangeLog = $autodlData->{body};
 
@@ -140,7 +140,7 @@ sub _parseTrackersUpdate {
 	my ($self, $trackersData) = @_;
 
 	my $trackersTagName = my $trackersVersion = $trackersData->{tag_name};
-	$trackersVersion =~ s/community-v//;
+	$trackersVersion =~ s/.*v//;
 	my $trackersDownloadUrl = "https://github.com/autodl-community/autodl-trackers/releases/download/$trackersTagName/autodl-trackers-v$trackersVersion.zip";
 	my $trackersChangeLog = $trackersData->{body};
 
