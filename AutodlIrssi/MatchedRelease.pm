@@ -63,23 +63,6 @@ else {
 	Digest::SHA1->import(qw(sha1));
 }
 
-my @actionSettings = (
-	'uploadType',
-	'uploadWatchDir',
-	'uploadFtpPath',
-	'uploadCommand',
-	'uploadArgs',
-	'uploadDyndir',
-	'rtDir',
-	'rtCommands',
-	'rtLabel',
-	'rtRatioGroup',
-	'rtChannel',
-	'rtPriority',
-	'rtIgnoreScheduler',
-	'rtDontAddName'
-);
-
 sub new {
 	my ($class, $downloadHistory) = @_;
 	bless {
@@ -238,11 +221,7 @@ sub start {
 	}
 
 	$self->{filename} = $self->_getFilename($self->{ti}{torrentName});
-
-	my $actionSetting;
-	foreach $actionSetting (@actionSettings) {
-		$self->{uploadMethod}{$actionSetting} = $self->{ti}{filter}{$actionSetting} ? $self->{ti}{filter}{$actionSetting} : $AutodlIrssi::g->{options}{$actionSetting};
-	}
+	$self->{uploadMethod} = $self->{ti}{filter}{uploadType} ? $self->{ti}{filter} : $AutodlIrssi::g->{options};
 
 	my $forceSsl = $self->{ti}{announceParser}->readOption("force-ssl");
 	$self->{downloadUrl} = $forceSsl ? $self->{ti}{torrentSslUrl} : $self->{ti}{torrentUrl};
