@@ -3,6 +3,15 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
+## [community-v2.0.1](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.0.1) (2017-12-14)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.0...community-v2.0.1)
+
+### Changed
+
+* Revert "Allow overriding torrent action settings in a filter without needing to set them all".
+
+
 ## [community-v2.0.0](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.0.0) (2017-12-12)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.65...community-v2.0.0)
