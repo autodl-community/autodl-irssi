@@ -52,7 +52,7 @@ our $tvResolutions = [
 	["810p"],
 	["1080i"],
 	["1080p"],
-	["2160p"]
+	["2160p", "4k"]
 ];
 
 our $tvSources = [
