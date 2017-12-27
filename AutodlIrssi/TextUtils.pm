@@ -121,11 +121,11 @@ sub stripMircColorCodes {
 
 my %mult = (
 	"B"		=> 1,
-	"KB"	=> 1024,
+	"KB"	=> 1000,
 	"KIB"	=> 1024,
-	"MB"	=> 1024*1024,
+	"MB"	=> 1000*1000,
 	"MIB"	=> 1024*1024,
-	"GB"	=> 1024*1024*1024,
+	"GB"	=> 1000*1000*1000,
 	"GIB"	=> 1024*1024*1024,
 );
 
@@ -153,16 +153,16 @@ sub convertToByteSizeString {
 	return unless defined $size;
 
 	my $sizePrefix;
-	if ($size >= 1024*1024*1000) {
-		$size /= 1024*1024*1024;
+	if ($size >= 1000*1000*1000) {
+		$size /= 1000*1000*1000;
 		$sizePrefix = "GB";
 	}
-	elsif ($size >= 1024*1000) {
-		$size /= 1024*1024;
+	elsif ($size >= 1000*1000) {
+		$size /= 1000*1000;
 		$sizePrefix = "MB";
 	}
 	elsif ($size >= 1000) {
-		$size /= 1024;
+		$size /= 1000;
 		$sizePrefix = "KB";
 	}
 	else {
