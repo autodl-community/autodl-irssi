@@ -155,18 +155,18 @@ sub convertToByteSizeString {
 	my $sizePrefix;
 	if ($size >= 1024*1024*1000) {
 		$size /= 1024*1024*1024;
-		$sizePrefix = "GB";
+		$sizePrefix = "GiB";
 	}
 	elsif ($size >= 1024*1000) {
 		$size /= 1024*1024;
-		$sizePrefix = "MB";
+		$sizePrefix = "MiB";
 	}
 	elsif ($size >= 1000) {
 		$size /= 1024;
-		$sizePrefix = "KB";
+		$sizePrefix = "KiB";
 	}
 	else {
-		$sizePrefix = "Bytes";
+		$sizePrefix = "B";
 	}
 
 	my $dot = index $size, ".";
