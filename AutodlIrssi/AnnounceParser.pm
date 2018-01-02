@@ -415,7 +415,6 @@ sub onAllLinesMatched {
 
 	extractReleaseNameInfo($ti, $ti->{torrentName});
 
-	$ti->{torrentSize} = convertToByteSizeString(convertByteSizeString($ti->{torrentSize})) || "";
 	$ti->{preTime} = convertToTimeSinceString(convertTimeSinceString($ti->{preTime})) || "";
 	$ti->{scene} = convertStringToBoolean($ti->{scene}) if $ti->{scene};
 	$ti->{freeleech} = convertStringToBoolean($ti->{freeleech}) if $ti->{freeleech};

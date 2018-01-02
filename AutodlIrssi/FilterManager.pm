@@ -140,9 +140,6 @@ sub checkFilter {
 	return 0 if $filter->{matchUploaders} ne '' && !checkFilterStrings($ti->{uploader}, $filter->{matchUploaders});
 	return 0 if $filter->{exceptUploaders} ne '' && checkFilterStrings($ti->{uploader}, $filter->{exceptUploaders});
 
-	my $torrentSize = convertByteSizeString($ti->{torrentSize});
-	return 0 if !checkFilterSize($torrentSize, $filter);
-
 	my $maxPreTime = convertTimeSinceString($filter->{maxPreTime});
 	if (defined $maxPreTime) {
 		my $preTime = convertTimeSinceString($ti->{preTime});
