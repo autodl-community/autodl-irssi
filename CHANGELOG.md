@@ -3,6 +3,20 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
+## [community-v2.1.0](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.1.0) (2018-01-19)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.1...community-v2.1.0)
+
+### Added
+
+* Add 4k alias for 2160p resolution.
+
+### Changed
+
+* Split up remux encoders.
+* Use proper size unit prefixes in status messages.
+
+
 ## [community-v2.0.1](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.0.1) (2017-12-14)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.0...community-v2.0.1)
