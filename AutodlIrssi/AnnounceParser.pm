@@ -470,7 +470,7 @@ sub onAllLinesMatched {
 		$msg =~ s/(\/(?:rss\/download|rssdownload\.php|download\.php)\/\d+\/)([\da-zA-Z]+)(\/.*.torrent)/$1<removed>$3/;
 		$msg =~ s/(?<=secret_key=)([\da-zA-Z]+)/<removed>/;
 		$msg =~ s/(?<=pk=)([\da-zA-Z]+)/<removed>/;
-		$msg =~ s/(?<=\/)([\da-zA-Z]{32})(?=\/)/<removed>/;
+		$msg =~ s/(?<=\/)([\da-zA-Z]{32})/<removed>/;
 
 		umessage $msg;
 	}
