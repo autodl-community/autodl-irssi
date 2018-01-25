@@ -683,19 +683,19 @@ sub extractReleaseNameInfo {
 	my $indexResolution;
 	if ($data = $find->($AutodlIrssi::Constants::tvResolutions)) {
 		$indexResolution = $data->{index};
-		$out->{resolution} = $data->{value};
+		$setVariable->("resolution", $data->{value});
 	}
 
 	my $indexSource;
 	if ($data = $find->($AutodlIrssi::Constants::tvSources)) {
 		$indexSource = $data->{index};
-		$out->{source} = $data->{value};
+		$setVariable->("source", $data->{value});
 	}
 
 	my $indexEncoder;
 	if ($data = $find->($AutodlIrssi::Constants::tvEncoders)) {
 		$indexEncoder = $data->{index};
-		$out->{encoder} = $data->{value};
+		$setVariable->("encoder", $data->{value});
 	}
 
 	my $indexIgnore;
