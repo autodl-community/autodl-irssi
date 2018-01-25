@@ -462,14 +462,14 @@ sub onAllLinesMatched {
 		$dumpVars->($ti->{httpHeaders});
 
 		# Censor private information from torrentUrl.
-		$msg =~ s/(?<=authkey=)([\da-zA-Z]+)/<removed>/;
-		$msg =~ s/(?<=passkey=)([\da-zA-Z]+)/<removed>/;
-		$msg =~ s/(?<=torrent_pass=)([\da-zA-Z]+)/<removed>/;
+		$msg =~ s/(?<=authkey=)([\da-zA-Z]+)/<authkey>/;
+		$msg =~ s/(?<=passkey=)([\da-zA-Z]+)/<passkey>/;
+		$msg =~ s/(?<=torrent_pass=)([\da-zA-Z]+)/<torrent_pass>/;
 
 		# Special treatment for some trackers is needed.
 		$msg =~ s/(\/(?:rss\/download|rssdownload\.php|download\.php)\/\d+\/)([\da-zA-Z]+)(\/.*.torrent)/$1<removed>$3/;
-		$msg =~ s/(?<=secret_key=)([\da-zA-Z]+)/<removed>/;
-		$msg =~ s/(?<=pk=)([\da-zA-Z]+)/<removed>/;
+		$msg =~ s/(?<=secret_key=)([\da-zA-Z]+)/<secret_key>/;
+		$msg =~ s/(?<=pk=)([\da-zA-Z]+)/<pk>/;
 		$msg =~ s/(?<=\/)([\da-zA-Z]{32})/<removed>/;
 
 		umessage $msg;
