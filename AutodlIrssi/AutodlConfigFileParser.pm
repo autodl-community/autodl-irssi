@@ -37,7 +37,7 @@ use base qw/ AutodlIrssi::ConfigFileParser /;
 
 sub defaultOptions {
 	return {
-		updateCheck => 'ask',	# auto, ask, disabled
+		updateCheck => 'auto',	# auto, ask, disabled
 		githubToken => '',
 		userAgent => 'autodl-irssi',
 		userAgentTracker => '',
@@ -460,7 +460,7 @@ sub doHeaderOptions {
 	if ($self->{options}{updateCheck} ne "auto" &&
 		$self->{options}{updateCheck} ne "ask" &&
 		$self->{options}{updateCheck} ne "disabled") {
-		$self->{options}{updateCheck} = "ask";
+		$self->{options}{updateCheck} = "auto";
 	}
 	$self->{options}{rtPriority} = _convertPriority($self->{options}{rtPriority});
 	$self->{options}{rtIgnoreScheduler} = convertStringToBoolean($self->{options}{rtIgnoreScheduler});
