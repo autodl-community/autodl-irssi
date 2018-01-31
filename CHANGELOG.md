@@ -3,6 +3,21 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
+## [community-v2.2.0](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.2.0) (2018-01-30)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.1.0...community-v2.2.0)
+
+### Changed
+
+* Change censor placeholders to be more specific.
+* Make auto updates the default.
+
+### Fixed
+
+* Make censor regex work with or without trailing slash.
+* Don't overwrite already set variables in auto extractor.
+
+
 ## [community-v2.1.0](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.1.0) (2018-01-19)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.1...community-v2.1.0)
