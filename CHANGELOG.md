@@ -3,9 +3,9 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
-## [community-v2.2.0](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.2.0) (2018-01-30)
+## [v2.2.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.2.0) (2018-01-30)
 
-[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.1.0...community-v2.2.0)
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.1.0...v2.2.0)
 
 ### Changed
 
@@ -18,9 +18,9 @@ Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-ir
 * Don't overwrite already set variables in auto extractor.
 
 
-## [community-v2.1.0](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.1.0) (2018-01-19)
+## [v2.1.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.1.0) (2018-01-19)
 
-[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.1...community-v2.1.0)
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.1...v2.1.0)
 
 ### Added
 
