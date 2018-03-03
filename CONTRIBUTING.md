@@ -1,6 +1,7 @@
 ## Submitting an issue
 
 Bug reports and feature requests can be submitted to our [Issue Tracker](https://github.com/autodl-community/autodl-irssi/issues).
+For support, use [Discord](http://discord.autodl.community).
 
 Some general guidelines to follow:
 
