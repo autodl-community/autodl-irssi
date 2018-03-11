@@ -131,6 +131,7 @@ our $musicFormats = [
 	["AAC"],
 	["AC3"],
 	["DTS"],
+	["TrueHD"],
 ];
 
 our $musicBitrates = [
