@@ -62,7 +62,7 @@ our $tvSources = [
 	["HR.PDTV"],
 	["HR.HDTV"],
 	["DVDRip"],
-	["DVDSCR", "DVDScr", "DVDSCREENER", "DVDScreener", "DVD-SCREENER", "DVD-Screener", "SCR", "Scr", "SCREENER", "Screener"],
+	["DVDScr", "DVDScreener", "DVD-Screener", "Scr", "Screener"],
 	["BDr"],
 	["BD5"],
 	["BD9"],
@@ -73,7 +73,7 @@ our $tvSources = [
 	["HDDVDRip", "HD-DVDRip"],
 	["BluRay", "Blu-Ray", "MBluRay"],
 	["WEB-DL", "WEB", "WEBDL"],
-	["Webrip", "WebRip", "WEBRip", "WEBRIP"],
+	["Webrip"],
 	["TVRip", "TV"],
 	["CAM"],
 	["HDCAM", "HD-CAM", "HD CAM"],
@@ -89,12 +89,12 @@ our $tvSources = [
 ];
 
 our $tvEncoders = [
-	["XviD", "XVID", "XvidHD"],
+	["XviD", "XvidHD"],
 	["DivX"],
-	["x264", "X264"],
 	["x264-Hi10p", "Hi10p", "10-bit"],
+	["x264"],
 	["AVC", "h.264", "h264"],
-	["x265", "X265"],
+	["x265"],
 	["HEVC", "h.265", "h265"],
 	["mpeg2", "mpeg-2"],
 	["VC-1", "VC1"],
