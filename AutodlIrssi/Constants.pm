@@ -143,7 +143,7 @@ our $musicBitrates = [
 	["q8.x (VBR)"],
 	["320"],
 	["Lossless"],
-	["24bit Lossless"],
+	["24bit Lossless", "Lossless 24-bit"],
 	["Other"],
 ];
 
