@@ -3,6 +3,19 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
+## [v2.3.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.3.0) (2018-03-10)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.2.0...v2.3.0)
+
+### Added
+
+* Add "h264 10-bit to constants.
+* Add constant group for h265/x265 10-bit.
+* Add "Lossless 24-bit" to constants.
+* Add WMA to constants.
+* Add TrueHD to constants.
+
+
 ## [v2.2.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.2.0) (2018-01-30)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.1.0...v2.2.0)
