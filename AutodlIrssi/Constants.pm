@@ -125,6 +125,7 @@ our $musicReleaseTypes = [
 
 our $musicFormats = [
 	["MP3"],
+	["WMA"],
 	["FLAC"],
 	["Ogg","Ogg Vorbis"],
 	["AAC"],
