@@ -91,8 +91,8 @@ our $tvSources = [
 our $tvEncoders = [
 	["XviD", "XvidHD"],
 	["DivX"],
-	["x264-Hi10p", "Hi10p", "10-bit"],
 	["x264"],
+	["x264-Hi10p", "Hi10p", "10-bit", "h264 10-bit"],
 	["AVC", "h.264", "h264"],
 	["x265"],
 	["HEVC", "h.265", "h265"],
