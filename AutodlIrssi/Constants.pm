@@ -95,6 +95,7 @@ our $tvEncoders = [
 	["x264-Hi10p", "Hi10p", "10-bit", "h264 10-bit"],
 	["AVC", "h.264", "h264"],
 	["x265"],
+	["x265-Hi10p", "h265 10-bit"],
 	["HEVC", "h.265", "h265"],
 	["mpeg2", "mpeg-2"],
 	["VC-1", "VC1"],
