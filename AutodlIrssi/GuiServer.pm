@@ -189,7 +189,6 @@ use File::Basename;
 use File::Spec;
 
 # The address we listen for connections. Default is 127.0.0.1
-use constant LISTEN_ADDRESS => '127.0.0.1';
 
 sub new {
 	my ($class, $autodlCmd) = @_;
@@ -218,7 +217,7 @@ sub setListenPort {
 		$port = 0 if $port < 0 || $port > 0xFFFF;
 		return if $self->{port} == $port;
 
-		my $address = LISTEN_ADDRESS;
+		my $address = $AutodlIrssi::g->{options}{guiServerIp};
 		$self->{serverSocket}->setAddress($address, $port);
 		$self->{port} = $port;
 

@@ -69,6 +69,7 @@ sub defaultOptions {
 		memoryLeakCheck => 0,
 		guiServerPort => 0,
 		guiServerPassword => '',
+		guiServerIp => '127.0.0.1',
 		uniqueTorrentNames => 0,
 
 		webui => {
@@ -444,6 +445,7 @@ sub doHeaderOptions {
 		'memory-leak-check' => 'memoryLeakCheck',
 		'gui-server-port' => 'guiServerPort',
 		'gui-server-password' => 'guiServerPassword',
+		'gui-server-ip' => 'guiServerIp',
 		'unique-torrent-names' => 'uniqueTorrentNames',
 	});
 
