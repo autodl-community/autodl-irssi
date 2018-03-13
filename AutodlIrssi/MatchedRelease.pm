@@ -618,7 +618,7 @@ sub _getRtAddress {
 		}
 	}
 
-	$rtAddress = "127.0.0.1$rtAddress" if $rtAddress =~ /^:\d{1,5}$/;
+	$rtAddress = "$AutodlIrssi::g->{options}{guiServerIp}$rtAddress" if $rtAddress =~ /^:\d{1,5}$/;
 
 	return $rtAddress if isInternetAddress($rtAddress);
 	return getAbsPath($rtAddress);
@@ -674,7 +674,7 @@ sub _sendRtorrent {
 		createDirectories($rtDir) if $rtDir ne "";
 
 		# Set REMOTE_ADDR since there could be user commands
-		my $scgi = new AutodlIrssi::Scgi($rtAddress, {REMOTE_ADDR => "127.0.0.1"});
+		my $scgi = new AutodlIrssi::Scgi($rtAddress, {REMOTE_ADDR => $AutodlIrssi::g->{options}{guiServerIp}});
 		my $xmlrpc = new AutodlIrssi::XmlRpcSimpleCall($scgi);
 		$xmlrpc->method($rtPriority eq '0' ? 'load.normal' : 'load.start');
 		$xmlrpc->string($filename);

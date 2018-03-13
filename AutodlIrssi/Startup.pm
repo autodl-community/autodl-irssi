@@ -356,6 +356,7 @@ sub reloadAutodlConfigFile {
 				my $options = $configFileParser->getOptions();
 				$AutodlIrssi::g->{options}{guiServerPort} = $options->{guiServerPort} if $options->{guiServerPort} != 0;
 				$AutodlIrssi::g->{options}{guiServerPassword} = $options->{guiServerPassword} if $options->{guiServerPassword} ne "";
+				$AutodlIrssi::g->{options}{guiServerIp} = $options->{guiServerIp} if $options->{guiServerIp} ne "";
 				$AutodlIrssi::g->{options}{rtAddress} = $options->{rtAddress} if $options->{rtAddress} ne "";
 			}
 		}
