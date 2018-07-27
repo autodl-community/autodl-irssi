@@ -22,6 +22,7 @@ The file is made up of headers in the form of ``[headername]`` with the options 
 The headers are:
 
 * [Options](options.md) - Global options for autodl-irssi
+* [Actions](actions.md) - Torrent action settings
 * [IRC](irc.md) - General IRC configuration for autodl-irssi
 * [Server](server.md) - Settings for tracker IRC servers
 * [Channel](channel.md) - Settings for tracker announce channels

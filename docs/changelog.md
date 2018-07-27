@@ -1,6 +1,81 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
+## [v2.3.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.3.0) (2018-03-10)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.2.0...v2.3.0)
+
+### Added
+
+* Add "h264 10-bit to constants.
+* Add constant group for h265/x265 10-bit.
+* Add "Lossless 24-bit" to constants.
+* Add WMA to constants.
+* Add TrueHD to constants.
+
+
+## [v2.2.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.2.0) (2018-01-30)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.1.0...v2.2.0)
+
+### Changed
+
+* Change censor placeholders to be more specific.
+* Make auto updates the default.
+
+### Fixed
+
+* Make censor regex work with or without trailing slash.
+* Don't overwrite already set variables in auto extractor.
+
+
+## [v2.1.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.1.0) (2018-01-19)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.1...v2.1.0)
+
+### Added
+
+* Add 4k alias for 2160p resolution.
+
+### Changed
+
+* Split up remux encoders.
+* Use proper size unit prefixes in status messages.
+
+
+## [community-v2.0.1](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.0.1) (2017-12-14)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.0...community-v2.0.1)
+
+### Changed
+
+* Revert "Allow overriding torrent action settings in a filter without needing to set them all".
+
+
+## [community-v2.0.0](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.0.0) (2017-12-12)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.65...community-v2.0.0)
+
+### Added
+
+* Add h265 remux to constants.
+* Add test upload-type.
+
+### Changed
+
+* Allow overriding torrent action settings in a filter without needing to set them all.
+* Deprecate autodl2.cfg.
+
+### Removed
+
+* Remove support for allowed option.
+* Removed support for /etc/autodl.cfg.
+
+### Fixed
+
+* Fix smart-episode option ignoring proper/repack.
+
+
 ## [community-v1.65](https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.65) (2017-08-30)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/community-v1.64...community-v1.65)

@@ -62,7 +62,6 @@ Create one [filter] header per filter like **[filter MY FILTER NAME]**. All filt
 
 ## P2P
 
-
 #### match-releases
 > **Type:** Comma separated list
 **Example:** match-releases = The?Simpsons*, American?Dad*
@@ -141,7 +140,7 @@ Create one [filter] header per filter like **[filter MY FILTER NAME]**. All filt
 #### encoders
 > **Type:** Comma separated list
 **Example:** encoders = x264, xvid
-**Description:** If you don't want windows WMV files, this option could be useful. :) Valid encoders are: **XviD**, **DivX**, **x264**, **h.264** (or **h264**), **mpeg2** (or **mpeg-2**), **VC-1** (or **VC1**), **WMV**, **Remux** (or **h.264 Remux**, **h264 Remux**, **VC-1 Remux**, **VC1 Remux**).
+**Description:** If you don't want windows WMV files, this option could be useful. :) Valid encoders are: **XviD**, **DivX**, **x264**, **h.264** (or **h264**), **mpeg2** (or **mpeg-2**), **VC-1** (or **VC1**), **WMV**, **Remux**, **h.264 Remux** (or **h264 Remux**), **VC-1 Remux** (or **VC1 Remux**).
 
 #### sources
 > **Type:** Comma separated list
@@ -158,7 +157,7 @@ Create one [filter] header per filter like **[filter MY FILTER NAME]**. All filt
 **Example:** years = 1999, 2005-2010
 **Description:** Not all releases have a year in the torrent name, but if it does, you can use it to filter out too old or too new releases.
 
-# Music
+## Music
 
 #### years
 > **Type:** Number list

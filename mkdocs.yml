@@ -11,12 +11,12 @@ theme:
     github: autodl-community
 
 markdown_extensions:
-  - admonition
-  - codehilite
-  - footnotes
-  - nl2br
-  - sane_lists
-  - toc(permalink=true)
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite
+  - markdown.extensions.footnotes
+  - markdown.extensions.nl2br
+  - markdown.extensions.sane_lists
+  - markdown.extensions.toc(permalink=true)
   - pymdownx.betterem(smart_enable=all)
   - pymdownx.caret
   - pymdownx.critic
@@ -35,6 +35,7 @@ pages:
   - Configuration:
     - Overview: configuration/overview.md
     - Options: configuration/options.md
+    - Actions: configuration/actions.md
     - IRC: configuration/irc.md
     - Server: configuration/server.md
     - Channel: configuration/channel.md
