@@ -19,6 +19,10 @@
       
         <meta name="lang:search.language" content="en">
       
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
         <meta name="lang:search.result.none" content="No matching documents">
       
         <meta name="lang:search.result.one" content="1 matching document">
@@ -28,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-2.9.2">
     
     
       
@@ -36,42 +40,68 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.ba0fd1a6.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.6079476c.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
       
     
     
       <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
     
     
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
       
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
   </head>
   
     
     
-    
-      <body data-md-color-primary="blue" data-md-color-accent="deep-orange">
-    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="deep-orange">
   
     <svg class="md-svg">
       <defs>
         
         
-          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
         
       </defs>
     </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#v230-2018-03-10" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -84,7 +114,7 @@
         </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
@@ -103,15 +133,17 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
             
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
-  <div class="md-search__inner">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
-      <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -141,7 +173,7 @@
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
+          <use xlink:href="#__github" width="24" height="24"></use>
         </svg>
       </div>
     
@@ -170,7 +202,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
     <span class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
@@ -190,7 +222,7 @@
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#github" width="24" height="24"></use>
+          <use xlink:href="#__github" width="24" height="24"></use>
         </svg>
       </div>
     
@@ -278,6 +310,18 @@
   <li class="md-nav__item">
     <a href="../configuration/options/" title="Options" class="md-nav__link">
       Options
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../configuration/actions/" title="Actions" class="md-nav__link">
+      Actions
     </a>
   </li>
 
@@ -380,10 +424,10 @@
 
   <li class="md-nav__item md-nav__item--active">
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
-      <label class="md-nav__link md-nav__link--active" for="toc">
+      <label class="md-nav__link md-nav__link--active" for="__toc">
         Changelog
       </label>
     
@@ -396,12 +440,12 @@
   
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
+    <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#community-v165-2017-08-30" title="community-v1.65 (2017-08-30)" class="md-nav__link">
-    community-v1.65 (2017-08-30)
+  <a href="#v230-2018-03-10" title="v2.3.0 (2018-03-10)" class="md-nav__link">
+    v2.3.0 (2018-03-10)
   </a>
   
     <nav class="md-nav">
@@ -414,8 +458,143 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v220-2018-01-30" title="v2.2.0 (2018-01-30)" class="md-nav__link">
+    v2.2.0 (2018-01-30)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#fixed" title="Fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v210-2018-01-19" title="v2.1.0 (2018-01-19)" class="md-nav__link">
+    v2.1.0 (2018-01-19)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" title="Added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community-v201-2017-12-14" title="community-v2.0.1 (2017-12-14)" class="md-nav__link">
+    community-v2.0.1 (2017-12-14)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_2" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community-v200-2017-12-12" title="community-v2.0.0 (2017-12-12)" class="md-nav__link">
+    community-v2.0.0 (2017-12-12)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_2" title="Added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_3" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed" title="Removed" class="md-nav__link">
+    Removed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_1" title="Fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community-v165-2017-08-30" title="community-v1.65 (2017-08-30)" class="md-nav__link">
+    community-v1.65 (2017-08-30)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_3" title="Added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_2" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -435,14 +614,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_1" title="Added" class="md-nav__link">
+  <a href="#added_4" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_1" title="Fixed" class="md-nav__link">
+  <a href="#fixed_3" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -462,14 +641,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed" title="Changed" class="md-nav__link">
+  <a href="#changed_4" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_2" title="Fixed" class="md-nav__link">
+  <a href="#fixed_4" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -489,7 +668,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_2" title="Added" class="md-nav__link">
+  <a href="#added_5" title="Added" class="md-nav__link">
     Added
   </a>
   
@@ -509,14 +688,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_3" title="Added" class="md-nav__link">
+  <a href="#added_6" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_1" title="Changed" class="md-nav__link">
+  <a href="#changed_5" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -536,7 +715,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed_2" title="Changed" class="md-nav__link">
+  <a href="#changed_6" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -556,7 +735,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_4" title="Added" class="md-nav__link">
+  <a href="#added_7" title="Added" class="md-nav__link">
     Added
   </a>
   
@@ -576,7 +755,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed_3" title="Changed" class="md-nav__link">
+  <a href="#changed_7" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -596,14 +775,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_5" title="Added" class="md-nav__link">
+  <a href="#added_8" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_3" title="Fixed" class="md-nav__link">
+  <a href="#fixed_5" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -623,14 +802,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_6" title="Added" class="md-nav__link">
+  <a href="#added_9" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_4" title="Changed" class="md-nav__link">
+  <a href="#changed_8" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -650,14 +829,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_7" title="Added" class="md-nav__link">
+  <a href="#added_10" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_5" title="Changed" class="md-nav__link">
+  <a href="#changed_9" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -677,14 +856,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_8" title="Added" class="md-nav__link">
+  <a href="#added_11" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_6" title="Changed" class="md-nav__link">
+  <a href="#changed_10" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -704,7 +883,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_9" title="Added" class="md-nav__link">
+  <a href="#added_12" title="Added" class="md-nav__link">
     Added
   </a>
   
@@ -724,14 +903,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_10" title="Added" class="md-nav__link">
+  <a href="#added_13" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_7" title="Changed" class="md-nav__link">
+  <a href="#changed_11" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -751,14 +930,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_11" title="Added" class="md-nav__link">
+  <a href="#added_14" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_8" title="Changed" class="md-nav__link">
+  <a href="#changed_12" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -778,14 +957,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_12" title="Added" class="md-nav__link">
+  <a href="#added_15" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_9" title="Changed" class="md-nav__link">
+  <a href="#changed_13" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -805,14 +984,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_13" title="Added" class="md-nav__link">
+  <a href="#added_16" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_10" title="Changed" class="md-nav__link">
+  <a href="#changed_14" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -832,21 +1011,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_14" title="Added" class="md-nav__link">
+  <a href="#added_17" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_11" title="Changed" class="md-nav__link">
+  <a href="#changed_15" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_4" title="Fixed" class="md-nav__link">
+  <a href="#fixed_6" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -866,28 +1045,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_15" title="Added" class="md-nav__link">
+  <a href="#added_18" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_12" title="Changed" class="md-nav__link">
+  <a href="#changed_16" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#removed" title="Removed" class="md-nav__link">
+  <a href="#removed_1" title="Removed" class="md-nav__link">
     Removed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_5" title="Fixed" class="md-nav__link">
+  <a href="#fixed_7" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -907,28 +1086,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_16" title="Added" class="md-nav__link">
+  <a href="#added_19" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_13" title="Changed" class="md-nav__link">
+  <a href="#changed_17" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#removed_1" title="Removed" class="md-nav__link">
+  <a href="#removed_2" title="Removed" class="md-nav__link">
     Removed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_6" title="Fixed" class="md-nav__link">
+  <a href="#fixed_8" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -948,28 +1127,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_17" title="Added" class="md-nav__link">
+  <a href="#added_20" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_14" title="Changed" class="md-nav__link">
+  <a href="#changed_18" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#removed_2" title="Removed" class="md-nav__link">
+  <a href="#removed_3" title="Removed" class="md-nav__link">
     Removed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_7" title="Fixed" class="md-nav__link">
+  <a href="#fixed_9" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -986,6 +1165,8 @@
   </a>
   
 </li>
+      
+      
       
       
       
@@ -1011,12 +1192,12 @@
   
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
+    <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#community-v165-2017-08-30" title="community-v1.65 (2017-08-30)" class="md-nav__link">
-    community-v1.65 (2017-08-30)
+  <a href="#v230-2018-03-10" title="v2.3.0 (2018-03-10)" class="md-nav__link">
+    v2.3.0 (2018-03-10)
   </a>
   
     <nav class="md-nav">
@@ -1029,8 +1210,143 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v220-2018-01-30" title="v2.2.0 (2018-01-30)" class="md-nav__link">
+    v2.2.0 (2018-01-30)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#fixed" title="Fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v210-2018-01-19" title="v2.1.0 (2018-01-19)" class="md-nav__link">
+    v2.1.0 (2018-01-19)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" title="Added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community-v201-2017-12-14" title="community-v2.0.1 (2017-12-14)" class="md-nav__link">
+    community-v2.0.1 (2017-12-14)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_2" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community-v200-2017-12-12" title="community-v2.0.0 (2017-12-12)" class="md-nav__link">
+    community-v2.0.0 (2017-12-12)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_2" title="Added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_3" title="Changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed" title="Removed" class="md-nav__link">
+    Removed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_1" title="Fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community-v165-2017-08-30" title="community-v1.65 (2017-08-30)" class="md-nav__link">
+    community-v1.65 (2017-08-30)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_3" title="Added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_2" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1050,14 +1366,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_1" title="Added" class="md-nav__link">
+  <a href="#added_4" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_1" title="Fixed" class="md-nav__link">
+  <a href="#fixed_3" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1077,14 +1393,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed" title="Changed" class="md-nav__link">
+  <a href="#changed_4" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_2" title="Fixed" class="md-nav__link">
+  <a href="#fixed_4" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1104,7 +1420,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_2" title="Added" class="md-nav__link">
+  <a href="#added_5" title="Added" class="md-nav__link">
     Added
   </a>
   
@@ -1124,14 +1440,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_3" title="Added" class="md-nav__link">
+  <a href="#added_6" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_1" title="Changed" class="md-nav__link">
+  <a href="#changed_5" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1151,7 +1467,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed_2" title="Changed" class="md-nav__link">
+  <a href="#changed_6" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1171,7 +1487,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_4" title="Added" class="md-nav__link">
+  <a href="#added_7" title="Added" class="md-nav__link">
     Added
   </a>
   
@@ -1191,7 +1507,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed_3" title="Changed" class="md-nav__link">
+  <a href="#changed_7" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1211,14 +1527,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_5" title="Added" class="md-nav__link">
+  <a href="#added_8" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_3" title="Fixed" class="md-nav__link">
+  <a href="#fixed_5" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1238,14 +1554,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_6" title="Added" class="md-nav__link">
+  <a href="#added_9" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_4" title="Changed" class="md-nav__link">
+  <a href="#changed_8" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1265,14 +1581,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_7" title="Added" class="md-nav__link">
+  <a href="#added_10" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_5" title="Changed" class="md-nav__link">
+  <a href="#changed_9" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1292,14 +1608,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_8" title="Added" class="md-nav__link">
+  <a href="#added_11" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_6" title="Changed" class="md-nav__link">
+  <a href="#changed_10" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1319,7 +1635,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_9" title="Added" class="md-nav__link">
+  <a href="#added_12" title="Added" class="md-nav__link">
     Added
   </a>
   
@@ -1339,14 +1655,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_10" title="Added" class="md-nav__link">
+  <a href="#added_13" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_7" title="Changed" class="md-nav__link">
+  <a href="#changed_11" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1366,14 +1682,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_11" title="Added" class="md-nav__link">
+  <a href="#added_14" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_8" title="Changed" class="md-nav__link">
+  <a href="#changed_12" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1393,14 +1709,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_12" title="Added" class="md-nav__link">
+  <a href="#added_15" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_9" title="Changed" class="md-nav__link">
+  <a href="#changed_13" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1420,14 +1736,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_13" title="Added" class="md-nav__link">
+  <a href="#added_16" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_10" title="Changed" class="md-nav__link">
+  <a href="#changed_14" title="Changed" class="md-nav__link">
     Changed
   </a>
   
@@ -1447,21 +1763,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_14" title="Added" class="md-nav__link">
+  <a href="#added_17" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_11" title="Changed" class="md-nav__link">
+  <a href="#changed_15" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_4" title="Fixed" class="md-nav__link">
+  <a href="#fixed_6" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1481,28 +1797,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_15" title="Added" class="md-nav__link">
+  <a href="#added_18" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_12" title="Changed" class="md-nav__link">
+  <a href="#changed_16" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#removed" title="Removed" class="md-nav__link">
+  <a href="#removed_1" title="Removed" class="md-nav__link">
     Removed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_5" title="Fixed" class="md-nav__link">
+  <a href="#fixed_7" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1522,28 +1838,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_16" title="Added" class="md-nav__link">
+  <a href="#added_19" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_13" title="Changed" class="md-nav__link">
+  <a href="#changed_17" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#removed_1" title="Removed" class="md-nav__link">
+  <a href="#removed_2" title="Removed" class="md-nav__link">
     Removed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_6" title="Fixed" class="md-nav__link">
+  <a href="#fixed_8" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1563,28 +1879,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_17" title="Added" class="md-nav__link">
+  <a href="#added_20" title="Added" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_14" title="Changed" class="md-nav__link">
+  <a href="#changed_18" title="Changed" class="md-nav__link">
     Changed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#removed_2" title="Removed" class="md-nav__link">
+  <a href="#removed_3" title="Removed" class="md-nav__link">
     Removed
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_7" title="Fixed" class="md-nav__link">
+  <a href="#fixed_9" title="Fixed" class="md-nav__link">
     Fixed
   </a>
   
@@ -1601,6 +1917,8 @@
   </a>
   
 </li>
+      
+      
       
       
       
@@ -1622,155 +1940,215 @@
                   <h1>Changelog</h1>
                 
                 <p>Notable changes for <a href="https://github.com/autodl-community/autodl-irssi">autodl-irssi</a>.</p>
+<h2 id="v230-2018-03-10"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/v2.3.0">v2.3.0</a> (2018-03-10)<a class="headerlink" href="#v230-2018-03-10" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/autodl-community/autodl-irssi/compare/v2.2.0...v2.3.0">Commits</a></p>
+<h3 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add "h264 10-bit to constants.</li>
+<li>Add constant group for h265/x265 10-bit.</li>
+<li>Add "Lossless 24-bit" to constants.</li>
+<li>Add WMA to constants.</li>
+<li>Add TrueHD to constants.</li>
+</ul>
+<h2 id="v220-2018-01-30"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/v2.2.0">v2.2.0</a> (2018-01-30)<a class="headerlink" href="#v220-2018-01-30" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/autodl-community/autodl-irssi/compare/v2.1.0...v2.2.0">Commits</a></p>
+<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Change censor placeholders to be more specific.</li>
+<li>Make auto updates the default.</li>
+</ul>
+<h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Make censor regex work with or without trailing slash.</li>
+<li>Don't overwrite already set variables in auto extractor.</li>
+</ul>
+<h2 id="v210-2018-01-19"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/v2.1.0">v2.1.0</a> (2018-01-19)<a class="headerlink" href="#v210-2018-01-19" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.1...v2.1.0">Commits</a></p>
+<h3 id="added_1">Added<a class="headerlink" href="#added_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add 4k alias for 2160p resolution.</li>
+</ul>
+<h3 id="changed_1">Changed<a class="headerlink" href="#changed_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Split up remux encoders.</li>
+<li>Use proper size unit prefixes in status messages.</li>
+</ul>
+<h2 id="community-v201-2017-12-14"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.0.1">community-v2.0.1</a> (2017-12-14)<a class="headerlink" href="#community-v201-2017-12-14" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v2.0.0...community-v2.0.1">Commits</a></p>
+<h3 id="changed_2">Changed<a class="headerlink" href="#changed_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Revert "Allow overriding torrent action settings in a filter without needing to set them all".</li>
+</ul>
+<h2 id="community-v200-2017-12-12"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v2.0.0">community-v2.0.0</a> (2017-12-12)<a class="headerlink" href="#community-v200-2017-12-12" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.65...community-v2.0.0">Commits</a></p>
+<h3 id="added_2">Added<a class="headerlink" href="#added_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add h265 remux to constants.</li>
+<li>Add test upload-type.</li>
+</ul>
+<h3 id="changed_3">Changed<a class="headerlink" href="#changed_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Allow overriding torrent action settings in a filter without needing to set them all.</li>
+<li>Deprecate autodl2.cfg.</li>
+</ul>
+<h3 id="removed">Removed<a class="headerlink" href="#removed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Remove support for allowed option.</li>
+<li>Removed support for /etc/autodl.cfg.</li>
+</ul>
+<h3 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix smart-episode option ignoring proper/repack.</li>
+</ul>
 <h2 id="community-v165-2017-08-30"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.65">community-v1.65</a> (2017-08-30)<a class="headerlink" href="#community-v165-2017-08-30" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.64...community-v1.65">Commits</a></p>
-<h3 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h3>
+<h3 id="added_3">Added<a class="headerlink" href="#added_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add 2160p resolution to constants.</li>
 </ul>
-<h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_2">Fixed<a class="headerlink" href="#fixed_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Fix bad subroutine references.</li>
 </ul>
 <h2 id="community-v164-2017-03-18"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.64">community-v1.64</a> (2017-03-18)<a class="headerlink" href="#community-v164-2017-03-18" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.63...community-v1.64">Commits</a></p>
-<h3 id="added_1">Added<a class="headerlink" href="#added_1" title="Permanent link">&para;</a></h3>
+<h3 id="added_4">Added<a class="headerlink" href="#added_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add HEVC/x265 constants.</li>
 </ul>
-<h3 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_3">Fixed<a class="headerlink" href="#fixed_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Fixed update callback references.</li>
 </ul>
 <h2 id="community-v163-2017-03-09"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.63">community-v1.63</a> (2017-03-09)<a class="headerlink" href="#community-v163-2017-03-09" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.62...community-v1.63">Commits</a></p>
-<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<h3 id="changed_4">Changed<a class="headerlink" href="#changed_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add release to download history earlier in the process.</li>
 </ul>
-<h3 id="fixed_2">Fixed<a class="headerlink" href="#fixed_2" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_4">Fixed<a class="headerlink" href="#fixed_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Fix smart-episode logic.</li>
 </ul>
 <h2 id="community-v162-2016-03-14"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.62">community-v1.62</a> (2016-03-14)<a class="headerlink" href="#community-v162-2016-03-14" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.61...community-v1.62">Commits</a></p>
-<h3 id="added_2">Added<a class="headerlink" href="#added_2" title="Permanent link">&para;</a></h3>
+<h3 id="added_5">Added<a class="headerlink" href="#added_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add smart-episode filter option.</li>
 </ul>
 <h2 id="community-v161-2016-01-25"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.61">community-v1.61</a> (2016-01-25)<a class="headerlink" href="#community-v161-2016-01-25" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.60...community-v1.61">Commits</a></p>
-<h3 id="added_3">Added<a class="headerlink" href="#added_3" title="Permanent link">&para;</a></h3>
+<h3 id="added_6">Added<a class="headerlink" href="#added_6" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add priority filter option.</li>
 <li>Add message for successful loading of configuration files.</li>
 </ul>
-<h3 id="changed_1">Changed<a class="headerlink" href="#changed_1" title="Permanent link">&para;</a></h3>
+<h3 id="changed_5">Changed<a class="headerlink" href="#changed_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Changed method for matching release groups.</li>
 </ul>
 <h2 id="community-v160-2015-10-01"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.60">community-v1.60</a> (2015-10-01)<a class="headerlink" href="#community-v160-2015-10-01" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.54...community-v1.60">Commits</a></p>
-<h3 id="changed_2">Changed<a class="headerlink" href="#changed_2" title="Permanent link">&para;</a></h3>
+<h3 id="changed_6">Changed<a class="headerlink" href="#changed_6" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add warning message for using bare wildcards in filter options. Filters using bare wildcards will no longer work.</li>
 <li>Change updater to use GitHub's Releases API.</li>
 </ul>
 <h2 id="community-v154-2015-04-30"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.54">community-v1.54</a> (2015-04-30)<a class="headerlink" href="#community-v154-2015-04-30" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.53...community-v1.54">Commits</a></p>
-<h3 id="added_4">Added<a class="headerlink" href="#added_4" title="Permanent link">&para;</a></h3>
+<h3 id="added_7">Added<a class="headerlink" href="#added_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add regex for sensitive data censoring.</li>
 <li>Add SNI support to SSLSocket.</li>
 </ul>
 <h2 id="community-v153-2015-04-16"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.53">community-v1.53</a> (2015-04-16)<a class="headerlink" href="#community-v153-2015-04-16" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.52...community-v1.53">Commits</a></p>
-<h3 id="changed_3">Changed<a class="headerlink" href="#changed_3" title="Permanent link">&para;</a></h3>
+<h3 id="changed_7">Changed<a class="headerlink" href="#changed_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Re-add '-' to replacement list for canonicalization.</li>
 <li>Change rTorrent commands/mehtods to use new style.</li>
 </ul>
 <h2 id="community-v152-2015-03-13"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.52">community-v1.52</a> (2015-03-13)<a class="headerlink" href="#community-v152-2015-03-13" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.51...community-v1.52">Commits</a></p>
-<h3 id="added_5">Added<a class="headerlink" href="#added_5" title="Permanent link">&para;</a></h3>
+<h3 id="added_8">Added<a class="headerlink" href="#added_8" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add match-release-groups filter option. This should be used instead of release-groups.</li>
 </ul>
-<h3 id="fixed_3">Fixed<a class="headerlink" href="#fixed_3" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_5">Fixed<a class="headerlink" href="#fixed_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Fix except-release groups filter option.</li>
 </ul>
 <h2 id="community-v151-2015-02-25"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.51">community-v1.51</a> (2015-02-25)<a class="headerlink" href="#community-v151-2015-02-25" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.50...community-v1.51">Commits</a></p>
-<h3 id="added_6">Added<a class="headerlink" href="#added_6" title="Permanent link">&para;</a></h3>
+<h3 id="added_9">Added<a class="headerlink" href="#added_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add except-release-groups filter options.</li>
 <li>Add use-regex option to Option and Filter headers. This allows the use of regex syntax for match/except-releases filter options.</li>
 <li>Add advanced-output-sites option.</li>
 </ul>
-<h3 id="changed_4">Changed<a class="headerlink" href="#changed_4" title="Permanent link">&para;</a></h3>
+<h3 id="changed_8">Changed<a class="headerlink" href="#changed_8" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Separate advanced output functionality from the output-level option. Previously, output-level=5 would output variables captured from announces. This functionality is now handled by the advanced-output-sites option.</li>
 </ul>
 <h2 id="community-v150-2015-01-02"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.50">community-v1.50</a> (2015-01-02)<a class="headerlink" href="#community-v150-2015-01-02" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.46...community-v1.50">Commits</a></p>
-<h3 id="added_7">Added<a class="headerlink" href="#added_7" title="Permanent link">&para;</a></h3>
+<h3 id="added_10">Added<a class="headerlink" href="#added_10" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add containers filter option.</li>
 <li>Add release-groups filter option.</li>
 </ul>
-<h3 id="changed_5">Changed<a class="headerlink" href="#changed_5" title="Permanent link">&para;</a></h3>
+<h3 id="changed_9">Changed<a class="headerlink" href="#changed_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Remove torrent size message.</li>
 <li>Move max-download message to only happen when a release is fully matched.</li>
 </ul>
 <h2 id="community-v146-2014-08-24"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.46">community-v1.46</a> (2014-08-24)<a class="headerlink" href="#community-v146-2014-08-24" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.45...community-v1.46">Commits</a></p>
-<h3 id="added_8">Added<a class="headerlink" href="#added_8" title="Permanent link">&para;</a></h3>
+<h3 id="added_11">Added<a class="headerlink" href="#added_11" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add DVD-R to constants.</li>
 <li>Add HDCAM group to constants.</li>
 <li>Add HDTS group to constants.</li>
 <li>Add origins filter option.</li>
 </ul>
-<h3 id="changed_6">Changed<a class="headerlink" href="#changed_6" title="Permanent link">&para;</a></h3>
+<h3 id="changed_10">Changed<a class="headerlink" href="#changed_10" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Removed faulty assumptions from release name auto extractor. Some were outdated. Some caused invalid values. This specifically causes issues with SD resolution releases where the resolution isn't announced separately by the tracker.</li>
 </ul>
 <h2 id="community-v145-2014-05-15"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.45">community-v1.45</a> (2014-05-15)<a class="headerlink" href="#community-v145-2014-05-15" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.44...community-v1.45">Commits</a></p>
-<h3 id="added_9">Added<a class="headerlink" href="#added_9" title="Permanent link">&para;</a></h3>
+<h3 id="added_12">Added<a class="headerlink" href="#added_12" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add CTCP ACTION handling.</li>
 </ul>
 <h2 id="community-v144-2014-04-18"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.44">community-v1.44</a> (2014-04-18)<a class="headerlink" href="#community-v144-2014-04-18" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.43...community-v1.44">Commits</a></p>
-<h3 id="added_10">Added<a class="headerlink" href="#added_10" title="Permanent link">&para;</a></h3>
+<h3 id="added_13">Added<a class="headerlink" href="#added_13" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add 10-bit x264 constant group.</li>
 </ul>
-<h3 id="changed_7">Changed<a class="headerlink" href="#changed_7" title="Permanent link">&para;</a></h3>
+<h3 id="changed_11">Changed<a class="headerlink" href="#changed_11" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Change update check interval to 24 hours.</li>
 <li>Move update hosting to cloud server.</li>
 </ul>
 <h2 id="community-v143-2014-01-13"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.43">community-v1.43</a> (2014-01-13)<a class="headerlink" href="#community-v143-2014-01-13" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.42...community-v1.43">Commits</a></p>
-<h3 id="added_11">Added<a class="headerlink" href="#added_11" title="Permanent link">&para;</a></h3>
+<h3 id="added_14">Added<a class="headerlink" href="#added_14" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Added more source constants.</li>
 </ul>
-<h3 id="changed_8">Changed<a class="headerlink" href="#changed_8" title="Permanent link">&para;</a></h3>
+<h3 id="changed_12">Changed<a class="headerlink" href="#changed_12" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Improve /autodl whatsnew output.</li>
 </ul>
 <h2 id="community-v142-2013-12-17"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.42">community-v1.42</a> (2013-12-17)<a class="headerlink" href="#community-v142-2013-12-17" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.41...community-v1.42">Commits</a></p>
-<h3 id="added_12">Added<a class="headerlink" href="#added_12" title="Permanent link">&para;</a></h3>
+<h3 id="added_15">Added<a class="headerlink" href="#added_15" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add forever to max-download-per filter option.</li>
 </ul>
-<h3 id="changed_9">Changed<a class="headerlink" href="#changed_9" title="Permanent link">&para;</a></h3>
+<h3 id="changed_13">Changed<a class="headerlink" href="#changed_13" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Make tracker updates follow update-check rules.</li>
 <li>Improve update messages.</li>
@@ -1780,7 +2158,7 @@
 </ul>
 <h2 id="community-v141-2013-08-14"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.41">community-v1.41</a> (2013-08-14)<a class="headerlink" href="#community-v141-2013-08-14" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.40...community-v1.41">Commits</a></p>
-<h3 id="added_13">Added<a class="headerlink" href="#added_13" title="Permanent link">&para;</a></h3>
+<h3 id="added_16">Added<a class="headerlink" href="#added_16" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add MPEG2 Remux constant group.</li>
 <li>Add /autodl reloadtrackers command.</li>
@@ -1788,7 +2166,7 @@
 <li>Add /autodl version command.</li>
 <li>Add hour to max-download-per filter option.</li>
 </ul>
-<h3 id="changed_10">Changed<a class="headerlink" href="#changed_10" title="Permanent link">&para;</a></h3>
+<h3 id="changed_14">Changed<a class="headerlink" href="#changed_14" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Remove trackers into separate repository and add as submodule.</li>
 <li>Change max-downloads to work without max-downloads-per.</li>
@@ -1796,7 +2174,7 @@
 </ul>
 <h2 id="community-v140-2013-05-15"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.40">community-v1.40</a> (2013-05-15)<a class="headerlink" href="#community-v140-2013-05-15" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.35...community-v1.40">Commits</a></p>
-<h3 id="added_14">Added<a class="headerlink" href="#added_14" title="Permanent link">&para;</a></h3>
+<h3 id="added_17">Added<a class="headerlink" href="#added_17" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add Beathau5 tracker.</li>
 <li>Add macro support to upload-watch-dir.</li>
@@ -1805,28 +2183,28 @@
 <li>Add close-nickserv option to IRC header.</li>
 <li>Add download-duplicates filter option.</li>
 </ul>
-<h3 id="changed_11">Changed<a class="headerlink" href="#changed_11" title="Permanent link">&para;</a></h3>
+<h3 id="changed_15">Changed<a class="headerlink" href="#changed_15" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Change PreToMe to use passkey.</li>
 <li>Improve ep/season parsing logic.</li>
 <li>Add DIGEST::SHA compat.</li>
 <li>Add count output for max-download filters.</li>
 </ul>
-<h3 id="fixed_4">Fixed<a class="headerlink" href="#fixed_4" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_6">Fixed<a class="headerlink" href="#fixed_6" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Update IRC info for My Anonamouse.</li>
 <li>Remove FTN deobfuscation.</li>
 </ul>
 <h2 id="community-v135-2013-04-16"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.35">community-v1.35</a> (2013-04-16)<a class="headerlink" href="#community-v135-2013-04-16" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.34...community-v1.35">Commits</a></p>
-<h3 id="added_15">Added<a class="headerlink" href="#added_15" title="Permanent link">&para;</a></h3>
+<h3 id="added_18">Added<a class="headerlink" href="#added_18" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add scene and max-pretime filter options to FunFile.</li>
 <li>Add freeleech filter option to IPTorrents.</li>
 <li>Add server-password option to IRC header.</li>
 <li>Add bnc option to server header.</li>
 </ul>
-<h3 id="changed_12">Changed<a class="headerlink" href="#changed_12" title="Permanent link">&para;</a></h3>
+<h3 id="changed_16">Changed<a class="headerlink" href="#changed_16" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Change Blackcats to use passkey.</li>
 <li>Add ignore to GazelleGames.</li>
@@ -1834,11 +2212,11 @@
 <li>Add ignore to Empornium.</li>
 <li>Change authkey to passkey in FunFile.</li>
 </ul>
-<h3 id="removed">Removed<a class="headerlink" href="#removed" title="Permanent link">&para;</a></h3>
+<h3 id="removed_1">Removed<a class="headerlink" href="#removed_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Remove HDBits tracker</li>
 </ul>
-<h3 id="fixed_5">Fixed<a class="headerlink" href="#fixed_5" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_7">Fixed<a class="headerlink" href="#fixed_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Force SSL for Awesome-HD.</li>
 <li>Force SSL for Blackcats.</li>
@@ -1851,7 +2229,7 @@
 </ul>
 <h2 id="community-v134-2013-02-17"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.34">community-v1.34</a> (2013-02-17)<a class="headerlink" href="#community-v134-2013-02-17" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.33...community-v1.34">Commits</a></p>
-<h3 id="added_16">Added<a class="headerlink" href="#added_16" title="Permanent link">&para;</a></h3>
+<h3 id="added_19">Added<a class="headerlink" href="#added_19" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Re-add filelist.ro.</li>
 <li>Add Empornium tracker.</li>
@@ -1868,15 +2246,15 @@
 <li>Add freeleech-percents filter option.</li>
 <li>Add freeleech-percents filter option to Awesome-HD.</li>
 </ul>
-<h3 id="changed_13">Changed<a class="headerlink" href="#changed_13" title="Permanent link">&para;</a></h3>
+<h3 id="changed_17">Changed<a class="headerlink" href="#changed_17" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Change update URL to Google Code.</li>
 </ul>
-<h3 id="removed_1">Removed<a class="headerlink" href="#removed_1" title="Permanent link">&para;</a></h3>
+<h3 id="removed_2">Removed<a class="headerlink" href="#removed_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Remove bitGAMER.</li>
 </ul>
-<h3 id="fixed_6">Fixed<a class="headerlink" href="#fixed_6" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_8">Fixed<a class="headerlink" href="#fixed_8" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Force SSL for RevolutionTT.</li>
 <li>Update channel name for GazelleGames.</li>
@@ -1885,22 +2263,22 @@
 </ul>
 <h2 id="community-v133-2012-10-31"><a href="https://github.com/autodl-community/autodl-irssi/releases/tag/community-v1.33">community-v1.33</a> (2012-10-31)<a class="headerlink" href="#community-v133-2012-10-31" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/autodl-community/autodl-irssi/compare/community-v1.32...community-v1.33">Commits</a></p>
-<h3 id="added_17">Added<a class="headerlink" href="#added_17" title="Permanent link">&para;</a></h3>
+<h3 id="added_20">Added<a class="headerlink" href="#added_20" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add remux formats to constants.</li>
 <li>Add freeleech filter option.</li>
 <li>Add freeleech filter option to PassThePopcorn.</li>
 </ul>
-<h3 id="changed_14">Changed<a class="headerlink" href="#changed_14" title="Permanent link">&para;</a></h3>
+<h3 id="changed_18">Changed<a class="headerlink" href="#changed_18" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Change IPTorrents to use passkey.</li>
 <li>Modify Awesome-HD.</li>
 </ul>
-<h3 id="removed_2">Removed<a class="headerlink" href="#removed_2" title="Permanent link">&para;</a></h3>
+<h3 id="removed_3">Removed<a class="headerlink" href="#removed_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Remove dead trackers.</li>
 </ul>
-<h3 id="fixed_7">Fixed<a class="headerlink" href="#fixed_7" title="Permanent link">&para;</a></h3>
+<h3 id="fixed_9">Fixed<a class="headerlink" href="#fixed_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Update RevolutionTT.</li>
 <li>Update Waffles.</li>
@@ -1917,6 +2295,8 @@
               
               
                 
+
+
               
             </article>
           </div>
@@ -1952,7 +2332,7 @@
       <div class="md-footer-copyright">
         
         powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
+        <a href="https://www.mkdocs.org">MkDocs</a>
         and
         <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
@@ -1966,9 +2346,9 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
+      <script src="../assets/javascripts/application.a59e2a89.js"></script>
       
-      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
+      <script>app.initialize({version:"0.17.5",url:{base:".."}})</script>
       
     
     
