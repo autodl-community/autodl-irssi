@@ -174,6 +174,15 @@ Create one [filter] header per filter like **[filter MY FILTER NAME]**. All filt
 **Example:** albums = Some album, Some other album, yet another one
 **Description:**
 
+#### match-release-types
+> **Type:** Comma separated list
+**Example:** match-release-types = Album,Single,EP
+**Description:** Matches on the release type of the torrent.
+
+#### except-release-types
+> **Type:** Comma separated list
+> **Description:** The exact opposite of **match-release-types**. When this matches, do *NOT* download the torrent.
+
 #### formats
 > **Type:** Comma separated list
 **Example:** formats = MP3, FLAC
