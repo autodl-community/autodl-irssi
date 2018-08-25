@@ -223,7 +223,7 @@ Create one [filter] header per filter like **[filter MY FILTER NAME]**. All filt
 **Description:** It's compared against the torrent category.
 
 #### except-categories
-> **Description:** The exact opposite of **except-categories**. If a release matches this option, then it's NOT downloaded.
+> **Description:** The exact opposite of **match-categories**. If a release matches this option, then it's NOT downloaded.
 
 #### match-uploaders
 > **Type:** Comma separated list
