@@ -3,6 +3,13 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
+## [v2.4.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.4.0) (2018-09-08)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.3.0...v2.4.0)
+
+**The maintainer no longer provides support. Look to other users for help.**
+
+
 ## [v2.3.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.3.0) (2018-03-10)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.2.0...v2.3.0)
