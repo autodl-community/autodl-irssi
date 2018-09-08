@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/faq/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/installation/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/overview/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/options/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/actions/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/irc/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/server/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/channel/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/tracker/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/filter/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/webui/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/configuration/ftp/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/changelog/</loc>
-     <lastmod>2018-07-27</lastmod>
+     <loc>None</loc>
+     <lastmod>2018-09-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
