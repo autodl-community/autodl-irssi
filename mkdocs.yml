@@ -28,7 +28,7 @@ markdown_extensions:
   - pymdownx.tasklist(custom_checkbox=true)
   - pymdownx.tilde
 
-pages:
+nav:
   - Home: index.md
   - FAQ: faq.md
   - Installation: installation.md
