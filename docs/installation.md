@@ -8,12 +8,13 @@ autodl-irssi has the following Perl module dependencies:
 * HTML::Entities
 * XML::LibXML
 * Digest::SHA
+* Filesys::DiskFree
 * JSON
 * JSON::XS (optional)
 
 Use your package manager to install them or use the CPAN utility. If you use CPAN, you will need a build environment already installed, eg. gcc, make, etc.
 
-	cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA JSON JSON::XS
+	cpan Archive::Zip Net::SSLeay HTML::Entities XML::LibXML Digest::SHA Filesys::DiskFree JSON JSON::XS
 
 ### Installation
 
