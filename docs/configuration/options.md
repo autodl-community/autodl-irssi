@@ -83,6 +83,12 @@ These options change the behavior of autodl-irssi. Place these options below the
 **Default:** test
 **Description:** Set the action to take when an announce is matched. See [actions](actions.md) for related settings.
 
+#### min-free-space
+> **Type:** Size
+**Default:** 0
+**Example:** min-free-space = 1GB
+**Description:** If a torrent files bigger than specified size, autodl-irssi will ignore it. Only available when you set action to rtorrent.
+
 
 ## Wake on LAN
 It's possible to wake up the computer before uploading the torrent (uTorrent webui or FTP upload). You may need to make sure your BIOS and network card have WOL enabled.

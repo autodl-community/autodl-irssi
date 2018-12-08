@@ -55,6 +55,9 @@ use Time::HiRes qw/ gettimeofday /;
 use File::Spec;
 use Errno qw/ :POSIX /;
 use POSIX qw/ strftime /;
+use Filesys::DiskFree;
+
+my $dfHandle = new Filesys::DiskFree;
 
 if (eval { require Digest::SHA;1; }) {
 	Digest::SHA->import(qw(sha1));
@@ -284,11 +287,17 @@ sub _onTorrentDownloaded {
 		return;
 	}
 	$self->{ti}{torrentSizeInBytes} = $self->{torrentFiles}{totalSize};
+	$dfHandle->df();
+
+        if ($AutodlIrssi::g->{options}{uploadType} eq 'rtorrent' && $self->{ti}{torrentSizeInBytes} >= ($dfHandle->avail($self->{uploadMethod}{rtDir}) - convertByteSizeString($AutodlIrssi::g->{options}{minFreeSpace}))) {
+                return;
+        }
 
 	if (!AutodlIrssi::FilterManager::checkFilterSize($self->{ti}{torrentSizeInBytes}, $self->{ti}{filter})) {
 		$self->{ti}{filter}{state}->restoreDownloadCount($self->{filterDlState});
 		return;
 	}
+
 	else {
 		$self->_addDownload();
 
