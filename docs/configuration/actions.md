@@ -135,6 +135,7 @@ _Enclose the macro in double quotes if it's possible that the macro contains spa
 **$(TorrentPathName)** - The path to the .torrent file (unix path if you're using cygwin).
 **$(WinTorrentPathName)** - The windows path to the .torrent file.
 **$(InfoHash)** - The info hash of the torrent file.
+**$(InfoName)** - The name from the info section of the torrent file.
 **$(TYear)** - Torrent release year.
 **$(Name1)**, **$(Artist)**, **$(Show)**, **$(Movie)** - Equivalent to the shows/artist value.
 **$(Name2)**, **$(Album)** - Equivalent to the album value.
