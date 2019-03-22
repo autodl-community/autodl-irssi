@@ -278,6 +278,14 @@ sub _onTorrentDownloaded {
 
 	$self->{info_hash} = sha1(substr($self->{torrentFileData}, $benc_info->{start}, $benc_info->{end} - $benc_info->{start}));
 
+	my $benc_info_name = $benc_info->readDictionary("name");
+	if (!$benc_info_name || !$benc_info_name->isString()) {
+		$self->{httpRequest}->retryRequest("Invalid torrent file: missing name in info", sub { $self->_onTorrentDownloaded(@_) });
+		return;
+	}
+
+	$self->{info_name} = $benc_info_name->{string};
+
 	$self->{torrentFiles} = getTorrentFiles($self->{bencRoot});
 	if (!$self->{torrentFiles}) {
 		$self->_messageFail(0, "Could not parse torrent file '$self->{ti}{torrentName}'");
@@ -511,6 +519,7 @@ sub _getMacroReplacer {
 	}
 
 	$macroReplacer->add("InfoHash", dataToHex($self->{info_hash}));
+	$macroReplacer->add("InfoName", $self->{info_name});
 
 	return $macroReplacer;
 }
