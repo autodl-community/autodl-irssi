@@ -150,7 +150,7 @@ sub _doWrite {
 		return;
 	}
 
-	my $res = Net::SSLeay::write($self->{ssl}, $data);
+	my $res = Net::SSLeay::ssl_write_all($self->{ssl}, $data);
 	if ($res > 0) {
 		if ($res >= length $data) {
 			$self->_callUser($writeInfo->{callback}, "");
@@ -203,7 +203,7 @@ sub _doRead {
 
 	while ($self->{hasReadHandler}) {
 		my $len = Net::SSLeay::pending($self->{ssl}) || 2048;
-		my $got = Net::SSLeay::read($self->{ssl}, $len);
+		my $got = Net::SSLeay::ssl_read_all($self->{ssl}, $len);
 		if (defined $got) {
 			return unless $self->_callUser($readHandler, "", $got);
 			return if length $got == 0;	# Stop if remote peer closed the connection
