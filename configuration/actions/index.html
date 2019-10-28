@@ -903,65 +903,46 @@ upload-dyndir = c:\the\windows\path\$(macro)$(macro2)\$(macro3)
 <h2 id="macros">Macros<a class="headerlink" href="#macros" title="Permanent link">&para;</a></h2>
 <p><em>Enclose the macro in double quotes if it's possible that the macro contains spaces.</em></p>
 <blockquote>
-<p><strong><span><span class="MathJax_Preview">(year)** - Current year.
-**</span><script type="math/tex">(year)** - Current year.
-**</script></span>(month)</strong> - Current month.<br />
-<strong><span><span class="MathJax_Preview">(day)** - Current day.
-**</span><script type="math/tex">(day)** - Current day.
-**</script></span>(hour)</strong> - Current hour.<br />
-<strong><span><span class="MathJax_Preview">(minute)** - Current minute.
-**</span><script type="math/tex">(minute)** - Current minute.
-**</script></span>(second)</strong> - Current second.<br />
-<strong><span><span class="MathJax_Preview">(milli)** - Current millisecond.
-**</span><script type="math/tex">(milli)** - Current millisecond.
-**</script></span>(FilterName)</strong> - Name of matched filter.<br />
-<strong><span><span class="MathJax_Preview">(Site)** - Tracker type from the tracker file.
-**</span><script type="math/tex">(Site)** - Tracker type from the tracker file.
-**</script></span>(Tracker)</strong> - The long tracker name from the tracker file.<br />
-<strong><span><span class="MathJax_Preview">(TrackerShort)** - The short tracker name from the tracker file.
-**</span><script type="math/tex">(TrackerShort)** - The short tracker name from the tracker file.
-**</script></span>(TorrentPathName)</strong> - The path to the .torrent file (unix path if you're using cygwin).<br />
-<strong><span><span class="MathJax_Preview">(WinTorrentPathName)** - The windows path to the .torrent file.
-**</span><script type="math/tex">(WinTorrentPathName)** - The windows path to the .torrent file.
-**</script></span>(InfoHash)</strong> - The info hash of the torrent file.<br />
-<strong><span><span class="MathJax_Preview">(InfoName)** - The name from the info section of the torrent file.
-**</span><script type="math/tex">(InfoName)** - The name from the info section of the torrent file.
-**</script></span>(TYear)</strong> - Torrent release year.<br />
-<strong><span><span class="MathJax_Preview">(Name1)**, **</span><script type="math/tex">(Name1)**, **</script></span>(Artist)</strong>, <strong><span><span class="MathJax_Preview">(Show)**, **</span><script type="math/tex">(Show)**, **</script></span>(Movie)</strong> - Equivalent to the shows/artist value.<br />
-<strong><span><span class="MathJax_Preview">(Name2)**, **</span><script type="math/tex">(Name2)**, **</script></span>(Album)</strong> - Equivalent to the album value.<br />
-<strong><span><span class="MathJax_Preview">(Category)**
-**</span><script type="math/tex">(Category)**
-**</script></span>(TorrentName)</strong><br />
-<strong><span><span class="MathJax_Preview">(Uploader)**
-**</span><script type="math/tex">(Uploader)**
-**</script></span>(TorrentSize)</strong><br />
-<strong><span><span class="MathJax_Preview">(PreTime)**
-**</span><script type="math/tex">(PreTime)**
-**</script></span>(TorrentUrl)</strong><br />
-<strong><span><span class="MathJax_Preview">(TorrentSslUrl)**
-**</span><script type="math/tex">(TorrentSslUrl)**
-**</script></span>(Season)</strong><br />
-<strong><span><span class="MathJax_Preview">(Season2)** - Two digit season number.
-**</span><script type="math/tex">(Season2)** - Two digit season number.
-**</script></span>(Episode)</strong><br />
-<strong><span><span class="MathJax_Preview">(Episode2)** - Two digit episode number.
-**</span><script type="math/tex">(Episode2)** - Two digit episode number.
-**</script></span>(Resolution)</strong><br />
-<strong><span><span class="MathJax_Preview">(Source)**
-**</span><script type="math/tex">(Source)**
-**</script></span>(Encoder)</strong><br />
-<strong><span><span class="MathJax_Preview">(Container)**
-**</span><script type="math/tex">(Container)**
-**</script></span>(Format)</strong><br />
-<strong><span><span class="MathJax_Preview">(Bitrate)**
-**</span><script type="math/tex">(Bitrate)**
-**</script></span>(Media)</strong><br />
-<strong><span><span class="MathJax_Preview">(Tags)**
-**</span><script type="math/tex">(Tags)**
-**</script></span>(Scene)</strong><br />
-<strong><span><span class="MathJax_Preview">(ReleaseGroup)**
-**</span><script type="math/tex">(ReleaseGroup)**
-**</script></span>(Log)</strong><br />
+<p><strong>$(year)</strong> - Current year.<br />
+<strong>$(month)</strong> - Current month.<br />
+<strong>$(day)</strong> - Current day.<br />
+<strong>$(hour)</strong> - Current hour.<br />
+<strong>$(minute)</strong> - Current minute.<br />
+<strong>$(second)</strong> - Current second.<br />
+<strong>$(milli)</strong> - Current millisecond.<br />
+<strong>$(FilterName)</strong> - Name of matched filter.<br />
+<strong>$(Site)</strong> - Tracker type from the tracker file.<br />
+<strong>$(Tracker)</strong> - The long tracker name from the tracker file.<br />
+<strong>$(TrackerShort)</strong> - The short tracker name from the tracker file.<br />
+<strong>$(TorrentPathName)</strong> - The path to the .torrent file (unix path if you're using cygwin).<br />
+<strong>$(WinTorrentPathName)</strong> - The windows path to the .torrent file.<br />
+<strong>$(InfoHash)</strong> - The info hash of the torrent file.<br />
+<strong>$(InfoName)</strong> - The name from the info section of the torrent file.<br />
+<strong>$(TYear)</strong> - Torrent release year.<br />
+<strong>$(Name1)</strong>, <strong>$(Artist)</strong>, <strong>$(Show)</strong>, <strong>$(Movie)</strong> - Equivalent to the shows/artist value.<br />
+<strong>$(Name2)</strong>, <strong>$(Album)</strong> - Equivalent to the album value.<br />
+<strong>$(Category)</strong><br />
+<strong>$(TorrentName)</strong><br />
+<strong>$(Uploader)</strong><br />
+<strong>$(TorrentSize)</strong><br />
+<strong>$(PreTime)</strong><br />
+<strong>$(TorrentUrl)</strong><br />
+<strong>$(TorrentSslUrl)</strong><br />
+<strong>$(Season)</strong><br />
+<strong>$(Season2)</strong> - Two digit season number.<br />
+<strong>$(Episode)</strong><br />
+<strong>$(Episode2)</strong> - Two digit episode number.<br />
+<strong>$(Resolution)</strong><br />
+<strong>$(Source)</strong><br />
+<strong>$(Encoder)</strong><br />
+<strong>$(Container)</strong><br />
+<strong>$(Format)</strong><br />
+<strong>$(Bitrate)</strong><br />
+<strong>$(Media)</strong><br />
+<strong>$(Tags)</strong><br />
+<strong>$(Scene)</strong><br />
+<strong>$(ReleaseGroup)</strong><br />
+<strong>$(Log)</strong><br />
 <strong>$(Cue)</strong></p>
 </blockquote>
                 
