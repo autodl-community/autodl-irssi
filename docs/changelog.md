@@ -1,4 +1,16 @@
+# Change Log
+
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
+
+
+## [v2.6.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.6.0) (2019-10-28)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.5.0...v2.6.0)
+
+### Added
+
+* ``InfoName`` macro.
+* Support for newer versions of ``Net::SSLeay``.
 
 
 ## [v2.5.0](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.5.0) (2019-02-06)
