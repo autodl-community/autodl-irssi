@@ -204,7 +204,7 @@ sub _doRead {
 	while ($self->{hasReadHandler}) {
 		my $len = Net::SSLeay::pending($self->{ssl}) || 2048;
 		my $got;
-		if (exists(&Net::SSLeay::ssl_read_all)) {
+		if ($Net::SSLeay::VERSION >= 1.86) {
 			$got = Net::SSLeay::ssl_read_all($self->{ssl}, $len);
 		}
 		else {
