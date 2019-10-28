@@ -203,7 +203,13 @@ sub _doRead {
 
 	while ($self->{hasReadHandler}) {
 		my $len = Net::SSLeay::pending($self->{ssl}) || 2048;
-		my $got = Net::SSLeay::read($self->{ssl}, $len);
+		my $got;
+		if (exists(&Net::SSLeay::ssl_read_all)) {
+			$got = Net::SSLeay::ssl_read_all($self->{ssl}, $len);
+		}
+		else {
+			$got = Net::SSLeay::read($self->{ssl}, $len);
+		}
 		if (defined $got) {
 			return unless $self->_callUser($readHandler, "", $got);
 			return if length $got == 0;	# Stop if remote peer closed the connection
