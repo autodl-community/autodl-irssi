@@ -21,7 +21,6 @@ markdown_extensions:
   - markdown.extensions.sane_lists
   - markdown.extensions.toc:
       permalink: true
-  - pymdownx.arithmatex
   - pymdownx.betterem:
       smart_enable: all
   - pymdownx.caret

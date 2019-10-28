@@ -122,43 +122,43 @@ _You need to initialize **path-utorrent** below [options] or it won't work!_
 _Enclose the macro in double quotes if it's possible that the macro contains spaces._
 
 > **$(year)** - Current year.
-**$(month)** - Current month.
-**$(day)** - Current day.
-**$(hour)** - Current hour.
-**$(minute)** - Current minute.
-**$(second)** - Current second.
-**$(milli)** - Current millisecond.
-**$(FilterName)** - Name of matched filter.
-**$(Site)** - Tracker type from the tracker file.
-**$(Tracker)** - The long tracker name from the tracker file.
-**$(TrackerShort)** - The short tracker name from the tracker file.
-**$(TorrentPathName)** - The path to the .torrent file (unix path if you're using cygwin).
-**$(WinTorrentPathName)** - The windows path to the .torrent file.
-**$(InfoHash)** - The info hash of the torrent file.
-**$(InfoName)** - The name from the info section of the torrent file.
-**$(TYear)** - Torrent release year.
-**$(Name1)**, **$(Artist)**, **$(Show)**, **$(Movie)** - Equivalent to the shows/artist value.
-**$(Name2)**, **$(Album)** - Equivalent to the album value.
-**$(Category)**
-**$(TorrentName)**
-**$(Uploader)**
-**$(TorrentSize)**
-**$(PreTime)**
-**$(TorrentUrl)**
-**$(TorrentSslUrl)**
-**$(Season)**
-**$(Season2)** - Two digit season number.
-**$(Episode)**
-**$(Episode2)** - Two digit episode number.
-**$(Resolution)**
-**$(Source)**
-**$(Encoder)**
-**$(Container)**
-**$(Format)**
-**$(Bitrate)**
-**$(Media)**
-**$(Tags)**
-**$(Scene)**
-**$(ReleaseGroup)**
-**$(Log)**
-**$(Cue)**
+> **$(month)** - Current month.
+> **$(day)** - Current day.
+> **$(hour)** - Current hour.
+> **$(minute)** - Current minute.
+> **$(second)** - Current second.
+> **$(milli)** - Current millisecond.
+> **$(FilterName)** - Name of matched filter.
+> **$(Site)** - Tracker type from the tracker file.
+> **$(Tracker)** - The long tracker name from the tracker file.
+> **$(TrackerShort)** - The short tracker name from the tracker file.
+> **$(TorrentPathName)** - The path to the .torrent file (unix path if you're using cygwin).
+> **$(WinTorrentPathName)** - The windows path to the .torrent file.
+> **$(InfoHash)** - The info hash of the torrent file.
+> **$(InfoName)** - The name from the info section of the torrent file.
+> **$(TYear)** - Torrent release year.
+> **$(Name1)**, **$(Artist)**, **$(Show)**, **$(Movie)** - Equivalent to the shows/artist value.
+> **$(Name2)**, **$(Album)** - Equivalent to the album value.
+> **$(Category)**
+> **$(TorrentName)**
+> **$(Uploader)**
+> **$(TorrentSize)**
+> **$(PreTime)**
+> **$(TorrentUrl)**
+> **$(TorrentSslUrl)**
+> **$(Season)**
+> **$(Season2)** - Two digit season number.
+> **$(Episode)**
+> **$(Episode2)** - Two digit episode number.
+> **$(Resolution)**
+> **$(Source)**
+> **$(Encoder)**
+> **$(Container)**
+> **$(Format)**
+> **$(Bitrate)**
+> **$(Media)**
+> **$(Tags)**
+> **$(Scene)**
+> **$(ReleaseGroup)**
+> **$(Log)**
+> **$(Cue)**
