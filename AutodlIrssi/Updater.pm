@@ -163,11 +163,13 @@ sub checkAutodlUpdate {
 	$self->_createHttpRequest();
 
 	$self->{updateUrl} = AUTODL_UPDATE_URL;
+
+	my $headers = {};
 	if ($self->{githubToken}) {
-		$self->{updateUrl} .= "?access_token=$self->{githubToken}";
+		$headers->{Authorization} = "token $self->{githubToken}";
 	}
 
-	$self->{request}->sendRequest("GET", "", $self->{updateUrl} , {}, sub {
+	$self->{request}->sendRequest("GET", "", $self->{updateUrl} , $headers, sub {
 		$self->_onRequestReceived(@_);
 	});
 }
@@ -182,11 +184,13 @@ sub checkTrackersUpdate {
 	$self->_createHttpRequest();
 
 	$self->{updateUrl} = TRACKERS_UPDATE_URL;
+
+	my $headers = {};
 	if ($self->{githubToken}) {
-		$self->{updateUrl} .= "?access_token=$self->{githubToken}";
+		$headers->{Authorization} = "token $self->{githubToken}";
 	}
 
-	$self->{request}->sendRequest("GET", "", $self->{updateUrl} , {}, sub {
+	$self->{request}->sendRequest("GET", "", $self->{updateUrl} , $headers, sub {
 		$self->_onRequestReceived(@_);
 	});
 }
