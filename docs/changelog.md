@@ -3,6 +3,16 @@
 Notable changes for [autodl-irssi](https://github.com/autodl-community/autodl-irssi).
 
 
+## [v2.6.2](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.6.2) (2020-03-11)
+
+[Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.6.1...v2.6.2)
+
+### Changed
+
+* Use ``1.84`` as the ``Net::SSLeay`` version boundary.
+* Send GitHub token in Authorization header.
+
+
 ## [v2.6.1](https://github.com/autodl-community/autodl-irssi/releases/tag/v2.6.1) (2019-10-28)
 
 [Commits](https://github.com/autodl-community/autodl-irssi/compare/v2.6.0...v2.6.1)
