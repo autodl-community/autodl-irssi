@@ -626,7 +626,7 @@ sub extractReleaseNameInfo {
 	};
 
 	my $indexYear;
-	if ($data = $findLast->($canonReleaseName, qr/(?:^|\D)(19[3-9]\d|20[01]\d)(?:\D|$)/)) {
+	if ($data = $findLast->($canonReleaseName, qr/(?:^|\D)(19[3-9]\d|20[012]\d)(?:\D|$)/)) {
 		$indexYear = $data->{index};
 		$setVariable->("year", 0 + $data->{value});
 	}
@@ -649,7 +649,7 @@ sub extractReleaseNameInfo {
 
 	# Year month day must be part of canonicalized name if it's present.
 	my $indexYmd;
-	if ($data = $findLast->($canonReleaseName, qr/(?:^|\D)((?:19[3-9]\d|20[01]\d)\s\d{1,2}\s\d{1,2})(?:\D|$)/)) {
+	if ($data = $findLast->($canonReleaseName, qr/(?:^|\D)((?:19[3-9]\d|20[012]\d)\s\d{1,2}\s\d{1,2})(?:\D|$)/)) {
 		$indexYmd = $data->{index};
 		$setVariable->("ymd", $data->{value});
 	}
@@ -712,7 +712,7 @@ sub extractReleaseNameInfo {
 		# Don't use the year index if it's a TV show since the year may be part of the name.
 		my $yindex = $indexYear;
 		if ($out->{season} || $out->{episode} || ($out->{source} && $out->{source} =~ /HDTV|PDTV/i)) {
-			if ($canonReleaseName !~ /(?:^|\D)(?:19[4-9]\d|20[01]\d)\s+\d\d\s+\d\d(?:\D|$)/) {
+			if ($canonReleaseName !~ /(?:^|\D)(?:19[4-9]\d|20[012]\d)\s+\d\d\s+\d\d(?:\D|$)/) {
 				$yindex = undef;
 			}
 		}
