@@ -15,7 +15,7 @@ Create one [filter] header per filter like **[filter MY FILTER NAME]**. All filt
 > **Type:** Integer
 **Default:** 0
 **Example:** priority = 10
-**Description:** Use it to determine the order by which filters are checked. Negative numbers are allowed.
+**Description:** Use it to determine the order by which filters are checked. Negative numbers are allowed. Filter with highest priority number will be checked first. Example Filter1: Priority 7, Filter2: Priority 3, Filter3: Priority 4, the order of check will be Filter1, Filter3 and Filter2.
 
 #### match-sites
 > **Type:** Comma separated list
