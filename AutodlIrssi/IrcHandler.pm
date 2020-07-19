@@ -125,7 +125,8 @@ sub onNewIrcLine {
 	my $ti = $self->handleNewAnnouncerLine($line, $networkName, $serverName, $channelName, $userName);
 	return 0 unless defined $ti;
 
-	my $matchedRelease = new AutodlIrssi::MatchedRelease($self->{downloadHistory});
+	# Matched Release takes filterManager as argument, so that it can check filters during 2nd attempt
+	my $matchedRelease = new AutodlIrssi::MatchedRelease($self->{downloadHistory}, $self->{filterManager});
 	$matchedRelease->start($ti);
 	return 1;
 }
