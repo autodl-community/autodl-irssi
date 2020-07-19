@@ -64,9 +64,10 @@ else {
 }
 
 sub new {
-	my ($class, $downloadHistory) = @_;
+	my ($class, $downloadHistory, $filterManager) = @_;
 	bless {
 		downloadHistory => $downloadHistory,
+		filterManager => $filterManager,
 	}, $class;
 }
 
@@ -295,6 +296,19 @@ sub _onTorrentDownloaded {
 
 	if (!AutodlIrssi::FilterManager::checkFilterSize($self->{ti}{torrentSizeInBytes}, $self->{ti}{filter})) {
 		$self->{ti}{filter}{state}->restoreDownloadCount($self->{filterDlState});
+
+		# Since all condition met except for torrent size
+		# Process the announcement again, since this time we have the torrentSizeInBytes, If a matching filter is identified, 
+		# this block of code will not be executed again as torrent size is also part of the filter
+		message 4, "Because of torrent size condition processing the announcement again";
+		my $ti = $self->{ti};
+		
+		$ti->{filter} = $self->{filterManager}->findFilter($ti);
+		return unless defined $ti->{filter};
+
+		my $matchedRelease = new AutodlIrssi::MatchedRelease($self->{downloadHistory}, $self->{filterManager});
+		$matchedRelease->start($ti);
+
 		return;
 	}
 	else {

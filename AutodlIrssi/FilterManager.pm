@@ -169,6 +169,11 @@ sub checkFilter {
 		return 0 if defined $numDownloads && $numDownloads >= $filter->{maxDownloads};
 	}
 
+	# Check filter size
+	# This is a soft check when torrentSizeInBytes is not defined,
+	# condition will be treated as satisfied
+	return checkFilterSize($ti->{torrentSizeInBytes}, $filter);
+
 	return 1;
 }
 
