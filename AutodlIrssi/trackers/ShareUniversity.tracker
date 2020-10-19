@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010, 2011
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="su"
+	shortName="SU"
+	longName="ShareUniversity"
+	siteName="shareuniversity.org"
+	ignore404="true">
+
+	<settings>
+		<description text="Paste (Ctrl+V) any ShareUniversity RSS link into the text box below to automatically extract passkey."/>
+		<passkey pasteRegex="([^.]{32})$" tooltiptext="Paste your ShareUniversity RSS link here."/>
+	</settings>
+
+	<servers>
+		<server
+			network="ShareUniversity"
+			serverNames="irc.shareuniversity.org"
+			channelNames="#announce"
+			announcerNames="SUAnnounce"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!--NYT UPLOAD ~ Movies ~ The Dead Dont Die 2019 NORDiC 1080p BluRay x264 DTS5.1-TWA ~ 28.16 GiB ~ https://shareuniversity.org/torrents/the-dead-dont-die-2019-nordic-1080p-bluray-x264-dts51-twa.977-->
+				<regex value="NYT UPLOAD ~ ([^~]+) ~ ([^~]+) ~ ([^~]+) ~ (https:[^~]+)torrents(\/[^~]+)$"/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="$torrentSize"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<!--base.url/torrent/download/torrentid.passkey-->
+			<var name="torrentUrl">
+				<var name="$baseUrl"/>
+				<string value="torrent/download"/>
+				<var name="$torrentId"/>
+				<string value="."/>
+				<var name="passkey"/>
+			</var>
+		</linematched>
+		<ignore>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

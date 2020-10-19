@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010, 2011
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+- ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="crate"
+	shortName="TC"
+	longName="TorrentCrate"
+	siteName="torrentcrate.org">
+
+	<settings>
+		<description text="Paste (Ctrl+V) any TorrentCrate torrent direct download (RSS) link into the text box to automatically extract passkey."/>
+		<passkey
+			tooltiptext="The passkey in your TorrentCrate RSS feed."
+			pasteRegex="[&amp;]torrent_pass=([\da-fA-F]{32})"/>
+	</settings>
+
+	<servers>
+		<server
+			netowrk="TorrentCrate"
+			serverNames="irc.torrentcrate.org"
+			channelNames="#tc.announce"
+			announcerNames="TC_Announce"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!--[TV/x264] Black Sails S04E02 720p HDTV x264-FLEET - https://torrentcrate.org/details.php?id=110 - 939.14 MB-->
+				<!--[Movies/XviD] Lavender 2016 HDRip XviD AC3-EVO - https://torrentcrate.org/details.php?id=106 - 1.40 GB-->
+				<regex value="\[(.*?)\] (.*?) - (https?://.*/).*id=(\d+) - (.*)"/>
+				<vars>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="$torrentSize"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<var name="$baseUrl"/>
+				<string value="download.php?torrent="/>
+				<var name="$torrentId"/>
+				<string value="&amp;torrent_pass="/>
+				<var name="passkey"/>
+			</var>
+		</linematched>
+		<ignore>
+		</ignore>
+	</parseinfo>
+</trackerinfo>
