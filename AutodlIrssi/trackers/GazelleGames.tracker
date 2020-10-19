@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010, 2011
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="gg"
+	shortName="GG"
+	longName="GazelleGames"
+	siteName="gazellegames.net">
+
+	<settings>
+		<gazelle_description/>
+		<gazelle_authkey/>
+		<gazelle_torrent_pass/>
+	</settings>
+
+	<servers>
+		<server
+			network="GGn"
+			serverNames="irc.gazellegames.net"
+			channelNames="#GGn-Announce"
+			announcerNames="Vertigo"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+				<!-- Uploader :-: Nintendo 3DS :-: Yo-Kai.Watch.KOR.3DS-BigBlueBox in Yo-kai Watch [2013] ::Korean, Multi-Region, Scene:: https://gazellegames.net/torrents.php?torrentid=78851 - adventure, role_playing_game, nintendo; -->
+				<!-- Uploader :-: Windows :-: Warriors.Wrath.Evil.Challenge-HI2U in Warriors' Wrath [2016] ::English, Scene:: FREELEECH! :: https://gazellegames.net/torrents.php?torrentid=78902 - action, adventure, casual, indie, role.playing.game; -->
+
+				<regex value="^(.+) :-: (.+) :-: (.+) \[(\d+)\] ::(.+?):: ?(.+? ::)? https?:\/\/([^\/]+\/)torrents.php\?torrentid=(\d+) ?-? ?(.*?)?;?$"/>
+
+				<vars>
+					<var name="uploader"/>
+					<var name="category"/>
+					<var name="torrentName"/>
+					<var name="year"/>
+					<var name="$flags"/>
+					<var name="$bonus"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="tags"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<!-- create values -->
+			<var name="scene">
+				<string value="false"/>
+			</var>
+			<var name="freeleech">
+				<string value="false"/>
+			</var>
+
+			<varreplace name="tags" srcvar="tags" regex="[\.]" replace=" "/> <!-- Change period tags to spaces [optional?]-->
+
+			<setregex srcvar="$bonus" regex="FREELEECH!" varName="freeleech" newValue="true"/> <!-- If bonus has Freeleech, make it so!-->
+			<setregex srcvar="$flags" regex="Scene" varName="scene" newValue="true"/>
+			
+			<extracttags srcvar="$flags" split=",">
+				<setvarif varName="scene" value="Scene" newValue="true"/>
+				<setvarif varName="origin" regex="^(?:DRM Free|P2P|Home Rip|Rip)$"/>
+			</extracttags>
+
+
+			<var name="torrentUrl">
+				<string value="https://"/>
+				<var name="$baseUrl"/>
+				<string value="torrents.php?action=download&amp;id="/>
+				<var name="$torrentId"/>
+				<string value="&amp;authkey="/>
+				<var name="authkey"/>
+				<string value="&amp;torrent_pass="/>
+				<var name="torrent_pass"/>
+			</var>
+		</linematched>
+		<ignore>
+			<regex value="^\s*New thread:"/>
+			<regex value="^\s*User not found"/>
+			<regex value="^\s*\[ .* \] ::  \[ Class"/>
+			<regex value="^New Game Request:"/>
+		</ignore>
+	</parseinfo>
+</trackerinfo>

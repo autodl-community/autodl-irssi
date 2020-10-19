@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is IRC Auto Downloader.
+   -
+   - The Initial Developer of the Original Code is
+   - David Nilsson.
+   - Portions created by the Initial Developer are Copyright (C) 2010
+   - the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<trackerinfo
+	type="Fuzer"
+	shortName="Fuzer"
+	longName="Fuzer.me"
+	siteName="Fuzer.me">
+
+	<settings>
+		<description text="Paste (Ctrl+V) any Fuzer torrent direct download (RSS) link into any one of the two text boxes below to automatically extract passkey and uid."/>
+		<passkey
+			tooltiptext="The passkey in any Fuzer torrent direct download (RSS) link."
+			pasteGroup="passkey,uid"
+			pasteRegex="[\?&amp;]passkey=([\da-zA-Z]{32})"
+		/>
+		<textbox
+			name="uid"
+			text="uid"
+			accesskey="i"
+			tooltiptext="The uid in any Fuzer torrent direct download (RSS) link."
+			pasteGroup="passkey,uid"
+			pasteRegex="[\?&amp;]uid=(\d+)"
+		/>
+	</settings>
+
+	<servers>
+		<server
+			network="Fuzer"
+			serverNames="irc.fuzer.me"
+			channelNames="#AutoDL"
+			announcerNames="Fuzer"
+			/>
+	</servers>
+
+	<parseinfo>
+		<linepatterns>
+			<extract>
+			<!-- New Torrent: משמרת לילה - עונה 4 פרק 3 - תרגום בצד | The Night Shift S04E03 720p HDTV x264-KILLERS Category: סדרות HD By: abyss1200 Size: 941.05MB Link: http://fuzer.me/attachment.php?attachmentid=61536 [The.Night.Shift.S04E03.720p.HDTV.x264-KILLERS] -->
+
+				<regex value="New Torrent:(.*)Category:(.*)By:(.*)Size:(.*)Link: https?\:\/\/([^\/]+\/).*[&amp;\?]attachmentid=(\d+) \[(.*)\]"/>
+				<vars>
+					<var name="torrentName"/>
+					<var name="category"/>
+					<var name="uploader"/>
+					<var name="$torrentSize"/>
+					<var name="$baseUrl"/>
+					<var name="$torrentId"/>
+					<var name="torrentName1"/>
+				</vars>
+			</extract>
+		</linepatterns>
+		<linematched>
+			<var name="torrentUrl">
+				<string value="https://www."/>
+				<var name="$baseUrl"/>
+				<string value="/"/>
+				<string value="rss/torrent.php/"/>
+				<var name="$torrentId"/>
+				<string value="/"/>
+				<varenc name="uid"/>
+				<string value="/"/>
+				<varenc name="passkey"/>
+				<string value="/"/>
+				<varenc name="torrentName1"/>
+				<string value=".torrent"/>
+			</var>
+		</linematched>
+		<ignore>
+		</ignore>
+	</parseinfo>
+</trackerinfo>
