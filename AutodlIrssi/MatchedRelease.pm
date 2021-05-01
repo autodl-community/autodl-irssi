@@ -295,9 +295,13 @@ sub _onTorrentDownloaded {
 
 	if (!AutodlIrssi::FilterManager::checkFilterSize($self->{ti}{torrentSizeInBytes}, $self->{ti}{filter})) {
 		$self->{ti}{filter}{state}->restoreDownloadCount($self->{filterDlState});
-		return;
+		# we may have used the wrong filter since we didn't know the torrent size until now. See if
+		# there is a matching filter now that we know the size
+		$self->{ti}{filter} = $AutodlIrssi::g->{filterManager}->findFilter($self->{ti});
+		return unless defined $self->{ti}{filter};
+		$self->{filterDlState} = $self->{ti}{filter}{state}->incrementDownloads();
 	}
-	else {
+	{
 		$self->_addDownload();
 
 		message(3, "Matched " . $self->_getTorrentInfoString());
