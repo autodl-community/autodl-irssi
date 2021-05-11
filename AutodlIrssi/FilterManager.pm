@@ -168,8 +168,10 @@ sub checkFilter {
 		}
 		return 0 if defined $numDownloads && $numDownloads >= $filter->{maxDownloads};
 	}
-
-	return 1;
+	# If the torrent hasn't been downlaoded yet from the tracker, torrentSizeInBytes
+	# won't be defined, but this function may be re-called after the torrent is downloaded,
+	# and at that point we can determine whether this filter matches based upon size
+	return checkFilterSize($ti->{torrentSizeInBytes}, $filter);
 }
 
 sub checkFilterRegex {
